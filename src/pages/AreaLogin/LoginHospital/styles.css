@@ -157,10 +157,10 @@ body {
 .text-erro {
     font-size: 13px;
     text-align: center;
-    color: #FBFBFD;
+    color: #e94a4f;
     margin-top: 7px;
     margin-bottom: 5px;
-    visibility: hidden;
+    height: 20px;
 }
 
 #textErroLogin {

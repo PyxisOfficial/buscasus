@@ -1,7 +1,54 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import UseAuth from '../../../hooks/useAuth';
+
 import './styles.css';
 
 export function LoginHospital() {
+    const { signIn }: any = UseAuth();
+    const [userName, setUserName] = useState<string>();
+    const [password, setPassword] = useState<string>();
+    const [isGeneralAdmin, setGeneralAdmin] = useState<boolean>();
+    const [userNameError, setUserNameError] = useState<string>();
+    const [passwordError, setPasswordError] = useState<string>();
+    const [loginError, setLoginError] = useState<string>();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setGeneralAdmin(false);
+
+        const newUser: any[] = ["hospital", "123", false, "Hospital Geral de Guaianazes"];
+        localStorage.setItem("users_db", JSON.stringify(newUser))
+    }, []);
+
+    function handleLogin() {
+        if (!userName && !password) {
+            setUserNameError("Por favor, insira seu nome de usuário.");
+            setPasswordError("Por favor, insira sua senha.");
+            return;
+        }
+
+        if (!userName) {
+            setUserNameError("Por favor, insira seu nome de usuário.");
+            return;
+        }
+
+        if (!password) {
+            setPasswordError("Por favor, insira sua senha.");
+            return;
+        }
+
+        const res = signIn(userName, password, isGeneralAdmin);
+
+        if (res) {
+            setLoginError(res);
+            return;
+        }
+
+        navigate("/visao-geral-hospital");
+    }
+
     return (
         <div>
             <div className="versao-incompativel">
@@ -22,29 +69,40 @@ export function LoginHospital() {
                         <Link to="/login-admin" className="text-tipos-usuario btn-admin"><span id="btnAdmin">Administrador</span></Link>
                     </div>
                     <form action="validar-login.php" method="POST" id="form">
-                        <input hidden type="radio" name="tipoAdmin" id="radioHospital" value="1" />
-                        <input hidden type="radio" name="tipoAdmin" id="radioAdmin" value="2" />
-
                         <div className="input-icone">
-                            <input id="inputUsuario" className="input" name="nomeAdmin" type="text" placeholder="Usuário" />
+                            <input
+                                onChange={(e) => [setUserName(e.target.value), setUserNameError("")]}
+                                id="inputUsuario"
+                                className="input"
+                                name="nomeAdmin"
+                                type="text"
+                                placeholder="Usuário"
+                            />
                             <label htmlFor="inputUsuario"><span className="material-symbols-outlined icone-input">mail</span></label>
-                            <p className="text-erro">Por favor, insira seu nome de usuário.</p>
+                            <p className="text-erro">{userNameError}</p>
                         </div>
 
                         <div className="input-icone">
-                            <input id="inputSenha" className="input" name="senhaAdmin" type="password" placeholder="Senha" />
+                            <input
+                                onChange={(e) => [setPassword(e.target.value), setPasswordError("")]}
+                                id="inputSenha"
+                                className="input"
+                                name="senhaAdmin"
+                                type="password"
+                                placeholder="Senha"
+                            />
                             <label htmlFor="inputSenha"><span className="material-symbols-outlined icone-input">lock_open</span></label>
                             <span className="material-symbols-outlined icone-eye">visibility_off</span>
-                            <p className="text-erro">Por favor, insira sua senha.</p>
+                            <p className="text-erro">{passwordError}</p>
                         </div>
 
                         <div className="text-form-container">
                             <a href="#" id="textEsqueceuSenha" className="text-senha">Esqueceu a senha?</a>
                         </div>
 
-                        <input id="btnSubmit" className="btn-login" type="button" value="Login" />
+                        <input onClick={handleLogin} id="btnSubmit" className="btn-login" type="button" value="Login" />
                     </form>
-                    <p id="textErroLogin"></p>
+                    <p id="textErroLogin">{loginError}</p>
                 </div>
 
                 <svg className="svg-login" viewBox="0 0 2308 1061" fill="none" xmlns="http://www.w3.org/2000/svg">

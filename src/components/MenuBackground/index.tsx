@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import UseAuth from '../../hooks/useAuth';
 import './styles.css';
 
 interface MenuBackgroundProps {
@@ -7,6 +8,9 @@ interface MenuBackgroundProps {
 }
 
 export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
+    const { signOut, hospitalName }: any = UseAuth();
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className="versao-incompativel">
@@ -17,8 +21,8 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
 
                 <div className="item-1 select-disable">
                     <img src="../../logo.png" alt="Logo BuscaSUS" className="img-logo-admin" />
-                    <h3>Nome Hospital</h3>
-                    <Link to="/"><button id="btnLogout" className="btn-logout">Sair</button></Link>
+                    <h3>{hospitalName ? hospitalName : "Administrador Geral"}</h3>
+                    <Link to="/"><button onClick={() => [signOut(), navigate("/")]} id="btnLogout" className="btn-logout">Sair</button></Link>
                 </div>
 
                 <div className="item-2 select-disable">
