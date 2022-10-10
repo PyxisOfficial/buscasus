@@ -1,0 +1,28 @@
+.input-icone {
+    position: relative;
+}
+
+.input {
+    font-size: 16px;
+    padding: 5px;
+    padding-left: 28px;
+    width: 100%;
+    border: none;
+    border-bottom: 3px solid #3eb08f;
+    border-radius: 5px;
+    background-color: #FBFBFD;
+}
+
+.icone-input {
+    color: #757575;
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+}
+
+.icone-eye {
+    color: #757575;
+    left: 290px;
+    position: absolute;
+    cursor: pointer;
+}

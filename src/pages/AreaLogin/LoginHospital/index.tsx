@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import UseAuth from '../../../hooks/useAuth';
 
+import { PasswordInput } from '../../../components/LoginForm/PasswordInput';
+
 import './styles.css';
 
 export function LoginHospital() {
@@ -78,23 +80,14 @@ export function LoginHospital() {
                                 type="text"
                                 placeholder="Usuário"
                             />
-                            <label htmlFor="inputUsuario"><span className="material-symbols-outlined icone-input">mail</span></label>
+                            <label htmlFor="inputUsuario"><span className="material-symbols-outlined icone-input">person</span></label>
                             <p className="text-erro">{userNameError}</p>
                         </div>
 
-                        <div className="input-icone">
-                            <input
-                                onChange={(e) => [setPassword(e.target.value), setPasswordError("")]}
-                                id="inputSenha"
-                                className="input"
-                                name="senhaAdmin"
-                                type="password"
-                                placeholder="Senha"
-                            />
-                            <label htmlFor="inputSenha"><span className="material-symbols-outlined icone-input">lock_open</span></label>
-                            <span className="material-symbols-outlined icone-eye">visibility_off</span>
-                            <p className="text-erro">{passwordError}</p>
-                        </div>
+                        <PasswordInput
+                            onChange={(e: any) => [setPassword(e.target.value), setPasswordError("")]}
+                            passwordError={passwordError}
+                        />
 
                         <div className="text-form-container">
                             <a href="#" id="textEsqueceuSenha" className="text-senha">Esqueceu a senha?</a>

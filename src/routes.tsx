@@ -14,12 +14,12 @@ import UseAuth from './hooks/useAuth';
 
 function PrivateHospital({ Item }: any) {
     const { signedHospital }: any = UseAuth();
-    return signedHospital > 0 ? <Item /> : <LoginHospital />;
+    return signedHospital ? <Item /> : <LoginHospital />;
 }
 
 function PrivateAdmin({ Item }: any) {
     const { signedAdmin }: any = UseAuth();
-    return signedAdmin > 0 ? <Item /> : <LoginAdmin />;
+    return signedAdmin ? <Item /> : <LoginAdmin />;
 }
 
 export default function AppRoutes() {
