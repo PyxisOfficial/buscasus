@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import UseAuth from '../../../hooks/useAuth';
@@ -24,7 +24,9 @@ export function LoginHospital() {
         localStorage.setItem("users_db", JSON.stringify(newUser))
     }, []);
 
-    function handleLogin() {
+    function handleLogin(event: FormEvent) {
+        event.preventDefault();
+
         if (!userName && !password) {
             setUserNameError("Por favor, insira seu nome de usuário.");
             setPasswordError("Por favor, insira sua senha.");
@@ -67,16 +69,14 @@ export function LoginHospital() {
 
                 <div className="container-form select-disable">
                     <div className="tipos-usuario">
-                        <Link to="/" className="text-tipos-usuario"><span id="btnHospital">Hospital</span></Link>
-                        <Link to="/login-admin" className="text-tipos-usuario btn-admin"><span id="btnAdmin">Administrador</span></Link>
+                        <Link to="/" className="text-tipos-usuario"><span>Hospital</span></Link>
+                        <Link to="/login-admin" className="text-tipos-usuario btn-admin"><span>Administrador</span></Link>
                     </div>
-                    <form action="validar-login.php" method="POST" id="form">
+                    <form onSubmit={handleLogin} id="form">
                         <div className="input-icone">
                             <input
                                 onChange={(e) => [setUserName(e.target.value), setUserNameError("")]}
-                                id="inputUsuario"
                                 className="input"
-                                name="nomeAdmin"
                                 type="text"
                                 placeholder="Usuário"
                             />
@@ -90,10 +90,10 @@ export function LoginHospital() {
                         />
 
                         <div className="text-form-container">
-                            <a href="#" id="textEsqueceuSenha" className="text-senha">Esqueceu a senha?</a>
+                            <a href="#" className="text-senha">Esqueceu a senha?</a>
                         </div>
 
-                        <input onClick={handleLogin} id="btnSubmit" className="btn-login" type="button" value="Login" />
+                        <input className="btn-login" type="submit" value="Login" />
                     </form>
                     <p id="textErroLogin">{loginError}</p>
                 </div>
