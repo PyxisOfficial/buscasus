@@ -1,4 +1,4 @@
-import { MenuBackground } from '../../../components/MenuBackground';
+import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import './styles.css';
 
@@ -23,12 +23,12 @@ export function Usuario() {
                                 <div className="input-icone">
                                     <label htmlFor="senhaAdminHospital">Senha:</label>
                                     <input type="password" name="senhaAdminHospital" id="senhaAdminHospital" className="input-admin" />
-                                    <span className="material-symbols-outlined eye-admin-senha select-disable">visibility_off</span>
+                                    <span className="material-symbols-outlined eye-admin-senha select-disable">visibility</span>
                                 </div>
                                 <div className="input-icone">
                                     <label htmlFor="confirmarSenha">Confirmar senha:</label>
                                     <input type="password" id="confirmarSenha" className="input-admin" />
-                                    <span className="material-symbols-outlined eye-admin-confirmar select-disable">visibility_off</span>
+                                    <span className="material-symbols-outlined eye-admin-confirmar select-disable">visibility</span>
                                 </div>
                                 <input type="hidden" name="tipoAdmin" value="1" />
                                 <div>

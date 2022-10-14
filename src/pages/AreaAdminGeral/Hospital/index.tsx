@@ -1,4 +1,4 @@
-import { MenuBackground } from '../../../components/MenuBackground';
+import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import './styles.css';
 

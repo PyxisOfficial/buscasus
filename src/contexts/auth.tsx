@@ -31,7 +31,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             return;
             
         } else {
-            return "E-mail ou senha incorretos!";
+            return true;
         }
     }
 

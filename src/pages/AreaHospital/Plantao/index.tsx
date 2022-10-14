@@ -1,4 +1,4 @@
-import { MenuBackground } from '../../../components/MenuBackground';
+import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import './styles.css';
 

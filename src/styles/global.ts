@@ -28,21 +28,38 @@ tbody::-webkit-scrollbar-thumb {
     border: 3px solid #fff;
 }
 
-.select-disable {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-
 .versao-incompativel,
 .text-versao-imcompativel {
     display: none;
 }
 
+.hospital-link,
+.adm-link {
+    flex: 1;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.hospital-link.active {
+    color: #fff;
+    background-color: #3eb08f;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 20px;
+}
+
+.adm-link.active {
+    color: #fff;
+    background-color: #3eb08f;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 20px;
+}
+
 @media (max-width: 999px) {
-    .container-login {
+    .login-container {
         display: none;
     }
 
