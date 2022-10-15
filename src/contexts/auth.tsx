@@ -1,9 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 export const AuthContext = createContext({});
 
 interface AuthProviderProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -11,11 +11,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [adminUser, setAdminUser] = useState<any>();
     const [hospitalName, setHospitalName] = useState<any>();
 
-    function signIn(userName: string, password: string, isGeneralAdmin: boolean) {
+    function signIn(userName: string, password: string, isGeneralAdminActivated: boolean) {
         const usersStorage: any = localStorage.getItem("users_db");
         const user = JSON.parse(usersStorage);
 
-        if (user[0] === userName && user[1] === password && user[2] === isGeneralAdmin && !isGeneralAdmin) {
+        if (user[0] === userName && user[1] === password && user[2] === isGeneralAdminActivated && !isGeneralAdminActivated) {
             const token = Math.random().toString(36).substring(2);
 
             localStorage.setItem("user_token", JSON.stringify({ token }));
@@ -23,13 +23,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setHospitalName(user[3]);
             return;
 
-        } else if (user[0] === userName && user[1] === password && user[2] === isGeneralAdmin && isGeneralAdmin) {
+        } else if (user[0] === userName && user[1] === password && user[2] === isGeneralAdminActivated && isGeneralAdminActivated) {
             const token = Math.random().toString(36).substring(2);
 
             localStorage.setItem("user_token", JSON.stringify({ token }));
             setAdminUser({ userName, password });
             return;
-            
+
         } else {
             return true;
         }

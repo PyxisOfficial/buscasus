@@ -11,17 +11,16 @@ import * as C from './styles';
 
 export function LoginHospital() {
     const { signIn }: any = UseAuth();
+
     const [userName, setUserName] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const [isGeneralAdmin, setGeneralAdmin] = useState<boolean>();
-    const [userNameError, setUserNameError] = useState<boolean>(false);
-    const [passwordError, setPasswordError] = useState<boolean>(false);
-    const [loginError, setLoginError] = useState<boolean>();
+    const [isUserNameWithError, setIsUserNameWithError] = useState<boolean>(false);
+    const [isPasswordWithError, setIsPasswordWithError] = useState<boolean>(false);
+    const [isLoginWithError, setIsLoginWithError] = useState<boolean>(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        setGeneralAdmin(false);
-
         const newUser: any[] = ["hospital", "123", false, "Hospital Geral de Guaianazes"];
         localStorage.setItem("users_db", JSON.stringify(newUser))
     }, []);
@@ -29,26 +28,28 @@ export function LoginHospital() {
     function handleLogin(event: FormEvent) {
         event.preventDefault();
 
+        const isGeneralAdminActivated = false;
+
         if (!userName && !password) {
-            setUserNameError(true);
-            setPasswordError(true);
+            setIsUserNameWithError(true);
+            setIsPasswordWithError(true);
             return;
         }
 
         if (!userName) {
-            setUserNameError(true);
+            setIsUserNameWithError(true);
             return;
         }
 
         if (!password) {
-            setPasswordError(true);
+            setIsPasswordWithError(true);
             return;
         }
 
-        const res = signIn(userName, password, isGeneralAdmin);
+        const res = signIn(userName, password, isGeneralAdminActivated);
 
         if (res) {
-            setLoginError(res);
+            setIsLoginWithError(res);
             return;
         }
 
@@ -77,13 +78,13 @@ export function LoginHospital() {
                     <C.Form onSubmit={handleLogin}>
 
                         <UserNameInput
-                            onChange={(e: any) => [setUserName(e.target.value), setUserNameError(false)]}
-                            errorText={userNameError}
+                            onChange={(e: any) => [setUserName(e.target.value), setIsUserNameWithError(false)]}
+                            errorText={isUserNameWithError}
                         />
 
                         <PasswordInput
-                            onChange={(e: any) => [setPassword(e.target.value), setPasswordError(false)]}
-                            errorText={passwordError}
+                            onChange={(e: any) => [setPassword(e.target.value), setIsPasswordWithError(false)]}
+                            errorText={isPasswordWithError}
                         />
 
                         <C.ForgotPasswordContainer>
@@ -93,7 +94,7 @@ export function LoginHospital() {
                         <C.Button type="submit" value="Login" />
                     </C.Form>
 
-                    <LoginError error={loginError} />
+                    <LoginError error={isLoginWithError} />
 
                 </C.FormContainer>
 

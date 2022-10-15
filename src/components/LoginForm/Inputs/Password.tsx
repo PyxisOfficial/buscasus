@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 import * as C from './styles';
 
@@ -7,8 +7,8 @@ interface PasswordInputProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function PasswordInput({ errorText, ...rest }: PasswordInputProps) {
-    const [eyeIcon, setEyeIcon] = useState<string>('visibility');
-    const [passwordType, setPasswordType] = useState<string>('password');
+    const [eyeIcon, setEyeIcon] = useState<string>("visibility");
+    const [passwordType, setPasswordType] = useState<string>("password");
 
     function eyeClick() {
         if (eyeIcon === 'visibility') {
