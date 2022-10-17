@@ -2,6 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 
+:root {
+  --rmdp-primary-green: #3eb08f;
+  --rmdp-secondary-green: #3eb08f;
+  --rmdp-shadow-green: #3eb08f;
+  --rmdp-today-green: #95d2c1;
+  --rmdp-hover-green: #3eb08f;
+  --rmdp-deselect-green: #3eb08f;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -79,6 +88,78 @@ tbody::-webkit-scrollbar-thumb {
     .text-versao-imcompativel {
         display: block;
     }
+}
+
+.green .rmdp-wrapper {
+  border: 1px solid var(--rmdp-secondary-green);
+  box-shadow: 0 0 5px var(--rmdp-secondary-green);
+}
+
+.green .rmdp-panel-body li {
+  background-color: var(--rmdp-primary-green);
+  box-shadow: 0 0 2px var(--rmdp-secondary-green);
+}
+
+.green .rmdp-week-day {
+  color: var(--rmdp-primary-green);
+}
+
+.green .rmdp-day.rmdp-deactive {
+  color: var(--rmdp-secondary-green);
+}
+
+.green .rmdp-range {
+  background-color: var(--rmdp-primary-green);
+  box-shadow: 0 0 3px var(--rmdp-shadow-green);
+}
+
+.green .rmdp-arrow {
+  border: solid var(--rmdp-primary-green);
+  border-width: 0 2px 2px 0;
+}
+
+.green .rmdp-arrow-container:hover {
+  background-color: var(--rmdp-primary-green);
+  box-shadow: 0 0 3px var(--rmdp-secondary-green);
+}
+
+.green .rmdp-panel-body::-webkit-scrollbar-thumb {
+  background: var(--rmdp-primary-green);
+}
+
+.green .rmdp-day.rmdp-today span {
+  background-color: var(--rmdp-today-green);
+}
+
+.green .rmdp-rtl .rmdp-panel {
+  border-left: unset;
+  border-right: 1px solid var(--rmdp-secondary-green);
+}
+
+.green .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: var(--rmdp-primary-green);
+  box-shadow: 0 0 3px var(--rmdp-shadow-green);
+}
+
+.green .rmdp-day:not(.rmdp-day-hidden) span:hover {
+  background-color: var(--rmdp-hover-green) !important;
+}
+
+.green .b-deselect {
+  color: var(--rmdp-deselect-green);
+  background-color: white;
+}
+
+.green .rmdp-action-button {
+  color: var(--rmdp-primary-green);
+}
+
+.green .rmdp-button:not(.rmdp-action-button) {
+  background-color: var(--rmdp-primary-green);
+}
+
+.green .rmdp-button:not(.rmdp-action-button):hover {
+  background-color: var(--rmdp-deselect-green);
 }
 
 `;
