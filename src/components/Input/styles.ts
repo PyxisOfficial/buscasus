@@ -4,7 +4,19 @@ export const InputContainer = styled.div`
     position: relative;
 `
 
-export const Input = styled.input<{
+export const Input = styled.input`
+    margin: 11px 0 12px 0;
+    padding: 2px 2px 2px 6px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+
+    &:focus {
+        outline: 0;
+        border: 1px solid #000;
+    }
+`
+
+export const LoginInput = styled.input<{
     errorText: boolean;
 }>`
     font-size: 16px;
@@ -13,13 +25,13 @@ export const Input = styled.input<{
     width: 100%;
     border: none;
     border-bottom: 3px solid ${(props) => props.errorText ? '#e94a4f' : '#3eb08f'};
-    border-radius: 5px;
+    border-radius: 8px;
     background-color: #FBFBFD;
     transition: .5s;
 
     &:focus {
     outline: 0;
-    background-color: #eeeded;
+    border-bottom:3px solid #28755f;
 }
 `
 

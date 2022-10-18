@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import UseAuth from '../../hooks/useAuth';
 
-import { TextInput } from '../../components/Input';
+import { Input } from '../../components/Input';
 import { LoginError } from '../../components/LoginError';
+import { Button } from '../../components/Button';
+import { User, Lock, Eye, EyeSlash } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -78,8 +80,8 @@ export function LoginAdmin() {
                     </C.UserType>
                     <C.Form onSubmit={handleLogin}>
 
-                        <TextInput.Root>
-                            <TextInput.Input
+                        <Input.Root>
+                            <Input.Login
                                 type="text"
                                 placeholder="Usuário"
                                 id="userName"
@@ -87,21 +89,21 @@ export function LoginAdmin() {
                                 onChange={(e: any) => [setUserName(e.target.value), setIsUserNameWithError(false)]}
                             />
 
-                            <TextInput.LeftIcon
+                            <Input.LeftIcon
                                 htmlFor="userName"
                             >
-                                person
-                            </TextInput.LeftIcon>
+                                <User size={24} />
+                            </Input.LeftIcon>
 
-                            <TextInput.ErrorMessage
+                            <Input.ErrorMessage
                                 errorText={isUserNameWithError}
                             >
                                 Por favor, insira um nome de usuário.
-                            </TextInput.ErrorMessage>
-                        </TextInput.Root>
+                            </Input.ErrorMessage>
+                        </Input.Root>
 
-                        <TextInput.Root>
-                            <TextInput.Input
+                        <Input.Root>
+                            <Input.Login
                                 type={isPasswordVisible ? "text" : "password"}
                                 placeholder="Senha"
                                 id="userPassword"
@@ -109,30 +111,32 @@ export function LoginAdmin() {
                                 onChange={(e: any) => [setPassword(e.target.value), setIsPasswordWithError(false)]}
                             />
 
-                            <TextInput.LeftIcon
+                            <Input.LeftIcon
                                 htmlFor="userPassword"
                             >
-                                lock
-                            </TextInput.LeftIcon>
+                                <Lock size={24} />
+                            </Input.LeftIcon>
 
-                            <TextInput.RightIcon
+                            <Input.RightIcon
                                 onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                             >
-                                {isPasswordVisible ? "visibility_off" : "visibility"}
-                            </TextInput.RightIcon>
+                                {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                            </Input.RightIcon>
 
-                            <TextInput.ErrorMessage
+                            <Input.ErrorMessage
                                 errorText={isPasswordWithError}
                             >
                                 Por favor, insira uma senha.
-                            </TextInput.ErrorMessage>
-                        </TextInput.Root>
+                            </Input.ErrorMessage>
+                        </Input.Root>
 
                         <C.ForgotPasswordContainer>
                             <C.ForgotPasswordText href="#">Esqueceu a senha?</C.ForgotPasswordText>
                         </C.ForgotPasswordContainer>
 
-                        <C.Button type="submit" value="Login" />
+                        <Button.Login
+                            value='Login'
+                        />
                     </C.Form>
 
                     <LoginError error={isLoginWithError} />

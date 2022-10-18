@@ -5,11 +5,7 @@ import './styles.css';
 export function VisaoGeralAdmin() {
     return (
         <div>
-            <MenuBackground
-                menuLinks={
-                    <MenuLinksAdmin />
-                }
-            >
+            <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
             </MenuBackground>
         </div>

@@ -39,7 +39,6 @@ export const SloganTitle = styled.h4`
 
 export const FormContainer = styled.div`
     width: 400px;
-    height: 330px;
     background-color: #FBFBFD;
     -webkit-box-shadow: -13px 10px 15px -3px rgba(0, 0, 0, 0.1);
     box-shadow: -13px 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -66,6 +65,7 @@ export const ForgotPasswordContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: 20px;
 `
 
 export const ForgotPasswordText = styled.a`

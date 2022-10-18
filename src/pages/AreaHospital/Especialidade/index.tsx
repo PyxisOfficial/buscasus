@@ -1,25 +1,25 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { Button } from '../../../components/Button';
+
+import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+
 import './styles.css';
 
 export function Especialidade() {
     return (
         <div>
-            <MenuBackground
-                menuLinks={
-                    <MenuLinksHospital />
-                }
-            >
+            <MenuBackground menuLinks={<MenuLinksHospital />}>
                 <div className="container-cad-esp">
                     <h3 className="titulo-medico">Cadastrar uma nova especialidade</h3>
-                    <form id="formEspecialidade" method="POST" action="#">
+                    <form id="formEspecialidade">
                         <input id="idEspecialidade" type="hidden" name="idEspecialidade" />
                         <label htmlFor="nomeEspecialidade">Nome da especialidade:</label>
                         <input type="text" id="nomeEspecialidade" className="input-hospital" name="nomeEspecialidade" />
                         <input type="hidden" name="idHospital" />
-                        <div className="submit-btn-esp">
-                            <input id="btnReset" className="btnReset" type="reset" value="Cancelar" />
-                            <input id="btnSubmit" className="btn-submit" type="button" value="Salvar" />
+                        <div className="btn-container">
+                            <Button.Cancel value="Cancelar" />
+                            <Button.Submit value="Salvar" />
                         </div>
                     </form>
                 </div>
@@ -29,7 +29,7 @@ export function Especialidade() {
                         <div className="container-inputs">
                             <div className="container-search select-disable">
                                 <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
-                                <label htmlFor="inputSearch"><span className="material-symbols-outlined icone-search">search</span></label>
+                                <label htmlFor="inputSearch"></label>
                             </div>
                             <input type="button" className="btn-submit" value="Download" />
                         </div>
@@ -46,8 +46,8 @@ export function Especialidade() {
                                 <td></td>
                                 <td>
                                     <div className="container-btn-esp select-disable">
-                                        <button className="btn-delete"><span className="material-symbols-outlined icones-apagar-editar">delete</span></button>
-                                        <button className="btn-edit"><span className="material-symbols-outlined icones-apagar-editar">edit</span></button>
+                                        <button className="btn-delete"></button>
+                                        <button className="btn-edit"></button>
                                     </div>
                                 </td>
                             </tr>

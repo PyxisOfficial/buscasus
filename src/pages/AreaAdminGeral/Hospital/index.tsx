@@ -1,20 +1,20 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
+import { Button } from '../../../components/Button';
+
+import { MagnifyingGlass, Trash, Pencil, Info } from 'phosphor-react';
+
 import './styles.css';
 
 export function Hospital() {
     return (
         <div>
-            <MenuBackground
-                menuLinks={
-                    <MenuLinksAdmin />
-                }
-            >
+            <MenuBackground menuLinks={<MenuLinksAdmin />}>
                 <div className="container-geral">
                     <div className="container-cad-hospital">
                         <h3>Cadastrar um novo hospital</h3>
                         <div className="scroll-inputs">
-                            <form id="formHospital" method="post" action="#">
+                            <form id="formHospital">
                                 <input type="hidden" name="idHospital" />
                                 <div>
                                     <label htmlFor="nomeHospital">Nome do hospital:</label>
@@ -73,9 +73,9 @@ export function Hospital() {
                                     <input hidden type="file" accept=".jpg, .png" name="fotoHospital" id="fotoHospital" />
                                 </div>
 
-                                <div className="submit-btn-hosp">
-                                    <input id="btnReset" className="btnReset" type="reset" value="Cancelar" />
-                                    <input id="btnSubmit" className="btn-submit" type="button" value="Salvar" />
+                                <div className="btn-container">
+                                    <Button.Cancel value="Cancelar" />
+                                    <Button.Submit value="Salvar" />
                                 </div>
                             </form>
                         </div>
@@ -86,7 +86,7 @@ export function Hospital() {
                             <div className="container-inputs">
                                 <div className="container-search select-disable">
                                     <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
-                                    <label htmlFor="inputSearch"><span className="material-symbols-outlined icone-search">search</span></label>
+                                    <label htmlFor="inputSearch"></label>
                                 </div>
                                 <input type="button" className="btn-submit" value="Download" />
                             </div>
@@ -104,9 +104,9 @@ export function Hospital() {
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <button className="btn-info btn-hospital-list select-disable"><span className="material-symbols-outlined icones-apagar-editar">info</span></button>
-                                        <button className="btn-delete btn-hospital-list select-disable"><span className="material-symbols-outlined icones-apagar-editar">delete</span></button>
-                                        <button className="btn-edit btn-hospital-list select-disable"><span className="material-symbols-outlined icones-apagar-editar">edit</span></button>
+                                        <button className="btn-info btn-hospital-list select-disable"></button>
+                                        <button className="btn-delete btn-hospital-list select-disable"></button>
+                                        <button className="btn-edit btn-hospital-list select-disable"></button>
                                     </td>
                                 </tr>
                             </tbody>

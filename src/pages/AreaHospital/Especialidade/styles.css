@@ -15,8 +15,10 @@
     border: 1px solid #000;
 }
 
-.submit-btn-esp {
+.btn-container {
+    display: flex;
     float: right;
+    gap: 8px;
 }
 
 .btn-submit {

@@ -2,11 +2,11 @@ import { HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode } f
 
 import * as C from './styles';
 
-interface TextInputRootProps {
+interface InputRootProps {
     children: ReactNode;
 }
 
-function TextInputRoot({ children }: TextInputRootProps) {
+function InputRoot({ children }: InputRootProps) {
     return (
         <C.InputContainer>
             {children}
@@ -14,31 +14,40 @@ function TextInputRoot({ children }: TextInputRootProps) {
     )
 }
 
-TextInputRoot.displayName = 'TextInput.Root';
 
-
-interface TextInputInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputInputProps extends InputHTMLAttributes<HTMLInputElement> {
     errorText: boolean;
 }
 
-function TextInputInput({ errorText, ...rest }: TextInputInputProps) {
+function InputInput({ errorText, ...props }: InputInputProps) {
     return (
         <C.Input
-            errorText={errorText}
-            {...rest}
+            {...props}
         />
     )
 }
 
-TextInputInput.displayName = 'TextInput.Input';
+
+interface InputLoginProps extends InputHTMLAttributes<HTMLInputElement> {
+    errorText: boolean;
+}
+
+function InputLogin({ errorText, ...props }: InputLoginProps) {
+    return (
+        <C.LoginInput
+            errorText={errorText}
+            {...props}
+        />
+    )
+}
 
 
-interface TextInputLeftIconProps extends LabelHTMLAttributes<HTMLElement> {
+interface InputLeftIconProps extends LabelHTMLAttributes<HTMLElement> {
     children: ReactNode;
     htmlFor: string;
 }
 
-function TextInputLeftIcon({ children, htmlFor }: TextInputLeftIconProps) {
+function InputLeftIcon({ children, htmlFor }: InputLeftIconProps) {
     return (
         <C.LeftIcon
             className="material-symbols-outlined"
@@ -49,33 +58,29 @@ function TextInputLeftIcon({ children, htmlFor }: TextInputLeftIconProps) {
     )
 }
 
-TextInputLeftIcon.displayName = 'TextInput.LeftIcon';
 
-
-interface TextInputRightIconProps extends HTMLAttributes<HTMLElement> {
+interface InputRightIconProps extends HTMLAttributes<HTMLElement> {
     children: ReactNode;
 }
 
-function TextInputRightIcon({ children, ...rest }: TextInputRightIconProps) {
+function InputRightIcon({ children, ...props }: InputRightIconProps) {
     return (
         <C.RightIcon
             className="material-symbols-outlined"
-            {...rest}
+            {...props}
         >
             {children}
         </C.RightIcon>
     )
 }
 
-TextInputRightIcon.displayName = 'TextInput.RightIcon';
 
-
-interface TextInputErrorMessageProps {
+interface InputErrorMessageProps {
     children: ReactNode;
     errorText: boolean;
 }
 
-function TextInputErrorMessage({ children, errorText }: TextInputErrorMessageProps) {
+function InputErrorMessage({ children, errorText }: InputErrorMessageProps) {
     return (
         <C.ErrorMessage
             errorText={errorText}
@@ -85,12 +90,11 @@ function TextInputErrorMessage({ children, errorText }: TextInputErrorMessagePro
     )
 }
 
-TextInputErrorMessage.displayName = 'TextInput.ErrorMessage';
-
-export const TextInput = {
-    Root: TextInputRoot,
-    Input: TextInputInput,
-    LeftIcon: TextInputLeftIcon,
-    RightIcon: TextInputRightIcon,
-    ErrorMessage: TextInputErrorMessage
+export const Input = {
+    Root: InputRoot,
+    Input: InputInput,
+    Login: InputLogin,
+    LeftIcon: InputLeftIcon,
+    RightIcon: InputRightIcon,
+    ErrorMessage: InputErrorMessage
 }

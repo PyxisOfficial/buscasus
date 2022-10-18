@@ -6,7 +6,6 @@ export const LoginErrorText = styled.p<{
     font-size: 13px;
     text-align: center;
     color: ${(props) => props.errorText ? '#e94a4f' : '#fbfbfd'};
-    margin-top: 11px;
-    margin-bottom: 5px;
+    padding: 12px 0;
     transition: .5s;
 `

@@ -5,11 +5,7 @@ import './styles.css';
 export function VisaoGeralHospital() {
     return (
         <div>
-            <MenuBackground
-                menuLinks={
-                    <MenuLinksHospital />
-                }
-            >
+            <MenuBackground menuLinks={<MenuLinksHospital />}>
 
             </MenuBackground>
         </div>

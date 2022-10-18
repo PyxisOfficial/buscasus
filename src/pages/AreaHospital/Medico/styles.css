@@ -69,9 +69,11 @@
     white-space: nowrap;
 }
 
-.submit-btn-med {
-    margin-top: 10px;
+.btn-container {
+    display: flex;
     float: right;
+    gap: 8px;
+    margin-top: 12px;
 }
 
 .btn-submit {

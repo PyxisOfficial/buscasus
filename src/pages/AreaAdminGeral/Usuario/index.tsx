@@ -1,20 +1,20 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
+import { Button } from '../../../components/Button';
+
+import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+
 import './styles.css';
 
 export function Usuario() {
     return (
         <div>
-            <MenuBackground
-                menuLinks={
-                    <MenuLinksAdmin />
-                }
-            >
+            <MenuBackground menuLinks={<MenuLinksAdmin />}>
                 <div className="container-geral">
                     <div className="container-column-admin">
                         <div className="container-cad-admin">
                             <h3 className="titulo-medico">Cadastrar novo administrador de um hospital</h3>
-                            <form id="formAdminHospital" method="post" action="#">
+                            <form id="formAdminHospital">
                                 <input type="hidden" name="idAdminHospital" />
                                 <div>
                                     <label htmlFor="loginAdminHospital">Nome de usuário:</label>
@@ -23,12 +23,10 @@ export function Usuario() {
                                 <div className="input-icone">
                                     <label htmlFor="senhaAdminHospital">Senha:</label>
                                     <input type="password" name="senhaAdminHospital" id="senhaAdminHospital" className="input-admin" />
-                                    <span className="material-symbols-outlined eye-admin-senha select-disable">visibility</span>
                                 </div>
                                 <div className="input-icone">
                                     <label htmlFor="confirmarSenha">Confirmar senha:</label>
                                     <input type="password" id="confirmarSenha" className="input-admin" />
-                                    <span className="material-symbols-outlined eye-admin-confirmar select-disable">visibility</span>
                                 </div>
                                 <input type="hidden" name="tipoAdmin" value="1" />
                                 <div>
@@ -37,9 +35,9 @@ export function Usuario() {
                                         <option value="0">Selecionar</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <input id="btnReset" className="btnReset" type="reset" value="Cancelar" />
-                                    <input id="btnSubmit" className="btn-submit" type="button" value="Salvar" />
+                                <div className="btn-container">
+                                    <Button.Cancel value="Cancelar" />
+                                    <Button.Submit value="Salvar" />
                                 </div>
                             </form>
                         </div>
@@ -50,7 +48,7 @@ export function Usuario() {
                                 <div className="container-inputs">
                                     <div className="container-search select-disable">
                                         <input id="inputSearchAdmin" type="search" className="input-search" placeholder="Buscar" />
-                                        <label htmlFor="inputSearchAdmin"><span className="material-symbols-outlined icone-search">search</span></label>
+                                        <label htmlFor="inputSearchAdmin"></label>
                                     </div>
                                     <input type="button" className="btn-submit" value="Download" />
                                 </div>
@@ -71,7 +69,7 @@ export function Usuario() {
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button className="btn-delete select-disable"><span className="material-symbols-outlined icones-apagar-editar">delete</span></button>
+                                            <button className="btn-delete select-disable"></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -84,7 +82,7 @@ export function Usuario() {
                             <div className="container-inputs">
                                 <div className="container-search select-disable">
                                     <input id="inputSearchUsuario" type="search" className="input-search" placeholder="Buscar" />
-                                    <label htmlFor="inputSearchUsuario"><span className="material-symbols-outlined icone-search">search</span></label>
+                                    <label htmlFor="inputSearchUsuario"></label>
                                 </div>
                             </div>
                         </div>

@@ -1,16 +1,16 @@
 import { DutyCalendar } from '../../../components/Calendar';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { Button } from '../../../components/Button';
+
+import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+
 import './styles.css';
 
 export function Plantao() {
     return (
         <div>
-            <MenuBackground
-                menuLinks={
-                    <MenuLinksHospital />
-                }
-            >
+            <MenuBackground menuLinks={<MenuLinksHospital />}>
                 <div className="general-container">
                     <div className="container-cad-plant">
                         <h3 className="titulo-medico">Cadastrar uma novo plantão</h3>
@@ -56,7 +56,7 @@ export function Plantao() {
                             <div className="container-inputs">
                                 <div className="container-search select-disable">
                                     <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
-                                    <label htmlFor="inputSearch"><span className="material-symbols-outlined icone-search">search</span></label>
+                                    <label htmlFor="inputSearch"></label>
                                 </div>
                                 <input type="button" className="btn-submit" value="Download" />
                             </div>
@@ -79,8 +79,8 @@ export function Plantao() {
                                     <td></td>
                                     <td>
                                         <div className="container-btn-esp select-disable">
-                                            <button className="btn-delete"><span className="material-symbols-outlined icones-apagar-editar">delete</span></button>
-                                            <button className="btn-edit"><span className="material-symbols-outlined icones-apagar-editar">edit</span></button>
+                                            <button className="btn-delete"></button>
+                                            <button className="btn-edit"></button>
                                         </div>
                                     </td>
                                 </tr>
