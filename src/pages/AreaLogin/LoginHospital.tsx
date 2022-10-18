@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import UseAuth from '../../hooks/useAuth';
 
-import { UserNameInput } from '../../components/LoginForm/Inputs/UserName';
-import { PasswordInput } from '../../components/LoginForm/Inputs/Password';
-import { LoginError } from '../../components/LoginForm/LoginError';
+import { TextInput } from '../../components/Input';
+import { LoginError } from '../../components/LoginError';
 
 import * as C from './styles';
 
@@ -17,6 +16,8 @@ export function LoginHospital() {
     const [isUserNameWithError, setIsUserNameWithError] = useState<boolean>(false);
     const [isPasswordWithError, setIsPasswordWithError] = useState<boolean>(false);
     const [isLoginWithError, setIsLoginWithError] = useState<boolean>(false);
+
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -72,20 +73,60 @@ export function LoginHospital() {
 
                 <C.FormContainer>
                     <C.UserType>
-                        <Link to="/" className="hospital-link active">Hospital</Link>
-                        <Link to="/login-admin" className="adm-link">Administrador</Link>
+                        <Link to="/" className="hospital-link">Hospital</Link>
+                        <Link to="/login-admin" className="adm-link active">Administrador</Link>
                     </C.UserType>
                     <C.Form onSubmit={handleLogin}>
 
-                        <UserNameInput
-                            onChange={(e: any) => [setUserName(e.target.value), setIsUserNameWithError(false)]}
-                            errorText={isUserNameWithError}
-                        />
+                        <TextInput.Root>
+                            <TextInput.Input
+                                type="text"
+                                placeholder="Usuário"
+                                id="userName"
+                                errorText={isUserNameWithError}
+                                onChange={(e: any) => [setUserName(e.target.value), setIsUserNameWithError(false)]}
+                            />
 
-                        <PasswordInput
-                            onChange={(e: any) => [setPassword(e.target.value), setIsPasswordWithError(false)]}
-                            errorText={isPasswordWithError}
-                        />
+                            <TextInput.LeftIcon
+                                htmlFor="userName"
+                            >
+                                person
+                            </TextInput.LeftIcon>
+
+                            <TextInput.ErrorMessage
+                                errorText={isUserNameWithError}
+                            >
+                                Por favor, insira um nome de usuário.
+                            </TextInput.ErrorMessage>
+                        </TextInput.Root>
+
+                        <TextInput.Root>
+                            <TextInput.Input
+                                type={isPasswordVisible ? "text" : "password"}
+                                placeholder="Senha"
+                                id="userPassword"
+                                errorText={isPasswordWithError}
+                                onChange={(e: any) => [setPassword(e.target.value), setIsPasswordWithError(false)]}
+                            />
+
+                            <TextInput.LeftIcon
+                                htmlFor="userPassword"
+                            >
+                                lock
+                            </TextInput.LeftIcon>
+
+                            <TextInput.RightIcon
+                                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                            >
+                                {isPasswordVisible ? "visibility_off" : "visibility"}
+                            </TextInput.RightIcon>
+
+                            <TextInput.ErrorMessage
+                                errorText={isPasswordWithError}
+                            >
+                                Por favor, insira uma senha.
+                            </TextInput.ErrorMessage>
+                        </TextInput.Root>
 
                         <C.ForgotPasswordContainer>
                             <C.ForgotPasswordText href="#">Esqueceu a senha?</C.ForgotPasswordText>

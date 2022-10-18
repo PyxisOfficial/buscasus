@@ -1,29 +1,7 @@
 import styled from "styled-components";
 
-export const InputIconContainer = styled.div`
+export const InputContainer = styled.div`
     position: relative;
-`
-
-export const PersonIcon = styled.span`
-    color: #757575;
-    position: absolute;
-    left: 0;
-    cursor: pointer;
-`
-
-export const LockIcon = styled.span`
-    color: #757575;
-    position: absolute;
-    left: 0;
-    cursor: pointer;
-`
-
-export const EyeIcon = styled.span`
-    color: #757575;
-    left: 290px;
-    top: 2px;
-    position: absolute;
-    cursor: pointer;
 `
 
 export const Input = styled.input<{
@@ -45,7 +23,23 @@ export const Input = styled.input<{
 }
 `
 
-export const ErrorText = styled.p<{
+export const LeftIcon = styled.label`
+    display: inline-block;
+    color: #757575;
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+`
+
+export const RightIcon = styled.span`
+    color: #757575;
+    left: 290px;
+    top: 2px;
+    position: absolute;
+    cursor: pointer;
+`
+
+export const ErrorMessage = styled.p<{
     errorText: boolean;
 }>`
     font-size: 13px;
