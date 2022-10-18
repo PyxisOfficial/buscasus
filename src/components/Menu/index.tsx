@@ -8,7 +8,12 @@ interface MenuBackgroundProps {
 }
 
 export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
-    const { signOut, hospitalName }: any = UseAuth();
+    const { signOut }: any = UseAuth();
+
+    const usersStorage: any = localStorage.getItem("users_db");
+    const user = JSON.parse(usersStorage);
+    const hospitalName = user[3];
+
     const navigate = useNavigate();
 
     return (

@@ -13,13 +13,13 @@ import { Usuario } from './pages/AreaAdminGeral/Usuario';
 import UseAuth from './hooks/useAuth';
 
 function PrivateHospital({ Item }: any) {
-    const { signedHospital }: any = UseAuth();
-    return signedHospital ? <Item /> : <LoginHospital />;
+    const { hospitalUser }: any = UseAuth();
+    return hospitalUser ? <Item /> : <LoginHospital />;
 }
 
 function PrivateAdmin({ Item }: any) {
-    const { signedAdmin }: any = UseAuth();
-    return signedAdmin ? <Item /> : <LoginAdmin />;
+    const { adminUser }: any = UseAuth();
+    return adminUser ? <Item /> : <LoginAdmin />;
 }
 
 export default function AppRoutes() {

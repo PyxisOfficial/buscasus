@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, useEffect } from "react";
 
 export const AuthContext = createContext({});
 
@@ -7,9 +7,21 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [hospitalUser, setHospitalUser] = useState<any>();
-    const [adminUser, setAdminUser] = useState<any>();
-    const [hospitalName, setHospitalName] = useState<any>();
+    const [hospitalUser, setHospitalUser] = useState<boolean>();
+    const [adminUser, setAdminUser] = useState<boolean>();
+
+    useEffect(() => {
+        const HospitalToken = localStorage.getItem("hospital_token");
+        const AdminToken = localStorage.getItem("admin_token");
+
+        if (HospitalToken) {
+            setHospitalUser(true);
+        }
+
+        if (AdminToken) {
+            setAdminUser(true);
+        }
+    }, []);
 
     function signIn(userName: string, password: string, isGeneralAdminActivated: boolean) {
         const usersStorage: any = localStorage.getItem("users_db");
@@ -17,17 +29,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         if (user[0] === userName && user[1] === password && user[2] === isGeneralAdminActivated && !isGeneralAdminActivated) {
             const token = Math.random().toString(36).substring(2);
-
-            localStorage.setItem("user_token", JSON.stringify({ token }));
-            setHospitalUser({ userName, password });
-            setHospitalName(user[3]);
+            localStorage.setItem("hospital_token", JSON.stringify({ token }));
+            setHospitalUser(true);
             return;
 
         } else if (user[0] === userName && user[1] === password && user[2] === isGeneralAdminActivated && isGeneralAdminActivated) {
             const token = Math.random().toString(36).substring(2);
-
-            localStorage.setItem("user_token", JSON.stringify({ token }));
-            setAdminUser({ userName, password });
+            localStorage.setItem("admin_token", JSON.stringify({ token }));
+            setAdminUser(true);
             return;
 
         } else {
@@ -36,15 +45,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     function signOut() {
-        setHospitalUser(null);
-        setAdminUser(null);
-        setHospitalName(null)
-        localStorage.removeItem("user_token");
+        setHospitalUser(false);
+        setAdminUser(false);
+        localStorage.removeItem("hospital_token");
+        localStorage.removeItem("admin_token");
     }
 
     return (
         <AuthContext.Provider
-            value={{ hospitalUser, adminUser, hospitalName, signedHospital: !!hospitalUser, signedAdmin: !!adminUser, signIn, signOut }}>
+            value={{ hospitalUser, adminUser, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )
