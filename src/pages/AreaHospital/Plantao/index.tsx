@@ -58,7 +58,7 @@ export function Plantao() {
                                     <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
                                     <label htmlFor="inputSearch"></label>
                                 </div>
-                                <input type="button" className="btn-submit" value="Download" />
+                                <Button.Green value="Download" type="button" />
                             </div>
                         </div>
                         <table>
@@ -79,8 +79,12 @@ export function Plantao() {
                                     <td></td>
                                     <td>
                                         <div className="container-btn-esp select-disable">
-                                            <button className="btn-delete"></button>
-                                            <button className="btn-edit"></button>
+                                            <Button.Delete>
+                                                <Trash size={24} />
+                                            </Button.Delete>
+                                            <Button.Edit>
+                                                <Pencil size={24} />
+                                            </Button.Edit>
                                         </div>
                                     </td>
                                 </tr>

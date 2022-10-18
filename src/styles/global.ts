@@ -37,6 +37,10 @@ tbody::-webkit-scrollbar-thumb {
     border: 3px solid #fff;
 }
 
+a:-webkit-any-link {
+  text-decoration: none;
+}
+
 .versao-incompativel,
 .text-versao-imcompativel {
     display: none;

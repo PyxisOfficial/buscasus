@@ -1,5 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
+
 import UseAuth from '../../hooks/useAuth';
+
+import { Button } from '../../components/Button';
+
 import './styles.css';
 
 interface MenuBackgroundProps {
@@ -27,7 +31,13 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                 <div className="item-1 select-disable">
                     <img src="../../logo.png" alt="Logo BuscaSUS" className="img-logo-admin" />
                     <h3>{hospitalName ? hospitalName : "Administrador Geral"}</h3>
-                    <Link to="/"><button onClick={() => [signOut(), navigate("/")]} id="btnLogout" className="btn-logout">Sair</button></Link>
+                    <Link to="/">
+                        <Button.Logout 
+                        value="Sair"
+                        type="button"
+                        onClick={() => [signOut(), navigate("/")]} 
+                        />
+                    </Link>
                 </div>
 
                 <div className="item-2 select-disable">

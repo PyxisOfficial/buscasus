@@ -74,8 +74,8 @@ export function Hospital() {
                                 </div>
 
                                 <div className="btn-container">
-                                    <Button.Cancel value="Cancelar" />
-                                    <Button.Submit value="Salvar" />
+                                    <Button.Gray value="Cancelar" type="reset" />
+                                    <Button.Green value="Salvar" type="submit" />
                                 </div>
                             </form>
                         </div>
@@ -88,7 +88,7 @@ export function Hospital() {
                                     <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
                                     <label htmlFor="inputSearch"></label>
                                 </div>
-                                <input type="button" className="btn-submit" value="Download" />
+                                <Button.Green value="Download" type="button" />
                             </div>
                         </div>
                         <table>
@@ -104,9 +104,12 @@ export function Hospital() {
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <button className="btn-info btn-hospital-list select-disable"></button>
-                                        <button className="btn-delete btn-hospital-list select-disable"></button>
-                                        <button className="btn-edit btn-hospital-list select-disable"></button>
+                                        <Button.Delete>
+                                            <Trash size={24} />
+                                        </Button.Delete>
+                                        <Button.Edit>
+                                            <Pencil size={24} />
+                                        </Button.Edit>
                                     </td>
                                 </tr>
                             </tbody>

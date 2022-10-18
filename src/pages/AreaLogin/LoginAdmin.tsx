@@ -134,9 +134,7 @@ export function LoginAdmin() {
                             <C.ForgotPasswordText href="#">Esqueceu a senha?</C.ForgotPasswordText>
                         </C.ForgotPasswordContainer>
 
-                        <Button.Login
-                            value='Login'
-                        />
+                        <Button.Login value="Login" type="submit" />
                     </C.Form>
 
                     <LoginError error={isLoginWithError} />

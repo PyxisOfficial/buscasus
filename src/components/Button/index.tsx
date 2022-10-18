@@ -1,42 +1,73 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 import * as C from './styles';
 
-interface ButtonProps extends InputHTMLAttributes<HTMLInputElement> {
+interface ButtonProps extends InputHTMLAttributes<HTMLElement> {
     value: string;
+    type: string;
 }
 
-export function SubmitButton({ value, ...props }: ButtonProps) {
+function GreenButton({ value, type }: ButtonProps) {
     return (
         <C.Button
             value={value}
-            type="submit"
-            {...props}
+            type={type}
         />
     )
 }
 
-export function CancelButton({ value, ...props }: ButtonProps) {
+function GrayButton({ value, type }: ButtonProps) {
     return (
-        <C.CancelButton
+        <C.GrayButton
             value={value}
-            type="reset"
-            {...props}
+            type={type}
         />
     )
 }
 
-export function LoginButton({ value, ...props }: ButtonProps) {
+function LoginButton({ value, type }: ButtonProps) {
     return (
         <C.LoginButton
             value={value}
-            type="submit"
+            type={type}
+        />
+    )
+}
+
+function LogoutButton({ value, type, ...props }: ButtonProps) {
+    return (
+        <C.LogoutButton
+            value={value}
+            type={type}
             {...props}
         />
+    )
+}
+
+interface IconButtonProps {
+    children: ReactNode;
+}
+
+function DeleteButton({ children }: IconButtonProps) {
+    return (
+        <C.IconButton>
+            {children}
+        </C.IconButton>
+    )
+}
+
+function EditButton({ children }: IconButtonProps) {
+    return (
+        <C.EditButton>
+            {children}
+        </C.EditButton>
     )
 }
 
 export const Button = {
-    Submit: SubmitButton,
-    Cancel: CancelButton,
-    Login: LoginButton
+    Green: GreenButton,
+    Gray: GrayButton,
+    Login: LoginButton,
+    Logout: LogoutButton,
+    Delete: DeleteButton,
+    Edit: EditButton
 }

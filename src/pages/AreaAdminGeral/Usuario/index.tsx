@@ -36,8 +36,8 @@ export function Usuario() {
                                     </select>
                                 </div>
                                 <div className="btn-container">
-                                    <Button.Cancel value="Cancelar" />
-                                    <Button.Submit value="Salvar" />
+                                    <Button.Gray value="Cancelar" type="reset" />
+                                    <Button.Green value="Salvar" type="submit" />
                                 </div>
                             </form>
                         </div>
@@ -50,7 +50,7 @@ export function Usuario() {
                                         <input id="inputSearchAdmin" type="search" className="input-search" placeholder="Buscar" />
                                         <label htmlFor="inputSearchAdmin"></label>
                                     </div>
-                                    <input type="button" className="btn-submit" value="Download" />
+                                    <Button.Green value="Download" type="button" />
                                 </div>
                             </div>
 
@@ -69,7 +69,12 @@ export function Usuario() {
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button className="btn-delete select-disable"></button>
+                                            <Button.Delete>
+                                                <Trash size={24} />
+                                            </Button.Delete>
+                                            <Button.Edit>
+                                                <Pencil size={24} />
+                                            </Button.Edit>
                                         </td>
                                     </tr>
                                 </tbody>
