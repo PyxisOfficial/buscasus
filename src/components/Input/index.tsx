@@ -2,6 +2,12 @@ import { HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode } f
 
 import * as C from './styles';
 
+export const sizes = {
+    sm: '200px',
+    md: '500px',
+    lg: '100%'
+}
+
 interface InputRootProps {
     children: ReactNode;
 }
@@ -17,11 +23,13 @@ function InputRoot({ children }: InputRootProps) {
 
 interface InputInputProps extends InputHTMLAttributes<HTMLInputElement> {
     errorText: boolean;
+    inputSize: string;
 }
 
-function InputInput({ errorText, ...props }: InputInputProps) {
+function InputInput({ errorText, inputSize, ...props }: InputInputProps) {
     return (
         <C.Input
+            size={inputSize}
             {...props}
         />
     )

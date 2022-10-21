@@ -4,15 +4,23 @@ export const InputContainer = styled.div`
     position: relative;
 `
 
-export const Input = styled.input`
-    margin: 11px 0 12px 0;
-    padding: 2px 2px 2px 6px;
-    border: 1px solid #e6e6e6;
-    border-radius: 5px;
+export const Input = styled.input<{
+    size: any;
+}>`
+    width: ${(props) => props.size || '100%'};
+    display: block;
+    padding: 4px 4px 4px 8px;
+    border: 1px solid #b3a9a9;
+    border-radius: 8px;
+    transition: border .3s, background-color .3s;
 
     &:focus {
         outline: 0;
-        border: 1px solid #000;
+        border: 1px solid #287365;
+    }
+
+    ::placeholder {
+        color: #b3a9a9;
     }
 `
 

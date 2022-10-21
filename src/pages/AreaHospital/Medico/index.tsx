@@ -1,5 +1,6 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { Input, sizes } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 
 import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
@@ -17,15 +18,30 @@ export function Medico() {
                         <div className="container-inputs-med">
                             <div className="input-med">
                                 <label htmlFor="nomeMedico">Nome:</label>
-                                <input type="text" id="nomeMedico" className="input-hospital" name="nomeMedico" />
+                                <Input.Input
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    type="text"
+                                    id="nomeMedico"
+                                />
                             </div>
                             <div className="input-med">
                                 <label htmlFor="cpfMedico">CPF:</label>
-                                <input type="text" id="cpfMedico" className="input-hospital" name="cpfMedico" />
+                                <Input.Input
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    type="text"
+                                    id="cpfMedico"
+                                />
                             </div>
                             <div className="input-med">
                                 <label htmlFor="crmMedico">CRM:</label>
-                                <input type="text" id="crmMedico" className="input-hospital" name="crmMedico" />
+                                <Input.Input
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    type="text"
+                                    id="crmMedico"
+                                />
                             </div>
                             <div className="input-med">
                                 <label htmlFor="idEspecialidade">Especialidade:</label>
@@ -34,10 +50,23 @@ export function Medico() {
                                 </select>
                             </div>
                             <div id="containerFotoMed" className="container-foto">
-                                <input id="inputCaminhoImg" type="text" disabled />
+                                <Input.Input
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    id="inputCaminhoImg"
+                                    type="text"
+                                    disabled
+                                />
+
                                 <label className="btnFoto select-disable" htmlFor="fotoMedico">Escolher foto</label>
                             </div>
-                            <input hidden type="file" accept=".jpg, .png" id="fotoMedico" placeholder="Foto do Médico" name="fotoMedico" />
+                            <input
+                                hidden 
+                                type="file"
+                                accept=".jpg, .png"
+                                id="fotoMedico"
+                                placeholder="Foto do Médico"
+                            />
                             <input type="hidden" name="idHospital" />
                         </div>
                         <div className="btn-container">
@@ -51,7 +80,12 @@ export function Medico() {
                         <h3>Médicos cadastrados</h3>
                         <div className="container-inputs">
                             <div className="container-search select-disable">
-                                <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
+                                <Input.Input
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    id="inputSea
+                                rch" type="search" className="input-search" placeholder="Bu
+                                scar" />
                                 <label htmlFor="inputSearch"></label>
                             </div>
                             <Button.Green value="Download" type="button" />
