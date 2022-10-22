@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 49%;
+    width: 26%;
     background-color: #fff;
     border-radius: 10px;
     padding: 10px;
@@ -48,7 +48,7 @@ export const ButtonContainer = styled.div`
 
 export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
-    width: 49%;
+    width: 70%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;

@@ -104,10 +104,10 @@ export function Usuario() {
                                     />
                                     <Input.LeftIcon
                                         htmlFor="adminSearch"
-                                        topPosition={2}
-                                        leftPosition={3}
+                                        topPosition={4}
+                                        leftPosition={5}
                                     >
-                                        <MagnifyingGlass size={20} />
+                                        <MagnifyingGlass size={16} />
                                     </Input.LeftIcon>
                                 </Input.Root>
                                 <Button.Green value="Download" type="button" />
@@ -158,10 +158,10 @@ export function Usuario() {
                                 />
                                 <Input.LeftIcon
                                     htmlFor="userSearch"
-                                    topPosition={2}
-                                    leftPosition={3}
+                                    topPosition={4}
+                                    leftPosition={5}
                                 >
-                                    <MagnifyingGlass size={20} />
+                                    <MagnifyingGlass size={16} />
                                 </Input.LeftIcon>
                             </Input.Root>
                             <Button.Green value="Download" type="button" />

@@ -122,7 +122,7 @@ export function LoginHospital() {
                             </Input.LeftIcon>
 
                             <Input.RightIcon
-                                topPosition={0}
+                                topPosition={1}
                                 rightPosition={4}
                                 onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                             >

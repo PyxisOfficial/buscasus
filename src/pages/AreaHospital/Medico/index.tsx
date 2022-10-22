@@ -82,10 +82,10 @@ export function Medico() {
                             />
                             <Input.LeftIcon
                                 htmlFor="search"
-                                topPosition={2}
-                                leftPosition={3}
+                                topPosition={4}
+                                leftPosition={5}
                             >
-                                <MagnifyingGlass size={20} />
+                                <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
                         <Button.Green value="Download" type="button" />
