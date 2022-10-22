@@ -2,6 +2,7 @@ import { DutyCalendar } from '../../../components/Calendar';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Input, sizes } from '../../../components/Input';
+import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
 import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
@@ -16,17 +17,17 @@ export function Plantao() {
                     <h3>Cadastrar um novo plantão</h3>
                     <C.Form autoComplete="off">
                         <input hidden id="idPlantao" name="idPlantao" />
-                            <C.Label htmlFor="TipoPlantao">
-                                Tipo do plantão
-                                <Input.Input
-                                    isWithIcon={false}
-                                    errorText={false}
-                                    inputSize={sizes.lg}
-                                    type="text"
-                                    id="tipoPlantao"
-                                    name="tipoPlantao"
-                                />
-                            </C.Label>
+                        <C.Label htmlFor="TipoPlantao">
+                            Tipo do plantão
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.lg}
+                                type="text"
+                                id="tipoPlantao"
+                                name="tipoPlantao"
+                            />
+                        </C.Label>
                         <C.InputContainer>
                             <C.Label htmlFor="inicioPlantao">
                                 Início
@@ -51,12 +52,19 @@ export function Plantao() {
                                 />
                             </C.Label>
                         </C.InputContainer>
-                            <C.Label htmlFor="idMedico">
-                                Médico
-                                <select name="idMedico" id="idMedico">
-                                    <option value="0">Selecionar</option>
-                                </select>
-                            </C.Label>
+                        <C.Label htmlFor="idMedico">
+                            Médico
+                            <Select.Root
+                                errorText={false}
+                                selectSize={sizes.lg}
+                            >
+                                <Select.Item
+                                    key={1}
+                                    value="1"
+                                    title="Dorivaldo Benegripe"
+                                />
+                            </Select.Root>
+                        </C.Label>
                         <input type="hidden" name="idHospital" />
 
                         <DutyCalendar />

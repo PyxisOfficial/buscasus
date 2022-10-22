@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Input, sizes } from '../../../components/Input';
+import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
 import { MagnifyingGlass, Trash, Pencil, EyeSlash, Eye } from 'phosphor-react';
@@ -78,9 +79,16 @@ export function Usuario() {
                             <input type="hidden" name="tipoAdmin" value="1" />
                             <C.InputContainer>
                                 <label htmlFor="idHospital">Hospital:</label>
-                                <select id="idHospital" className="input-admin" name="idHospital">
-                                    <option value="0">Selecionar</option>
-                                </select>
+                                <Select.Root
+                                    errorText={false}
+                                    selectSize={sizes.lg}
+                                >
+                                    <Select.Item
+                                        key={1}
+                                        value="1"
+                                        title="Hospital Geral de Guaianazes"
+                                    />
+                                </Select.Root>
                             </C.InputContainer>
                             <C.ButtonContainer>
                                 <Button.Gray value="Cancelar" type="reset" />

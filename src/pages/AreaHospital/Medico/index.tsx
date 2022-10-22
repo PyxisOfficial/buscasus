@@ -1,9 +1,10 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Input, sizes } from '../../../components/Input';
+import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
-import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+import { MagnifyingGlass, Trash, Pencil, CaretDown, Check } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -53,9 +54,23 @@ export function Medico() {
 
                         <C.Label htmlFor="idEspecialidade">
                             Especialidade
-                            <select id="idEspecialidade" className="input-hospital" name="idEspecialidade">
-                                <option value="0">Selecionar</option>
-                            </select>
+
+                            <Select.Root
+                                errorText={false}
+                                selectSize={sizes.xs}
+                            >
+                                <Select.Item
+                                    key={1}
+                                    value="1"
+                                    title="Pediatra"
+                                />
+                                <Select.Item
+                                    key={2}
+                                    value="2"
+                                    title="Ortopedista"
+                                />
+                            </Select.Root>
+
                         </C.Label>
 
                         <C.Label>
