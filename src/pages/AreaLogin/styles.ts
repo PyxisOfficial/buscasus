@@ -26,6 +26,7 @@ export const LogoImg = styled.img`
     width: 120px;
     height: 120px;
     position: relative;
+    user-select: none;
 `
 
 export const SloganTitle = styled.h4`

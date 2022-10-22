@@ -1,116 +1,191 @@
+import { useState } from 'react';
+
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
+import { Input, sizes } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 
-import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+import { MagnifyingGlass, Trash, Pencil, EyeSlash, Eye } from 'phosphor-react';
 
-import './styles.css';
+import * as C from './styles';
 
 export function Usuario() {
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
+
     return (
-        <div>
-            <MenuBackground menuLinks={<MenuLinksAdmin />}>
-                <div className="container-geral">
-                    <div className="container-column-admin">
-                        <div className="container-cad-admin">
-                            <h3 className="titulo-medico">Cadastrar novo administrador de um hospital</h3>
-                            <form id="formAdminHospital">
-                                <input type="hidden" name="idAdminHospital" />
-                                <div>
-                                    <label htmlFor="loginAdminHospital">Nome de usuário:</label>
-                                    <input type="text" name="loginAdminHospital" id="loginAdminHospital" className="input-admin" />
-                                </div>
-                                <div className="input-icone">
-                                    <label htmlFor="senhaAdminHospital">Senha:</label>
-                                    <input type="password" name="senhaAdminHospital" id="senhaAdminHospital" className="input-admin" />
-                                </div>
-                                <div className="input-icone">
-                                    <label htmlFor="confirmarSenha">Confirmar senha:</label>
-                                    <input type="password" id="confirmarSenha" className="input-admin" />
-                                </div>
-                                <input type="hidden" name="tipoAdmin" value="1" />
-                                <div>
-                                    <label htmlFor="idHospital">Hospital:</label>
-                                    <select id="idHospital" className="input-admin" name="idHospital">
-                                        <option value="0">Selecionar</option>
-                                    </select>
-                                </div>
-                                <div className="btn-container">
-                                    <Button.Gray value="Cancelar" type="reset" />
-                                    <Button.Green value="Salvar" type="submit" />
-                                </div>
-                            </form>
-                        </div>
+        <MenuBackground menuLinks={<MenuLinksAdmin />}>
+            <C.Container>
+                <C.AdminColumn>
+                    <C.FormContainer>
+                        <C.Title>Cadastrar novo administrador de um hospital</C.Title>
+                        <form autoComplete="off">
+                            <input hidden name="idAdminHospital" />
+                            <C.InputContainer>
+                                <label htmlFor="loginAdminHospital">Nome de usuário:</label>
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    type="text"
+                                    name="loginAdminHospital"
+                                    id="loginAdminHospital"
+                                />
+                            </C.InputContainer>
+                            <C.InputContainer>
+                                <label htmlFor="senhaAdminHospital">Senha:</label>
+                                <Input.Root>
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.sm}
+                                        type={isPasswordVisible ? "text" : "password"}
+                                        name="senhaAdminHospital"
+                                        id="senhaAdminHospital"
+                                    />
 
-                        <div className="container-admin-hosp">
-                            <h3>Administradores de hospitais cadastrados</h3>
-                            <div className="container-search-download">
-                                <div className="container-inputs">
-                                    <div className="container-search select-disable">
-                                        <input id="inputSearchAdmin" type="search" className="input-search" placeholder="Buscar" />
-                                        <label htmlFor="inputSearchAdmin"></label>
-                                    </div>
-                                    <Button.Green value="Download" type="button" />
-                                </div>
-                            </div>
+                                    <Input.RightIcon
+                                        topPosition={1}
+                                        rightPosition={4}
+                                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                    >
+                                        {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                    </Input.RightIcon>
 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Nome de usuário</th>
-                                        <th>Senha</th>
-                                        <th>Id do Hospital</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
+                                </Input.Root>
+                            </C.InputContainer>
+                            <C.InputContainer>
+                                <label htmlFor="confirmarSenha">Confirmar senha:</label>
+                                <Input.Root>
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.sm}
+                                        type={isConfirmPasswordVisible ? "text" : "password"}
+                                        id="confirmarSenha"
+                                    />
+
+                                    <Input.RightIcon
+                                        topPosition={1}
+                                        rightPosition={4}
+                                        onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                                    >
+                                        {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                    </Input.RightIcon>
+
+                                </Input.Root>
+                            </C.InputContainer>
+                            <input type="hidden" name="tipoAdmin" value="1" />
+                            <C.InputContainer>
+                                <label htmlFor="idHospital">Hospital:</label>
+                                <select id="idHospital" className="input-admin" name="idHospital">
+                                    <option value="0">Selecionar</option>
+                                </select>
+                            </C.InputContainer>
+                            <C.ButtonContainer>
+                                <Button.Gray value="Cancelar" type="reset" />
+                                <Button.Green value="Salvar" type="submit" />
+                            </C.ButtonContainer>
+                        </form>
+                    </C.FormContainer>
+
+                    <C.TableContainer>
+                        <C.TableContainerHeader>
+                            <h3>Administradores cadastrados</h3>
+                            <C.InputsContainer>
+                                <Input.Root>
+                                    <Input.Input
+                                        isWithIcon
+                                        errorText={false}
+                                        inputSize={sizes.sm}
+                                        id="adminSearch"
+                                        type="search"
+                                        placeholder="Buscar"
+                                    />
+                                    <Input.LeftIcon
+                                        htmlFor="adminSearch"
+                                        topPosition={2}
+                                        leftPosition={3}
+                                    >
+                                        <MagnifyingGlass size={20} />
+                                    </Input.LeftIcon>
+                                </Input.Root>
+                                <Button.Green value="Download" type="button" />
+                            </C.InputsContainer>
+                        </C.TableContainerHeader>
+
+                        <C.Table>
+                            <C.Thead>
+                                <C.Tr>
+                                    <C.Th>Nome de usuário</C.Th>
+                                    <C.Th>Senha</C.Th>
+                                    <C.Th>Id do Hospital</C.Th>
+                                    <C.Th></C.Th>
+                                </C.Tr>
+                            </C.Thead>
+                            <C.Tbody>
+                                <C.Tr>
+                                    <td>Nome</td>
+                                    <td>*******</td>
+                                    <td>Id Hospital</td>
+                                    <td>
+                                        <C.ButtonContainer>
                                             <Button.Delete>
                                                 <Trash size={24} />
                                             </Button.Delete>
                                             <Button.Edit>
                                                 <Pencil size={24} />
                                             </Button.Edit>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div className="container-usuario">
-                        <div className="container-titulo">
-                            <h3>Usuários cadastrados</h3>
-                            <div className="container-inputs">
-                                <div className="container-search select-disable">
-                                    <input id="inputSearchUsuario" type="search" className="input-search" placeholder="Buscar" />
-                                    <label htmlFor="inputSearchUsuario"></label>
-                                </div>
-                            </div>
-                        </div>
+                                        </C.ButtonContainer>
+                                    </td>
+                                </C.Tr>
+                            </C.Tbody>
+                        </C.Table>
+                    </C.TableContainer>
+                </C.AdminColumn>
+                <C.UserColumn>
+                    <C.TableContainerHeader>
+                        <h3>Usuários cadastrados</h3>
+                        <C.InputsContainer>
+                            <Input.Root>
+                                <Input.Input
+                                    isWithIcon
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    id="userSearch"
+                                    type="search"
+                                    placeholder="Buscar"
+                                />
+                                <Input.LeftIcon
+                                    htmlFor="userSearch"
+                                    topPosition={2}
+                                    leftPosition={3}
+                                >
+                                    <MagnifyingGlass size={20} />
+                                </Input.LeftIcon>
+                            </Input.Root>
+                            <Button.Green value="Download" type="button" />
+                        </C.InputsContainer>
+                    </C.TableContainerHeader>
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nome</th>
-                                    <th>CPF</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </MenuBackground>
-        </div>
+                    <C.Table>
+                        <C.Thead>
+                            <C.Tr>
+                                <C.Th>Id</C.Th>
+                                <C.Th>Nome</C.Th>
+                                <C.Th>CPF</C.Th>
+                            </C.Tr>
+                        </C.Thead>
+                        <C.Tbody>
+                            <C.Tr>
+                                <td>Id</td>
+                                <td>Nome</td>
+                                <td>Cpf</td>
+                            </C.Tr>
+                        </C.Tbody>
+                    </C.Table>
+                </C.UserColumn>
+            </C.Container>
+        </MenuBackground>
     )
 }

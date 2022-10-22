@@ -71,6 +71,51 @@ a:-webkit-any-link {
     border-bottom-left-radius: 20px;
 }
 
+.sidebar-item {
+    padding: 12px;
+    margin-bottom: 25px;
+    cursor: pointer;
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar-item.active {
+    font-weight: bold;
+    padding: 12px;
+    margin: 0 0 25px 10px;
+    background-color: #ededed;
+    color: #000;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    position: relative;
+}
+
+.sidebar-item.active::before {
+    content: "";
+    background-color: #3eb08f;
+    width: 30px;
+    height: 30px;
+    float: right;
+    border-radius: 50%;
+    box-shadow: 15px 15px 0 #ededed;
+    position: absolute;
+    top: -30px;
+    right: 0;
+}
+
+.sidebar-item.active::after {
+    content: "";
+    background-color: #3eb08f;
+    width: 30px;
+    height: 30px;
+    float: right;
+    border-radius: 50%;
+    box-shadow: 15px -15px 0 #ededed;
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+}
+
 @media (max-width: 999px) {
     .login-container {
         display: none;

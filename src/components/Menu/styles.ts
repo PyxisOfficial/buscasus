@@ -1,16 +1,18 @@
-.container {
+import styled from "styled-components";
+
+export const Container = styled.div`
     background-color: #3eb08f;
     height: 100vh;
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-areas:
-        "header header header"
-        "sidebar content content"
-        "sidebar content content";
-}
+        "nav nav nav"
+        "sidebar main main"
+        "sidebar main main";
+`
 
-.item-1 {
-    grid-area: header;
+export const Nav = styled.div`
+    grid-area: nav;
     display: grid;
     grid-template-columns: 1fr 6fr 1fr;
     grid-template-rows: 6vh;
@@ -18,9 +20,10 @@
     align-items: center;
     color: #fff;
     background-color: #3eb08f;
-}
+    user-select: none;
+`
 
-.item-2 {
+export const SideBar = styled.nav`
     grid-area: sidebar;
     color: #fff;
     background-color: #3eb08f;
@@ -29,10 +32,11 @@
     grid-template-columns: 12vw;
     padding-top: 40px;
     overflow: hidden;
-}
+    user-select: none;
+`
 
-.item-3 {
-    grid-area: content;
+export const Main = styled.main`
+    grid-area: main;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -43,64 +47,32 @@
     padding: 30px;
     border-top-left-radius: 24px;
     position: relative;
-}
+`
 
-.sidebar {
+export const Footer = styled.footer`
     display: flex;
     flex-direction: column;
-    list-style: none;
-    padding-top: 60px;
+    justify-content: flex-end;
+    align-items: center;
+`
+
+export const TextFooter = styled.h5`
     text-align: center;
-}
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 9px;
+`
 
-.link-img-logo {
-    z-index: 2;
-}
-
-.img-logo-admin {
+export const LogoImg = styled.img`
     margin-top: 64px;
     max-width: 78px;
     z-index: 2;
     border-radius: 50%;
     background-color: #fff;
-}
+`
 
-.btn-logout {
-    font-size: 14px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #fff;
-    background-color: #3eb08f;
-    border: 1px solid #fff;
-    border-radius: 50px;
-    padding: 5px;
-    padding-left: 22px;
-    padding-right: 22px;
-    cursor: pointer;
-    transition: .4s;
-}
-
-.btn-logout:hover {
-    background-color: #e94a4f;
-    border: 1px solid #fff;
-}
-
-.footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.text-footer {
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 9px;
-}
-
-.svg-admin {
+export const Svg = styled.svg`
     width: 30vw;
     position: relative;
     margin-bottom: -105px;
-}
+`

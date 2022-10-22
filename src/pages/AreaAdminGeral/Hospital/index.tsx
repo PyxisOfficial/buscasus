@@ -1,122 +1,227 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
+import { Input, sizes } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 
 import { MagnifyingGlass, Trash, Pencil, Info } from 'phosphor-react';
 
-import './styles.css';
+import * as C from './styles';
 
 export function Hospital() {
     return (
-        <div>
-            <MenuBackground menuLinks={<MenuLinksAdmin />}>
-                <div className="container-geral">
-                    <div className="container-cad-hospital">
-                        <h3>Cadastrar um novo hospital</h3>
-                        <div className="scroll-inputs">
-                            <form id="formHospital">
-                                <input type="hidden" name="idHospital" />
-                                <div>
-                                    <label htmlFor="nomeHospital">Nome do hospital:</label>
-                                    <input type="text" name="nomeHospital" id="nomeHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="emailHospital">Endereço de e-mail do hospital:</label>
-                                    <input type="text" name="emailHospital" id="emailHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <input type="hidden" name="idTelefoneHospital" />
-                                    <label htmlFor="telefoneHospital">Número de telefone do hospital:</label>
-                                    <input type="text" name="numTelefoneHospital" id="telefoneHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="aberturaHospital">Horário de abertura:</label>
-                                    <input type="time" name="aberturaHospital" id="aberturaHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="fechamentoHospital">Horário de fechamento:</label>
-                                    <input type="time" name="fechamentoHospital" id="fechamentoHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="cnpjHospital">CNPJ:</label>
-                                    <input type="text" name="cnpjHospital" id="cnpjHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="cepHospital">CEP:</label>
-                                    <input type="text" name="cepHospital" id="cepHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="ufHospital">UF:</label>
-                                    <input type="text" name="ufHospital" id="ufHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="logradouroHospital">Logradouro:</label>
-                                    <input type="text" name="logradouroHospital" id="logradouroHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="complementoHospital">Complemento:</label>
-                                    <input type="text" name="complementoHospital" id="complementoHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="cidadeHospital">Cidade:</label>
-                                    <input type="text" name="cidadeHospital" id="cidadeHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <label htmlFor="bairroHospital">Bairro:</label>
-                                    <input type="text" name="bairroHospital" id="bairroHospital" className="input-admin" />
-                                </div>
-                                <div>
-                                    <div id="containerFoto" className="container-foto">
-                                        <input id="inputCaminhoImg" type="text" disabled />
-                                        <label className="btnFoto select-disable" htmlFor="fotoHospital">Escolher foto</label>
-                                    </div>
-                                    <input hidden type="file" accept=".jpg, .png" name="fotoHospital" id="fotoHospital" />
-                                </div>
+        <MenuBackground menuLinks={<MenuLinksAdmin />}>
+            <C.Container>
+                <C.FormContainer>
+                    <C.Title>Cadastrar um novo hospital</C.Title>
+                    <form autoComplete="off">
+                        <input type="hidden" name="idHospital" />
+                        <C.InputContainer>
+                            <label htmlFor="nomeHospital">Nome do hospital:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="nomeHospital"
+                                id="nomeHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="emailHospital">Endereço de e-mail do hospital:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="emailHospital"
+                                id="emailHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <input hidden name="idTelefoneHospital" />
 
-                                <div className="btn-container">
-                                    <Button.Gray value="Cancelar" type="reset" />
-                                    <Button.Green value="Salvar" type="submit" />
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div className="container-hosp">
-                        <div className="container-titulo">
-                            <h3>Hospitais cadastrados</h3>
-                            <div className="container-inputs">
-                                <div className="container-search select-disable">
-                                    <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
-                                    <label htmlFor="inputSearch"></label>
-                                </div>
-                                <Button.Green value="Download" type="button" />
-                            </div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Nome do hospital</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
+                            <label htmlFor="telefoneHospital">Número de telefone do hospital:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="numTelefoneHospital"
+                                id="telefoneHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="aberturaHospital">Horário de abertura:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="time"
+                                name="aberturaHospital"
+                                id="aberturaHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="fechamentoHospital">Horário de fechamento:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="time"
+                                name="fechamentoHospital"
+                                id="fechamentoHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="cnpjHospital">CNPJ:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="cnpjHospital"
+                                id="cnpjHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="cepHospital">CEP:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="cepHospital"
+                                id="cepHospital"
+                            />
+
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="ufHospital">UF:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="ufHospital"
+                                id="ufHospital"
+                            />
+
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="logradouroHospital">Logradouro:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="logradouroHospital"
+                                id="logradouroHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="complementoHospital">Complemento:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="complementoHospital"
+                                id="complementoHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="cidadeHospital">Cidade:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="cidadeHospital"
+                                id="cidadeHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <label htmlFor="bairroHospital">Bairro:</label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                name="bairroHospital"
+                                id="bairroHospital"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="file"
+                                accept=".jpg, .png"
+                                name="fotoHospital"
+                                id="fotoHospital" />
+                        </C.InputContainer>
+
+                        <C.ButtonContainer>
+                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
+                <C.TableContainer>
+                    <C.TableContainerHeader>
+                        <h3>Hospitais cadastrados</h3>
+                        <C.InputsContainer>
+                            <Input.Root>
+                                <Input.Input
+                                    isWithIcon
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    id="search"
+                                    type="search"
+                                    placeholder="Buscar"
+                                />
+                                <Input.LeftIcon
+                                    htmlFor="search"
+                                    topPosition={2}
+                                    leftPosition={3}
+                                >
+                                    <MagnifyingGlass size={20} />
+                                </Input.LeftIcon>
+                            </Input.Root>
+                            <Button.Green value="Download" type="button" />
+                        </C.InputsContainer>
+                    </C.TableContainerHeader>
+                    <C.Table>
+                        <C.Thead>
+                            <C.Tr>
+                                <C.Th>Id</C.Th>
+                                <C.Th>Nome do hospital</C.Th>
+                                <C.Th></C.Th>
+                            </C.Tr>
+                        </C.Thead>
+                        <C.Tbody>
+                            <C.Tr>
+                                <td>1</td>
+                                <td>Hospital Geral de Guaianazes</td>
+                                <td>
+                                    <C.ButtonContainer>
+                                        <Button.Edit>
+                                            <Info size={24} />
+                                        </Button.Edit>
                                         <Button.Delete>
                                             <Trash size={24} />
                                         </Button.Delete>
                                         <Button.Edit>
                                             <Pencil size={24} />
                                         </Button.Edit>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </MenuBackground>
-        </div>
+                                    </C.ButtonContainer>
+                                </td>
+                            </C.Tr>
+                        </C.Tbody>
+                    </C.Table>
+                </C.TableContainer>
+            </C.Container>
+        </MenuBackground>
     )
 }

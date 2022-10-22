@@ -20,21 +20,22 @@ function InputRoot({ children }: InputRootProps) {
     )
 }
 
-
 interface InputInputProps extends InputHTMLAttributes<HTMLInputElement> {
     errorText: boolean;
     inputSize: string;
+    isWithIcon: boolean;
 }
 
-function InputInput({ errorText, inputSize, ...props }: InputInputProps) {
+function InputInput({ errorText, inputSize, isWithIcon, ...props }: InputInputProps) {
     return (
         <C.Input
             size={inputSize}
+            isWithIcon={isWithIcon}
+            errorText={errorText}
             {...props}
         />
     )
 }
-
 
 interface InputLoginProps extends InputHTMLAttributes<HTMLInputElement> {
     errorText: boolean;
@@ -49,39 +50,44 @@ function InputLogin({ errorText, ...props }: InputLoginProps) {
     )
 }
 
-
 interface InputLeftIconProps extends LabelHTMLAttributes<HTMLElement> {
     children: ReactNode;
     htmlFor: string;
+    topPosition: number;
+    leftPosition: number;
 }
 
-function InputLeftIcon({ children, htmlFor }: InputLeftIconProps) {
+function InputLeftIcon({ children, htmlFor, topPosition, leftPosition }: InputLeftIconProps) {
     return (
         <C.LeftIcon
             className="material-symbols-outlined"
             htmlFor={htmlFor}
+            topPosition={topPosition}
+            leftPosition={leftPosition}
         >
             {children}
         </C.LeftIcon>
     )
 }
 
-
 interface InputRightIconProps extends HTMLAttributes<HTMLElement> {
     children: ReactNode;
+    topPosition: number;
+    rightPosition: number;
 }
 
-function InputRightIcon({ children, ...props }: InputRightIconProps) {
+function InputRightIcon({ children, topPosition, rightPosition, ...props }: InputRightIconProps) {
     return (
         <C.RightIcon
             className="material-symbols-outlined"
+            topPosition={topPosition}
+            rightPosition={rightPosition}
             {...props}
         >
             {children}
         </C.RightIcon>
     )
 }
-
 
 interface InputErrorMessageProps {
     children: ReactNode;

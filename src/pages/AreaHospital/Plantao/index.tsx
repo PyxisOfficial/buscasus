@@ -1,98 +1,125 @@
 import { DutyCalendar } from '../../../components/Calendar';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { Input, sizes } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 
 import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
 
-import './styles.css';
+import * as C from './styles';
 
 export function Plantao() {
     return (
-        <div>
-            <MenuBackground menuLinks={<MenuLinksHospital />}>
-                <div className="general-container">
-                    <div className="container-cad-plant">
-                        <h3 className="titulo-medico">Cadastrar uma novo plantão</h3>
-                        <form id="formPlantao">
+        <MenuBackground menuLinks={<MenuLinksHospital />}>
+            <C.Container>
+                <C.FormContainer>
+                    <C.Title>Cadastrar um novo plantão</C.Title>
+                    <form autoComplete="off">
+                        <input hidden id="idPlantao" name="idPlantao" />
+                        <C.InputContainer>
+                            <C.Label htmlFor="TipoPlantao">Tipo do plantão:</C.Label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="text"
+                                id="tipoPlantao"
+                                name="tipoPlantao"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer className="inicio-plant">
+                            <C.Label htmlFor="inicioPlantao">Início:</C.Label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="time"
+                                id="inicioPlantao"
+                                name="inicioPlantao"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <C.Label htmlFor="fimPlantao">Fim:</C.Label>
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.sm}
+                                type="time"
+                                id="fimPlantao"
+                                name="fimPlantao"
+                            />
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <C.Label htmlFor="idMedico">Médico:</C.Label>
+                            <select name="idMedico" id="idMedico">
+                                <option value="0">Selecionar</option>
+                            </select>
+                        </C.InputContainer>
+                        <input type="hidden" name="idHospital" />
 
-                            <DutyCalendar />
+                        <DutyCalendar />
 
-                            {/* <input id="idPlantao" type="hidden" name="idPlantao" />
-                        <div className="container-inputs-plant">
-                            <div className="input-plant">
-                                <label htmlFor="TipoPlantao">Tipo do plantão:</label>
-                                <input type="text" id="tipoPlantao" className="input-hospital" name="tipoPlantao" />
-                            </div>
-                            <div className="input-plant">
-                                <div className="inicio-plant">
-                                    <label htmlFor="inicioPlantao">Início:</label>
-                                    <input id="inicioPlantao" type="datetime-local" className="input-hospital" name="inicioPlantao" />
-                                </div>
-
-                                <div className="fim-plant">
-                                    <label htmlFor="fimPlantao">Fim:</label>
-                                    <input id="fimPlantao" type="datetime-local" className="input-hospital" name="fimPlantao" />
-                                </div>
-                            </div>
-                            <div className="input-plant">
-                                <label htmlFor="idMedico">Médico:</label>
-                                <select name="idMedico" id="idMedico" className="input-hospital">
-                                    <option value="0">Selecionar</option>
-                                </select>
-                            </div>
-                            <input type="hidden" name="idHospital" />
-                        </div>
-                        <div className="submit-btn-plant">
-                            <input id="btnReset" className="btnReset" type="reset" value="Cancelar" />
-                            <input id="btnSubmit" className="btn-submit" type="button" value="Salvar" />
-                        </div> */}
-
-                        </form>
-                    </div>
-                    <div className="container-plant">
-                        <div className="container-titulo">
-                            <h3>Plantões cadastrados</h3>
-                            <div className="container-inputs">
-                                <div className="container-search select-disable">
-                                    <input id="inputSearch" type="search" className="input-search" placeholder="Buscar" />
-                                    <label htmlFor="inputSearch"></label>
-                                </div>
-                                <Button.Green value="Download" type="button" />
-                            </div>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Tipo do Plantão</th>
-                                    <th>Início</th>
-                                    <th>Fim</th>
-                                    <th>Médico</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <div className="container-btn-esp select-disable">
-                                            <Button.Delete>
-                                                <Trash size={24} />
-                                            </Button.Delete>
-                                            <Button.Edit>
-                                                <Pencil size={24} />
-                                            </Button.Edit>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </MenuBackground>
-        </div>
+                        <C.ButtonContainer>
+                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
+                <C.TableContainer>
+                    <C.TableContainerHeader>
+                        <h3>Plantões cadastrados</h3>
+                        <C.InputsContainer>
+                            <Input.Root>
+                                <Input.Input
+                                    isWithIcon
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    id="search"
+                                    type="search"
+                                    placeholder="Buscar"
+                                />
+                                <Input.LeftIcon
+                                    htmlFor="search"
+                                    topPosition={2}
+                                    leftPosition={3}
+                                >
+                                    <MagnifyingGlass size={20} />
+                                </Input.LeftIcon>
+                            </Input.Root>
+                            <Button.Green value="Download" type="button" />
+                        </C.InputsContainer>
+                    </C.TableContainerHeader>
+                    <C.Table>
+                        <C.Thead>
+                            <C.Tr>
+                                <C.Th>Tipo do Plantão</C.Th>
+                                <C.Th>Início</C.Th>
+                                <C.Th>Fim</C.Th>
+                                <C.Th>Médico</C.Th>
+                                <C.Th></C.Th>
+                            </C.Tr>
+                        </C.Thead>
+                        <C.Tbody>
+                            <C.Tr>
+                                <td>Tipo do plantão</td>
+                                <td>Início</td>
+                                <td>Fim</td>
+                                <td>Médico</td>
+                                <td>
+                                    <C.ButtonContainer>
+                                        <Button.Delete>
+                                            <Trash size={24} />
+                                        </Button.Delete>
+                                        <Button.Edit>
+                                            <Pencil size={24} />
+                                        </Button.Edit>
+                                    </C.ButtonContainer>
+                                </td>
+                            </C.Tr>
+                        </C.Tbody>
+                    </C.Table>
+                </C.TableContainer>
+            </C.Container>
+        </MenuBackground>
     )
 }

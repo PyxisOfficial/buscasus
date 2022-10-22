@@ -91,6 +91,8 @@ export function LoginAdmin() {
 
                             <Input.LeftIcon
                                 htmlFor="userName"
+                                topPosition={1}
+                                leftPosition={0}
                             >
                                 <User size={24} />
                             </Input.LeftIcon>
@@ -113,11 +115,15 @@ export function LoginAdmin() {
 
                             <Input.LeftIcon
                                 htmlFor="userPassword"
+                                topPosition={1}
+                                leftPosition={0}
                             >
                                 <Lock size={24} />
                             </Input.LeftIcon>
 
                             <Input.RightIcon
+                                topPosition={0}
+                                rightPosition={4}
                                 onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                             >
                                 {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}

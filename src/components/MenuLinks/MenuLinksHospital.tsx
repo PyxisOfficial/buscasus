@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom";
-import './styles.css'
+import * as C from './styles';
 
 export function MenuLinksHospital() {
     return (
-        <ul className="sidebar">
+        <C.SideBar>
             <NavLink to="/visao-geral-hospital" className="sidebar-item">Visão Geral</NavLink>
             <NavLink to="/medicos" className="sidebar-item">Médicos</NavLink>
             <NavLink to="/especialidades" className="sidebar-item">Especialidades</NavLink>
             <NavLink to="/plantoes" className="sidebar-item">Plantões</NavLink>
-        </ul>
+        </C.SideBar>
     )
 }

@@ -5,12 +5,13 @@ export const InputContainer = styled.div`
 `
 
 export const Input = styled.input<{
+    errorText: boolean;
     size: any;
+    isWithIcon: boolean;
 }>`
     width: ${(props) => props.size || '100%'};
-    display: block;
-    padding: 4px 4px 4px 8px;
-    border: 1px solid #b3a9a9;
+    padding: ${(props) => props.isWithIcon ? '4px 4px 4px 24px' : '4px 4px 4px 8px'};
+    border: ${(props) => props.errorText ? '1px solid #e94a4f' : '1px solid #b3a9a9'};
     border-radius: 8px;
     transition: border .3s, background-color .3s;
 
@@ -43,18 +44,25 @@ export const LoginInput = styled.input<{
 }
 `
 
-export const LeftIcon = styled.label`
+export const LeftIcon = styled.label<{
+    topPosition: number;
+    leftPosition: number;
+}>`
     display: inline-block;
     color: #757575;
     position: absolute;
-    left: 0;
+    top: ${(props) => `${props.topPosition}px`};
+    left: ${(props) => `${props.leftPosition}px`};
     cursor: pointer;
 `
 
-export const RightIcon = styled.span`
+export const RightIcon = styled.span<{
+    topPosition: number;
+    rightPosition: number;
+}>`
     color: #757575;
-    left: 290px;
-    top: 2px;
+    top: ${(props) => `${props.topPosition}px`};
+    right: ${(props) => `${props.rightPosition}px`};
     position: absolute;
     cursor: pointer;
 `
