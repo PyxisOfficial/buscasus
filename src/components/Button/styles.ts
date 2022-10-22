@@ -69,10 +69,10 @@ export const IconButton = styled.button`
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 5px 14px 5px 14px;
+    padding: 6px 8px 6px 8px;
     border: 1px solid #e94a4f;
     background-color: #e94a4f;
-    border-radius: 14px;
+    border-radius: 12px;
     color: #fff;
     transition: all .4s;
     cursor: pointer;
@@ -84,7 +84,6 @@ export const IconButton = styled.button`
 `
 
 export const EditButton = styled(IconButton)`
-    padding: 5px 14px 5px 14px;
     border: 1px solid #3eb08f;
     background-color: #3eb08f;
 

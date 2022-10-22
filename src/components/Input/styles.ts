@@ -10,7 +10,7 @@ export const Input = styled.input<{
     isWithIcon: boolean;
 }>`
     width: ${(props) => props.size || '100%'};
-    padding: ${(props) => props.isWithIcon ? '4px 4px 4px 24px' : '4px 4px 4px 8px'};
+    padding: ${(props) => props.isWithIcon ? '4px 4px 4px 24px' : '4px 8px 4px 8px'};
     border: ${(props) => props.errorText ? '1px solid #e94a4f' : '1px solid #b3a9a9'};
     border-radius: 8px;
     transition: border .3s, background-color .3s;

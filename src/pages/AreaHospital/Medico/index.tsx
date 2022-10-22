@@ -11,53 +11,61 @@ export function Medico() {
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.FormContainer>
-                <C.Title>Cadastrar um novo médico</C.Title>
+                <h3>Cadastrar um novo médico</h3>
                 <form autoComplete="off">
                     <input hidden name="idMedico" />
                     <C.InputsContainer>
-                        <C.InputContainer>
-                            <label htmlFor="nomeMedico">Nome:</label>
+                        <C.Label htmlFor="nomeMedico">
+                            Nome
                             <Input.Input
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.sm}
                                 type="text"
                                 id="nomeMedico"
+                                placeholder='Mário de Andrade'
                             />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="cpfMedico">CPF:</label>
+                        </C.Label>
+
+                        <C.Label htmlFor="cpfMedico">
+                            CPF
                             <Input.Input
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.sm}
                                 type="text"
                                 id="cpfMedico"
+                                placeholder='123.456.789-00'
                             />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="crmMedico">CRM:</label>
+                        </C.Label>
+
+                        <C.Label htmlFor="crmMedico">
+                            CRM
                             <Input.Input
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.sm}
                                 type="text"
                                 id="crmMedico"
+                                placeholder='SP/123456'
                             />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="idEspecialidade">Especialidade:</label>
+                        </C.Label>
+
+                        <C.Label htmlFor="idEspecialidade">
+                            Especialidade
                             <select id="idEspecialidade" className="input-hospital" name="idEspecialidade">
                                 <option value="0">Selecionar</option>
                             </select>
-                        </C.InputContainer>
+                        </C.Label>
 
-                        <label>Foto do médico:</label>
-                        <input
-                            type="file"
-                            accept=".jpg, .png"
-                            id="fotoMedico"
-                        />
+                        <C.Label>
+                            Foto do médico
+                            <input
+                                type="file"
+                                accept=".jpg, .png"
+                                id="fotoMedico"
+                            />
+                        </C.Label>
 
                         <input type="hidden" name="idHospital" />
                     </C.InputsContainer>

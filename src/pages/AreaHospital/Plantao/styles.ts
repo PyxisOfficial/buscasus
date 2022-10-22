@@ -10,19 +10,27 @@ export const Container = styled.div`
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 26%;
+    justify-content: center;
+    width: 25%;
     background-color: #fff;
     border-radius: 10px;
-    padding: 10px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
     white-space: nowrap;
+    gap: 16px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
-export const Title = styled.h3`
-    margin-bottom: 16px;
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 `
 
 export const Label = styled.label`
-    margin-right: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 `
 
 export const InputsContainer = styled.div`
@@ -36,7 +44,8 @@ export const InputContainer = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    flex-direction: row;
 `
 
 export const ButtonContainer = styled.div`
@@ -47,11 +56,12 @@ export const ButtonContainer = styled.div`
 `
 
 export const TableContainer = styled.div`
-    padding: 10px 10px 58px 10px;
+    padding: 16px 20px 68px 20px;
     width: 70%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
 export const TableContainerHeader = styled.div`

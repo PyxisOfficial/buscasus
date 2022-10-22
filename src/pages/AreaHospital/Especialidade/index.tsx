@@ -11,18 +11,21 @@ export function Especialidade() {
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.FormContainer>
-                <C.Title>Cadastrar uma nova especialidade</C.Title>
+                <h3>Cadastrar uma nova especialidade</h3>
                 <form autoComplete="off">
                     <input hidden id="idEspecialidade" name="idEspecialidade" />
-                    <C.Label htmlFor="nomeEspecialidade">Nome da especialidade:</C.Label>
-                    <Input.Input
-                        isWithIcon={false}
-                        errorText={false}
-                        inputSize={sizes.sm}
-                        type="text"
-                        id="nomeEspecialidade"
-                        name="nomeEspecialidade"
-                    />
+                    <C.Label htmlFor="nomeEspecialidade">
+                        Especialidade
+                        <Input.Input
+                            isWithIcon={false}
+                            errorText={false}
+                            inputSize={sizes.md}
+                            type="text"
+                            id="nomeEspecialidade"
+                            name="nomeEspecialidade"
+                            placeholder='Pediatra'
+                        />
+                    </C.Label>
                     <input hidden name="idHospital" />
                     <C.ButtonContainer>
                         <Button.Gray value="Cancelar" type="reset" />
@@ -38,7 +41,7 @@ export function Especialidade() {
                             <Input.Input
                                 isWithIcon
                                 errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.md}
                                 id="search"
                                 type="search"
                                 placeholder="Buscar"

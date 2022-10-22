@@ -5,20 +5,20 @@ export const FormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 70%;
-    height: 14%;
+    height: 20%;
     background-color: #fff;
     border-radius: 10px;
-    margin-bottom: 25px;
-    padding: 10px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
     white-space: nowrap;
-`
-
-export const Title = styled.h3`
-    margin-bottom: 16px;
-`
+    gap: 16px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+`   
 
 export const Label = styled.label`
-    margin-right: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 `
 
 export const InputsContainer = styled.div`
@@ -29,16 +29,18 @@ export const InputsContainer = styled.div`
 
 export const ButtonContainer = styled.div`
     display: flex;
+    flex-direction: row;
     float: right;
     gap: 8px;
 `
 
 export const TableContainer = styled.div`
-    padding: 10px 10px 58px 10px;
+    padding: 16px 20px 68px 20px;
     width: 70%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
 export const TableContainerHeader = styled.div`
@@ -48,7 +50,7 @@ export const TableContainerHeader = styled.div`
 
 export const Table = styled.table`
     height: 100%;
-    margin-top: 20px;
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
     border-radius: 8px;

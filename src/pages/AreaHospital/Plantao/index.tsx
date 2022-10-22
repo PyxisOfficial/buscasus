@@ -13,48 +13,50 @@ export function Plantao() {
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.Container>
                 <C.FormContainer>
-                    <C.Title>Cadastrar um novo plantão</C.Title>
-                    <form autoComplete="off">
+                    <h3>Cadastrar um novo plantão</h3>
+                    <C.Form autoComplete="off">
                         <input hidden id="idPlantao" name="idPlantao" />
+                            <C.Label htmlFor="TipoPlantao">
+                                Tipo do plantão
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.lg}
+                                    type="text"
+                                    id="tipoPlantao"
+                                    name="tipoPlantao"
+                                />
+                            </C.Label>
                         <C.InputContainer>
-                            <C.Label htmlFor="TipoPlantao">Tipo do plantão:</C.Label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                id="tipoPlantao"
-                                name="tipoPlantao"
-                            />
+                            <C.Label htmlFor="inicioPlantao">
+                                Início
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.xs}
+                                    type="time"
+                                    id="inicioPlantao"
+                                    name="inicioPlantao"
+                                />
+                            </C.Label>
+                            <C.Label htmlFor="fimPlantao">
+                                Fim
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.xs}
+                                    type="time"
+                                    id="fimPlantao"
+                                    name="fimPlantao"
+                                />
+                            </C.Label>
                         </C.InputContainer>
-                        <C.InputContainer className="inicio-plant">
-                            <C.Label htmlFor="inicioPlantao">Início:</C.Label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="time"
-                                id="inicioPlantao"
-                                name="inicioPlantao"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <C.Label htmlFor="fimPlantao">Fim:</C.Label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="time"
-                                id="fimPlantao"
-                                name="fimPlantao"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <C.Label htmlFor="idMedico">Médico:</C.Label>
-                            <select name="idMedico" id="idMedico">
-                                <option value="0">Selecionar</option>
-                            </select>
-                        </C.InputContainer>
+                            <C.Label htmlFor="idMedico">
+                                Médico
+                                <select name="idMedico" id="idMedico">
+                                    <option value="0">Selecionar</option>
+                                </select>
+                            </C.Label>
                         <input type="hidden" name="idHospital" />
 
                         <DutyCalendar />
@@ -63,7 +65,7 @@ export function Plantao() {
                             <Button.Gray value="Cancelar" type="reset" />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
-                    </form>
+                    </C.Form>
                 </C.FormContainer>
                 <C.TableContainer>
                     <C.TableContainerHeader>
