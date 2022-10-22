@@ -23,11 +23,6 @@ export function LoginHospital() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const newUser: any[] = ["hospital", "123", false, "Hospital Geral de Guaianazes"];
-        localStorage.setItem("users_db", JSON.stringify(newUser))
-    }, []);
-
     function handleLogin(event: FormEvent) {
         event.preventDefault();
 

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, ReactNode, useState, useEffect } from "react";
 
 export const AuthContext = createContext({});
@@ -7,10 +8,15 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+    const [users, setUsers] = useState<any>([]);
     const [hospitalUser, setHospitalUser] = useState<boolean>();
     const [adminUser, setAdminUser] = useState<boolean>();
 
     useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/login/login-json.php').then((response) => {
+            setUsers(response.data);
+        });
+
         const HospitalToken = localStorage.getItem("hospital_token");
         const AdminToken = localStorage.getItem("admin_token");
 
@@ -24,20 +30,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }, []);
 
     function signIn(userName: string, password: string, isGeneralAdminActivated: boolean) {
-        const usersStorage: any = localStorage.getItem("users_db");
-        const user = JSON.parse(usersStorage);
+        const user = users.filter((user: any) => {
+            return user.loginAdmin === userName && user.senhaAdmin === password && user.tipoAdmin == isGeneralAdminActivated
+        })
 
-        if (user[0] === userName && user[1] === password && user[2] === isGeneralAdminActivated && !isGeneralAdminActivated) {
-            const token = Math.random().toString(36).substring(2);
-            localStorage.setItem("hospital_token", JSON.stringify({ token }));
-            setHospitalUser(true);
-            return;
+        if (user.length) {
 
-        } else if (user[0] === userName && user[1] === password && user[2] === isGeneralAdminActivated && isGeneralAdminActivated) {
-            const token = Math.random().toString(36).substring(2);
-            localStorage.setItem("admin_token", JSON.stringify({ token }));
-            setAdminUser(true);
-            return;
+            if (userName == user[0].loginAdmin && password == user[0].senhaAdmin && isGeneralAdminActivated == user[0].tipoAdmin && !isGeneralAdminActivated) {
+                const token = Math.random().toString(36).substring(2);
+                localStorage.setItem("hospital_token", JSON.stringify({ token }));
+                setHospitalUser(true);
+                return;
+
+            } else if (userName == user[0].loginAdmin && password == user[0].senhaAdmin && isGeneralAdminActivated == user[0].tipoAdmin && isGeneralAdminActivated) {
+                const token = Math.random().toString(36).substring(2);
+                localStorage.setItem("admin_token", JSON.stringify({ token }));
+                setAdminUser(true);
+                return;
+
+            } else {
+                return true;
+            }
 
         } else {
             return true;

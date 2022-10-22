@@ -23,11 +23,6 @@ export function LoginAdmin() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const newUser: any[] = ["admin", "123", true];
-        localStorage.setItem("users_db", JSON.stringify(newUser))
-    }, []);
-
     function handleLogin(event: FormEvent) {
         event.preventDefault();
 
