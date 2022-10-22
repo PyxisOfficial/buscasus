@@ -3,9 +3,12 @@ import { useState } from "react";
 import { Calendar } from "react-multi-date-picker";
 import type { Value } from "react-multi-date-picker";
 
-export function DutyCalendar() {
-    const [dates, setDates] = useState<Value>();
+interface CalendarProps {
+    dates: any;
+    setDates: any;
+}
 
+export function DutyCalendar({dates, setDates}: CalendarProps) {
     const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     const weekDays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 

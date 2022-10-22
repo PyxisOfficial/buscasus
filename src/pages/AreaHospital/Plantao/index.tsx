@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { DutyCalendar } from '../../../components/Calendar';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
@@ -9,7 +11,11 @@ import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
 
 import * as C from './styles';
 
+import { Value } from 'react-multi-date-picker';
+
 export function Plantao() {
+    const [dates, setDates] = useState<Value>();
+
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.Container>
@@ -67,10 +73,13 @@ export function Plantao() {
                         </C.Label>
                         <input type="hidden" name="idHospital" />
 
-                        <DutyCalendar />
+                        <DutyCalendar
+                            dates={dates}
+                            setDates={setDates}
+                        />
 
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Gray value="Cancelar" type="reset" onClick={() => setDates([])} />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </C.Form>

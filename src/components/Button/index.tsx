@@ -15,11 +15,12 @@ function GreenButton({ value, type }: ButtonProps) {
     )
 }
 
-function GrayButton({ value, type }: ButtonProps) {
+function GrayButton({ value, type, ...props }: ButtonProps) {
     return (
         <C.GrayButton
             value={value}
             type={type}
+            {...props}
         />
     )
 }
