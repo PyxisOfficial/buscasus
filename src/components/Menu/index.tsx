@@ -13,11 +13,7 @@ interface MenuBackgroundProps {
 }
 
 export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
-    const { signOut }: any = UseAuth();
-
-    // const hospitalStorage: any = localStorage.getItem("hospital_name");
-    // const user = JSON.parse(hospitalStorage);
-    // const hospitalName = user[0];
+    const { signOut, hospitalId, hospitalName }: any = UseAuth();
 
     const navigate = useNavigate();
 
@@ -33,7 +29,7 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                         src="../../logo.png"
                         alt="Logo BuscaSUS"
                     />
-                    <h3></h3>
+                    <h3>{hospitalId === 0 ? 'Administrador Geral' : hospitalName}</h3>
                     <Link to="/">
                         <Button.Logout
                             value="Sair"
