@@ -40,15 +40,15 @@ function SelectRoot({ children, errorText, selectSize, onValueChange }: SelectRo
 }
 
 interface SelectItemProps {
-    key: number;
+    id: number;
     value: string;
     title: string;
 }
 
-function SelectItem({ key, value, title }: SelectItemProps) {
+function SelectItem({ id, value, title }: SelectItemProps) {
     return (
         <C.SelectItem
-            key={key}
+            key={id}
             value={value}
         >
             <SelectElement.ItemIndicator>

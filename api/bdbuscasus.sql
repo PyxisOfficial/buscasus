@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2022 at 10:55 PM
+-- Generation Time: Oct 24, 2022 at 10:31 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -40,25 +40,10 @@ CREATE TABLE `tbadmin` (
 --
 
 INSERT INTO `tbadmin` (`idAdmin`, `loginAdmin`, `senhaAdmin`, `tipoAdmin`, `idHospital`) VALUES
-(1, 'admin', '123', 2, 0),
-(2, 'hospital', '123', 1, 1),
-(3, 'hospital2', '123', 1, 2),
-(4, 'hospital3', '123', 1, 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbescala`
---
-
-CREATE TABLE `tbescala` (
-  `idEscala` int(11) NOT NULL,
-  `dataEscala` date NOT NULL,
-  `entradaEscala` date NOT NULL,
-  `saidaEscala` date NOT NULL,
-  `presenca` tinyint(1) NOT NULL,
-  `idPlantao` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(1, 'admin', '123', 1, 0),
+(2, 'hospital', '123', 0, 1),
+(3, 'hospital2', '123', 0, 2),
+(4, 'hospital3', '123', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -160,22 +145,13 @@ INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fot
 
 CREATE TABLE `tbplantao` (
   `idPlantao` int(11) NOT NULL,
-  `tipoPlantao` varchar(50) NOT NULL,
-  `inicioPlantao` datetime NOT NULL,
-  `fimPlantao` datetime NOT NULL,
+  `dataPlantao` date NOT NULL,
+  `inicioPlantao` time NOT NULL,
+  `fimPlantao` time NOT NULL,
+  `idEspecialidade` int(11) NOT NULL,
   `idMedico` int(11) NOT NULL,
   `idHospital` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbplantao`
---
-
-INSERT INTO `tbplantao` (`idPlantao`, `tipoPlantao`, `inicioPlantao`, `fimPlantao`, `idMedico`, `idHospital`) VALUES
-(1, 'COVID', '2022-08-01 20:33:00', '2022-08-04 20:33:00', 4, 1),
-(2, 'Ginecologia', '2022-08-15 07:00:00', '2022-08-15 18:30:00', 3, 1),
-(3, 'Pediatria ', '2022-08-25 20:00:00', '2022-08-21 08:30:00', 8, 1),
-(4, 'Oncologia', '2022-08-30 00:00:00', '2022-09-01 10:00:00', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -239,13 +215,6 @@ ALTER TABLE `tbadmin`
   ADD KEY `fk_idHospital` (`idHospital`);
 
 --
--- Indexes for table `tbescala`
---
-ALTER TABLE `tbescala`
-  ADD PRIMARY KEY (`idEscala`),
-  ADD KEY `fk_idPlantao` (`idPlantao`) USING BTREE;
-
---
 -- Indexes for table `tbespecialidade`
 --
 ALTER TABLE `tbespecialidade`
@@ -272,7 +241,8 @@ ALTER TABLE `tbmedico`
 ALTER TABLE `tbplantao`
   ADD PRIMARY KEY (`idPlantao`),
   ADD KEY `fk_idMedico` (`idMedico`) USING BTREE,
-  ADD KEY `fk_idHospital` (`idHospital`);
+  ADD KEY `fk_idHospital` (`idHospital`),
+  ADD KEY `fk_idEspecialidade` (`idEspecialidade`);
 
 --
 -- Indexes for table `tbreclamacao`
@@ -304,12 +274,6 @@ ALTER TABLE `tbusuario`
 --
 ALTER TABLE `tbadmin`
   MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `tbescala`
---
-ALTER TABLE `tbescala`
-  MODIFY `idEscala` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbespecialidade`

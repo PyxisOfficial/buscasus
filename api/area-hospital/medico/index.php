@@ -50,13 +50,14 @@ switch($method) {
     case "PUT":
         $medico = json_decode( file_get_contents('php://input') );
         $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, cpfMedico =:cpfMedico, fotoMedico =:fotoMedico, idEspecialidade =:idEspecialidade, idHospital =:idHospital WHERE idMedico = :idMedico";
+        $path = explode('/', $_SERVER['REQUEST_URI']);
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idMedico', $medico->idMedico);
         $stmt->bindParam(':nomeMedico', $medico->nomeMedico);
         $stmt->bindParam(':cpfMedico', $medico->cpfMedico);
         $stmt->bindParam(':crmMedico', $medico->crmMedico);
         $stmt->bindParam(':idEspecialidade', $medico->idEspecialidade);
         $stmt->bindParam(':idHospital', $medico->idHospital);
+        $stmt->bindParam(':idMedico', $path[4]);
 
         if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Médico alterado com sucesso.'];
@@ -68,11 +69,10 @@ switch($method) {
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM tbMedico WHERE idMedico = :idMedico";
+        $sql = "DELETE FROM tbMedico WHERE idMedico = :id";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idMedico', $path[3]);
+        $stmt->bindParam(':id', $path[5]);
 
         if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Médico exluído com sucesso.'];

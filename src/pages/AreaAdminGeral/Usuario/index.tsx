@@ -80,11 +80,12 @@ export function Usuario() {
                             <C.InputContainer>
                                 <label htmlFor="idHospital">Hospital:</label>
                                 <Select.Root
+                                    onValueChange={null}
                                     errorText={false}
                                     selectSize={sizes.lg}
                                 >
                                     <Select.Item
-                                        key={1}
+                                        id={1}
                                         value="1"
                                         title="Hospital Geral de Guaianazes"
                                     />

@@ -61,11 +61,12 @@ export function Plantao() {
                         <C.Label htmlFor="idMedico">
                             Médico
                             <Select.Root
+                                onValueChange={null}
                                 errorText={false}
                                 selectSize={sizes.lg}
                             >
                                 <Select.Item
-                                    key={1}
+                                    id={1}
                                     value="1"
                                     title="Dorivaldo Benegripe"
                                 />

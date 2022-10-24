@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { MenuBackground } from '../../../components/Menu';
@@ -7,15 +7,35 @@ import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
-import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+
+import { MagnifyingGlass, Trash, Pencil, X } from 'phosphor-react';
 
 import * as C from './styles';
 
 export function Medico() {
+    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>();
+
     const [selectItem, setSelectItem] = useState<string>();
+    const [medics, setMedics] = useState([]);
+    const [medicId, setMedicId] = useState<number>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
+
+    useEffect(() => {
+        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
+            setMedics(response.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
+            setMedics(response.data);
+        });
+        setIsFormSubmitted(false);
+    }, [isFormSubmitted]);
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
@@ -23,18 +43,38 @@ export function Medico() {
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
 
-        try {
-            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
-                nomeMedico: data.nomeMedico,
-                cpfMedico: data.cpfMedico,
-                crmMedico: data.crmMedico,
-                fotoMedico: data.fotoMedico.name,
-                idEspecialidade: selectItem,
-                idHospital: hospitalId
-            })
-        } catch (err) {
-            console.log(err);
-        }
+        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            nomeMedico: data.nomeMedico,
+            cpfMedico: data.cpfMedico,
+            crmMedico: data.crmMedico,
+            fotoMedico: data.fotoMedico.name,
+            idEspecialidade: selectItem,
+            idHospital: hospitalId
+        });
+
+        setIsFormSubmitted(true);
+    }
+
+    async function editMedic(event: FormEvent) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target as HTMLFormElement);
+        const data: any = Object.fromEntries(formData);
+
+        await axios.put(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`, {
+            nomeMedico: data.nomeMedico,
+            cpfMedico: data.cpfMedico,
+            crmMedico: data.crmMedico,
+            fotoMedico: data.fotoMedico.name,
+            idEspecialidade: selectItem
+        });
+
+        setIsFormSubmitted(true);
+    }
+
+    async function deleteMedic() {
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`)
+        setIsFormSubmitted(true);
     }
 
     return (
@@ -92,14 +132,9 @@ export function Medico() {
                                 selectSize={sizes.xs}
                             >
                                 <Select.Item
-                                    key={1}
+                                    id={1}
                                     value="1"
                                     title="Pediatra"
-                                />
-                                <Select.Item
-                                    key={2}
-                                    value="2"
-                                    title="Ortopedista"
                                 />
                             </Select.Root>
 
@@ -157,23 +192,68 @@ export function Medico() {
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
-                        <C.Tr>
-                            <td><C.Img src="" /></td>
-                            <td>Nome do médico</td>
-                            <td>CPF</td>
-                            <td>CRM</td>
-                            <td>Especialidade</td>
-                            <td>
-                                <C.ButtonContainer>
-                                    <Button.Delete>
-                                        <Trash size={24} />
-                                    </Button.Delete>
-                                    <Button.Edit>
-                                        <Pencil size={24} />
-                                    </Button.Edit>
-                                </C.ButtonContainer>
-                            </td>
-                        </C.Tr>
+
+                        {medics.map((medic: any, key) =>
+                            <C.Tr key={key}>
+                                <td><C.Img src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} /></td>
+                                <td>{medic.nomeMedico}</td>
+                                <td>{medic.cpfMedico}</td>
+                                <td>{medic.crmMedico}</td>
+                                <td>{medic.especialidadeMedico}</td>
+                                <td>
+                                    <C.ButtonContainer>
+
+                                        <AlertDialog.Root>
+                                            <AlertDialog.Trigger
+                                                onClick={() => setMedicId(medic.idMedico)}
+                                            >
+                                                <Button.Delete>
+                                                    <Trash size={24} />
+                                                </Button.Delete>
+                                            </AlertDialog.Trigger>
+                                            <AlertDialog.Portal>
+                                                <AlertDialog.Overlay />
+                                                <AlertDialog.Content>
+                                                    <AlertDialog.Title />
+                                                    <AlertDialog.Description />
+                                                    <AlertDialog.Cancel asChild>
+                                                        <X
+                                                            size={16}
+                                                            onClick={() => setMedicId(0)}
+                                                        />
+                                                    </AlertDialog.Cancel>
+                                                    <AlertDialog.Action />
+                                                </AlertDialog.Content>
+                                            </AlertDialog.Portal>
+                                        </AlertDialog.Root>
+
+                                        <Dialog.Root>
+                                            <Dialog.Trigger
+                                                onClick={() => setMedicId(medic.idMedico)}
+                                            >
+                                                <Button.Edit>
+                                                    <Pencil size={24} />
+                                                </Button.Edit>
+                                            </Dialog.Trigger>
+                                            <Dialog.Portal>
+                                                <Dialog.Overlay />
+                                                <Dialog.Content>
+                                                    <Dialog.Title />
+                                                    <Dialog.Description />
+                                                    <Dialog.Close asChild>
+                                                        <X
+                                                            size={16}
+                                                            onClick={() => setMedicId(0)}
+                                                        />
+                                                    </Dialog.Close>
+                                                </Dialog.Content>
+                                            </Dialog.Portal>
+                                        </Dialog.Root>
+
+                                    </C.ButtonContainer>
+                                </td>
+                            </C.Tr>
+                        )}
                     </C.Tbody>
                 </C.Table>
             </C.TableContainer>
