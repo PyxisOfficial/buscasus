@@ -13,12 +13,12 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbMedico";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if(isset($path[3]) && is_numeric($path[3])) {
-            $sql .= " WHERE idHospital = :idHospital";
+        if(isset($path[4]) && is_numeric($path[4])) {
+            $sql .= " WHERE idHospital = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':idHospital', $path[3]);
+            $stmt->bindParam(':id', $path[4]);
             $stmt->execute();
-            $medico = $stmt->fetch(PDO::FETCH_ASSOC);
+            $medico = $stmt->fetchALL(PDO::FETCH_ASSOC);
         } else {
             echo("console.log('Deu erro ai o bobão')");
         }
