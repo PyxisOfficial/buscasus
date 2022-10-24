@@ -1,10 +1,9 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-include '../Connection.php';
+include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
@@ -13,18 +12,21 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbHospital";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if(isset($path[4]) && is_numeric($path[4])) {
+        if (isset($path[4]) && is_numeric($path[4])) {
             $sql .= " WHERE idHospital = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $path[4]);
             $stmt->execute();
-            $medico = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            echo("console.log('Deu erro ai o bobão')");
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         echo json_encode($hospital);
         break;
+
     case "POST":
         $hospital = json_decode( file_get_contents('php://input') );
         $sql = "INSERT INTO tbHospital(idHospital, nomeHospital, emailHospital, idTelefone, numTelefone, aberturaHospital, fechamentoHospital, cnpjHospital, ufHospital, logradouroHospital, complementoHospital, cepHospital, cidadeHospital, bairroHospital, fotoHospital) VALUES(null, :nomeHospital, :emailHospital, :idTelefone, :numTelefone, :aberturaHospital, :fechamentoHospital, :cnpjHospital, :ufHospital, :logradouroHospital, :complementoHospital, :cepHospital, :cidadeHospital, :bairroHospital, :fotoHospital)";
@@ -44,11 +46,12 @@ switch($method) {
         $stmt->bindParam(':bairroHospital', $hospital->bairroHospital);
         $stmt->bindParam(':fotoHospital', $hospital->fotoHospital);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Hospital cadastrado com sucesso'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha em cadastrar o Hospital'];
         }
+
         echo json_encode($response);
         break;
 
@@ -70,11 +73,12 @@ switch($method) {
         $stmt->bindParam(':bairroHospital', $hospital->bairroHospital);
         $stmt->bindParam(':fotoHospital', $hospital->fotoHospital);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Hospital alterado com sucesso.'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha em alterar o hospital.'];
         }
+
         echo json_encode($response);
         break;
 
@@ -85,11 +89,12 @@ switch($method) {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $path[4]);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Hospital exluído com sucesso.'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha na exclusão do hospital.'];
         }
+        
         echo json_encode($response);
         break;
 }

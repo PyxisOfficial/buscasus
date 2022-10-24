@@ -1,5 +1,6 @@
-import { ReactComponentElement, ReactNode } from 'react';
+import { ReactComponentElement, ReactNode, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import UseAuth from '../../hooks/useAuth';
 
@@ -13,7 +14,18 @@ interface MenuBackgroundProps {
 }
 
 export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
-    const { signOut, hospitalId, hospitalName }: any = UseAuth();
+    const { signOut }: any = UseAuth();
+
+    const getHospitalId: any = localStorage.getItem("hospital_id");
+    const hospitalId = JSON.parse(getHospitalId);
+
+    const [hospitalName, setHospitalName] = useState<string>();
+
+    useEffect(() => {
+        axios.get(`http://localhost/buscaSusWeb/api/login/${hospitalId}`).then((response) => {
+            setHospitalName(response.data.nomeHospital);
+        });
+    }, [])
 
     const navigate = useNavigate();
 
@@ -29,7 +41,7 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                         src="../../logo.png"
                         alt="Logo BuscaSUS"
                     />
-                    <h3>{hospitalId === 0 ? 'Administrador Geral' : hospitalName}</h3>
+                    <h3>{hospitalId == 0 ? 'Administrador Geral' : hospitalName}</h3>
                     <Link to="/">
                         <Button.Logout
                             value="Sair"

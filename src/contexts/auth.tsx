@@ -11,14 +11,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [users, setUsers] = useState<any>([]);
     const [hospitalUser, setHospitalUser] = useState<boolean>();
     const [adminUser, setAdminUser] = useState<boolean>();
-    const [hospitalId, setHospitalId] = useState<number>();
-    const [hospitalName, setHospitalName] = useState<string>();
-
-    useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/login/${hospitalId}`).then((response) => {
-            setHospitalName(response.data.nomeHospital);
-        });
-    }, [signIn])
 
     useEffect(() => {
         axios.get('http://localhost/buscaSusWeb/api/login/').then((response) => {
@@ -47,14 +39,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
             if (userName == user[0].loginAdmin && password == user[0].senhaAdmin && isGeneralAdminActivated == user[0].tipoAdmin && !isGeneralAdminActivated) {
                 const token = Math.random().toString(36).substring(2);
                 localStorage.setItem("hospital_token", JSON.stringify({ token }));
-                setHospitalId(user[0].idHospital);
+                localStorage.setItem("hospital_id", JSON.stringify(user[0].idHospital));
                 setHospitalUser(true);
                 return;
 
             } else if (userName == user[0].loginAdmin && password == user[0].senhaAdmin && isGeneralAdminActivated == user[0].tipoAdmin && isGeneralAdminActivated) {
                 const token = Math.random().toString(36).substring(2);
                 localStorage.setItem("admin_token", JSON.stringify({ token }));
-                setHospitalId(0);
+                localStorage.setItem("hospital_id", JSON.stringify(user[0].idHospital));
                 setAdminUser(true);
                 return;
 
@@ -72,11 +64,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setAdminUser(false);
         localStorage.removeItem("hospital_token");
         localStorage.removeItem("admin_token");
+        localStorage.removeItem("hospital_id");
     }
 
     return (
         <AuthContext.Provider
-            value={{ hospitalUser, adminUser, hospitalName, hospitalId, signIn, signOut }}>
+            value={{ hospitalUser, adminUser, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     )

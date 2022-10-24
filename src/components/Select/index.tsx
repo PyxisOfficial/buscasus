@@ -9,11 +9,14 @@ interface SelectRootProps {
     children: ReactNode;
     errorText: boolean;
     selectSize: string;
+    onValueChange: any;
 }
 
-function SelectRoot({ children, errorText, selectSize }: SelectRootProps) {
+function SelectRoot({ children, errorText, selectSize, onValueChange }: SelectRootProps) {
     return (
-        <SelectElement.Root>
+        <SelectElement.Root
+            onValueChange={onValueChange}
+        >
             <C.SelectTrigger
                 size={selectSize}
                 errorText={errorText}

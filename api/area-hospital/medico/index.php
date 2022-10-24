@@ -1,10 +1,9 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-include '../Connection.php';
+include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
@@ -13,18 +12,21 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbMedico";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if(isset($path[4]) && is_numeric($path[4])) {
+        if (isset($path[4]) && is_numeric($path[4])) {
             $sql .= " WHERE idHospital = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $path[4]);
             $stmt->execute();
-            $medico = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            echo("console.log('Deu erro ai o bobão')");
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         echo json_encode($medico);
         break;
+
     case "POST":
         $medico = json_decode( file_get_contents('php://input') );
         $sql = "INSERT INTO tbMedico(idMedico, nomeMedico, cpfMedico, crmMedico, fotoMedico, idEspecialidade, idHospital) VALUES(null, :nomeMedico, :cpfMedico, :crmMedico, :fotoMedico, :idEspecialidade, :idHospital)";
@@ -36,11 +38,12 @@ switch($method) {
         $stmt->bindParam(':idEspecialidade', $medico->idEspecialidade);
         $stmt->bindParam(':idHospital', $medico->idHospital);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Médico cadastrado com sucesso'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha em cadastrar o médico'];
         }
+
         echo json_encode($response);
         break;
 
@@ -55,11 +58,12 @@ switch($method) {
         $stmt->bindParam(':idEspecialidade', $medico->idEspecialidade);
         $stmt->bindParam(':idHospital', $medico->idHospital);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Médico alterado com sucesso.'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha em alterar o médico.'];
         }
+
         echo json_encode($response);
         break;
 
@@ -70,11 +74,12 @@ switch($method) {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':idMedico', $path[3]);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Médico exluído com sucesso.'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha na exclusão do médico.'];
         }
+        
         echo json_encode($response);
         break;
 }

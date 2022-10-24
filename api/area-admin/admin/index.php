@@ -1,10 +1,9 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-include '../Connection.php';
+include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
@@ -13,18 +12,21 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbAdmin";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if(isset($path[4]) && is_numeric($path[4])) {
+        if (isset($path[4]) && is_numeric($path[4])) {
             $sql .= " WHERE idHospital = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $path[4]);
             $stmt->execute();
-            $medico = $stmt->fetchALL(PDO::FETCH_ASSOC);
+            $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            echo("console.log('Deu erro ai o bobão')");
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         echo json_encode($admin);
         break;
+
     case "POST":
         $admin = json_decode( file_get_contents('php://input') );
         $sql = "INSERT INTO tdAdmin(idAdmin, loginAdmin, senhaAdmin, tipoAdmin, idHospital) VALUES(null, :loginAdmin, :senhaAdmin, :tipoAdmin, :idHospital)";
@@ -34,11 +36,12 @@ switch($method) {
         $stmt->bindParam(':tipoAdmin', $admin->senhaAdmin);
         $stmt->bindParam(':idHospital', $admin->idHospital);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Admin cadastrado com sucesso'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha em cadastrar o admin'];
         }
+
         echo json_encode($response);
         break;
 
@@ -51,11 +54,12 @@ switch($method) {
         $stmt->bindParam(':tipoAdmin', $admin->tipoAdmin);
         $stmt->bindParam(':idHospital', $admin->idHospital);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Admin alterado com sucesso.'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha em alterar o admin.'];
         }
+
         echo json_encode($response);
         break;
 
@@ -66,11 +70,12 @@ switch($method) {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':idAdmin', $path[3]);
 
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Admin exluído com sucesso.'];
         } else {
             $response = ['status' => 0, 'message' => 'Falha na exclusão do admin.'];
         }
+
         echo json_encode($response);
         break;
 }

@@ -1,24 +1,53 @@
+import { FormEvent, useState } from 'react';
+import axios from 'axios';
+
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
-import { MagnifyingGlass, Trash, Pencil, CaretDown, Check } from 'phosphor-react';
+import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
 
 import * as C from './styles';
 
 export function Medico() {
+    const [selectItem, setSelectItem] = useState<string>();
+
+    const getHospitalId: any = localStorage.getItem("hospital_id");
+    const hospitalId = JSON.parse(getHospitalId);
+
+    async function handleSubmit(event: FormEvent) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target as HTMLFormElement);
+        const data: any = Object.fromEntries(formData);
+
+        try {
+            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+                nomeMedico: data.nomeMedico,
+                cpfMedico: data.cpfMedico,
+                crmMedico: data.crmMedico,
+                fotoMedico: data.fotoMedico.name,
+                idEspecialidade: selectItem,
+                idHospital: hospitalId
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.FormContainer>
                 <h3>Cadastrar um novo médico</h3>
-                <form autoComplete="off">
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <input hidden name="idMedico" />
                     <C.InputsContainer>
                         <C.Label htmlFor="nomeMedico">
                             Nome
                             <Input.Input
+                                name="nomeMedico"
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.sm}
@@ -31,6 +60,7 @@ export function Medico() {
                         <C.Label htmlFor="cpfMedico">
                             CPF
                             <Input.Input
+                                name="cpfMedico"
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.sm}
@@ -43,6 +73,7 @@ export function Medico() {
                         <C.Label htmlFor="crmMedico">
                             CRM
                             <Input.Input
+                                name="crmMedico"
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.sm}
@@ -56,6 +87,7 @@ export function Medico() {
                             Especialidade
 
                             <Select.Root
+                                onValueChange={setSelectItem}
                                 errorText={false}
                                 selectSize={sizes.xs}
                             >
@@ -76,13 +108,12 @@ export function Medico() {
                         <C.Label>
                             Foto do médico
                             <input
+                                name="fotoMedico"
                                 type="file"
                                 accept=".jpg, .png"
                                 id="fotoMedico"
                             />
                         </C.Label>
-
-                        <input type="hidden" name="idHospital" />
                     </C.InputsContainer>
                     <C.ButtonContainer>
                         <Button.Gray value="Cancelar" type="reset" />
