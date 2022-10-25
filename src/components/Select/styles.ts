@@ -3,16 +3,18 @@ import styled from "styled-components";
 import * as Select from '@radix-ui/react-select';
 import { CaretDown, Check } from 'phosphor-react';
 
-export const SelectTrigger = styled(Select.Trigger) <{
+interface SelectTriggerProps {
     size: any;
-    errorText: boolean;
-}>`
+    $errorText: boolean;
+}
+
+export const SelectTrigger = styled(Select.Trigger)<SelectTriggerProps>`
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: ${(props) => props.size || '100%'};
     padding: 0 8px;
-    border: ${(props) => props.errorText ? '1px solid #e94a4f' : '1px solid #b3a9a9'};
+    border: ${($props) => $props.$errorText ? '1px solid #e94a4f' : '1px solid #b3a9a9'};
     border-radius: 8px;
     cursor: pointer;
 

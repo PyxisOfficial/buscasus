@@ -19,7 +19,7 @@ function SelectRoot({ children, errorText, selectSize, onValueChange }: SelectRo
         >
             <C.SelectTrigger
                 size={selectSize}
-                errorText={errorText}
+                $errorText={errorText}
             >
                 <SelectElement.Value placeholder="Selecione" />
                 <SelectElement.Icon>

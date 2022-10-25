@@ -204,12 +204,10 @@ export function Medico() {
                                     <C.ButtonContainer>
 
                                         <AlertDialog.Root>
-                                            <AlertDialog.Trigger
+                                            <AlertDialog.Trigger asChild
                                                 onClick={() => setMedicId(medic.idMedico)}
                                             >
-                                                <Button.Delete>
-                                                    <Trash size={24} />
-                                                </Button.Delete>
+                                                <Trash size={24} />
                                             </AlertDialog.Trigger>
                                             <AlertDialog.Portal>
                                                 <AlertDialog.Overlay />
@@ -229,11 +227,10 @@ export function Medico() {
 
                                         <Dialog.Root>
                                             <Dialog.Trigger
+                                                asChild
                                                 onClick={() => setMedicId(medic.idMedico)}
                                             >
-                                                <Button.Edit>
-                                                    <Pencil size={24} />
-                                                </Button.Edit>
+                                                <Pencil size={24} />
                                             </Dialog.Trigger>
                                             <Dialog.Portal>
                                                 <Dialog.Overlay />
