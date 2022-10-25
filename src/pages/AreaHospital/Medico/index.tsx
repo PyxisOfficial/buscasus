@@ -8,10 +8,7 @@ import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
-import * as Dialog from '@radix-ui/react-dialog';
-
-
-import { MagnifyingGlass, Trash, Pencil, X } from 'phosphor-react';
+import { MagnifyingGlass, Trash, Pencil, Pen } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -204,35 +201,20 @@ export function Medico() {
                                 <td>{medic.nomeEspecialidade}</td>
                                 <td>
                                     <C.ButtonContainer>
+                                        <Modal.Dialog
+                                            medicId={() => {setMedicId(medic.idMedico)}}
+                                            closeModal={() => {setMedicId(0) }}
+                                            title='Editar médico'
+                                        >
+                                            <Pencil size={40} />
+                                        </Modal.Dialog>
                                         <Modal.Alert
                                             medicId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
+                                            title="Excluir médico"
                                         >
                                             <Trash size={40} />
                                         </Modal.Alert>
-
-                                        <Dialog.Root>
-                                            <Dialog.Trigger
-                                                asChild
-                                                onClick={() => setMedicId(medic.idMedico)}
-                                            >
-                                                <Pencil size={24} />
-                                            </Dialog.Trigger>
-                                            <Dialog.Portal>
-                                                <Dialog.Overlay />
-                                                <Dialog.Content>
-                                                    <Dialog.Title />
-                                                    <Dialog.Description />
-                                                    <Dialog.Close asChild>
-                                                        <X
-                                                            size={16}
-                                                            onClick={() => setMedicId(0)}
-                                                        />
-                                                    </Dialog.Close>
-                                                </Dialog.Content>
-                                            </Dialog.Portal>
-                                        </Dialog.Root>
-
                                     </C.ButtonContainer>
                                 </td>
                             </C.Tr>

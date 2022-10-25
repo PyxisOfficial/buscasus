@@ -31,9 +31,17 @@ export const SelectItem = styled(Select.Item)`
     display: flex;
     align-items: center;
     background-color: #f0f0f0;
-    padding: 8px;
-    gap: 4px;
+    padding: 2px 8px;
+    gap: 8px;
     cursor: pointer;
+    border: 1px solid #b3a9a9;
+    border-radius: 8px;
+    transition: background .2s;
+    font-size: 14px;
+
+    &:hover {
+        background: #67C5A2;
+    }
 
     &:focus {
         outline: 0;

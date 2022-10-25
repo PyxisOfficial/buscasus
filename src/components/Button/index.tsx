@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, ReactNode } from 'react';
+
 import * as C from './styles';
 
 interface ButtonProps extends InputHTMLAttributes<HTMLElement> {
@@ -15,7 +16,7 @@ function GreenButton({ value, type }: ButtonProps) {
     )
 }
 
-function GrayButton({ value, type, ...props }: ButtonProps) {
+function GrayButton({ value, type,...props }: ButtonProps) {
     return (
         <C.GrayButton
             value={value}

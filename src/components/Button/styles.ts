@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Button = styled.input`
+export const Button = styled.input<{
+    buttonSize?: string;
+}>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,7 +11,7 @@ export const Button = styled.input`
     background-color: #3eb08f;
     border: 1px solid #3eb08f;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 16px;
     text-transform: none;
     font-weight: 500;
     color: #fff;
@@ -26,7 +28,6 @@ export const GrayButton = styled(Button)`
     padding: 4px 12px;
     background-color: #a4a4a4;
     border: 1px solid #a4a4a4;
-    font-size: 14px;
     text-transform: none;
     font-weight: 500;
 

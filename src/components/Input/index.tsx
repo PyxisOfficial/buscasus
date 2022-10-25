@@ -3,9 +3,9 @@ import { HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode } f
 import * as C from './styles';
 
 export const sizes = {
-    xs: '100px',
-    sm: '300px',
-    md: '400px',
+    xs: '5vw',
+    sm: '15vw',
+    md: '20vw',
     lg: '100%'
 }
 
