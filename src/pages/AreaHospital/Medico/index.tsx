@@ -3,19 +3,20 @@ import axios from 'axios';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 
 import * as Dialog from '@radix-ui/react-dialog';
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
+
 
 import { MagnifyingGlass, Trash, Pencil, X } from 'phosphor-react';
 
 import * as C from './styles';
 
 export function Medico() {
-    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>();
+    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [selectItem, setSelectItem] = useState<string>();
     const [medics, setMedics] = useState([]);
@@ -50,7 +51,7 @@ export function Medico() {
             fotoMedico: data.fotoMedico.name,
             idEspecialidade: selectItem,
             idHospital: hospitalId
-        });
+        })
 
         setIsFormSubmitted(true);
     }
@@ -76,6 +77,7 @@ export function Medico() {
         await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`)
         setIsFormSubmitted(true);
     }
+
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
@@ -199,31 +201,15 @@ export function Medico() {
                                 <td>{medic.nomeMedico}</td>
                                 <td>{medic.cpfMedico}</td>
                                 <td>{medic.crmMedico}</td>
-                                <td>{medic.especialidadeMedico}</td>
+                                <td>{medic.nomeEspecialidade}</td>
                                 <td>
                                     <C.ButtonContainer>
-
-                                        <AlertDialog.Root>
-                                            <AlertDialog.Trigger asChild
-                                                onClick={() => setMedicId(medic.idMedico)}
-                                            >
-                                                <Trash size={24} />
-                                            </AlertDialog.Trigger>
-                                            <AlertDialog.Portal>
-                                                <AlertDialog.Overlay />
-                                                <AlertDialog.Content>
-                                                    <AlertDialog.Title />
-                                                    <AlertDialog.Description />
-                                                    <AlertDialog.Cancel asChild>
-                                                        <X
-                                                            size={16}
-                                                            onClick={() => setMedicId(0)}
-                                                        />
-                                                    </AlertDialog.Cancel>
-                                                    <AlertDialog.Action />
-                                                </AlertDialog.Content>
-                                            </AlertDialog.Portal>
-                                        </AlertDialog.Root>
+                                        <Modal.Alert
+                                            medicId={() => { setMedicId(medic.idMedico) }}
+                                            closeModal={() => { setMedicId(0) }}
+                                        >
+                                            <Trash size={40} />
+                                        </Modal.Alert>
 
                                         <Dialog.Root>
                                             <Dialog.Trigger
