@@ -6,17 +6,17 @@ import * as Dialog from '@radix-ui/react-dialog'
 import * as C from './styles';
 
 import { Button } from "../Button";
-import { X } from 'phosphor-react'
 
 interface ModalProps {
     children: ReactNode;
+    form?: ReactNode;
     medicId: any;
     closeModal: any;
     title: string;
-    form: ReactNode;
+    deleteMedic: any;
 }
 
-function AlertModal({ children, medicId, closeModal, title }: ModalProps) {
+function AlertModal({ children, medicId, closeModal, title, deleteMedic }: ModalProps) {
     return (
         <AlertDialog.Root>
             <C.AlertDialogTrigger
@@ -29,28 +29,30 @@ function AlertModal({ children, medicId, closeModal, title }: ModalProps) {
                 <AlertDialog.Overlay />
                 <C.AlertDialogContent>
                     <C.DialogHeader>
-                    <AlertDialog.Cancel asChild>
-                        <C.Close
-                            size={20}
-                            onClick={closeModal}
-                        />
-                    </AlertDialog.Cancel>
-                    <C.AlertDialogTitle>
-                        {title}
-                    </C.AlertDialogTitle>
+                        <AlertDialog.Cancel asChild>
+                            <C.Close
+                                size={20}
+                                onClick={closeModal}
+                            />
+                        </AlertDialog.Cancel>
+                        <C.AlertDialogTitle>
+                            {title}
+                        </C.AlertDialogTitle>
                     </C.DialogHeader>
                     <C.AlertDialogDescription>
                         Deseja excluir o médico selecionado?
                     </C.AlertDialogDescription>
                     <C.AlertDialogFooter>
                         <AlertDialog.Action asChild>
-                        <Button.Gray 
-                                type='reset' 
+                            <Button.Gray
+                            onClick={closeModal}
+                                type='reset'
                                 value='Cancelar'
                             />
                         </AlertDialog.Action>
-                        <Button.Green 
-                            type='submit' 
+                        <Button.Green
+                            onClick={deleteMedic}
+                            type='button'
                             value='Excluir'
                         />
                     </C.AlertDialogFooter>
@@ -60,6 +62,7 @@ function AlertModal({ children, medicId, closeModal, title }: ModalProps) {
 
     )
 }
+
 
 function DialogModal({ children, medicId, closeModal, title, form }: ModalProps) {
     return (

@@ -5,13 +5,15 @@ import * as C from './styles';
 interface ButtonProps extends InputHTMLAttributes<HTMLElement> {
     value: string;
     type: string;
+    onClick?: any;
 }
 
-function GreenButton({ value, type }: ButtonProps) {
+function GreenButton({ value, type, ...props }: ButtonProps) {
     return (
         <C.Button
             value={value}
             type={type}
+            {...props}
         />
     )
 }

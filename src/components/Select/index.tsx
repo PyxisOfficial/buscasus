@@ -1,5 +1,5 @@
 
-import { ReactNode } from 'react';
+import { Key, ReactNode } from 'react';
 
 import * as SelectElement from '@radix-ui/react-select';
 
@@ -40,16 +40,17 @@ function SelectRoot({ children, errorText, selectSize, onValueChange }: SelectRo
 }
 
 interface SelectItemProps {
-    id: number;
+    specialtyKey: Key;
     value: string;
-    title: string;
+    title?: string;
 }
 
-function SelectItem({ id, value, title }: SelectItemProps) {
+function SelectItem({ specialtyKey, value, title }: SelectItemProps) {
     return (
         <C.SelectItem
-            key={id}
+            key={specialtyKey}
             value={value}
+            title={title}
         >
             <SelectElement.ItemIndicator>
                 <C.CheckIcon size={16} />

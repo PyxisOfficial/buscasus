@@ -75,7 +75,6 @@ export function Medico() {
         setIsFormSubmitted(true);
     }
 
-
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.FormContainer>
@@ -131,7 +130,7 @@ export function Medico() {
                                 selectSize={sizes.xs}
                             >
                                 <Select.Item
-                                    id={1}
+                                    specialtyKey={1}
                                     value="1"
                                     title="Pediatra"
                                 />
@@ -202,8 +201,8 @@ export function Medico() {
                                 <td>
                                     <C.ButtonContainer>
                                         <Modal.Dialog
-                                            medicId={() => {setMedicId(medic.idMedico)}}
-                                            closeModal={() => {setMedicId(0) }}
+                                            medicId={() => { setMedicId(medic.idMedico) }}
+                                            closeModal={() => { setMedicId(0) }}
                                             title='Editar médico'
                                         >
                                             <Pencil size={40} />
@@ -212,6 +211,7 @@ export function Medico() {
                                             medicId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
                                             title="Excluir médico"
+                                            deleteMedic={deleteMedic}
                                         >
                                             <Trash size={40} />
                                         </Modal.Alert>

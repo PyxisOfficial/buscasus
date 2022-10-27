@@ -12,10 +12,13 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbMedico";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[4]) && is_numeric($path[4])) {
-            $sql .= " WHERE idHospital = :id";
+        if (isset($path[5]) && is_numeric($path[5])) {
+            $sql = "SELECT m.idMedico, m.nomeMedico , m.cpfMedico , m.crmMedico , m.fotoMedico , m.fotoMedico , e.nomeEspecialidade FROM tbMedico m     
+                    INNER JOIN tbEspecialidade e 
+                    ON m.idEspecialidade = e.idEspecialidade 
+                    WHERE m.idHospital = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[4]);
+            $stmt->bindParam(':id', $path[5]);
             $stmt->execute();
             $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {

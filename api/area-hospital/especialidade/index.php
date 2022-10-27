@@ -10,12 +10,12 @@ $conn = $connection->connect();
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
     case "GET":
-        $sql = "SELECT * FROM tbEspecialidade";
+        $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[4]) && is_numeric($path[4])) {
-            $sql .= " WHERE idHospital = :idHospital";
+        if (isset($path[5]) && is_numeric($path[5])) {
+            $sql .= " WHERE idHospital = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[4]);
+            $stmt->bindParam(':id', $path[5]);
             $stmt->execute();
             $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
@@ -76,4 +76,3 @@ switch($method) {
         echo json_encode($response);
         break;
 }
-?>
