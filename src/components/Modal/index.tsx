@@ -45,16 +45,18 @@ function AlertModal({ children, medicId, closeModal, title, deleteMedic }: Modal
                     <C.AlertDialogFooter>
                         <AlertDialog.Action asChild>
                             <Button.Gray
-                            onClick={closeModal}
+                                onClick={closeModal}
                                 type='reset'
                                 value='Cancelar'
                             />
                         </AlertDialog.Action>
+                        <AlertDialog.Action asChild>
                         <Button.Green
                             onClick={deleteMedic}
                             type='button'
                             value='Excluir'
                         />
+                        </AlertDialog.Action>
                     </C.AlertDialogFooter>
                 </C.AlertDialogContent>
             </AlertDialog.Portal>

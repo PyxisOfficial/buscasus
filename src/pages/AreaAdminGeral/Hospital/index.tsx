@@ -13,160 +13,175 @@ export function Hospital() {
             <C.Container>
                 <C.FormContainer>
                     <C.Title>Cadastrar um novo hospital</C.Title>
-                    <form autoComplete="off">
+                    <C.Form autoComplete="off">
                         <input type="hidden" name="idHospital" />
-                        <C.InputContainer>
-                            <label htmlFor="nomeHospital">Nome do hospital:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="nomeHospital"
-                                id="nomeHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="emailHospital">Endereço de e-mail do hospital:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="emailHospital"
-                                id="emailHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
+
+                            <C.Label htmlFor="nomeHospital">
+                                Nome do hospital
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.xl}
+                                    type="text"
+                                    name="nomeHospital"
+                                    id="nomeHospital"
+                                />
+                            </C.Label>
+                            <C.Label htmlFor="emailHospital">
+                                Endereço de e-mail do hospital
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.xl}
+                                    type="text"
+                                    name="emailHospital"
+                                    id="emailHospital"
+                                />
+                            </C.Label>
+
                             <input hidden name="idTelefoneHospital" />
 
-                            <label htmlFor="telefoneHospital">Número de telefone do hospital:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="numTelefoneHospital"
-                                id="telefoneHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="aberturaHospital">Horário de abertura:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="time"
-                                name="aberturaHospital"
-                                id="aberturaHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="fechamentoHospital">Horário de fechamento:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="time"
-                                name="fechamentoHospital"
-                                id="fechamentoHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="cnpjHospital">CNPJ:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="cnpjHospital"
-                                id="cnpjHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="cepHospital">CEP:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="cepHospital"
-                                id="cepHospital"
-                            />
+                            <C.Label htmlFor="telefoneHospital">
+                                Número de telefone do hospital
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    type="text"
+                                    name="numTelefoneHospital"
+                                    id="telefoneHospital"
+                                />
+                            </C.Label>
 
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="ufHospital">UF:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="ufHospital"
-                                id="ufHospital"
-                            />
+                            <C.InputContainer>
+                            <C.Label htmlFor="aberturaHospital">
+                                Horário de abertura
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.xs}
+                                    type="time"
+                                    name="aberturaHospital"
+                                    id="aberturaHospital"
+                                />
+                            </C.Label>
 
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="logradouroHospital">Logradouro:</label>
+                            <C.Label htmlFor="fechamentoHospital">
+                                Horário de fechamento
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.xs}
+                                    type="time"
+                                    name="fechamentoHospital"
+                                    id="fechamentoHospital"
+                                />
+                            </C.Label>
+                            </C.InputContainer>
+
+                            <C.InputContainer>
+                                <C.Label htmlFor="cnpjHospital">
+                                    CNPJ
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.sm}
+                                        type="text"
+                                        name="cnpjHospital"
+                                        id="cnpjHospital"
+                                    />
+                                </C.Label>
+
+                                <C.Label htmlFor="cepHospital">
+                                    CEP
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.xs}
+                                        type="text"
+                                        name="cepHospital"
+                                        id="cepHospital"
+                                    />
+                                </C.Label>
+
+
+                                <C.Label htmlFor="ufHospital">
+                                    UF
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.xxs}
+                                        type="text"
+                                        name="ufHospital"
+                                        id="ufHospital"
+                                    />
+                                </C.Label>
+                            </C.InputContainer>
+
+
+                            <C.Label htmlFor="logradouroHospital">
+                                Logradouro
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    name="logradouroHospital"
+                                    id="logradouroHospital"
+                                />
+                            </C.Label>
+
+ 
+                            <C.Label htmlFor="cidadeHospital">
+                                Cidade
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    name="cidadeHospital"
+                                    id="cidadeHospital"
+                                />
+                            </C.Label>
+
+                            <C.Label htmlFor="bairroHospital">
+                                Bairro
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    name="bairroHospital"
+                                    id="bairroHospital"
+                                />
+                            </C.Label>
+                            
+                            <C.Label htmlFor="complementoHospital">
+                                Complemento
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    name="complementoHospital"
+                                    id="complementoHospital"
+                                />
+                            </C.Label>
+
                             <Input.Input
                                 isWithIcon={false}
                                 errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="logradouroHospital"
-                                id="logradouroHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="complementoHospital">Complemento:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="complementoHospital"
-                                id="complementoHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="cidadeHospital">Cidade:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="cidadeHospital"
-                                id="cidadeHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <label htmlFor="bairroHospital">Bairro:</label>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="bairroHospital"
-                                id="bairroHospital"
-                            />
-                        </C.InputContainer>
-                        <C.InputContainer>
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.xl}
                                 type="file"
                                 accept=".jpg, .png"
                                 name="fotoHospital"
-                                id="fotoHospital" />
-                        </C.InputContainer>
-
+                                id="fotoHospital"
+                            />
                         <C.ButtonContainer>
                             <Button.Gray value="Cancelar" type="reset" />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
-                    </form>
+                    </C.Form>
                 </C.FormContainer>
                 <C.TableContainer>
                     <C.TableContainerHeader>

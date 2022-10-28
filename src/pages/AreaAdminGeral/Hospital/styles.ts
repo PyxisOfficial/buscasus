@@ -6,19 +6,31 @@ export const Container = styled.div`
     width: 100%;
 `
 
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 30%;
     background-color: #fff;
     border-radius: 10px;
     margin-bottom: 25px;
-    padding: 10px;
+    padding: 16px 20px;
     white-space: nowrap;
 `
 
 export const Title = styled.h3`
     margin-bottom: 16px;
+`
+
+export const Label = styled.label`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 `
 
 export const InputsContainer = styled.div`
@@ -32,8 +44,7 @@ export const InputContainer = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin-bottom: 16px;
+    justify-content: space-between;
 `
 
 export const ButtonContainer = styled.div`
@@ -47,7 +58,8 @@ export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
     width: 55%;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 10px;  
+    padding: 16px 20px;
 `
 
 export const TableContainerHeader = styled.div`

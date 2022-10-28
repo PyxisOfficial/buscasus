@@ -3,10 +3,12 @@ import { HTMLAttributes, InputHTMLAttributes, LabelHTMLAttributes, ReactNode } f
 import * as C from './styles';
 
 export const sizes = {
+    xxs: '2vw',
     xs: '5vw',
-    sm: '15vw',
-    md: '20vw',
-    lg: '100%'
+    sm: '8vw',
+    md: '12vw',
+    lg: '15vw',
+    xl: '100%'
 }
 
 interface InputRootProps {
