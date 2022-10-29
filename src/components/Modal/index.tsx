@@ -43,20 +43,12 @@ function AlertModal({ children, medicId, closeModal, title, deleteMedic }: Modal
                         Deseja excluir o médico selecionado?
                     </C.AlertDialogDescription>
                     <C.AlertDialogFooter>
-                        <AlertDialog.Action asChild>
-                            <Button.Gray
-                                onClick={closeModal}
-                                type='reset'
-                                value='Cancelar'
-                            />
-                        </AlertDialog.Action>
-                        <AlertDialog.Action asChild>
-                        <Button.Green
-                            onClick={deleteMedic}
-                            type='button'
-                            value='Excluir'
-                        />
-                        </AlertDialog.Action>
+                        <C.AlertDialogCancel>
+                            Cancelar
+                        </C.AlertDialogCancel>
+                        <C.AlertDialogButton onClick={deleteMedic}>
+                            Excluir
+                        </C.AlertDialogButton>
                     </C.AlertDialogFooter>
                 </C.AlertDialogContent>
             </AlertDialog.Portal>

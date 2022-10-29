@@ -28,7 +28,7 @@ export function Plantao() {
                             <Input.Input
                                 isWithIcon={false}
                                 errorText={false}
-                                inputSize={sizes.lg}
+                                inputSize={sizes.xl}
                                 type="text"
                                 id="tipoPlantao"
                                 name="tipoPlantao"
@@ -63,7 +63,7 @@ export function Plantao() {
                             <Select.Root
                                 onValueChange={null}
                                 errorText={false}
-                                selectSize={sizes.lg}
+                                selectSize={sizes.xl}
                             >
                                 <Select.Item
                                     id={1}
@@ -93,7 +93,7 @@ export function Plantao() {
                                 <Input.Input
                                     isWithIcon
                                     errorText={false}
-                                    inputSize={sizes.sm}
+                                    inputSize={sizes.md}
                                     id="search"
                                     type="search"
                                     placeholder="Buscar"

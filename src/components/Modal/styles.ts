@@ -77,6 +77,40 @@ export const AlertDialogFooter = styled.div`
     gap: 16px;
 `
 
+export const AlertDialogButton = styled(AlertDialog.Action)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px 12px;
+    background-color: #3eb08f;
+    border: 1px solid #3eb08f;
+    border-radius: 20px;
+    font-size: 16px;
+    text-transform: none;
+    font-weight: 500;
+    color: #fff;
+    transition: all .4s;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: #fff;
+        color: #3eb08f;
+    }
+`
+
+export const AlertDialogCancel = styled(AlertDialogButton)`
+    padding: 4px 12px;
+    background-color: #a4a4a4;
+    border: 1px solid #a4a4a4;
+    text-transform: none;
+    font-weight: 500;
+
+    &:hover {
+        background-color: #fff;
+        color: #a4a4a4;
+    }
+`
 // Dialog Modal
 
 export const DialogContent = styled(Dialog.Content)`

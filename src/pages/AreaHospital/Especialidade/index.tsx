@@ -19,7 +19,7 @@ export function Especialidade() {
                         <Input.Input
                             isWithIcon={false}
                             errorText={false}
-                            inputSize={sizes.md}
+                            inputSize={sizes.lg}
                             type="text"
                             id="nomeEspecialidade"
                             name="nomeEspecialidade"
@@ -41,7 +41,7 @@ export function Especialidade() {
                             <Input.Input
                                 isWithIcon
                                 errorText={false}
-                                inputSize={sizes.md}
+                                inputSize={sizes.lg}
                                 id="search"
                                 type="search"
                                 placeholder="Buscar"

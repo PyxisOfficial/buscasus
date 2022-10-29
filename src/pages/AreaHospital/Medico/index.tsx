@@ -88,7 +88,7 @@ export function Medico() {
                                 name="nomeMedico"
                                 isWithIcon={false}
                                 errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.md}
                                 type="text"
                                 id="nomeMedico"
                                 placeholder='Mário de Andrade'
@@ -101,7 +101,7 @@ export function Medico() {
                                 name="cpfMedico"
                                 isWithIcon={false}
                                 errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.md}
                                 type="text"
                                 id="cpfMedico"
                                 placeholder='123.456.789-00'
@@ -114,7 +114,7 @@ export function Medico() {
                                 name="crmMedico"
                                 isWithIcon={false}
                                 errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.md}
                                 type="text"
                                 id="crmMedico"
                                 placeholder='SP/123456'
@@ -162,7 +162,7 @@ export function Medico() {
                             <Input.Input
                                 isWithIcon
                                 errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.lg}
                                 id="search"
                                 type="search"
                                 placeholder="Buscar"
