@@ -206,7 +206,54 @@ export function Medico() {
                                             closeModal={() => { setMedicId(0) }}
                                             title='Editar médico'
                                         >
-                                            <Pencil size={40} />
+                                            <C.Form action="">
+                                                <Label htmlFor='editarNome'>
+                                                    Editar nome
+                                                <Input.Root>
+                                                    <Input.Input 
+                                                        isWithIcon={false}
+                                                        errorText={false}
+                                                        inputSize={sizes.lg}
+                                                        id="editarNome"
+                                                        type='text'
+                                                        placeholder='Editar nome'
+                                                    />
+                                                </Input.Root>
+                                                </Label>
+                                                <Label>
+                                                    Editar especialidade
+                                                    <Select.Root
+                                                        onValueChange={setSelectItem}
+                                                        errorText={false}
+                                                        selectSize={sizes.lg}
+                                                    >
+                                                        <Select.Item
+                                                            specialtyKey={1}
+                                                            value="1"
+                                                            title="Pediatra"
+                                                        />
+                                                    </Select.Root>
+                                                </Label>
+                                                <Label>
+                                                    Editar foto do médico
+                                                    <input
+                                                        name="fotoMedico"
+                                                        type="file"
+                                                        accept=".jpg, .png"
+                                                        id="fotoMedico"
+                                                    />
+                                                </Label>
+                                                <C.ButtonContainer>
+                                                    <Button.Gray 
+                                                        value='Cancelar'
+                                                        type='reset'
+                                                    />
+                                                    <Button.Green 
+                                                        value='Salvar'
+                                                        type='submit' 
+                                                    />
+                                                </C.ButtonContainer>
+                                            </C.Form>
                                         </Modal.Dialog>
                                         <Modal.Alert
                                             medicId={() => { setMedicId(medic.idMedico) }}

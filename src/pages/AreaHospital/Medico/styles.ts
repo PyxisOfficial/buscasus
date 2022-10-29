@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -24,6 +30,7 @@ export const InputsContainer = styled.div`
 
 export const ButtonContainer = styled.div`
     display: flex;
+    justify-content: flex-end;
     float: right;
     gap: 8px;
     margin-top: 12px;

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { Pencil } from 'phosphor-react';
+
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import * as Dialog from '@radix-ui/react-dialog'
 
@@ -8,8 +10,7 @@ import * as C from './styles';
 import { Button } from "../Button";
 
 interface ModalProps {
-    children: ReactNode;
-    form?: ReactNode;
+    children?: ReactNode;
     medicId: any;
     closeModal: any;
     title: string;
@@ -58,14 +59,14 @@ function AlertModal({ children, medicId, closeModal, title, deleteMedic }: Modal
 }
 
 
-function DialogModal({ children, medicId, closeModal, title, form }: ModalProps) {
+function DialogModal({ children, medicId, closeModal, title}: ModalProps) {
     return (
         <Dialog.Root>
             <C.DialogTrigger
                 asChild
                 onClick={medicId}
             >
-                {children}
+                <Pencil size={40} />
             </C.DialogTrigger>
             <Dialog.Portal>
                 <C.DialogOverlay />
@@ -82,7 +83,7 @@ function DialogModal({ children, medicId, closeModal, title, form }: ModalProps)
                         </C.DialogTitle>
                     </C.DialogHeader>
                     <C.DialogDescription>
-                        {form}
+                        {children}
                     </C.DialogDescription>
                 </C.DialogContent>
             </Dialog.Portal>
