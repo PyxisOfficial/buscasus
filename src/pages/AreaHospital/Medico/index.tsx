@@ -7,6 +7,7 @@ import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
+import { Label } from '../../../components/Label';
 
 import { MagnifyingGlass, Trash, Pencil, Pen } from 'phosphor-react';
 
@@ -82,7 +83,7 @@ export function Medico() {
                 <form onSubmit={handleSubmit} autoComplete="off">
                     <input hidden name="idMedico" />
                     <C.InputsContainer>
-                        <C.Label htmlFor="nomeMedico">
+                        <Label htmlFor="nomeMedico">
                             Nome
                             <Input.Input
                                 name="nomeMedico"
@@ -93,9 +94,9 @@ export function Medico() {
                                 id="nomeMedico"
                                 placeholder='Mário de Andrade'
                             />
-                        </C.Label>
+                        </Label>
 
-                        <C.Label htmlFor="cpfMedico">
+                        <Label htmlFor="cpfMedico">
                             CPF
                             <Input.Input
                                 name="cpfMedico"
@@ -106,9 +107,9 @@ export function Medico() {
                                 id="cpfMedico"
                                 placeholder='123.456.789-00'
                             />
-                        </C.Label>
+                        </Label>
 
-                        <C.Label htmlFor="crmMedico">
+                        <Label htmlFor="crmMedico">
                             CRM
                             <Input.Input
                                 name="crmMedico"
@@ -119,9 +120,9 @@ export function Medico() {
                                 id="crmMedico"
                                 placeholder='SP/123456'
                             />
-                        </C.Label>
+                        </Label>
 
-                        <C.Label htmlFor="idEspecialidade">
+                        <Label htmlFor="idEspecialidade">
                             Especialidade
 
                             <Select.Root
@@ -136,9 +137,9 @@ export function Medico() {
                                 />
                             </Select.Root>
 
-                        </C.Label>
+                        </Label>
 
-                        <C.Label>
+                        <Label>
                             Foto do médico
                             <input
                                 name="fotoMedico"
@@ -146,7 +147,7 @@ export function Medico() {
                                 accept=".jpg, .png"
                                 id="fotoMedico"
                             />
-                        </C.Label>
+                        </Label>
                     </C.InputsContainer>
                     <C.ButtonContainer>
                         <Button.Gray value="Cancelar" type="reset" />

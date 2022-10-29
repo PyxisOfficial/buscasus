@@ -77,6 +77,16 @@ export const AlertDialogFooter = styled.div`
     gap: 16px;
 `
 
+export const AlertDialogOverlay = styled(AlertDialog.Overlay)`
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: aqua;
+`
+
 export const AlertDialogButton = styled(AlertDialog.Action)`
     display: flex;
     align-items: center;

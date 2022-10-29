@@ -13,7 +13,7 @@ interface ModalProps {
     medicId: any;
     closeModal: any;
     title: string;
-    deleteMedic: any;
+    deleteMedic?: any;
 }
 
 function AlertModal({ children, medicId, closeModal, title, deleteMedic }: ModalProps) {

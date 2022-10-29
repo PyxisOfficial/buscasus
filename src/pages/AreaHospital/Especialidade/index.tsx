@@ -2,6 +2,7 @@ import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Input, sizes } from '../../../components/Input';
 import { Button } from '../../../components/Button';
+import { Label } from '../../../components/Label';
 
 import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
 
@@ -14,7 +15,7 @@ export function Especialidade() {
                 <h3>Cadastrar uma nova especialidade</h3>
                 <form autoComplete="off">
                     <input hidden id="idEspecialidade" name="idEspecialidade" />
-                    <C.Label htmlFor="nomeEspecialidade">
+                    <Label htmlFor="nomeEspecialidade">
                         Especialidade
                         <Input.Input
                             isWithIcon={false}
@@ -25,7 +26,7 @@ export function Especialidade() {
                             name="nomeEspecialidade"
                             placeholder='Pediatra'
                         />
-                    </C.Label>
+                    </Label>
                     <input hidden name="idHospital" />
                     <C.ButtonContainer>
                         <Button.Gray value="Cancelar" type="reset" />

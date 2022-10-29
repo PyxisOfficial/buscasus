@@ -22,12 +22,6 @@ export const InputsContainer = styled.div`
     gap: 8px;
 `
 
-export const Label = styled.label`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-`
-
 export const ButtonContainer = styled.div`
     display: flex;
     float: right;

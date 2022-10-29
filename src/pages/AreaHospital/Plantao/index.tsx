@@ -6,6 +6,7 @@ import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospit
 import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
+import { Label } from '../../../components/Label';
 
 import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
 
@@ -23,7 +24,7 @@ export function Plantao() {
                     <h3>Cadastrar um novo plantão</h3>
                     <C.Form autoComplete="off">
                         <input hidden id="idPlantao" name="idPlantao" />
-                        <C.Label htmlFor="TipoPlantao">
+                        <Label htmlFor="TipoPlantao">
                             Tipo do plantão
                             <Input.Input
                                 isWithIcon={false}
@@ -33,9 +34,9 @@ export function Plantao() {
                                 id="tipoPlantao"
                                 name="tipoPlantao"
                             />
-                        </C.Label>
+                        </Label>
                         <C.InputContainer>
-                            <C.Label htmlFor="inicioPlantao">
+                            <Label htmlFor="inicioPlantao">
                                 Início
                                 <Input.Input
                                     isWithIcon={false}
@@ -45,8 +46,8 @@ export function Plantao() {
                                     id="inicioPlantao"
                                     name="inicioPlantao"
                                 />
-                            </C.Label>
-                            <C.Label htmlFor="fimPlantao">
+                            </Label>
+                            <Label htmlFor="fimPlantao">
                                 Fim
                                 <Input.Input
                                     isWithIcon={false}
@@ -56,9 +57,9 @@ export function Plantao() {
                                     id="fimPlantao"
                                     name="fimPlantao"
                                 />
-                            </C.Label>
+                            </Label>
                         </C.InputContainer>
-                        <C.Label htmlFor="idMedico">
+                        <Label htmlFor="idMedico">
                             Médico
                             <Select.Root
                                 onValueChange={null}
@@ -71,7 +72,7 @@ export function Plantao() {
                                     title="Dorivaldo Benegripe"
                                 />
                             </Select.Root>
-                        </C.Label>
+                        </Label>
                         <input type="hidden" name="idHospital" />
 
                         <DutyCalendar

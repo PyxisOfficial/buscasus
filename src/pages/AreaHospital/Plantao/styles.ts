@@ -27,12 +27,6 @@ export const Form = styled.form`
     gap: 16px;
 `
 
-export const Label = styled.label`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-`
-
 export const InputsContainer = styled.div`
     display: flex;
     justify-content: space-between;
