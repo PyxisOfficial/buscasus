@@ -16,6 +16,7 @@ export const AlertDialogContent = styled(AlertDialog.Content)`
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     transition: all .4s;
     animation: fadeIn .4s ease-in-out;
+    z-index: 3;
 
     @keyframes fadeIn {
         from {
@@ -84,7 +85,9 @@ export const AlertDialogOverlay = styled(AlertDialog.Overlay)`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: aqua;
+    background-color: #000;
+    opacity: 0.4;
+    z-index: 2;
 `
 
 export const AlertDialogButton = styled(AlertDialog.Action)`
@@ -134,6 +137,7 @@ export const DialogContent = styled(Dialog.Content)`
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     transition: all .4s;
     animation: fadeIn .4s ease-in-out;
+    z-index: 3;
 
     @keyframes fadeIn {
         from {
@@ -145,6 +149,18 @@ export const DialogContent = styled(Dialog.Content)`
             opacity: 1;
         }
     }
+`
+
+export const DialogOverlay = styled(Dialog.Overlay)`
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.4;
+    z-index: 2;
 `
 
 export const DialogTrigger = styled(Dialog.Trigger)`

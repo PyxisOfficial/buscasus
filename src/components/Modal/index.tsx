@@ -26,7 +26,7 @@ function AlertModal({ children, medicId, closeModal, title, deleteMedic }: Modal
                 {children}
             </C.AlertDialogTrigger>
             <AlertDialog.Portal>
-                <AlertDialog.Overlay />
+                <C.AlertDialogOverlay />
                 <C.AlertDialogContent>
                     <C.DialogHeader>
                         <AlertDialog.Cancel asChild>
@@ -68,7 +68,7 @@ function DialogModal({ children, medicId, closeModal, title, form }: ModalProps)
                 {children}
             </C.DialogTrigger>
             <Dialog.Portal>
-                <Dialog.Overlay />
+                <C.DialogOverlay />
                 <C.DialogContent>
                     <C.DialogHeader>
                         <Dialog.Close asChild>
