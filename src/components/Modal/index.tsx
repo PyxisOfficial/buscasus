@@ -1,17 +1,15 @@
 import { ReactNode } from 'react';
 
-import { Pencil } from 'phosphor-react';
+import { Pencil, Info } from 'phosphor-react';
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import * as Dialog from '@radix-ui/react-dialog'
 
 import * as C from './styles';
 
-import { Button } from "../Button";
-
 interface ModalProps {
     children?: ReactNode;
-    medicId: any;
+    medicId?: any;
     closeModal: any;
     title: string;
     deleteMedic?: any;
@@ -66,8 +64,40 @@ function DialogModal({ children, medicId, closeModal, title}: ModalProps) {
                 asChild
                 onClick={medicId}
             >
-                <Pencil size={40} />
+                <Pencil size={38} />
             </C.DialogTrigger>
+            <Dialog.Portal>
+                <C.DialogOverlay />
+                <C.DialogContent>
+                    <C.DialogHeader>
+                        <Dialog.Close asChild>
+                            <C.Close
+                                size={20}
+                                onClick={closeModal}
+                            />
+                        </Dialog.Close>
+                        <C.DialogTitle>
+                            {title}
+                        </C.DialogTitle>
+                    </C.DialogHeader>
+                    <C.DialogDescription>
+                        {children}
+                    </C.DialogDescription>
+                </C.DialogContent>
+            </Dialog.Portal>
+        </Dialog.Root>
+    )
+}
+
+function InfoDialogModal({ children, medicId, closeModal, title}: ModalProps) {
+    return (
+        <Dialog.Root>
+            <C.InfoDialogTrigger
+                asChild
+                onClick={medicId}
+            >
+                <Info size={38} />
+            </C.InfoDialogTrigger>
             <Dialog.Portal>
                 <C.DialogOverlay />
                 <C.DialogContent>
@@ -93,5 +123,6 @@ function DialogModal({ children, medicId, closeModal, title}: ModalProps) {
 
 export const Modal = {
     Alert: AlertModal,
-    Dialog: DialogModal
+    Dialog: DialogModal,
+    Info: InfoDialogModal
 }

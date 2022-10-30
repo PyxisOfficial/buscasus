@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const Text = styled.span`
+    font-size: 18px;
+    font-weight: 500;
+`
+
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -90,8 +95,25 @@ export const Tbody = styled.tbody`
     height: 100%;
 `
 
-export const Img = styled.img`
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
+export const InfoModalContent = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+`
+
+export const InfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+`
+
+export const InfoImg = styled.img`
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
 `

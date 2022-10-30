@@ -194,13 +194,25 @@ export function Medico() {
 
                         {medics.map((medic: any, key) =>
                             <C.Tr key={key}>
-                                <td><C.Img src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} /></td>
                                 <td>{medic.nomeMedico}</td>
-                                <td>{medic.cpfMedico}</td>
-                                <td>{medic.crmMedico}</td>
                                 <td>{medic.nomeEspecialidade}</td>
                                 <td>
                                     <C.ButtonContainer>
+                                        <Modal.Info
+                                            closeModal={() => { setMedicId(0) }}
+                                            title='Informações do médico'
+                                        >
+                                            <C.InfoModalContent>
+                                                <C.InfoContainer>
+                                                    <C.Text><b>Nome:</b> {medic.nomeMedico}</C.Text>
+                                                    <C.Text><b>CPF:</b> {medic.cpfMedico}</C.Text>
+                                                    <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
+                                                    <C.Text><b>Especialidade</b>: {medic.nomeEspecialidade}</C.Text>
+                                                    <C.Text><b>Ausências:</b> X</C.Text>
+                                                </C.InfoContainer>
+                                                <C.InfoImg src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} /> 
+                                            </C.InfoModalContent>
+                                        </Modal.Info>
                                         <Modal.Dialog
                                             medicId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
@@ -261,7 +273,7 @@ export function Medico() {
                                             title="Excluir médico"
                                             deleteMedic={deleteMedic}
                                         >
-                                            <Trash size={40} />
+                                                <Trash size={38} />
                                         </Modal.Alert>
                                     </C.ButtonContainer>
                                 </td>

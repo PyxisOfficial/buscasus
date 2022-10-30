@@ -60,6 +60,7 @@ export const DialogHeader = styled.div`
     gap: 12px;
     border-bottom: 1px solid #313131;
     padding-bottom: 10px;
+    margin-bottom: 20px;
 `
 
 export const AlertDialogTitle = styled(AlertDialog.Title)`
@@ -67,7 +68,7 @@ export const AlertDialogTitle = styled(AlertDialog.Title)`
 `
 
 export const AlertDialogDescription = styled(AlertDialog.Description)`
-    padding: 10px 0;
+    margin-bottom: 10px;
 `
 
 export const AlertDialogFooter = styled.div`
@@ -133,6 +134,8 @@ export const DialogContent = styled(Dialog.Content)`
     transform: translate(-50%, -50%);
     background-color: #FBFBFD;
     padding: 20px;
+    border: none;
+    outline: none;
     border-radius: 16px;
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     transition: all .4s;
@@ -182,10 +185,20 @@ export const DialogTrigger = styled(Dialog.Trigger)`
     }
 `
 
+export const InfoDialogTrigger = styled(DialogTrigger)`
+   background-color : #2A9EDF;
+   border: 1px solid #2A9EDF;
+
+   &:hover {
+    background-color: #fff;
+    color: #2A9EDF;
+   }
+`
+
 export const DialogTitle = styled(Dialog.Title)`
     font-size: 20px;
 `
 
 export const DialogDescription = styled(Dialog.Description)`
-    padding: 10px 0;
+    padding: 0;
 `
