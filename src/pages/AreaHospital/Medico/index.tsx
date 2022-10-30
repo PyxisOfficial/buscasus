@@ -182,10 +182,7 @@ export function Medico() {
                 <C.Table>
                     <C.Thead>
                         <C.Tr>
-                            <C.Th>Foto</C.Th>
                             <C.Th>Nome</C.Th>
-                            <C.Th>CPF</C.Th>
-                            <C.Th>CRM</C.Th>
                             <C.Th>Especialidade</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
@@ -194,9 +191,9 @@ export function Medico() {
 
                         {medics.map((medic: any, key) =>
                             <C.Tr key={key}>
-                                <td>{medic.nomeMedico}</td>
-                                <td>{medic.nomeEspecialidade}</td>
-                                <td>
+                                <C.Td>{medic.nomeMedico}</C.Td>
+                                <C.Td>{medic.nomeEspecialidade}</C.Td>
+                                <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Info
                                             closeModal={() => { setMedicId(0) }}
@@ -276,7 +273,7 @@ export function Medico() {
                                                 <Trash size={38} />
                                         </Modal.Alert>
                                     </C.ButtonContainer>
-                                </td>
+                                </C.Td>
                             </C.Tr>
                         )}
                     </C.Tbody>

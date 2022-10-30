@@ -74,6 +74,7 @@ export const Thead = styled.thead`
     background-color: #3eb08f;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    padding: 5px 20px;
 `
 
 export const Tr = styled.tr`
@@ -84,8 +85,8 @@ export const Tr = styled.tr`
 
 export const Th = styled.th`
     padding: 5px;
-    width: 150px;
-    text-align: center;
+    width: 250px;
+    text-align: left;
 `
 
 export const Tbody = styled.tbody`
@@ -93,6 +94,12 @@ export const Tbody = styled.tbody`
     flex-direction: column;
     overflow-y: scroll;
     height: 100%;
+    padding: 5px 20px;
+`
+
+export const Td = styled.td`
+    width: 250px;
+    text-align: left;
 `
 
 export const InfoModalContent = styled.div`
@@ -108,7 +115,7 @@ export const InfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
 `
 
 export const InfoImg = styled.img`
