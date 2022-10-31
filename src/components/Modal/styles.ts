@@ -125,6 +125,26 @@ export const AlertDialogCancel = styled(AlertDialogButton)`
         color: #a4a4a4;
     }
 `
+
+export const EditDialogTrigger = styled(AlertDialog.Trigger)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2px 4px 2px 4px;
+    border: 1px solid #45CA99;
+    background-color: #45CA99;
+    border-radius: 12px;
+    color: #fff;
+    transition: all .4s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #fff;
+        color: #45CA99;
+    }
+`
+
 // Dialog Modal
 
 export const DialogContent = styled(Dialog.Content)`

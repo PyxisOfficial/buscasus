@@ -60,7 +60,6 @@ switch($method) {
         $stmt->bindParam(':crmMedico', $medico->crmMedico);
         $stmt->bindParam(':idEspecialidade', $medico->idEspecialidade);
         $stmt->bindParam(':fotoMedico', $medico->fotoMedico);
-        $stmt->bindParam(':idHospital', $medico->idHospital);
         $stmt->bindParam(':idMedico', $path[5]);
 
         if ($stmt->execute()) {

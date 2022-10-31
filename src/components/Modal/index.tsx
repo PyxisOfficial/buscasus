@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Pencil, Info } from 'phosphor-react';
+import { Pencil, Info, Trash } from 'phosphor-react';
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import * as Dialog from '@radix-ui/react-dialog'
@@ -12,17 +12,17 @@ interface ModalProps {
     medicId?: any;
     closeModal: any;
     title: string;
-    deleteMedic?: any;
+    modalAction?: any;
 }
 
-function AlertModal({ children, medicId, closeModal, title, deleteMedic }: ModalProps) {
+function AlertModal({ children, medicId, closeModal, title, modalAction }: ModalProps) {
     return (
         <AlertDialog.Root>
             <C.AlertDialogTrigger
                 asChild
                 onClick={medicId}
             >
-                {children}
+                <Trash size={38}/>
             </C.AlertDialogTrigger>
             <AlertDialog.Portal>
                 <C.AlertDialogOverlay />
@@ -39,13 +39,13 @@ function AlertModal({ children, medicId, closeModal, title, deleteMedic }: Modal
                         </C.AlertDialogTitle>
                     </C.DialogHeader>
                     <C.AlertDialogDescription>
-                        Deseja excluir o médico selecionado?
+                        {children}
                     </C.AlertDialogDescription>
                     <C.AlertDialogFooter>
                         <C.AlertDialogCancel>
                             Cancelar
                         </C.AlertDialogCancel>
-                        <C.AlertDialogButton onClick={deleteMedic}>
+                        <C.AlertDialogButton onClick={modalAction}>
                             Excluir
                         </C.AlertDialogButton>
                     </C.AlertDialogFooter>
@@ -57,35 +57,36 @@ function AlertModal({ children, medicId, closeModal, title, deleteMedic }: Modal
 }
 
 
-function DialogModal({ children, medicId, closeModal, title}: ModalProps) {
+function EditModal({ children, medicId, closeModal, title, modalAction }: ModalProps) {
     return (
-        <Dialog.Root>
-            <C.DialogTrigger
+        <AlertDialog.Root>
+            <C.EditDialogTrigger
                 asChild
                 onClick={medicId}
             >
-                <Pencil size={38} />
-            </C.DialogTrigger>
-            <Dialog.Portal>
-                <C.DialogOverlay />
-                <C.DialogContent>
+                <Pencil size={38}/>
+            </C.EditDialogTrigger>
+            <AlertDialog.Portal>
+                <C.AlertDialogOverlay />
+                <C.AlertDialogContent>
                     <C.DialogHeader>
-                        <Dialog.Close asChild>
+                        <AlertDialog.Cancel asChild>
                             <C.Close
                                 size={20}
                                 onClick={closeModal}
                             />
-                        </Dialog.Close>
-                        <C.DialogTitle>
+                        </AlertDialog.Cancel>
+                        <C.AlertDialogTitle>
                             {title}
-                        </C.DialogTitle>
+                        </C.AlertDialogTitle>
                     </C.DialogHeader>
-                    <C.DialogDescription>
+                    <C.AlertDialogDescription>
                         {children}
-                    </C.DialogDescription>
-                </C.DialogContent>
-            </Dialog.Portal>
-        </Dialog.Root>
+                    </C.AlertDialogDescription>
+                </C.AlertDialogContent>
+            </AlertDialog.Portal>
+        </AlertDialog.Root>
+
     )
 }
 
@@ -123,6 +124,6 @@ function InfoDialogModal({ children, medicId, closeModal, title}: ModalProps) {
 
 export const Modal = {
     Alert: AlertModal,
-    Dialog: DialogModal,
+    Edit: EditModal,
     Info: InfoDialogModal
 }

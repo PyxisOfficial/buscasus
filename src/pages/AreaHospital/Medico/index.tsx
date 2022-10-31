@@ -11,6 +11,8 @@ import { Label } from '../../../components/Label';
 
 import { MagnifyingGlass, Trash, Pencil, Pen } from 'phosphor-react';
 
+import  * as AlertDialog from '@radix-ui/react-alert-dialog'
+
 import * as C from './styles';
 
 export function Medico() {
@@ -66,6 +68,8 @@ export function Medico() {
             crmMedico: data.crmMedico,
             fotoMedico: data.fotoMedico.name,
             idEspecialidade: selectItem
+        }).then(response => {
+            console.log(response.data);
         });
 
         setIsFormSubmitted(true);
@@ -209,7 +213,7 @@ export function Medico() {
                                                 <C.InfoImg src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} />
                                             </C.InfoModalContent>
                                         </Modal.Info>
-                                        <Modal.Dialog
+                                        <Modal.Edit
                                             medicId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
                                             title='Editar médico'
@@ -280,19 +284,21 @@ export function Medico() {
                                                         id="fotoMedico"
                                                     />
                                                 </Label>
-                                                <C.ButtonContainer>
-                                                    <Button.Gray value="Cancelar" type="reset" />
-                                                    <Button.Green value="Salvar" type="submit" />
-                                                </C.ButtonContainer>
+                                                <AlertDialog.Action asChild>
+                                                    <C.ButtonContainer>
+                                                        <Button.Gray value="Cancelar" type="reset" />
+                                                        <Button.Green value="Salvar" type="submit" />
+                                                    </C.ButtonContainer>
+                                                </AlertDialog.Action>
                                             </C.Form>
-                                        </Modal.Dialog>
+                                        </Modal.Edit>
                                         <Modal.Alert
                                             medicId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
                                             title="Excluir médico"
-                                            deleteMedic={deleteMedic}
+                                            modalAction={deleteMedic}
                                         >
-                                            <Trash size={38} />
+                                            Deseja apagar o médico selecionado?
                                         </Modal.Alert>
                                     </C.ButtonContainer>
                                 </C.Td>
