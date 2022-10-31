@@ -121,12 +121,12 @@ export function Plantao() {
                             </C.Tr>
                         </C.Thead>
                         <C.Tbody>
-                            <C.Tr>
-                                <td>Tipo do plantão</td>
-                                <td>Início</td>
-                                <td>Fim</td>
-                                <td>Médico</td>
-                                <td>
+                            <C.InnerTr>
+                                <C.Td>Tipo do plantão</C.Td>
+                                <C.Td>Início</C.Td>
+                                <C.Td>Fim</C.Td>
+                                <C.Td>Médico</C.Td>
+                                <C.Td>
                                     <C.ButtonContainer>
                                         <Button.Delete>
                                             <Trash size={24} />
@@ -135,8 +135,8 @@ export function Plantao() {
                                             <Pencil size={24} />
                                         </Button.Edit>
                                     </C.ButtonContainer>
-                                </td>
-                            </C.Tr>
+                                </C.Td>
+                            </C.InnerTr>
                         </C.Tbody>
                     </C.Table>
                 </C.TableContainer>

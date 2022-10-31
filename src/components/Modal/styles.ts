@@ -16,7 +16,6 @@ export const AlertDialogContent = styled(AlertDialog.Content)`
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     transition: all .4s;
     animation: fadeIn .4s ease-in-out;
-    z-index: 3;
 
     @keyframes fadeIn {
         from {
@@ -60,7 +59,7 @@ export const DialogHeader = styled.div`
     gap: 12px;
     border-bottom: 1px solid #313131;
     padding-bottom: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 `
 
 export const AlertDialogTitle = styled(AlertDialog.Title)`
@@ -88,7 +87,6 @@ export const AlertDialogOverlay = styled(AlertDialog.Overlay)`
     height: 100%;
     background-color: #000;
     opacity: 0.4;
-    z-index: 2;
 `
 
 export const AlertDialogButton = styled(AlertDialog.Action)`
@@ -145,6 +143,29 @@ export const EditDialogTrigger = styled(AlertDialog.Trigger)`
     }
 `
 
+export const LogoutDialogTrigger = styled(AlertDialog.Trigger)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 16px;
+    text-transform: none;
+    font-weight: 500;
+    color: #fff;
+    transition: all .4s;
+    cursor: pointer;
+    border: 1px solid #fff;
+    padding: 5px 22px 5px 22px;
+    text-transform: uppercase;
+
+    &:hover {
+        color: #fff;
+        background-color: #e94a4f;
+        border: 1px solid #fff;
+    }
+`
+
 // Dialog Modal
 
 export const DialogContent = styled(Dialog.Content)`
@@ -160,7 +181,6 @@ export const DialogContent = styled(Dialog.Content)`
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     transition: all .4s;
     animation: fadeIn .4s ease-in-out;
-    z-index: 3;
 
     @keyframes fadeIn {
         from {
@@ -183,7 +203,6 @@ export const DialogOverlay = styled(Dialog.Overlay)`
     height: 100%;
     background-color: #000;
     opacity: 0.4;
-    z-index: 2;
 `
 
 export const DialogTrigger = styled(Dialog.Trigger)`

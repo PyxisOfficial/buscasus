@@ -13,7 +13,7 @@ export const SelectTrigger = styled(Select.Trigger)<SelectTriggerProps>`
     justify-content: space-between;
     align-items: center;
     width: ${(props) => props.size || '100%'};
-    padding: 0 8px;
+    padding: 0px 10px;
     border: ${($props) => $props.$errorText ? '1px solid #e94a4f' : '1px solid #b3a9a9'};
     border-radius: 8px;
     cursor: pointer;
@@ -24,18 +24,18 @@ export const SelectTrigger = styled(Select.Trigger)<SelectTriggerProps>`
 `
 
 export const SelectViewport = styled(Select.Viewport)`
+    display: flex;
+    flex-direction: column;
     border-radius: 8px;
+    background-color: #f0f0f0;
+    border: 1px solid #b3a9a9;
 `
 
 export const SelectItem = styled(Select.Item)`
     display: flex;
     align-items: center;
-    background-color: #f0f0f0;
-    padding: 2px 8px;
-    gap: 8px;
+    padding: 6px 10px;
     cursor: pointer;
-    border: 1px solid #b3a9a9;
-    border-radius: 8px;
     transition: background .2s;
     font-size: 14px;
 

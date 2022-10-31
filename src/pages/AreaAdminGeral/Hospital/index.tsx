@@ -210,16 +210,14 @@ export function Hospital() {
                     <C.Table>
                         <C.Thead>
                             <C.Tr>
-                                <C.Th>Id</C.Th>
                                 <C.Th>Nome do hospital</C.Th>
                                 <C.Th></C.Th>
                             </C.Tr>
                         </C.Thead>
                         <C.Tbody>
-                            <C.Tr>
-                                <td>1</td>
-                                <td>Hospital Geral de Guaianazes</td>
-                                <td>
+                            <C.InnerTr>
+                                <C.Td>Hospital Geral de Guaianazes</C.Td>
+                                <C.Td>
                                     <C.ButtonContainer>
                                         <Button.Edit>
                                             <Info size={24} />
@@ -231,8 +229,8 @@ export function Hospital() {
                                             <Pencil size={24} />
                                         </Button.Edit>
                                     </C.ButtonContainer>
-                                </td>
-                            </C.Tr>
+                                </C.Td>
+                            </C.InnerTr>
                         </C.Tbody>
                     </C.Table>
                 </C.TableContainer>

@@ -5,6 +5,8 @@ import axios from 'axios';
 import UseAuth from '../../hooks/useAuth';
 
 import { Button } from '../../components/Button';
+import { Modal } from '../Modal';
+import * as AlertDialog from '@radix-ui/react-alert-dialog'
 
 import * as C from './styles';
 
@@ -42,13 +44,18 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                         alt="Logo BuscaSUS"
                     />
                     <h3>{hospitalId == 0 ? 'Administrador Geral' : hospitalName}</h3>
-                    <Link to="/">
-                        <Button.Logout
-                            value="Sair"
-                            type="button"
-                            onClick={() => [signOut(), navigate("/")]}
-                        />
-                    </Link>
+                    <Modal.Logout title='Realizar Logout'>
+                            <span>Deseja sair?</span>
+                            <C.ButtonContainer>
+                                <Link to="/">
+                                    <Button.Green
+                                        value="Sair"
+                                        type="button"
+                                        onClick={() => [signOut(), navigate("/")]}
+                                    />
+                                </Link> 
+                            </C.ButtonContainer>
+                        </Modal.Logout>
                 </C.Nav>
 
                 <C.SideBar>

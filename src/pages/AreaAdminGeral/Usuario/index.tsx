@@ -133,11 +133,11 @@ export function Usuario() {
                                 </C.Tr>
                             </C.Thead>
                             <C.Tbody>
-                                <C.Tr>
-                                    <td>Nome</td>
-                                    <td>*******</td>
-                                    <td>Id Hospital</td>
-                                    <td>
+                                <C.InnerTr>
+                                    <C.Td>Nome</C.Td>
+                                    <C.Td>*******</C.Td>
+                                    <C.Td>Id Hospital</C.Td>
+                                    <C.Td>
                                         <C.ButtonContainer>
                                             <Button.Delete>
                                                 <Trash size={24} />
@@ -146,8 +146,8 @@ export function Usuario() {
                                                 <Pencil size={24} />
                                             </Button.Edit>
                                         </C.ButtonContainer>
-                                    </td>
-                                </C.Tr>
+                                    </C.Td>
+                                </C.InnerTr>
                             </C.Tbody>
                         </C.Table>
                     </C.TableContainer>
@@ -186,11 +186,11 @@ export function Usuario() {
                             </C.Tr>
                         </C.Thead>
                         <C.Tbody>
-                            <C.Tr>
-                                <td>Id</td>
-                                <td>Nome</td>
-                                <td>Cpf</td>
-                            </C.Tr>
+                            <C.InnerTr>
+                                <C.Td>Id</C.Td>
+                                <C.Td>Nome</C.Td>
+                                <C.Td>Cpf</C.Td>
+                            </C.InnerTr>
                         </C.Tbody>
                     </C.Table>
                 </C.UserColumn>

@@ -44,7 +44,7 @@ export const TableContainerHeader = styled.div`
 
 export const Table = styled.table`
     height: 100%;
-    margin-top: 24px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     border-radius: 8px;
@@ -61,18 +61,27 @@ export const Thead = styled.thead`
     background-color: #3eb08f;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    padding: 5px;
 `
 
 export const Tr = styled.tr`
-    padding: 5px;
-    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     text-align: center;
+    padding: 4px;
+`
+
+export const InnerTr = styled(Tr)`
+    &:hover {
+        background-color: #f2f2f2;
+    }
 `
 
 export const Th = styled.th`
-    padding: 5px;
-    width: 150px;
-    text-align: center;
+    padding: 4px;
+    text-align: left;
+    width: 350px;
 `
 
 export const Tbody = styled.tbody`
@@ -80,6 +89,12 @@ export const Tbody = styled.tbody`
     flex-direction: column;
     overflow-y: scroll;
     height: 100%;
+`
+
+export const Td = styled.td`
+    padding: 4px;
+    text-align: left;
+    width: 350px;
 `
 
 export const Img = styled.img`

@@ -76,3 +76,11 @@ export const Svg = styled.svg`
     position: relative;
     margin-bottom: -105px;
 `
+
+export const ButtonContainer = styled.div`
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 16px;
+`

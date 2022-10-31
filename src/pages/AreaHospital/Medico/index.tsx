@@ -8,6 +8,7 @@ import { Input, sizes } from '../../../components/Input';
 import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Label';
+import { Toast } from '../../../components/Toast';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -85,6 +86,7 @@ export function Medico() {
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
+            {isFormSubmitted ? <Toast.Sucess /> : <Toast.Fail />}
             <C.FormContainer>
                 <h3>Cadastrar um novo médico</h3>
                 <form onSubmit={insertMedic} autoComplete="off">
@@ -192,15 +194,17 @@ export function Medico() {
                         <C.Tr>
                             <C.Th>Nome</C.Th>
                             <C.Th>Especialidade</C.Th>
-                            <C.Th></C.Th>
+                            <C.Th>CRM</C.Th>
+                            <C.Th></C.Th> 
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
 
                         {medics.map((medic: any, key) =>
-                            <C.Tr key={key}>
+                            <C.InnerTr key={key}>
                                 <C.Td>{medic.nomeMedico}</C.Td>
                                 <C.Td>{medic.nomeEspecialidade}</C.Td>
+                                <C.Td>{medic.crmMedico}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Info
@@ -300,12 +304,14 @@ export function Medico() {
                                             closeModal={() => { setMedicId(0) }}
                                             title="Excluir médico"
                                             modalAction={deleteMedic}
+                                            cancel='Cancelar'
+                                            submit='Excluir'
                                         >
                                             Deseja apagar o médico selecionado?
                                         </Modal.Alert>
                                     </C.ButtonContainer>
                                 </C.Td>
-                            </C.Tr>
+                            </C.InnerTr>
                         )}
                     </C.Tbody>
                 </C.Table>

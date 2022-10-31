@@ -66,9 +66,9 @@ export function Especialidade() {
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
-                        <C.Tr>
-                            <td>Especialidade</td>
-                            <td>
+                        <C.InnerTr>
+                            <C.Td>Especialidade</C.Td>
+                            <C.Td>
                                 <C.ButtonContainer>
                                     <Button.Delete>
                                         <Trash size={24} />
@@ -77,8 +77,8 @@ export function Especialidade() {
                                         <Pencil size={24} />
                                     </Button.Edit>
                                 </C.ButtonContainer>
-                            </td>
-                        </C.Tr>
+                            </C.Td>
+                        </C.InnerTr>
                     </C.Tbody>
                 </C.Table>
             </C.TableContainer>
