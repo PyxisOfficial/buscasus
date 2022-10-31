@@ -9,9 +9,7 @@ import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Label';
 
-import { MagnifyingGlass, Trash, Pencil, Pen } from 'phosphor-react';
-
-import  * as AlertDialog from '@radix-ui/react-alert-dialog'
+import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -21,6 +19,7 @@ export function Medico() {
     const [selectItem, setSelectItem] = useState<string>();
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
+    const [especialidade, setEspecialidade] = useState([]);
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -28,6 +27,10 @@ export function Medico() {
     useEffect(() => {
         axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
             setMedics(response.data);
+        });
+
+        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/${hospitalId}`).then((response) => {
+            setEspecialidade(response.data);
         });
     }, []);
 
@@ -133,11 +136,13 @@ export function Medico() {
                                 errorText={false}
                                 selectSize={sizes.xs}
                             >
-                                <Select.Item
-                                    specialtyKey={1}
-                                    value="1"
-                                    title="Pediatra"
-                                />
+                                {especialidade.map((esp: any) =>
+                                    <Select.Item
+                                        specialtyKey={esp.idEspecialidade}
+                                        value={esp.idEspecialidade}
+                                        title={esp.nomeEspecialidade}
+                                    />
+                                )}
                             </Select.Root>
 
                         </Label>
@@ -214,7 +219,7 @@ export function Medico() {
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Edit
-                                            medicId={() => { setMedicId(medic.idMedico) }}
+                                            itemId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
                                             title='Editar médico'
                                         >
@@ -228,7 +233,7 @@ export function Medico() {
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="nomeMedico"
-                                                        placeholder='Mário de Andrade'
+                                                        defaultValue={medic.nomeMedico}
                                                     />
                                                 </Label>
 
@@ -241,7 +246,7 @@ export function Medico() {
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="cpfMedico"
-                                                        placeholder='123.456.789-00'
+                                                        defaultValue={medic.cpfMedico}
                                                     />
                                                 </Label>
 
@@ -254,7 +259,7 @@ export function Medico() {
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="crmMedico"
-                                                        placeholder='SP/123456'
+                                                        defaultValue={medic.crmMedico}
                                                     />
                                                 </Label>
 
@@ -266,13 +271,14 @@ export function Medico() {
                                                         errorText={false}
                                                         selectSize={sizes.xs}
                                                     >
-                                                        <Select.Item
-                                                            specialtyKey={1}
-                                                            value="1"
-                                                            title="Pediatra"
-                                                        />
+                                                        {especialidade.map((esp: any) =>
+                                                            <Select.Item
+                                                                specialtyKey={esp.idEspecialidade}
+                                                                value={esp.idEspecialidade}
+                                                                title={esp.nomeEspecialidade}
+                                                            />
+                                                        )}
                                                     </Select.Root>
-
                                                 </Label>
 
                                                 <Label>
@@ -284,16 +290,13 @@ export function Medico() {
                                                         id="fotoMedico"
                                                     />
                                                 </Label>
-                                                <AlertDialog.Action asChild>
-                                                    <C.ButtonContainer>
-                                                        <Button.Gray value="Cancelar" type="reset" />
-                                                        <Button.Green value="Salvar" type="submit" />
-                                                    </C.ButtonContainer>
-                                                </AlertDialog.Action>
+                                                <C.ButtonContainer>
+                                                    <Button.Green value="Salvar" type="submit" />
+                                                </C.ButtonContainer>
                                             </C.Form>
                                         </Modal.Edit>
                                         <Modal.Alert
-                                            medicId={() => { setMedicId(medic.idMedico) }}
+                                            itemId={() => { setMedicId(medic.idMedico) }}
                                             closeModal={() => { setMedicId(0) }}
                                             title="Excluir médico"
                                             modalAction={deleteMedic}

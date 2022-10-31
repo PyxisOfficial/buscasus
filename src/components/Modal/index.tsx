@@ -9,20 +9,20 @@ import * as C from './styles';
 
 interface ModalProps {
     children?: ReactNode;
-    medicId?: any;
+    itemId?: any;
     closeModal: any;
     title: string;
     modalAction?: any;
 }
 
-function AlertModal({ children, medicId, closeModal, title, modalAction }: ModalProps) {
+function AlertModal({ children, itemId, closeModal, title, modalAction }: ModalProps) {
     return (
         <AlertDialog.Root>
             <C.AlertDialogTrigger
                 asChild
-                onClick={medicId}
+                onClick={itemId}
             >
-                <Trash size={38}/>
+                <Trash size={38} />
             </C.AlertDialogTrigger>
             <AlertDialog.Portal>
                 <C.AlertDialogOverlay />
@@ -57,14 +57,14 @@ function AlertModal({ children, medicId, closeModal, title, modalAction }: Modal
 }
 
 
-function EditModal({ children, medicId, closeModal, title, modalAction }: ModalProps) {
+function EditModal({ children, itemId, closeModal, title, modalAction }: ModalProps) {
     return (
         <AlertDialog.Root>
             <C.EditDialogTrigger
                 asChild
-                onClick={medicId}
+                onClick={itemId}
             >
-                <Pencil size={38}/>
+                <Pencil size={38} />
             </C.EditDialogTrigger>
             <AlertDialog.Portal>
                 <C.AlertDialogOverlay />
@@ -90,12 +90,12 @@ function EditModal({ children, medicId, closeModal, title, modalAction }: ModalP
     )
 }
 
-function InfoDialogModal({ children, medicId, closeModal, title}: ModalProps) {
+function InfoDialogModal({ children, itemId, closeModal, title }: ModalProps) {
     return (
         <Dialog.Root>
             <C.InfoDialogTrigger
                 asChild
-                onClick={medicId}
+                onClick={itemId}
             >
                 <Info size={38} />
             </C.InfoDialogTrigger>
