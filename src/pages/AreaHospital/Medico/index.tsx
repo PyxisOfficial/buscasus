@@ -36,7 +36,7 @@ export function Medico() {
         setIsFormSubmitted(false);
     }, [isFormSubmitted]);
 
-    async function handleSubmit(event: FormEvent) {
+    async function insertMedic(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
@@ -80,8 +80,7 @@ export function Medico() {
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.FormContainer>
                 <h3>Cadastrar um novo médico</h3>
-                <form onSubmit={handleSubmit} autoComplete="off">
-                    <input hidden name="idMedico" />
+                <form onSubmit={insertMedic} autoComplete="off">
                     <C.InputsContainer>
                         <Label htmlFor="nomeMedico">
                             Nome
@@ -182,10 +181,7 @@ export function Medico() {
                 <C.Table>
                     <C.Thead>
                         <C.Tr>
-                            <C.Th>Foto</C.Th>
                             <C.Th>Nome</C.Th>
-                            <C.Th>CPF</C.Th>
-                            <C.Th>CRM</C.Th>
                             <C.Th>Especialidade</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
@@ -194,9 +190,9 @@ export function Medico() {
 
                         {medics.map((medic: any, key) =>
                             <C.Tr key={key}>
-                                <td>{medic.nomeMedico}</td>
-                                <td>{medic.nomeEspecialidade}</td>
-                                <td>
+                                <C.Td>{medic.nomeMedico}</C.Td>
+                                <C.Td>{medic.nomeEspecialidade}</C.Td>
+                                <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Info
                                             closeModal={() => { setMedicId(0) }}
@@ -207,10 +203,10 @@ export function Medico() {
                                                     <C.Text><b>Nome:</b> {medic.nomeMedico}</C.Text>
                                                     <C.Text><b>CPF:</b> {medic.cpfMedico}</C.Text>
                                                     <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
-                                                    <C.Text><b>Especialidade</b>: {medic.nomeEspecialidade}</C.Text>
-                                                    <C.Text><b>Ausências:</b> X</C.Text>
+                                                    <C.Text><b>Especialidade:</b> {medic.nomeEspecialidade}</C.Text>
+                                                    <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
-                                                <C.InfoImg src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} /> 
+                                                <C.InfoImg src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} />
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Dialog
@@ -218,26 +214,53 @@ export function Medico() {
                                             closeModal={() => { setMedicId(0) }}
                                             title='Editar médico'
                                         >
-                                            <C.Form action="">
-                                                <Label htmlFor='editarNome'>
-                                                    Editar nome
-                                                <Input.Root>
-                                                    <Input.Input 
+                                            <C.Form onSubmit={editMedic} autoComplete="off">
+                                                <Label htmlFor="nomeMedico">
+                                                    Nome
+                                                    <Input.Input
+                                                        name="nomeMedico"
                                                         isWithIcon={false}
                                                         errorText={false}
-                                                        inputSize={sizes.lg}
-                                                        id="editarNome"
-                                                        type='text'
-                                                        placeholder='Editar nome'
+                                                        inputSize={sizes.xl}
+                                                        type="text"
+                                                        id="nomeMedico"
+                                                        placeholder='Mário de Andrade'
                                                     />
-                                                </Input.Root>
                                                 </Label>
-                                                <Label>
-                                                    Editar especialidade
+
+                                                <Label htmlFor="cpfMedico">
+                                                    CPF
+                                                    <Input.Input
+                                                        name="cpfMedico"
+                                                        isWithIcon={false}
+                                                        errorText={false}
+                                                        inputSize={sizes.xl}
+                                                        type="text"
+                                                        id="cpfMedico"
+                                                        placeholder='123.456.789-00'
+                                                    />
+                                                </Label>
+
+                                                <Label htmlFor="crmMedico">
+                                                    CRM
+                                                    <Input.Input
+                                                        name="crmMedico"
+                                                        isWithIcon={false}
+                                                        errorText={false}
+                                                        inputSize={sizes.xl}
+                                                        type="text"
+                                                        id="crmMedico"
+                                                        placeholder='SP/123456'
+                                                    />
+                                                </Label>
+
+                                                <Label htmlFor="idEspecialidade">
+                                                    Especialidade
+
                                                     <Select.Root
                                                         onValueChange={setSelectItem}
                                                         errorText={false}
-                                                        selectSize={sizes.lg}
+                                                        selectSize={sizes.xs}
                                                     >
                                                         <Select.Item
                                                             specialtyKey={1}
@@ -245,9 +268,11 @@ export function Medico() {
                                                             title="Pediatra"
                                                         />
                                                     </Select.Root>
+
                                                 </Label>
+
                                                 <Label>
-                                                    Editar foto do médico
+                                                    Foto do médico
                                                     <input
                                                         name="fotoMedico"
                                                         type="file"
@@ -256,14 +281,8 @@ export function Medico() {
                                                     />
                                                 </Label>
                                                 <C.ButtonContainer>
-                                                    <Button.Gray 
-                                                        value='Cancelar'
-                                                        type='reset'
-                                                    />
-                                                    <Button.Green 
-                                                        value='Salvar'
-                                                        type='submit' 
-                                                    />
+                                                    <Button.Gray value="Cancelar" type="reset" />
+                                                    <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>
                                             </C.Form>
                                         </Modal.Dialog>
@@ -273,10 +292,10 @@ export function Medico() {
                                             title="Excluir médico"
                                             deleteMedic={deleteMedic}
                                         >
-                                                <Trash size={38} />
+                                            <Trash size={38} />
                                         </Modal.Alert>
                                     </C.ButtonContainer>
-                                </td>
+                                </C.Td>
                             </C.Tr>
                         )}
                     </C.Tbody>

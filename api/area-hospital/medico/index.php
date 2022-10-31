@@ -13,7 +13,7 @@ switch($method) {
         $sql = "SELECT * FROM tbMedico";
         $path = explode('/', $_SERVER['REQUEST_URI']);
         if (isset($path[5]) && is_numeric($path[5])) {
-            $sql = "SELECT m.idMedico, m.nomeMedico , m.cpfMedico , m.crmMedico , m.fotoMedico , m.fotoMedico , e.nomeEspecialidade FROM tbMedico m     
+            $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.nomeEspecialidade FROM tbMedico m     
                     INNER JOIN tbEspecialidade e 
                     ON m.idEspecialidade = e.idEspecialidade 
                     WHERE m.idHospital = :id";
@@ -52,15 +52,16 @@ switch($method) {
 
     case "PUT":
         $medico = json_decode( file_get_contents('php://input') );
-        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, cpfMedico =:cpfMedico, fotoMedico =:fotoMedico, idEspecialidade =:idEspecialidade, idHospital =:idHospital WHERE idMedico = :idMedico";
+        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, cpfMedico =:cpfMedico, crmMedico =:crmMedico, fotoMedico =:fotoMedico, idEspecialidade =:idEspecialidade WHERE idMedico = :idMedico";
         $path = explode('/', $_SERVER['REQUEST_URI']);
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nomeMedico', $medico->nomeMedico);
         $stmt->bindParam(':cpfMedico', $medico->cpfMedico);
         $stmt->bindParam(':crmMedico', $medico->crmMedico);
         $stmt->bindParam(':idEspecialidade', $medico->idEspecialidade);
+        $stmt->bindParam(':fotoMedico', $medico->fotoMedico);
         $stmt->bindParam(':idHospital', $medico->idHospital);
-        $stmt->bindParam(':idMedico', $path[4]);
+        $stmt->bindParam(':idMedico', $path[5]);
 
         if ($stmt->execute()) {
             $response = ['status' => 1, 'message' => 'Médico alterado com sucesso.'];
@@ -86,4 +87,3 @@ switch($method) {
         echo json_encode($response);
         break;
 }
-?>
