@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import * as C from './styles';
+import { Check } from 'phosphor-react';
 
 interface ToastProps {
    children: ReactNode;
@@ -17,17 +18,10 @@ function ToastRoot({ children, onOpenChange }: ToastProps) {
    )
 }
 
-function ToastTitle({ children }: ToastProps) {
-   return (
-      <C.ToastTitle>
-         {children}
-      </C.ToastTitle>
-   )
-}
-
 function ToastDescription({ children }: ToastProps) {
    return (
       <C.ToastDescription>
+         <Check size={20} weight='bold'/>
          {children}
       </C.ToastDescription>
    )
@@ -35,6 +29,5 @@ function ToastDescription({ children }: ToastProps) {
 
 export const Toast = {
    Root: ToastRoot,
-   Title: ToastTitle,
    Description: ToastDescription
 }

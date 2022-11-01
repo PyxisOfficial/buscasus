@@ -18,7 +18,6 @@ export function Medico() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [titleToast, setTitleToast] = useState<string>();
     const [messageToast, setMessageToast] = useState<string>();
 
     const [medicName, setMedicName] = useState<string>();
@@ -59,7 +58,7 @@ export function Medico() {
 
         setTimeout(() => {
             setIsToastOpened(false);
-        }, 2500);
+        }, 2000);
 
         setMedicName("");
         setMedicCpf("");
@@ -83,7 +82,6 @@ export function Medico() {
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setTitleToast("Inserção");
         setMessageToast("Médico cadastrado com sucesso!");
     }
 
@@ -101,7 +99,6 @@ export function Medico() {
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setTitleToast("Alteração");
         setMessageToast("Médico alterado com sucesso!");
     }
 
@@ -111,7 +108,6 @@ export function Medico() {
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setTitleToast("Exclusão");
         setMessageToast("Médico excluído com sucesso!");
     }
 
@@ -121,7 +117,6 @@ export function Medico() {
             <Toast.Root
                 onOpenChange={isToastOpened}
             >
-                <Toast.Title>{titleToast}</Toast.Title>
                 <Toast.Description>{messageToast}</Toast.Description>
             </Toast.Root>
 
