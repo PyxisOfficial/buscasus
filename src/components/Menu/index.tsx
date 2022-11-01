@@ -6,7 +6,6 @@ import UseAuth from '../../hooks/useAuth';
 
 import { Button } from '../../components/Button';
 import { Modal } from '../Modal';
-import * as AlertDialog from '@radix-ui/react-alert-dialog'
 
 import * as C from './styles';
 
@@ -45,7 +44,7 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                     />
                     <h3>{hospitalId == 0 ? 'Administrador Geral' : hospitalName}</h3>
                     <Modal.Logout title='Realizar Logout'>
-                            <span>Deseja sair?</span>
+                            <span>Tem certeza de que deseja sair?</span>
                             <C.ButtonContainer>
                                 <Link to="/">
                                     <Button.Green

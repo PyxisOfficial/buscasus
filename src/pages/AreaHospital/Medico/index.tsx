@@ -17,10 +17,25 @@ import * as C from './styles';
 export function Medico() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
+    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
+    const [titleToast, setTitleToast] = useState<string>();
+    const [messageToast, setMessageToast] = useState<string>();
+
+    const [medicName, setMedicName] = useState<string>();
+    const [medicCpf, setMedicCpf] = useState<string>();
+    const [medicCrm, setMedicCrm] = useState<string>();
+    const [medicImage, setMedicImage] = useState<string>();
     const [selectItem, setSelectItem] = useState<string>();
+
+    const [medicNameModal, setMedicNameModal] = useState<string>();
+    const [medicCpfModal, setMedicCpfModal] = useState<string>();
+    const [medicCrmModal, setMedicCrmModal] = useState<string>();
+    const [medicImageModal, setMedicImageModal] = useState<string>();
+    const [selectItemModal, setSelectItemModal] = useState<string>();
+
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
-    const [especialidade, setEspecialidade] = useState([]);
+    const [specialty, setSpecialty] = useState([]);
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -31,7 +46,7 @@ export function Medico() {
         });
 
         axios.get(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/${hospitalId}`).then((response) => {
-            setEspecialidade(response.data);
+            setSpecialty(response.data);
         });
     }, []);
 
@@ -39,54 +54,77 @@ export function Medico() {
         axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
             setMedics(response.data);
         });
+
         setIsFormSubmitted(false);
+
+        setTimeout(() => {
+            setIsToastOpened(false);
+        }, 2500);
+
+        setMedicName("");
+        setMedicCpf("");
+        setMedicCrm("");
+        setMedicImage("");
+        setSelectItem("");
     }, [isFormSubmitted]);
 
     async function insertMedic(event: FormEvent) {
         event.preventDefault();
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
-
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
-            nomeMedico: data.nomeMedico,
-            cpfMedico: data.cpfMedico,
-            crmMedico: data.crmMedico,
-            fotoMedico: data.fotoMedico.name,
+            nomeMedico: medicName,
+            cpfMedico: medicCpf,
+            crmMedico: medicCrm,
+            fotoMedico: medicImage,
             idEspecialidade: selectItem,
             idHospital: hospitalId
-        })
+        });
 
         setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setTitleToast("Inserção");
+        setMessageToast("Médico cadastrado com sucesso!");
     }
 
     async function editMedic(event: FormEvent) {
         event.preventDefault();
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
-
         await axios.put(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`, {
-            nomeMedico: data.nomeMedico,
-            cpfMedico: data.cpfMedico,
-            crmMedico: data.crmMedico,
-            fotoMedico: data.fotoMedico.name,
-            idEspecialidade: selectItem
-        }).then(response => {
-            console.log(response.data);
+            nomeMedico: medicNameModal,
+            cpfMedico: medicCpfModal,
+            crmMedico: medicCrmModal,
+            fotoMedico: medicImageModal,
+            idEspecialidade: selectItemModal
         });
 
         setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setTitleToast("Alteração");
+        setMessageToast("Médico alterado com sucesso!");
     }
 
     async function deleteMedic() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`)
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`);
+
         setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setTitleToast("Exclusão");
+        setMessageToast("Médico excluído com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
-            {isFormSubmitted ? <Toast.Sucess /> : <Toast.Fail />}
+
+            <Toast.Root
+                onOpenChange={isToastOpened}
+            >
+                <Toast.Title>{titleToast}</Toast.Title>
+                <Toast.Description>{messageToast}</Toast.Description>
+            </Toast.Root>
+
             <C.FormContainer>
                 <h3>Cadastrar um novo médico</h3>
                 <form onSubmit={insertMedic} autoComplete="off">
@@ -94,7 +132,8 @@ export function Medico() {
                         <Label htmlFor="nomeMedico">
                             Nome
                             <Input.Input
-                                name="nomeMedico"
+                                onChange={(e) => setMedicName(e.target.value)}
+                                value={medicName}
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.md}
@@ -107,7 +146,8 @@ export function Medico() {
                         <Label htmlFor="cpfMedico">
                             CPF
                             <Input.Input
-                                name="cpfMedico"
+                                onChange={(e) => setMedicCpf(e.target.value)}
+                                value={medicCpf}
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.md}
@@ -120,7 +160,8 @@ export function Medico() {
                         <Label htmlFor="crmMedico">
                             CRM
                             <Input.Input
-                                name="crmMedico"
+                                onChange={(e) => setMedicCrm(e.target.value)}
+                                value={medicCrm}
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.md}
@@ -138,7 +179,7 @@ export function Medico() {
                                 errorText={false}
                                 selectSize={sizes.xs}
                             >
-                                {especialidade.map((esp: any) =>
+                                {specialty.map((esp: any) =>
                                     <Select.Item
                                         specialtyKey={esp.idEspecialidade}
                                         value={esp.idEspecialidade}
@@ -152,7 +193,8 @@ export function Medico() {
                         <Label>
                             Foto do médico
                             <input
-                                name="fotoMedico"
+                                onChange={(e: any) => setMedicImage(e.target.value)}
+                                value={medicImage}
                                 type="file"
                                 accept=".jpg, .png"
                                 id="fotoMedico"
@@ -195,7 +237,7 @@ export function Medico() {
                             <C.Th>Nome</C.Th>
                             <C.Th>Especialidade</C.Th>
                             <C.Th>CRM</C.Th>
-                            <C.Th></C.Th> 
+                            <C.Th></C.Th>
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
@@ -231,7 +273,7 @@ export function Medico() {
                                                 <Label htmlFor="nomeMedico">
                                                     Nome
                                                     <Input.Input
-                                                        name="nomeMedico"
+                                                        onChange={(e) => setMedicNameModal(e.target.value)}
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
@@ -244,7 +286,7 @@ export function Medico() {
                                                 <Label htmlFor="cpfMedico">
                                                     CPF
                                                     <Input.Input
-                                                        name="cpfMedico"
+                                                        onChange={(e) => setMedicCpfModal(e.target.value)}
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
@@ -257,7 +299,7 @@ export function Medico() {
                                                 <Label htmlFor="crmMedico">
                                                     CRM
                                                     <Input.Input
-                                                        name="crmMedico"
+                                                        onChange={(e) => setMedicCrmModal(e.target.value)}
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
@@ -271,11 +313,11 @@ export function Medico() {
                                                     Especialidade
 
                                                     <Select.Root
-                                                        onValueChange={setSelectItem}
+                                                        onValueChange={setSelectItemModal}
                                                         errorText={false}
                                                         selectSize={sizes.xs}
                                                     >
-                                                        {especialidade.map((esp: any) =>
+                                                        {specialty.map((esp: any) =>
                                                             <Select.Item
                                                                 specialtyKey={esp.idEspecialidade}
                                                                 value={esp.idEspecialidade}
@@ -288,7 +330,7 @@ export function Medico() {
                                                 <Label>
                                                     Foto do médico
                                                     <input
-                                                        name="fotoMedico"
+                                                        onChange={(e: any) => setMedicImageModal(e.target.value)}
                                                         type="file"
                                                         accept=".jpg, .png"
                                                         id="fotoMedico"

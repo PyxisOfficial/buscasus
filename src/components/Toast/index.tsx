@@ -1,31 +1,40 @@
 import { ReactNode } from 'react';
-import *  as ToastPrimitive from '@radix-ui/react-toast'
+
+import * as C from './styles';
 
 interface ToastProps {
    children: ReactNode;
+   onOpenChange?: any;
 }
 
-function ToastSucess({children}: ToastProps) {
+function ToastRoot({ children, onOpenChange }: ToastProps) {
    return (
-      <ToastPrimitive.Root>
-         <ToastPrimitive.Description>
-            {children}
-         </ToastPrimitive.Description>
-      </ToastPrimitive.Root>
+      <C.ToastBg
+         isToastOpened={onOpenChange}
+      >
+         {children}
+      </C.ToastBg>
    )
 }
 
-function ToastFail({children}: ToastProps) {
+function ToastTitle({ children }: ToastProps) {
    return (
-      <ToastPrimitive.Root>
-         <ToastPrimitive.Description>
-            {children}
-         </ToastPrimitive.Description>
-      </ToastPrimitive.Root>
+      <C.ToastTitle>
+         {children}
+      </C.ToastTitle>
    )
 }
 
-const Toast = {
-   Sucess: ToastSucess,
-   Fail: ToastFail
+function ToastDescription({ children }: ToastProps) {
+   return (
+      <C.ToastDescription>
+         {children}
+      </C.ToastDescription>
+   )
+}
+
+export const Toast = {
+   Root: ToastRoot,
+   Title: ToastTitle,
+   Description: ToastDescription
 }
