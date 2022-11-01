@@ -59,7 +59,7 @@ function AlertModal({ children, itemId, closeModal, title, modalAction, cancel, 
 }
 
 
-function EditModal({ children, itemId, closeModal, title, modalAction }: ModalProps) {
+function EditModal({ children, itemId, closeModal, title }: ModalProps) {
     return (
         <AlertDialog.Root>
             <C.EditDialogTrigger

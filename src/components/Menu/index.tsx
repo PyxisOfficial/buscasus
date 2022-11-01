@@ -1,6 +1,8 @@
 import { ReactComponentElement, ReactNode, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import UseAuth from '../../hooks/useAuth';
 
@@ -44,17 +46,18 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                     />
                     <h3>{hospitalId == 0 ? 'Administrador Geral' : hospitalName}</h3>
                     <Modal.Logout title='Realizar Logout'>
-                            <span>Tem certeza de que deseja sair?</span>
-                            <C.ButtonContainer>
-                                <Link to="/">
-                                    <Button.Green
-                                        value="Sair"
-                                        type="button"
-                                        onClick={() => [signOut(), navigate("/")]}
-                                    />
-                                </Link> 
-                            </C.ButtonContainer>
-                        </Modal.Logout>
+                        <span>Tem certeza de que deseja sair?</span>
+                        <C.ButtonContainer>
+                            <AlertDialog.Cancel asChild>
+                                <Button.Gray value="Cancelar" type="button" />
+                            </AlertDialog.Cancel>
+                            <Button.Green
+                                value="Sair"
+                                type="button"
+                                onClick={() => [signOut(), navigate("/")]}
+                            />
+                        </C.ButtonContainer>
+                    </Modal.Logout>
                 </C.Nav>
 
                 <C.SideBar>

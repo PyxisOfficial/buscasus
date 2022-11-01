@@ -1,11 +1,12 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Input';
-import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Label';
 import { Toast } from '../../../components/Toast';
@@ -20,24 +21,14 @@ export function Medico() {
     const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
     const [messageToast, setMessageToast] = useState<string>();
 
-    const [medicName, setMedicName] = useState<string>();
-    const [medicCpf, setMedicCpf] = useState<string>();
-    const [medicCrm, setMedicCrm] = useState<string>();
-    const [medicImage, setMedicImage] = useState<string>();
-    const [selectItem, setSelectItem] = useState<string>();
-
-    const [medicNameModal, setMedicNameModal] = useState<string>();
-    const [medicCpfModal, setMedicCpfModal] = useState<string>();
-    const [medicCrmModal, setMedicCrmModal] = useState<string>();
-    const [medicImageModal, setMedicImageModal] = useState<string>();
-    const [selectItemModal, setSelectItemModal] = useState<string>();
-
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
+
+    const containerRef = useRef<any>();
 
     useEffect(() => {
         axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
@@ -60,22 +51,21 @@ export function Medico() {
             setIsToastOpened(false);
         }, 2000);
 
-        setMedicName("");
-        setMedicCpf("");
-        setMedicCrm("");
-        setMedicImage("");
-        setSelectItem("");
+        containerRef.current.reset();
     }, [isFormSubmitted]);
 
     async function insertMedic(event: FormEvent) {
         event.preventDefault();
 
+        const formData = new FormData(event.target as HTMLFormElement);
+        const data: any = Object.fromEntries(formData);
+
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
-            nomeMedico: medicName,
-            cpfMedico: medicCpf,
-            crmMedico: medicCrm,
-            fotoMedico: medicImage,
-            idEspecialidade: selectItem,
+            nomeMedico: data.nomeMedico,
+            cpfMedico: data.cpfMedico,
+            crmMedico: data.crmMedico,
+            fotoMedico: data.fotoMedico.name,
+            idEspecialidade: data.idEspecialidade,
             idHospital: hospitalId
         });
 
@@ -88,12 +78,15 @@ export function Medico() {
     async function editMedic(event: FormEvent) {
         event.preventDefault();
 
+        const formData = new FormData(event.target as HTMLFormElement);
+        const data: any = Object.fromEntries(formData);
+
         await axios.put(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`, {
-            nomeMedico: medicNameModal,
-            cpfMedico: medicCpfModal,
-            crmMedico: medicCrmModal,
-            fotoMedico: medicImageModal,
-            idEspecialidade: selectItemModal
+            nomeMedico: data.nomeMedico,
+            cpfMedico: data.cpfMedico,
+            crmMedico: data.crmMedico,
+            fotoMedico: data.fotoMedico.name,
+            idEspecialidade: data.idEspecialidade
         });
 
         setIsFormSubmitted(true);
@@ -122,18 +115,17 @@ export function Medico() {
 
             <C.FormContainer>
                 <h3>Cadastrar um novo médico</h3>
-                <form onSubmit={insertMedic} autoComplete="off">
+                <form ref={containerRef} onSubmit={insertMedic} autoComplete="off">
                     <C.InputsContainer>
                         <Label htmlFor="nomeMedico">
                             Nome
                             <Input.Input
-                                onChange={(e) => setMedicName(e.target.value)}
-                                value={medicName}
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.md}
                                 type="text"
                                 id="nomeMedico"
+                                name="nomeMedico"
                                 placeholder='Mário de Andrade'
                             />
                         </Label>
@@ -141,13 +133,12 @@ export function Medico() {
                         <Label htmlFor="cpfMedico">
                             CPF
                             <Input.Input
-                                onChange={(e) => setMedicCpf(e.target.value)}
-                                value={medicCpf}
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.md}
                                 type="text"
                                 id="cpfMedico"
+                                name="cpfMedico"
                                 placeholder='123.456.789-00'
                             />
                         </Label>
@@ -155,13 +146,12 @@ export function Medico() {
                         <Label htmlFor="crmMedico">
                             CRM
                             <Input.Input
-                                onChange={(e) => setMedicCrm(e.target.value)}
-                                value={medicCrm}
                                 isWithIcon={false}
                                 errorText={false}
                                 inputSize={sizes.md}
                                 type="text"
                                 id="crmMedico"
+                                name="crmMedico"
                                 placeholder='SP/123456'
                             />
                         </Label>
@@ -169,30 +159,26 @@ export function Medico() {
                         <Label htmlFor="idEspecialidade">
                             Especialidade
 
-                            <Select.Root
-                                onValueChange={setSelectItem}
-                                errorText={false}
-                                selectSize={sizes.xs}
-                            >
+                            <select name="idEspecialidade">
+                                <option value="0">Selecione</option>
                                 {specialty.map((esp: any) =>
-                                    <Select.Item
-                                        specialtyKey={esp.idEspecialidade}
+                                    <option
+                                        key={esp.idEspecialidade}
                                         value={esp.idEspecialidade}
-                                        title={esp.nomeEspecialidade}
-                                    />
+                                    >
+                                        {esp.nomeEspecialidade}
+                                    </option>
                                 )}
-                            </Select.Root>
+                            </select>
 
                         </Label>
 
                         <Label>
                             Foto do médico
                             <input
-                                onChange={(e: any) => setMedicImage(e.target.value)}
-                                value={medicImage}
                                 type="file"
                                 accept=".jpg, .png"
-                                id="fotoMedico"
+                                name="fotoMedico"
                             />
                         </Label>
                     </C.InputsContainer>
@@ -265,73 +251,74 @@ export function Medico() {
                                             title='Editar médico'
                                         >
                                             <C.Form onSubmit={editMedic} autoComplete="off">
-                                                <Label htmlFor="nomeMedico">
+                                                <Label htmlFor="nomeMedicoModal">
                                                     Nome
                                                     <Input.Input
-                                                        onChange={(e) => setMedicNameModal(e.target.value)}
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="nomeMedico"
+                                                        id="nomeMedicoModal"
+                                                        name="nomeMedico"
                                                         defaultValue={medic.nomeMedico}
                                                     />
                                                 </Label>
 
-                                                <Label htmlFor="cpfMedico">
+                                                <Label htmlFor="cpfMedicoModal">
                                                     CPF
                                                     <Input.Input
-                                                        onChange={(e) => setMedicCpfModal(e.target.value)}
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="cpfMedico"
+                                                        id="cpfMedicoModal"
+                                                        name="cpfMedico"
                                                         defaultValue={medic.cpfMedico}
                                                     />
                                                 </Label>
 
-                                                <Label htmlFor="crmMedico">
+                                                <Label htmlFor="crmMedicoModal">
                                                     CRM
                                                     <Input.Input
-                                                        onChange={(e) => setMedicCrmModal(e.target.value)}
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="crmMedico"
+                                                        id="crmMedicoModal"
+                                                        name="crmMedico"
                                                         defaultValue={medic.crmMedico}
                                                     />
                                                 </Label>
 
-                                                <Label htmlFor="idEspecialidade">
+                                                <Label>
                                                     Especialidade
 
-                                                    <Select.Root
-                                                        onValueChange={setSelectItemModal}
-                                                        errorText={false}
-                                                        selectSize={sizes.xs}
-                                                    >
+                                                    <select name="idEspecialidade">
+                                                        <option value="0">Selecione</option>
                                                         {specialty.map((esp: any) =>
-                                                            <Select.Item
-                                                                specialtyKey={esp.idEspecialidade}
+                                                            <option
+                                                                key={esp.idEspecialidade}
                                                                 value={esp.idEspecialidade}
-                                                                title={esp.nomeEspecialidade}
-                                                            />
+                                                            >
+                                                                {esp.nomeEspecialidade}
+                                                            </option>
                                                         )}
-                                                    </Select.Root>
+                                                    </select>
                                                 </Label>
 
                                                 <Label>
                                                     Foto do médico
                                                     <input
-                                                        onChange={(e: any) => setMedicImageModal(e.target.value)}
                                                         type="file"
                                                         accept=".jpg, .png"
-                                                        id="fotoMedico"
+                                                        name="fotoMedico"
                                                     />
                                                 </Label>
+
                                                 <C.ButtonContainer>
+                                                    <AlertDialog.Cancel asChild>
+                                                        <Button.Gray value="Fechar" type="button" />
+                                                    </AlertDialog.Cancel>
                                                     <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>
                                             </C.Form>
