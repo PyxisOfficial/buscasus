@@ -24,11 +24,12 @@ export function Medico() {
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
+    const [medicPhoto, setMedicPhoto] = useState<any>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
 
-    const containerRef = useRef<any>();
+    const formRef = useRef<any>();
 
     useEffect(() => {
         axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
@@ -51,7 +52,7 @@ export function Medico() {
             setIsToastOpened(false);
         }, 2000);
 
-        containerRef.current.reset();
+        formRef.current.reset();
     }, [isFormSubmitted]);
 
     async function insertMedic(event: FormEvent) {
@@ -60,14 +61,16 @@ export function Medico() {
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
-            nomeMedico: data.nomeMedico,
-            cpfMedico: data.cpfMedico,
-            crmMedico: data.crmMedico,
-            fotoMedico: data.fotoMedico.name,
-            idEspecialidade: data.idEspecialidade,
-            idHospital: hospitalId
-        });
+        const allFormData = new FormData(event.target as HTMLFormElement);
+        allFormData.append("nomeMedico", data.nomeMedico);
+        allFormData.append("cpfMedico", data.cpfMedico);
+        allFormData.append("crmMedico", data.crmMedico);
+        allFormData.append("fotoMedico", data.fotoMedico.name);
+        allFormData.append("idEspecialidade", data.idEspecialidade);
+        allFormData.append("idHospital", hospitalId);
+        allFormData.append("picture", medicPhoto[0]);
+
+        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData);
 
         setIsFormSubmitted(true);
 
@@ -81,12 +84,19 @@ export function Medico() {
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
 
-        await axios.put(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`, {
-            nomeMedico: data.nomeMedico,
-            cpfMedico: data.cpfMedico,
-            crmMedico: data.crmMedico,
-            fotoMedico: data.fotoMedico.name,
-            idEspecialidade: data.idEspecialidade
+        const allFormData = new FormData(event.target as HTMLFormElement);
+        allFormData.append("picture", medicPhoto[0]);
+        allFormData.append('_method', 'PUT');
+
+        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData, {
+            params: {
+                nomeMedico: data.nomeMedico,
+                cpfMedico: data.cpfMedico,
+                crmMedico: data.crmMedico,
+                fotoMedico: data.fotoMedico.name,
+                idEspecialidade: data.idEspecialidade,
+                idMedico: medicId
+            }
         });
 
         setIsFormSubmitted(true);
@@ -115,7 +125,7 @@ export function Medico() {
 
             <C.FormContainer>
                 <h3>Cadastrar um novo médico</h3>
-                <form ref={containerRef} onSubmit={insertMedic} autoComplete="off">
+                <form ref={formRef} onSubmit={insertMedic} autoComplete="off">
                     <C.InputsContainer>
                         <Label htmlFor="nomeMedico">
                             Nome
@@ -176,6 +186,7 @@ export function Medico() {
                         <Label>
                             Foto do médico
                             <input
+                                onChange={(e) => setMedicPhoto(e.target.files)}
                                 type="file"
                                 accept=".jpg, .png"
                                 name="fotoMedico"
@@ -294,7 +305,7 @@ export function Medico() {
                                                     Especialidade
 
                                                     <select name="idEspecialidade">
-                                                        <option value="0">Selecione</option>
+                                                        <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
                                                         {specialty.map((esp: any) =>
                                                             <option
                                                                 key={esp.idEspecialidade}
@@ -309,6 +320,7 @@ export function Medico() {
                                                 <Label>
                                                     Foto do médico
                                                     <input
+                                                        onChange={(e) => setMedicPhoto(e.target.files)}
                                                         type="file"
                                                         accept=".jpg, .png"
                                                         name="fotoMedico"
