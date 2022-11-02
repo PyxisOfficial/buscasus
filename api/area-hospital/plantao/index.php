@@ -12,13 +12,14 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbPlantao";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[4]) && is_numeric($path[4])) {
-            $sql .= " SELECT m.idPlantao, m.tipoPlantao, DATE_FORMAT(m.inicioPlantao,'%d/%m/%Y %H:%i') AS inicioPlantao, DATE_FORMAT(m.fimPlantao,'%d/%m/%Y %H:%i') AS fimPlantao ,e.nomeMedico, e.idMedico 
-            FROM tbPlantao m
-            INNER JOIN tbMedico e
-            ON m.idMedico = e.idMedico";
+        if (isset($path[5]) && is_numeric($path[5])) {
+            $sql = " SELECT p.idPlantao, p.dataPlantao, DATE_FORMAT(p.inicioPlantao,'%d/%m/%Y %H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%d/%m/%Y %H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico 
+            FROM tbPlantao p
+            INNER JOIN tbMedico m
+            ON p.idMedico = m.idMedico
+            WHERE p.idHospital = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[4]);
+            $stmt->bindParam(':id', $path[5]);
             $stmt->execute();
             $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
@@ -31,55 +32,49 @@ switch($method) {
         break;
 
     case "POST":
-        $plantao = json_decode( file_get_contents('php://input') );
-        $sql = "INSERT INTO tbPlantao(idPlantao, tipoPlantao, inicioPlantao, fimPlantao, idhospital) VALUES(null, :tipoPlantao, :inicioPlantao, :fimPlantao, :idHospital)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':tipoPlantao', $plantao->tipoPlantao);
-        $stmt->bindParam(':inicioPlantao', $plantao->inicioPlantao);
-        $stmt->bindParam(':fimPlantao', $plantao->fimPlantao);
-        $stmt->bindParam(':idHospital', $especialidade->idHospital);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Plantão cadastrado com sucesso'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha em cadastrar o plantão'];
-        }
+        $dataPlantao = $_POST['dataPlantao'];
+        $inicioPlantao = $_POST['inicioPlantao'];
+        $fimPlantao = $_POST['fimPlantao'];
+        $idEspecialidade = $_POST['idEspecialidade'];
+        $idMedico = $_POST['idMedico'];
+        $idHospital = $_POST['idHospital'];
         
-        echo json_encode($response);
+        $sql = "INSERT INTO tbPlantao(idPlantao, dataPlantao, inicioPlantao, fimPlantao, idEspecialidade, idMedico, idHospital) VALUES(null, :dataPlantao, :inicioPlantao, :fimPlantao, :idEspecialidade, :idMedico, :idHospital)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':dataPlantao', $dataPlantao);
+        $stmt->bindParam(':inicioPlantao', $inicioPlantao);
+        $stmt->bindParam(':fimPlantao', $fimPlantao);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
+        $stmt->bindParam(':idMedico', $idMedico);
+        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->execute();
         break;
 
     case "PUT":
-        $plantao = json_decode( file_get_contents('php://input') );
-        $sql = "UPDATE tbPlantao SET tipoPlantao= :tipoPlantao, inicioPlantao = :inicioPlantao, fimPlantao = fimPlantao WHERE idPlantao = :idPlantao";
+        $idPlantao = $_GET['idPlantao'];
+        $dataPlantao = $_GET['dataPlantao'];
+        $inicioPlantao = $_GET['inicioPlantao'];
+        $fimPlantao = $_GET['fimPlantao'];
+        $idEspecialidade = $_GET['idEspecialidade'];
+        $idMedico = $_GET['idMedico'];
+
+        $sql = "UPDATE tbPlantao SET dataPlantao= :dataPlantao, inicioPlantao = :inicioPlantao, fimPlantao = :fimPlantao, idEspecialidade = :idEspecialidade, idMedico = :idMedico WHERE idPlantao = :idPlantao";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idPlantao', $plantao->idPlantao);
-        $stmt->bindParam(':tipoPlantao', $plantao->tipoPlantao);
-        $stmt->bindParam(':inicioPlantao', $plantao->inicioPlantao);
-        $stmt->bindParam(':fimPlantao', $plantao->fimPlantao);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Plantão alterado com sucesso.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha em alterar o plantão.'];
-        }
-
-        echo json_encode($response);
+        $stmt->bindParam(':idPlantao', $idPlantao);
+        $stmt->bindParam(':dataPlantao', $dataPlantao);
+        $stmt->bindParam(':inicioPlantao', $inicioPlantao);
+        $stmt->bindParam(':fimPlantao', $fimPlantao);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
+        $stmt->bindParam(':idMedico', $idMedico);
+        $stmt->execute();
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM tbPlantao WHERE idPlantao = :idPlantao";
+        $sql = "DELETE FROM tbPlantao WHERE idPlantao = :id";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idPlantao', $path[3]);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Plantão exluído com sucesso.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha na exclusão do plantão.'];
-        }
-
-        echo json_encode($response);
+        $stmt->bindParam(':id', $path[5]);
+        $stmt->execute();
         break;
 }
 ?>

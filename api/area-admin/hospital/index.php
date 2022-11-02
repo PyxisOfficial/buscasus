@@ -12,10 +12,10 @@ switch($method) {
     case "GET":
         $sql = "SELECT * FROM tbHospital";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[4]) && is_numeric($path[4])) {
+        if (isset($path[5]) && is_numeric($path[5])) {
             $sql .= " WHERE idHospital = :id";
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[4]);
+            $stmt->bindParam(':id', $path[5]);
             $stmt->execute();
             $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
@@ -27,75 +27,103 @@ switch($method) {
         echo json_encode($hospital);
         break;
 
-    case "POST":
-        $hospital = json_decode( file_get_contents('php://input') );
-        $sql = "INSERT INTO tbHospital(idHospital, nomeHospital, emailHospital, idTelefone, numTelefone, aberturaHospital, fechamentoHospital, cnpjHospital, ufHospital, logradouroHospital, complementoHospital, cepHospital, cidadeHospital, bairroHospital, fotoHospital) VALUES(null, :nomeHospital, :emailHospital, :idTelefone, :numTelefone, :aberturaHospital, :fechamentoHospital, :cnpjHospital, :ufHospital, :logradouroHospital, :complementoHospital, :cepHospital, :cidadeHospital, :bairroHospital, :fotoHospital)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nomeHospital', $hospital->nomeHospital);
-        $stmt->bindParam(':emailHospital', $hospital->emailHospital);
-        $stmt->bindParam(':idTelefone', $hospital->idTelefone);
-        $stmt->bindParam(':numTelefone', $hospital->numTelefone);
-        $stmt->bindParam(':aberturaHospital', $hospital->aberturaHospital);
-        $stmt->bindParam(':fechamentoHospital', $hospital->fechamentoHospital);
-        $stmt->bindParam(':cnpjHospital', $hospital->cnpjHospital);
-        $stmt->bindParam(':ufHospital', $hospital->ufHospital);
-        $stmt->bindParam(':logradouroHospital', $hospital->logradouroHospital);
-        $stmt->bindParam(':complementoHospital', $hospital->complementoHospital);
-        $stmt->bindParam(':cepHospital', $hospital->cepHospital);
-        $stmt->bindParam(':cidadeHospital', $hospital->cidadeHospital);
-        $stmt->bindParam(':bairroHospital', $hospital->bairroHospital);
-        $stmt->bindParam(':fotoHospital', $hospital->fotoHospital);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Hospital cadastrado com sucesso'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha em cadastrar o Hospital'];
-        }
-
-        echo json_encode($response);
-        break;
-
-    case "PUT":
-        $hospital = json_decode( file_get_contents('php://input') );
-        $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, idTelefone = :idTelefone, numTelefone = :numTelefone, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital fotoHospital = :fotoHospital WHERE idHospital = :id";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nomeHospital', $hospital->nomeHospital);
-        $stmt->bindParam(':emailHospital', $hospital->emailHospital);
-        $stmt->bindParam(':idTelefone', $hospital->idTelefone);
-        $stmt->bindParam(':numTelefone', $hospital->numTelefone);
-        $stmt->bindParam(':aberturaHospital', $hospital->aberturaHospital);
-        $stmt->bindParam(':fechamentoHospital', $hospital->fechamentoHospital);
-        $stmt->bindParam(':ufHospital', $hospital->ufHospital);
-        $stmt->bindParam(':logradouroHospital', $hospital->logradouroHospital);
-        $stmt->bindParam(':complementoHospital', $hospital->complementoHospital);
-        $stmt->bindParam(':cepHospital', $hospital->cepHospital);
-        $stmt->bindParam(':cidadeHospital', $hospital->cidadeHospital);
-        $stmt->bindParam(':bairroHospital', $hospital->bairroHospital);
-        $stmt->bindParam(':fotoHospital', $hospital->fotoHospital);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Hospital alterado com sucesso.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha em alterar o hospital.'];
-        }
-
-        echo json_encode($response);
-        break;
-
     case "DELETE":
         $sql = "DELETE FROM tbHospital WHERE idHospital = :id";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[4]);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Hospital exluído com sucesso.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha na exclusão do hospital.'];
-        }
-        
-        echo json_encode($response);
+        $stmt->bindParam(':id', $path[5]);
+        $stmt->execute();
         break;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
+    $nomeHospital = $_POST['nomeHospital'];
+    $emailHospital = $_POST['emailHospital'];
+    $numTelefone = $_POST['numTelefone'];
+    $aberturaHospital = $_POST['aberturaHospital'];
+    $fechamentoHospital = $_POST['fechamentoHospital'];
+    $cnpjHospital = $_POST['cnpjHospital'];
+    $ufHospital = $_POST['ufHospital'];
+    $logradouroHospital = $_POST['logradouroHospital'];
+    $complementoHospital = $_POST['complementoHospital'];
+    $cepHospital = $_POST['cepHospital'];
+    $cidadeHospital = $_POST['cidadeHospital'];
+    $bairroHospital = $_POST['bairroHospital'];
+    $fotoHospital = $_POST['fotoHospital'];
+    
+    $sql = "INSERT INTO tbHospital(idHospital, nomeHospital, emailHospital, aberturaHospital, fechamentoHospital, cnpjHospital, ufHospital, logradouroHospital, complementoHospital, cepHospital, cidadeHospital, bairroHospital, fotoHospital) VALUES(null, :nomeHospital, :emailHospital, :aberturaHospital, :fechamentoHospital, :cnpjHospital, :ufHospital, :logradouroHospital, :complementoHospital, :cepHospital, :cidadeHospital, :bairroHospital, :fotoHospital)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':nomeHospital', $nomeHospital);
+    $stmt->bindParam(':emailHospital', $emailHospital);
+    $stmt->bindParam(':aberturaHospital', $aberturaHospital);
+    $stmt->bindParam(':fechamentoHospital', $fechamentoHospital);
+    $stmt->bindParam(':cnpjHospital', $cnpjHospital);
+    $stmt->bindParam(':ufHospital', $ufHospital);
+    $stmt->bindParam(':logradouroHospital', $logradouroHospital);
+    $stmt->bindParam(':complementoHospital', $complementoHospital);
+    $stmt->bindParam(':cepHospital', $cepHospital);
+    $stmt->bindParam(':cidadeHospital', $cidadeHospital);
+    $stmt->bindParam(':bairroHospital', $bairroHospital);
+    $stmt->bindParam(':fotoHospital', $fotoHospital);
+    $stmt->execute();
+    $lastIdHosp = $conn->lastInsertId();
+
+    $sql = "INSERT INTO tbTelefone(idTelefone, numTelefone, idHospital) VALUES(null, :numTelefone, :idHospital)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':numTelefone', $numTelefone);
+    $stmt->bindParam(':idHospital', $lastIdHosp);
+    $stmt->execute();
+
+    $files = $_FILES['picture'];
+    $filename = $files['name'];
+    $templocation = $files['tmp_name'];
+    $file_destination = '../img/' . $filename;
+    move_uploaded_file($templocation, $file_destination);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
+    $nomeHospital = $_GET['nomeHospital'];
+    $emailHospital = $_GET['emailHospital'];
+    $numTelefone = $_GET['numTelefone'];
+    $aberturaHospital = $_GET['aberturaHospital'];
+    $fechamentoHospital = $_GET['fechamentoHospital'];
+    $cnpjHospital = $_GET['cnpjHospital'];
+    $ufHospital = $_GET['ufHospital'];
+    $logradouroHospital = $_GET['logradouroHospital'];
+    $complementoHospital = $_GET['complementoHospital'];
+    $cepHospital = $_GET['cepHospital'];
+    $cidadeHospital = $_GET['cidadeHospital'];
+    $bairroHospital = $_GET['bairroHospital'];
+    $fotoHospital = $_GET['fotoHospital'];
+    $idHospital = $_GET['idHospital'];
+    $idTelefone = $_GET['idTelefone'];
+    
+    $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital fotoHospital = :fotoHospital WHERE idHospital = :idHospital";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':nomeHospital', $nomeHospital);
+    $stmt->bindParam(':emailHospital', $emailHospital);
+    $stmt->bindParam(':aberturaHospital', $aberturaHospital);
+    $stmt->bindParam(':fechamentoHospital', $fechamentoHospital);
+    $stmt->bindParam(':cnpjHospital', $cnpjHospital);
+    $stmt->bindParam(':ufHospital', $ufHospital);
+    $stmt->bindParam(':logradouroHospital', $logradouroHospital);
+    $stmt->bindParam(':complementoHospital', $complementoHospital);
+    $stmt->bindParam(':cepHospital', $cepHospital);
+    $stmt->bindParam(':cidadeHospital', $cidadeHospital);
+    $stmt->bindParam(':bairroHospital', $bairroHospital);
+    $stmt->bindParam(':fotoHospital', $fotoHospital);
+    $stmt->bindParam(':idHospital', $idHospital);
+    $stmt->execute();
+
+    $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':numTelefone', $numTelefone);
+    $stmt->bindValue(':idTelefone', $telefone);
+
+    $files = $_FILES['picture'];
+    $filename = $files['name'];
+    $templocation = $files['tmp_name'];
+    $file_destination = '../img/' . $filename;
+    move_uploaded_file($templocation, $file_destination);
 }
 ?>

@@ -85,7 +85,7 @@ export function Medico() {
         const data: any = Object.fromEntries(formData);
 
         const allFormData = new FormData(event.target as HTMLFormElement);
-        allFormData.append("picture", medicPhoto[0]);
+        medicPhoto ? allFormData.append("picture", medicPhoto[0]) : allFormData.append("picture", "");
         allFormData.append('_method', 'PUT');
 
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData, {
@@ -102,7 +102,7 @@ export function Medico() {
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setMessageToast("Médico alterado com sucesso!");
+        setMessageToast("Médico editado com sucesso!");
     }
 
     async function deleteMedic() {
@@ -171,12 +171,12 @@ export function Medico() {
 
                             <select name="idEspecialidade">
                                 <option value="0">Selecione</option>
-                                {specialty.map((esp: any) =>
+                                {specialty.map((spe: any) =>
                                     <option
-                                        key={esp.idEspecialidade}
-                                        value={esp.idEspecialidade}
+                                        key={spe.idEspecialidade}
+                                        value={spe.idEspecialidade}
                                     >
-                                        {esp.nomeEspecialidade}
+                                        {spe.nomeEspecialidade}
                                     </option>
                                 )}
                             </select>
@@ -306,12 +306,12 @@ export function Medico() {
 
                                                     <select name="idEspecialidade">
                                                         <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
-                                                        {specialty.map((esp: any) =>
+                                                        {specialty.map((spe: any) =>
                                                             <option
-                                                                key={esp.idEspecialidade}
-                                                                value={esp.idEspecialidade}
+                                                                key={spe.idEspecialidade}
+                                                                value={spe.idEspecialidade}
                                                             >
-                                                                {esp.nomeEspecialidade}
+                                                                {spe.nomeEspecialidade}
                                                             </option>
                                                         )}
                                                     </select>
@@ -343,7 +343,7 @@ export function Medico() {
                                             cancel='Cancelar'
                                             submit='Excluir'
                                         >
-                                            Deseja apagar o médico selecionado?
+                                            Deseja excluir o médico selecionado?
                                         </Modal.Alert>
                                     </C.ButtonContainer>
                                 </C.Td>

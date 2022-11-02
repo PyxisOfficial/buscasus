@@ -5,7 +5,7 @@ export const FormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     width: 70%;
-    height: 20%;
+    height: 24%;
     background-color: #fff;
     border-radius: 10px;
     margin-bottom: 24px;
@@ -15,6 +15,12 @@ export const FormContainer = styled.div`
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `   
 
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+
 export const InputsContainer = styled.div`
     display: flex;
     align-items: center;
@@ -23,7 +29,7 @@ export const InputsContainer = styled.div`
 
 export const ButtonContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    justify-content: flex-end;
     float: right;
     gap: 8px;
 `
@@ -31,7 +37,7 @@ export const ButtonContainer = styled.div`
 export const TableContainer = styled.div`
     padding: 16px 20px 68px 20px;
     width: 70%;
-    height: 100%;
+    height: 72%;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);

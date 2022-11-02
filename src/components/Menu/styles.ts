@@ -66,7 +66,7 @@ export const TextFooter = styled.h5`
 export const LogoImg = styled.img`
     margin-top: 64px;
     max-width: 78px;
-    z-index: 2;
+    z-index: 0;
     border-radius: 50%;
     background-color: #fff;
 `

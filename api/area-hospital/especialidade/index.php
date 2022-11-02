@@ -28,51 +28,32 @@ switch($method) {
         break;
 
     case "POST":
-        $especialidade = json_decode( file_get_contents('php://input') );
+        $nomeEspecialidade = $_POST['nomeEspecialidade'];
+        $idHospital = $_POST['idHospital'];
+
         $sql = "INSERT INTO tbEspecialidade(idEspecialidade, nomeEspecialidade, idHospital) VALUES(null, :nomeEspecialidade, :idHospital)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nomeEspecialidade', $especialidade->nomeEspecialidade);
-        $stmt->bindParam(':idHospital', $especialidade->idHospital);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Especialidade cadastrada com sucesso'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha em cadastrar a especialidade'];
-        }
-
-        echo json_encode($response);
+        $stmt->bindParam(':nomeEspecialidade', $nomeEspecialidade);
+        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->execute();
         break;
 
     case "PUT":
-        $especialidade = json_decode( file_get_contents('php://input') );
+        $nomeEspecialidade = $_GET['nomeEspecialidade'];
+        $idEspecialidade = $_GET['idEspecialidade'];
+
         $sql = "UPDATE tbEspecialidade SET nomeEspecialidade= :nomeEspecialidade WHERE idEspecialidade = :idEspecialidade";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idEspecialidade', $especialidade->idEspecialidade);
-        $stmt->bindParam(':nomeEspecialidade', $especialidade->nomeEspecialidade);
-        
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Especialidade alterada com sucesso.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha em alterar a Especialidade.'];
-        }
-
-        echo json_encode($response);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
+        $stmt->bindParam(':nomeEspecialidade', $nomeEspecialidade);
+        $stmt->execute();
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM tbEspecialidade WHERE idEspecialidade = :idEspecialidade";
+        $sql = "DELETE FROM tbEspecialidade WHERE idEspecialidade = :id";
         $path = explode('/', $_SERVER['REQUEST_URI']);
-
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idEspecialidade', $path[3]);
-
-        if ($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Especialidade exluída com sucesso.'];
-        } else {
-            $response = ['status' => 0, 'message' => 'Falha na exclusão da especialidade.'];
-        }
-
-        echo json_encode($response);
+        $stmt->bindParam(':id', $path[5]);
+        $stmt->execute();
         break;
 }
