@@ -169,7 +169,7 @@ export function Medico() {
                         <Label htmlFor="idEspecialidade">
                             Especialidade
 
-                            <select name="idEspecialidade">
+                            <C.Select name="idEspecialidade">
                                 <option value="0">Selecione</option>
                                 {specialty.map((spe: any) =>
                                     <option
@@ -179,7 +179,7 @@ export function Medico() {
                                         {spe.nomeEspecialidade}
                                     </option>
                                 )}
-                            </select>
+                            </C.Select>
 
                         </Label>
 
@@ -304,7 +304,7 @@ export function Medico() {
                                                 <Label>
                                                     Especialidade
 
-                                                    <select name="idEspecialidade">
+                                                    <C.Select name="idEspecialidade">
                                                         <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
                                                         {specialty.map((spe: any) =>
                                                             <option
@@ -314,7 +314,7 @@ export function Medico() {
                                                                 {spe.nomeEspecialidade}
                                                             </option>
                                                         )}
-                                                    </select>
+                                                    </C.Select>
                                                 </Label>
 
                                                 <Label>

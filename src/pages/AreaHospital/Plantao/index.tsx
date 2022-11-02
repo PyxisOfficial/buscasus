@@ -112,7 +112,7 @@ export function Plantao() {
                         </C.InputContainer>
                         <Label htmlFor="idMedico">
                             Médico
-                            <select>
+                            <C.Select>
                                 <option value="0">Selecione</option>
                                 {medics.map((medic: any) =>
                                     <option
@@ -122,7 +122,7 @@ export function Plantao() {
                                         {medic.nomeMedico}
                                     </option>
                                 )}
-                            </select>
+                            </C.Select>
                         </Label>
 
                         <DutyCalendar

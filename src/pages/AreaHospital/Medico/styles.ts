@@ -127,8 +127,17 @@ export const InfoContainer = styled.div`
 `
 
 export const InfoImg = styled.img`
-    width: 200px;
-    height: 200px;
+    width: 12vw;
+    height: 25vh;
+    border: 2px solid #313131;
     border-radius: 8px;
     object-fit: cover;
+    background-position: 100%;
+`
+
+export const Select = styled.select`
+    border-radius: 6px;
+    outline: none;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #b3a9a9;
 `

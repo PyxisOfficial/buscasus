@@ -144,8 +144,9 @@ export const InfoContainer = styled.div`
 `
 
 export const InfoImg = styled.img`
-    width: 200px;
-    height: 200px;
+    width: 25vw;
+    height: 45vh;
+    border: 2px solid #313131;
     border-radius: 8px;
     object-fit: cover;
 `

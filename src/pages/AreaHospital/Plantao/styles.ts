@@ -140,3 +140,10 @@ export const InfoImg = styled.img`
     border-radius: 8px;
     object-fit: cover;
 `
+
+export const Select = styled.select`
+    border-radius: 6px;
+    outline: none;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #b3a9a9;
+`

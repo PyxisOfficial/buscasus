@@ -31,9 +31,8 @@ export const FormContainer = styled.div`
     background-color: #fff;
     border-radius: 10px;
     margin-bottom: 25px;
-    padding: 10px;
+    padding: 16px 20px;
     white-space: nowrap;
-    height: 268px;
 `
 
 export const Title = styled.h3`
@@ -127,4 +126,11 @@ export const Td = styled.td`
     padding: 4px;
     text-align: left;
     width: 150px;
+`
+
+export const Select = styled.select`
+    border-radius: 6px;
+    outline: none;
+    padding: 2px 6px 2px 6px;
+    border: 1px solid #b3a9a9;
 `
