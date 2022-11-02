@@ -253,7 +253,7 @@ export function Medico() {
                                                     <C.Text><b>Especialidade:</b> {medic.nomeEspecialidade}</C.Text>
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
-                                                <C.InfoImg src={`../../../../api/area-hospital/img/${medic.fotoMedico}`} />
+                                                <C.InfoImg src={`http://localhost/buscaSusWeb/api/area-hospital/img/${medic.fotoMedico}`} />
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Edit

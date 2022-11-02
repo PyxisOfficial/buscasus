@@ -33,6 +33,7 @@ export const FormContainer = styled.div`
     margin-bottom: 25px;
     padding: 10px;
     white-space: nowrap;
+    height: 268px;
 `
 
 export const Title = styled.h3`
@@ -65,7 +66,7 @@ export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
     background-color: #fff;
     border-radius: 10px;
-    height: 100%;
+    height: 50%;
 `
 
 export const TableContainerHeader = styled.div`

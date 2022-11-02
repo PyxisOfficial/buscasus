@@ -6,6 +6,11 @@ export const Container = styled.div`
     width: 100%;
 `
 
+export const Text = styled.span`
+    font-size: 18px;
+    font-weight: 500;
+`
+
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -49,6 +54,7 @@ export const InputContainer = styled.div`
 
 export const ButtonContainer = styled.div`
     display: flex;
+    justify-content: flex-end;
     float: right;
     gap: 8px;
     margin-top: 12px;
@@ -59,7 +65,6 @@ export const TableContainer = styled.div`
     width: 55%;
     background-color: #fff;
     border-radius: 10px;  
-    padding: 16px 20px;
 `
 
 export const TableContainerHeader = styled.div`
@@ -120,4 +125,27 @@ export const Td = styled.td`
     padding: 4px;
     text-align: left;
     width: 350px;
+`
+
+export const InfoModalContent = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+`
+
+export const InfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+`
+
+export const InfoImg = styled.img`
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
 `

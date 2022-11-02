@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { DutyCalendar } from '../../../components/Calendar';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Input';
-import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Label';
+import { Toast } from '../../../components/Toast';
 
-import { MagnifyingGlass, Trash, Pencil } from 'phosphor-react';
+import { MagnifyingGlass, Pencil } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -17,13 +19,62 @@ import { Value } from 'react-multi-date-picker';
 export function Plantao() {
     const [dates, setDates] = useState<Value>();
 
+    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+
+    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
+    const [messageToast, setMessageToast] = useState<string>();
+
+    const [duty, setDuty] = useState([]);
+    const [dutyId, setDutyId] = useState<number>();
+    const [medics, setMedics] = useState([]);
+
+    const getHospitalId: any = localStorage.getItem("hospital_id");
+    const hospitalId = JSON.parse(getHospitalId);
+
+    useEffect(() => {
+        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/plantao/${hospitalId}`).then((response) => {
+            setDuty(response.data);
+        });
+
+        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
+            setMedics(response.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/plantao/${hospitalId}`).then((response) => {
+            setDuty(response.data);
+        });
+
+        setIsFormSubmitted(false);
+
+        setTimeout(() => {
+            setIsToastOpened(false);
+        }, 2000);
+    }, [isFormSubmitted]);
+
+    async function deleteDuty() {
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/plantao/${dutyId}`);
+
+        setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setMessageToast("Plantão excluído com sucesso!");
+    }
+
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
+
+            <Toast.Root
+                onOpenChange={isToastOpened}
+            >
+                <Toast.Description>{messageToast}</Toast.Description>
+            </Toast.Root>
+
             <C.Container>
                 <C.FormContainer>
                     <h3>Cadastrar um novo plantão</h3>
                     <C.Form autoComplete="off">
-                        <input hidden id="idPlantao" name="idPlantao" />
                         <Label htmlFor="TipoPlantao">
                             Tipo do plantão
                             <Input.Input
@@ -61,19 +112,18 @@ export function Plantao() {
                         </C.InputContainer>
                         <Label htmlFor="idMedico">
                             Médico
-                            <Select.Root
-                                onValueChange={null}
-                                errorText={false}
-                                selectSize={sizes.xl}
-                            >
-                                <Select.Item
-                                    id={1}
-                                    value="1"
-                                    title="Dorivaldo Benegripe"
-                                />
-                            </Select.Root>
+                            <select>
+                                <option value="0">Selecione</option>
+                                {medics.map((medic: any) =>
+                                    <option
+                                        key={medic.idMedico}
+                                        value={medic.idMedico}
+                                    >
+                                        {medic.nomeMedico}
+                                    </option>
+                                )}
+                            </select>
                         </Label>
-                        <input type="hidden" name="idHospital" />
 
                         <DutyCalendar
                             dates={dates}
@@ -113,7 +163,7 @@ export function Plantao() {
                     <C.Table>
                         <C.Thead>
                             <C.Tr>
-                                <C.Th>Tipo do Plantão</C.Th>
+                                <C.Th>Data</C.Th>
                                 <C.Th>Início</C.Th>
                                 <C.Th>Fim</C.Th>
                                 <C.Th>Médico</C.Th>
@@ -121,22 +171,31 @@ export function Plantao() {
                             </C.Tr>
                         </C.Thead>
                         <C.Tbody>
-                            <C.InnerTr>
-                                <C.Td>Tipo do plantão</C.Td>
-                                <C.Td>Início</C.Td>
-                                <C.Td>Fim</C.Td>
-                                <C.Td>Médico</C.Td>
-                                <C.Td>
-                                    <C.ButtonContainer>
-                                        <Button.Delete>
-                                            <Trash size={24} />
-                                        </Button.Delete>
-                                        <Button.Edit>
-                                            <Pencil size={24} />
-                                        </Button.Edit>
-                                    </C.ButtonContainer>
-                                </C.Td>
-                            </C.InnerTr>
+                            {duty.map((duty: any, key) =>
+                                <C.InnerTr key={key}>
+                                    <C.Td>{duty.dataPlantao}</C.Td>
+                                    <C.Td>{duty.inicioPlantao}</C.Td>
+                                    <C.Td>{duty.fimPlantao}</C.Td>
+                                    <C.Td>{duty.nomeMedico}</C.Td>
+                                    <C.Td>
+                                        <C.ButtonContainer>
+                                            <Button.Edit>
+                                                <Pencil size={24} />
+                                            </Button.Edit>
+                                            <Modal.Alert
+                                                itemId={() => { setDutyId(duty.idPlantao) }}
+                                                closeModal={() => { setDutyId(0) }}
+                                                title="Excluir plantão"
+                                                modalAction={deleteDuty}
+                                                cancel='Cancelar'
+                                                submit='Excluir'
+                                            >
+                                                Deseja excluir o plantão selecionado?
+                                            </Modal.Alert>
+                                        </C.ButtonContainer>
+                                    </C.Td>
+                                </C.InnerTr>
+                            )}
                         </C.Tbody>
                     </C.Table>
                 </C.TableContainer>

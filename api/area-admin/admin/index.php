@@ -30,10 +30,10 @@ switch($method) {
     case "POST":
         $loginAdmin = $_POST['loginAdmin'];
         $senhaAdmin = $_POST['senhaAdmin'];
-        $tipoAdmin = $_POST['tipoAdmin'];
+        $tipoAdmin = '0';
         $idHospital = $_POST['idHospital'];
         
-        $sql = "INSERT INTO tdAdmin(idAdmin, loginAdmin, senhaAdmin, tipoAdmin, idHospital) VALUES(null, :loginAdmin, :senhaAdmin, :tipoAdmin, :idHospital)";
+        $sql = "INSERT INTO tbAdmin(idAdmin, loginAdmin, senhaAdmin, tipoAdmin, idHospital) VALUES(null, :loginAdmin, :senhaAdmin, :tipoAdmin, :idHospital)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':loginAdmin', $loginAdmin);
         $stmt->bindParam(':senhaAdmin', $senhaAdmin);
@@ -43,16 +43,12 @@ switch($method) {
         break;
 
     case "PUT":
-        $loginAdmin = $_GET['loginAdmin'];
         $senhaAdmin = $_GET['senhaAdmin'];
-        $tipoAdmin = $_GET['tipoAdmin'];
         $idAdmin = $_GET['idAdmin'];
         
-        $sql = "UPDATE tbAdmin SET loginAdmin= :loginAdmin, senhaAdmin =:senhaAdmin, tipoAdmin =:tipoAdmin WHERE idAdmin =:idAdmin";
+        $sql = "UPDATE tbAdmin SET senhaAdmin =:senhaAdmin WHERE idAdmin =:idAdmin";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':loginAdmin', $loginAdmin);
         $stmt->bindParam(':senhaAdmin', $senhaAdmin);
-        $stmt->bindParam(':tipoAdmin', $tipoAdmin);
         $stmt->bindParam(':idAdmin', $idAdmin);
         $stmt->execute();
         break;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2022 at 06:58 PM
+-- Generation Time: Nov 02, 2022 at 03:51 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -154,6 +154,13 @@ CREATE TABLE `tbplantao` (
   `idHospital` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `tbplantao`
+--
+
+INSERT INTO `tbplantao` (`idPlantao`, `dataPlantao`, `inicioPlantao`, `fimPlantao`, `idEspecialidade`, `idMedico`, `idHospital`) VALUES
+(5, '2022-11-09', '08:00:00', '21:00:00', 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -178,17 +185,18 @@ CREATE TABLE `tbreclamacao` (
 CREATE TABLE `tbtelefone` (
   `idTelefone` int(11) NOT NULL,
   `numTelefone` varchar(15) NOT NULL,
-  `idHospital` int(11) NOT NULL
+  `idHospital` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbtelefone`
 --
 
-INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`) VALUES
-(1, '(11) 2551-3300', 1),
-(2, '(11) 4674-8400', 2),
-(3, '(11) 4746-5188', 3);
+INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idUsuario`) VALUES
+(1, '(11) 2551-3300', 1, 0),
+(2, '(11) 4674-8400', 2, 0),
+(3, '(11) 4746-5188', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -203,6 +211,13 @@ CREATE TABLE `tbusuario` (
   `senhaUsuario` varchar(100) NOT NULL,
   `cpfUsuario` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbusuario`
+--
+
+INSERT INTO `tbusuario` (`idUsuario`, `nomeUsuario`, `dtNasctoUsuario`, `senhaUsuario`, `cpfUsuario`) VALUES
+(2, 'Leandro Coelho Saraiva', '2004-07-24', '123', '195.173.500-58');
 
 --
 -- Indexes for dumped tables
@@ -258,7 +273,8 @@ ALTER TABLE `tbreclamacao`
 --
 ALTER TABLE `tbtelefone`
   ADD PRIMARY KEY (`idTelefone`),
-  ADD KEY `fk_idHospital` (`idHospital`);
+  ADD KEY `fk_idHospital` (`idHospital`),
+  ADD KEY `fk_idUsuario` (`idUsuario`);
 
 --
 -- Indexes for table `tbusuario`
@@ -298,7 +314,7 @@ ALTER TABLE `tbmedico`
 -- AUTO_INCREMENT for table `tbplantao`
 --
 ALTER TABLE `tbplantao`
-  MODIFY `idPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbreclamacao`
@@ -316,7 +332,7 @@ ALTER TABLE `tbtelefone`
 -- AUTO_INCREMENT for table `tbusuario`
 --
 ALTER TABLE `tbusuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

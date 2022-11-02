@@ -13,7 +13,7 @@ switch($method) {
         $sql = "SELECT * FROM tbPlantao";
         $path = explode('/', $_SERVER['REQUEST_URI']);
         if (isset($path[5]) && is_numeric($path[5])) {
-            $sql = " SELECT p.idPlantao, p.dataPlantao, DATE_FORMAT(p.inicioPlantao,'%d/%m/%Y %H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%d/%m/%Y %H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico 
+            $sql = " SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico 
             FROM tbPlantao p
             INNER JOIN tbMedico m
             ON p.idMedico = m.idMedico

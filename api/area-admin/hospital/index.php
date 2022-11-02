@@ -10,33 +10,34 @@ $conn = $connection->connect();
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
     case "GET":
-        $sql = "SELECT * FROM tbHospital";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[5]) && is_numeric($path[5])) {
-            $sql .= " WHERE idHospital = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[5]);
-            $stmt->execute();
-            $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+        $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital
+        FROM tbHospital h
+        INNER JOIN tbTelefone t
+        ON h.idHospital = t.idHospital";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo json_encode($hospital);
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM tbHospital WHERE idHospital = :id";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
+        $idHospital = $_GET['idHospital'];
+        $idTelefone = $_GET['idTelefone'];
+
+        $sql = "DELETE FROM tbHospital WHERE idHospital = :idHospital";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[5]);
+        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->execute();
+
+        $sql = "DELETE FROM tbTelefone WHERE idTelefone = :idTelefone";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':idTelefone', $idTelefone);
         $stmt->execute();
         break;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeHospital'])) {
     $nomeHospital = $_POST['nomeHospital'];
     $emailHospital = $_POST['emailHospital'];
     $numTelefone = $_POST['numTelefone'];
@@ -66,12 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $stmt->bindParam(':bairroHospital', $bairroHospital);
     $stmt->bindParam(':fotoHospital', $fotoHospital);
     $stmt->execute();
-    $lastIdHosp = $conn->lastInsertId();
+    $lastHospId = $conn->lastInsertId();
 
     $sql = "INSERT INTO tbTelefone(idTelefone, numTelefone, idHospital) VALUES(null, :numTelefone, :idHospital)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':numTelefone', $numTelefone);
-    $stmt->bindParam(':idHospital', $lastIdHosp);
+    $stmt->bindParam(':idHospital', $lastHospId);
     $stmt->execute();
 
     $files = $_FILES['picture'];
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     move_uploaded_file($templocation, $file_destination);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeHospital'])) {
     $nomeHospital = $_GET['nomeHospital'];
     $emailHospital = $_GET['emailHospital'];
     $numTelefone = $_GET['numTelefone'];
@@ -98,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
     $idHospital = $_GET['idHospital'];
     $idTelefone = $_GET['idTelefone'];
     
-    $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital fotoHospital = :fotoHospital WHERE idHospital = :idHospital";
+    $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, cnpjHospital = :cnpjHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital, cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital, fotoHospital = :fotoHospital WHERE idHospital = :idHospital";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':nomeHospital', $nomeHospital);
     $stmt->bindParam(':emailHospital', $emailHospital);
@@ -118,7 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
     $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':numTelefone', $numTelefone);
-    $stmt->bindValue(':idTelefone', $telefone);
+    $stmt->bindValue(':idTelefone', $idTelefone);
+    $stmt->execute();
 
     $files = $_FILES['picture'];
     $filename = $files['name'];

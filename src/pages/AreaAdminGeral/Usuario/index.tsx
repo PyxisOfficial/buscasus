@@ -1,48 +1,127 @@
-import { useState } from 'react';
+import { FormEvent, useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
+import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Input';
-import { Select } from '../../../components/Select';
 import { Button } from '../../../components/Button';
+import { Toast } from '../../../components/Toast';
 
-import { MagnifyingGlass, Trash, Pencil, EyeSlash, Eye } from 'phosphor-react';
+import { MagnifyingGlass, EyeSlash, Eye } from 'phosphor-react';
 
 import * as C from './styles';
 
 export function Usuario() {
+    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+
+    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
+    const [messageToast, setMessageToast] = useState<string>();
+
+    const [users, setUsers] = useState([]);
+    const [adminUsers, setAdminUsers] = useState([]);
+    const [adminUserId, setAdminUserId] = useState<number>();
+    const [hospital, setHospital] = useState([]);
+
+    const formRef = useRef<any>();
+
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
 
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
+            setAdminUsers(response.data);
+        });
+
+        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/').then((response) => {
+            setUsers(response.data);
+        });
+
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/').then((response) => {
+            setHospital(response.data);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
+            setAdminUsers(response.data);
+        });
+
+        setIsFormSubmitted(false);
+
+        setTimeout(() => {
+            setIsToastOpened(false);
+        }, 2000);
+
+        formRef.current.reset();
+    }, [isFormSubmitted]);
+
+    async function insertUser(event: FormEvent) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target as HTMLFormElement);
+        const data: any = Object.fromEntries(formData);
+
+        const allFormData = new FormData(event.target as HTMLFormElement);
+        allFormData.append("loginAdmin", data.loginAdmin);
+        allFormData.append("senhaAdmin", data.senhaAdmin);
+        allFormData.append("idHospital", data.idHospital);
+
+        await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', allFormData).then((response) => {
+            console.log(response.data);
+
+        })
+
+        setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setMessageToast("Administrador cadastrado com sucesso!");
+    }
+
+    async function deleteUser() {
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-admin/admin/${adminUserId}`);
+
+        setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setMessageToast("Administrador excluído com sucesso!");
+    }
+
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
+
+            <Toast.Root
+                onOpenChange={isToastOpened}
+            >
+                <Toast.Description>{messageToast}</Toast.Description>
+            </Toast.Root>
+
             <C.Container>
                 <C.AdminColumn>
                     <C.FormContainer>
                         <C.Title>Cadastrar novo administrador de um hospital</C.Title>
-                        <form autoComplete="off">
-                            <input hidden name="idAdminHospital" />
+                        <form ref={formRef} onSubmit={insertUser} autoComplete="off">
                             <C.InputContainer>
-                                <label htmlFor="loginAdminHospital">Nome de usuário:</label>
+                                <label htmlFor="loginAdmin">Nome de usuário:</label>
                                 <Input.Input
                                     isWithIcon={false}
                                     errorText={false}
                                     inputSize={sizes.sm}
                                     type="text"
-                                    name="loginAdminHospital"
-                                    id="loginAdminHospital"
+                                    name="loginAdmin"
+                                    id="loginAdmin"
                                 />
                             </C.InputContainer>
                             <C.InputContainer>
-                                <label htmlFor="senhaAdminHospital">Senha:</label>
+                                <label htmlFor="senhaAdmin">Senha:</label>
                                 <Input.Root>
                                     <Input.Input
                                         isWithIcon={false}
                                         errorText={false}
                                         inputSize={sizes.sm}
                                         type={isPasswordVisible ? "text" : "password"}
-                                        name="senhaAdminHospital"
-                                        id="senhaAdminHospital"
+                                        name="senhaAdmin"
+                                        id="senhaAdmin"
                                     />
 
                                     <Input.RightIcon
@@ -76,20 +155,21 @@ export function Usuario() {
 
                                 </Input.Root>
                             </C.InputContainer>
-                            <input type="hidden" name="tipoAdmin" value="1" />
                             <C.InputContainer>
                                 <label htmlFor="idHospital">Hospital:</label>
-                                <Select.Root
-                                    onValueChange={null}
-                                    errorText={false}
-                                    selectSize={sizes.lg}
-                                >
-                                    <Select.Item
-                                        id={1}
-                                        value="1"
-                                        title="Hospital Geral de Guaianazes"
-                                    />
-                                </Select.Root>
+
+                                <select name="idHospital">
+                                    <option value="0">Selecione</option>
+                                    {hospital.map((hosp: any) =>
+                                        <option
+                                            key={hosp.idHospital}
+                                            value={hosp.idHospital}
+                                        >
+                                            {hosp.nomeHospital}
+                                        </option>
+                                    )}
+                                </select>
+
                             </C.InputContainer>
                             <C.ButtonContainer>
                                 <Button.Gray value="Cancelar" type="reset" />
@@ -133,21 +213,27 @@ export function Usuario() {
                                 </C.Tr>
                             </C.Thead>
                             <C.Tbody>
-                                <C.InnerTr>
-                                    <C.Td>Nome</C.Td>
-                                    <C.Td>*******</C.Td>
-                                    <C.Td>Id Hospital</C.Td>
-                                    <C.Td>
-                                        <C.ButtonContainer>
-                                            <Button.Delete>
-                                                <Trash size={24} />
-                                            </Button.Delete>
-                                            <Button.Edit>
-                                                <Pencil size={24} />
-                                            </Button.Edit>
-                                        </C.ButtonContainer>
-                                    </C.Td>
-                                </C.InnerTr>
+                                {adminUsers.map((user: any, key) =>
+                                    <C.InnerTr key={key}>
+                                        <C.Td>{user.loginAdmin}</C.Td>
+                                        <C.Td>{user.senhaAdmin}</C.Td>
+                                        <C.Td>{user.idHospital}</C.Td>
+                                        <C.Td>
+                                            <C.ButtonContainer>
+                                                <Modal.Alert
+                                                    itemId={() => { setAdminUserId(user.idAdmin) }}
+                                                    closeModal={() => { setAdminUserId(0) }}
+                                                    title="Excluir administrador"
+                                                    modalAction={deleteUser}
+                                                    cancel='Cancelar'
+                                                    submit='Excluir'
+                                                >
+                                                    Deseja excluir o administrador selecionado?
+                                                </Modal.Alert>
+                                            </C.ButtonContainer>
+                                        </C.Td>
+                                    </C.InnerTr>
+                                )}
                             </C.Tbody>
                         </C.Table>
                     </C.TableContainer>
@@ -186,11 +272,13 @@ export function Usuario() {
                             </C.Tr>
                         </C.Thead>
                         <C.Tbody>
-                            <C.InnerTr>
-                                <C.Td>Id</C.Td>
-                                <C.Td>Nome</C.Td>
-                                <C.Td>Cpf</C.Td>
-                            </C.InnerTr>
+                            {users.map((user: any, key) =>
+                                <C.InnerTr key={key}>
+                                    <C.Td>{user.idUsuario}</C.Td>
+                                    <C.Td>{user.nomeUsuario}</C.Td>
+                                    <C.Td>{user.cpfUsuario}</C.Td>
+                                </C.InnerTr>
+                            )}
                         </C.Tbody>
                     </C.Table>
                 </C.UserColumn>
