@@ -27,6 +27,7 @@ export function Plantao() {
     const [duty, setDuty] = useState([]);
     const [dutyId, setDutyId] = useState<number>();
     const [medics, setMedics] = useState([]);
+    const [dutyType, setDutyType] = useState([]);
     const [search, setSearch] = useState<string>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
@@ -47,6 +48,10 @@ export function Plantao() {
             }
         }).then((response) => {
             setMedics(response.data);
+        });
+
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then((response) => {
+            setDutyType(response.data);
         });
     }, []);
 
@@ -116,14 +121,17 @@ export function Plantao() {
                     <C.Form autoComplete="off">
                         <Label htmlFor="TipoPlantao">
                             Tipo do plantão
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.xl}
-                                type="text"
-                                id="tipoPlantao"
-                                name="tipoPlantao"
-                            />
+                            <C.Select name="tipoPlantao">
+                                <option value="0">Selecione</option>
+                                {dutyType.map((dt: any) =>
+                                    <option
+                                        key={dt.idTipoPlantao}
+                                        value={dt.idTipoPlantao}
+                                    >
+                                        {dt.tipoPlantao}
+                                    </option>
+                                )}
+                            </C.Select>
                         </Label>
                         <C.InputContainer>
                             <Label htmlFor="inicioPlantao">
@@ -151,7 +159,7 @@ export function Plantao() {
                         </C.InputContainer>
                         <Label htmlFor="idMedico">
                             Médico
-                            <C.Select>
+                            <C.Select name="medico">
                                 <option value="0">Selecione</option>
                                 {medics.map((medic: any) =>
                                     <option
