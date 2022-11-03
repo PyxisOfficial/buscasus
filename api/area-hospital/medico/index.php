@@ -21,6 +21,13 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+} else if (isset($_GET['count'])) {
+    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $medico = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($medico);
 } else {
     $idHospital = @$_GET['idHospital'];
 

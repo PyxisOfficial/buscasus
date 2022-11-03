@@ -46,6 +46,7 @@ export const LoginButton = styled(Button)`
     text-transform: uppercase;
     font-weight: 600;
     font-size: 20px;
+    margin-top: 10px;
 
     &:hover {
         background-color: #fff;

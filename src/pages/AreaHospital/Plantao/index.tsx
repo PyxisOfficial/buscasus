@@ -10,7 +10,7 @@ import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
 import { Toast } from '../../../components/Toast';
 
-import { MagnifyingGlass, Pencil } from 'phosphor-react';
+import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -219,9 +219,7 @@ export function Plantao() {
                                     <C.Td>{duty.nomeMedico}</C.Td>
                                     <C.Td>
                                         <C.ButtonContainer>
-                                            <Button.Edit>
-                                                <Pencil size={24} />
-                                            </Button.Edit>
+
                                             <Modal.Alert
                                                 itemId={() => { setDutyId(duty.idPlantao) }}
                                                 closeModal={() => { setDutyId(0) }}

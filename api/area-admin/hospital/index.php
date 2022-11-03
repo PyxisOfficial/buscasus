@@ -19,6 +19,13 @@ if (isset($_GET['search'])) {
     $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($hospital);
+} else if (isset($_GET['count'])) {
+    $sql = "SELECT COUNT(idHospital) AS idHospital FROM tbHospital";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $hospital = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($hospital);
 } else {
     $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital
     FROM tbHospital h

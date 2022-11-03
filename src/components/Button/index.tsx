@@ -38,36 +38,6 @@ function LoginButton({ value, type }: ButtonProps) {
     )
 }
 
-function LogoutButton({ value, type, ...props }: ButtonProps) {
-    return (
-        <C.LogoutButton
-            value={value}
-            type={type}
-            {...props}
-        />
-    )
-}
-
-interface IconButtonProps {
-    children: ReactNode;
-}
-
-function DeleteButton({ children }: IconButtonProps) {
-    return (
-        <C.IconButton>
-            {children}
-        </C.IconButton>
-    )
-}
-
-function EditButton({ children }: IconButtonProps) {
-    return (
-        <C.EditButton>
-            {children}
-        </C.EditButton>
-    )
-}
-
 function PdfButton() {
     return (
         <C.EditButton>
@@ -81,8 +51,5 @@ export const Button = {
     Green: GreenButton,
     Gray: GrayButton,
     Login: LoginButton,
-    Logout: LogoutButton,
-    Delete: DeleteButton,
-    Edit: EditButton,
     Pdf: PdfButton
 }

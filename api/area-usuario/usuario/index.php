@@ -16,6 +16,13 @@ if (isset($_GET['search'])) {
     $usuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($usuario);
+} else if (isset($_GET['count'])) {
+    $sql = "SELECT COUNT(idUsuario) AS idUsuario FROM tbUsuario";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($usuario);
 } else {
     $sql = "SELECT * FROM tbUsuario";
     $stmt = $conn->prepare($sql);

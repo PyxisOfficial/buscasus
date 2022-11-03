@@ -131,10 +131,6 @@ export function LoginHospital() {
                             </Input.ErrorMessage>
                         </Input.Root>
 
-                        <C.ForgotPasswordContainer>
-                            <C.ForgotPasswordText href="#">Esqueceu a senha?</C.ForgotPasswordText>
-                        </C.ForgotPasswordContainer>
-
                         <Button.Login value="Login" type="submit" />
                     </C.Form>
 

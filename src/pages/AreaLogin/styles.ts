@@ -62,23 +62,6 @@ export const Form = styled.form`
     padding-right: 10%;
 `
 
-export const ForgotPasswordContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
-`
-
-export const ForgotPasswordText = styled.a`
-    font-size: 12px;
-    text-decoration: none;
-    color: #000;
-
-    &:hover {
-    text-decoration: underline;
-}
-`
-
 export const Button = styled.input`
     width: 100%;
     text-transform: uppercase;
