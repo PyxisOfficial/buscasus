@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, ReactNode } from 'react';
+import { FilePdf } from 'phosphor-react';
 
 import * as C from './styles';
 
@@ -18,7 +19,7 @@ function GreenButton({ value, type, ...props }: ButtonProps) {
     )
 }
 
-function GrayButton({ value, type,...props }: ButtonProps) {
+function GrayButton({ value, type, ...props }: ButtonProps) {
     return (
         <C.GrayButton
             value={value}
@@ -67,11 +68,21 @@ function EditButton({ children }: IconButtonProps) {
     )
 }
 
+function PdfButton() {
+    return (
+        <C.EditButton>
+            <FilePdf size={18} weight="bold" />
+            <C.Text>Download</C.Text>
+        </C.EditButton>
+    )
+}
+
 export const Button = {
     Green: GreenButton,
     Gray: GrayButton,
     Login: LoginButton,
     Logout: LogoutButton,
     Delete: DeleteButton,
-    Edit: EditButton
+    Edit: EditButton,
+    Pdf: PdfButton
 }

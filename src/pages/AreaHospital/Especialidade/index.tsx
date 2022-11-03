@@ -6,9 +6,9 @@ import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Modal } from '../../../components/Modal';
-import { Input, sizes } from '../../../components/Input';
+import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
-import { Label } from '../../../components/Label';
+import { Label } from '../../../components/Form/Label';
 import { Toast } from '../../../components/Toast';
 
 import { MagnifyingGlass } from 'phosphor-react';
@@ -182,7 +182,7 @@ export function Especialidade() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
-                        <Button.Green value="Download" type="button" />
+                        <Button.Pdf />
                     </C.InputsContainer>
                 </C.TableContainerHeader>
                 <C.Table>

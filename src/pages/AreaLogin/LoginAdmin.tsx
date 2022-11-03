@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import UseAuth from '../../hooks/useAuth';
 
-import { Input } from '../../components/Input';
-import { LoginError } from '../../components/LoginError';
+import { Input } from '../../components/Form/Input';
+import { LoginError } from '../../components/Form/LoginError';
 import { Button } from '../../components/Button';
 import { User, Lock, Eye, EyeSlash } from 'phosphor-react';
 

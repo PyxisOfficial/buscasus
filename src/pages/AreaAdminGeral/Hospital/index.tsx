@@ -6,7 +6,7 @@ import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
-import { Input, sizes } from '../../../components/Input';
+import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Toast } from '../../../components/Toast';
 
@@ -341,7 +341,7 @@ export function Hospital() {
                                     <MagnifyingGlass size={16} />
                                 </Input.LeftIcon>
                             </Input.Root>
-                            <Button.Green value="Download" type="button" />
+                            <Button.Pdf />
                         </C.InputsContainer>
                     </C.TableContainerHeader>
                     <C.Table>

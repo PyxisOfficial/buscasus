@@ -93,3 +93,18 @@ export const EditButton = styled(IconButton)`
         color: #3eb08f;
     }
 `
+
+export const PdfButton = styled(IconButton)`
+    border: 1px solid #3eb08f;
+    background-color: #3eb08f;
+
+    &:hover {
+        background-color: #fff;
+        color: #3eb08f;
+    }
+`
+
+export const Text = styled.span`
+    margin-left: 4px;
+    font-weight: bold;
+`
