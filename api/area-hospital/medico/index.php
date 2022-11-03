@@ -7,36 +7,33 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
-$method = $_SERVER['REQUEST_METHOD'];
-switch ($method) {
-    case "GET":
-        $sql = "SELECT * FROM tbMedico";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[5]) && is_numeric($path[5])) {
-            $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
-                    INNER JOIN tbEspecialidade e 
-                    ON m.idEspecialidade = e.idEspecialidade 
-                    WHERE m.idHospital = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[5]);
-            $stmt->execute();
-            $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $idHospital = @$_GET['idHospital'];
 
-        echo json_encode($medico);
-        break;
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
+            INNER JOIN tbEspecialidade e 
+            ON m.idEspecialidade = e.idEspecialidade 
+            WHERE m.nomeMedico LIKE '%$search%' AND m.idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    case "DELETE":
-        $sql = "DELETE FROM tbMedico WHERE idMedico = :id";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[5]);
-        $stmt->execute();
-        break;
+    echo json_encode($medico);
+} else {
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
+            INNER JOIN tbEspecialidade e 
+            ON m.idEspecialidade = e.idEspecialidade 
+            WHERE m.idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($medico);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
@@ -66,26 +63,40 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
     $nomeMedico = $_GET['nomeMedico'];
-    $cpfMedico = $_GET['cpfMedico'];
-    $crmMedico = $_GET['crmMedico'];
     $fotoMedico = $_GET['fotoMedico'];
     $idEspecialidade = $_GET['idEspecialidade'];
     $idMedico = $_GET['idMedico'];
+    $files = @$_FILES['picture'];
 
-    $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, cpfMedico =:cpfMedico, crmMedico =:crmMedico, fotoMedico =:fotoMedico, idEspecialidade =:idEspecialidade WHERE idMedico = :idMedico";
+    if (isset($files)) {
+        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, fotoMedico =:fotoMedico, idEspecialidade =:idEspecialidade WHERE idMedico = :idMedico";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nomeMedico', $nomeMedico);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
+        $stmt->bindParam(':fotoMedico', $fotoMedico);
+        $stmt->bindParam(':idMedico', $idMedico);
+        $stmt->execute();
+
+        $filename = $files['name'];
+        $templocation = $files['tmp_name'];
+        $file_destination = '../img/' . $filename;
+        move_uploaded_file($templocation, $file_destination);
+    } else {
+        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, idEspecialidade =:idEspecialidade WHERE idMedico = :idMedico";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nomeMedico', $nomeMedico);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
+        $stmt->bindParam(':idMedico', $idMedico);
+        $stmt->execute();
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
+    $idMedico = $_GET['idMedico'];
+
+    $sql = "DELETE FROM tbMedico WHERE idMedico = :id";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':nomeMedico', $nomeMedico);
-    $stmt->bindParam(':cpfMedico', $cpfMedico);
-    $stmt->bindParam(':crmMedico', $crmMedico);
-    $stmt->bindParam(':idEspecialidade', $idEspecialidade);
-    $stmt->bindParam(':fotoMedico', $fotoMedico);
-    $stmt->bindParam(':idMedico', $idMedico);
+    $stmt->bindParam(':id', $idMedico);
     $stmt->execute();
-
-    $files = $_FILES['picture'];
-    $filename = $files['name'];
-    $templocation = $files['tmp_name'];
-    $file_destination = '../img/' . $filename;
-    move_uploaded_file($templocation, $file_destination);
 }
 ?>

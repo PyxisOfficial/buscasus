@@ -27,24 +27,48 @@ export function Plantao() {
     const [duty, setDuty] = useState([]);
     const [dutyId, setDutyId] = useState<number>();
     const [medics, setMedics] = useState([]);
+    const [search, setSearch] = useState<string>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/plantao/${hospitalId}`).then((response) => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then((response) => {
             setDuty(response.data);
         });
 
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then((response) => {
             setMedics(response.data);
         });
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/plantao/${hospitalId}`).then((response) => {
-            setDuty(response.data);
-        });
+        if (search) {
+            axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
+                params: {
+                    search: search,
+                    idHospital: hospitalId
+                }
+            }).then(response => {
+                setDuty(response.data);
+            });
+        } else {
+            axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
+                params: {
+                    idHospital: hospitalId
+                }
+            }).then((response) => {
+                setDuty(response.data);
+            });
+        }
 
         setIsFormSubmitted(false);
 
@@ -53,8 +77,23 @@ export function Plantao() {
         }, 2000);
     }, [isFormSubmitted]);
 
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
+            params: {
+                search: search,
+                idHospital: hospitalId
+            }
+        }).then(response => {
+            setDuty(response.data);
+        });
+    }, [search]);
+
     async function deleteDuty() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/plantao/${dutyId}`);
+        await axios.delete('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
+            params: {
+                idPlantao: dutyId
+            }
+        });
 
         setIsFormSubmitted(true);
 
@@ -142,6 +181,7 @@ export function Plantao() {
                         <C.InputsContainer>
                             <Input.Root>
                                 <Input.Input
+                                    onChange={(e) => setSearch(e.target.value)}
                                     isWithIcon
                                     errorText={false}
                                     inputSize={sizes.md}

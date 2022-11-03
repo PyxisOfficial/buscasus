@@ -7,26 +7,26 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+
+    $sql = "SELECT * FROM tbAdmin WHERE loginAdmin LIKE '%$search%'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($admin);
+} else {
+    $sql = "SELECT * FROM tbAdmin";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($admin);
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
-    case "GET":
-        $sql = "SELECT * FROM tbAdmin";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[5]) && is_numeric($path[5])) {
-            $sql .= " WHERE idHospital = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[5]);
-            $stmt->execute();
-            $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        echo json_encode($admin);
-        break;
-
     case "POST":
         $loginAdmin = $_POST['loginAdmin'];
         $senhaAdmin = $_POST['senhaAdmin'];

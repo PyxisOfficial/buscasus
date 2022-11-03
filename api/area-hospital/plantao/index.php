@@ -7,30 +7,39 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico 
+    FROM tbPlantao p
+    INNER JOIN tbMedico m
+    ON p.idMedico = m.idMedico
+    WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($plantao);
+} else {
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico 
+    FROM tbPlantao p
+    INNER JOIN tbMedico m
+    ON p.idMedico = m.idMedico
+    WHERE p.idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($plantao);
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
-    case "GET":
-        $sql = "SELECT * FROM tbPlantao";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[5]) && is_numeric($path[5])) {
-            $sql = " SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico 
-            FROM tbPlantao p
-            INNER JOIN tbMedico m
-            ON p.idMedico = m.idMedico
-            WHERE p.idHospital = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[5]);
-            $stmt->execute();
-            $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        echo json_encode($plantao);
-        break;
-
     case "POST":
         $dataPlantao = $_POST['dataPlantao'];
         $inicioPlantao = $_POST['inicioPlantao'];
@@ -70,10 +79,11 @@ switch($method) {
         break;
 
     case "DELETE":
+        $idPlantao = $_GET['idPlantao'];
+
         $sql = "DELETE FROM tbPlantao WHERE idPlantao = :id";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[5]);
+        $stmt->bindParam(':id', $idPlantao);
         $stmt->execute();
         break;
 }

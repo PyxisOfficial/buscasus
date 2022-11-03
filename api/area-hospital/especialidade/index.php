@@ -7,26 +7,32 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade
+            WHERE nomeEspecialidade LIKE '%$search%' AND idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($especialidade);
+} else {
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade WHERE idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($especialidade);
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
-    case "GET":
-        $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
-        if (isset($path[5]) && is_numeric($path[5])) {
-            $sql .= " WHERE idHospital = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[5]);
-            $stmt->execute();
-            $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        echo json_encode($especialidade);
-        break;
-
     case "POST":
         $nomeEspecialidade = $_POST['nomeEspecialidade'];
         $idHospital = $_POST['idHospital'];
@@ -50,10 +56,11 @@ switch($method) {
         break;
 
     case "DELETE":
+        $idEspecialidade = $_GET['idEspecialidade'];
+
         $sql = "DELETE FROM tbEspecialidade WHERE idEspecialidade = :id";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[5]);
+        $stmt->bindParam(':id', $idEspecialidade);
         $stmt->execute();
         break;
 }

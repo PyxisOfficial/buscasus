@@ -1,6 +1,8 @@
 import { FormEvent, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
+
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
@@ -23,6 +25,8 @@ export function Usuario() {
     const [adminUsers, setAdminUsers] = useState([]);
     const [adminUserId, setAdminUserId] = useState<number>();
     const [hospital, setHospital] = useState([]);
+    const [searchAdmin, setSearchAdmin] = useState<string>();
+    const [searchUser, setSearchUser] = useState<string>();
 
     const formRef = useRef<any>();
 
@@ -44,9 +48,19 @@ export function Usuario() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
-            setAdminUsers(response.data);
-        });
+        if (searchAdmin) {
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/', {
+                params: {
+                    search: searchAdmin
+                }
+            }).then((response) => {
+                setAdminUsers(response.data);
+            });
+        } else {
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
+                setAdminUsers(response.data);
+            });
+        }
 
         setIsFormSubmitted(false);
 
@@ -56,6 +70,24 @@ export function Usuario() {
 
         formRef.current.reset();
     }, [isFormSubmitted]);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/', {
+            params: {
+                search: searchAdmin,
+            }
+        }).then(response => {
+            setAdminUsers(response.data);
+        });
+
+        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/', {
+            params: {
+                search: searchUser,
+            }
+        }).then((response) => {
+            setUsers(response.data);
+        });
+    }, [searchAdmin, searchUser]);
 
     async function insertUser(event: FormEvent) {
         event.preventDefault();
@@ -77,6 +109,25 @@ export function Usuario() {
 
         setIsToastOpened(true);
         setMessageToast("Administrador cadastrado com sucesso!");
+    }
+
+    async function editUser(event: FormEvent) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target as HTMLFormElement);
+        const data: any = Object.fromEntries(formData);
+
+        await axios.put('http://localhost/buscaSusWeb/api/area-admin/admin/', null, {
+            params: {
+                senhaAdmin: data.senhaAdmin,
+                idAdmin: adminUserId
+            }
+        });
+
+        setIsFormSubmitted(true);
+
+        setIsToastOpened(true);
+        setMessageToast("Administrador editado com sucesso!");
     }
 
     async function deleteUser() {
@@ -113,7 +164,7 @@ export function Usuario() {
                                         name="loginAdmin"
                                         id="loginAdmin"
                                     />
-                                    </Label>
+                                </Label>
                             </C.InputContainer>
                             <C.InputContainer>
                                 <Label htmlFor="senhaAdmin">
@@ -193,6 +244,7 @@ export function Usuario() {
                             <C.InputsContainer>
                                 <Input.Root>
                                     <Input.Input
+                                        onChange={(e) => setSearchAdmin(e.target.value)}
                                         isWithIcon
                                         errorText={false}
                                         inputSize={sizes.sm}
@@ -229,6 +281,82 @@ export function Usuario() {
                                         <C.Td>{user.idHospital}</C.Td>
                                         <C.Td>
                                             <C.ButtonContainer>
+                                                <Modal.Edit
+                                                    itemId={() => { setAdminUserId(user.idAdmin) }}
+                                                    closeModal={() => { setAdminUserId(0) }}
+                                                    title='Editar administrador'
+                                                >
+                                                    <form onSubmit={editUser} autoComplete="off">
+                                                        <C.InputContainer>
+                                                            <Label htmlFor="loginAdminModal">
+                                                                Nome de usuário
+                                                                <Input.Input
+                                                                    isWithIcon={false}
+                                                                    errorText={false}
+                                                                    inputSize={sizes.xl}
+                                                                    type="text"
+                                                                    name="loginAdmin"
+                                                                    id="loginAdminModal"
+                                                                    defaultValue={user.loginAdmin}
+                                                                    disabled
+                                                                />
+                                                            </Label>
+                                                        </C.InputContainer>
+                                                        <C.InputContainer>
+                                                            <Label htmlFor="senhaAdminModal">
+                                                                Nova senha
+                                                                <Input.Root>
+                                                                    <Input.Input
+                                                                        isWithIcon={false}
+                                                                        errorText={false}
+                                                                        inputSize={sizes.xl}
+                                                                        type={isPasswordVisible ? "text" : "password"}
+                                                                        name="senhaAdmin"
+                                                                        id="senhaAdminModal"
+                                                                    />
+
+                                                                    <Input.RightIcon
+                                                                        topPosition={1}
+                                                                        rightPosition={4}
+                                                                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                                                    >
+                                                                        {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                                                    </Input.RightIcon>
+
+                                                                </Input.Root>
+                                                            </Label>
+                                                        </C.InputContainer>
+                                                        <C.InputContainer>
+                                                            <Label htmlFor="confirmarSenhaModal">
+                                                                Confirmar nova senha
+                                                                <Input.Root>
+                                                                    <Input.Input
+                                                                        isWithIcon={false}
+                                                                        errorText={false}
+                                                                        inputSize={sizes.xl}
+                                                                        type={isConfirmPasswordVisible ? "text" : "password"}
+                                                                        id="confirmarSenhaModal"
+                                                                    />
+
+                                                                    <Input.RightIcon
+                                                                        topPosition={1}
+                                                                        rightPosition={4}
+                                                                        onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                                                                    >
+                                                                        {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                                                    </Input.RightIcon>
+
+                                                                </Input.Root>
+                                                            </Label>
+                                                        </C.InputContainer>
+                                                        <C.ButtonContainer>
+                                                            <AlertDialog.Cancel asChild>
+                                                                <Button.Gray value="Fechar" type="button" />
+                                                            </AlertDialog.Cancel>
+                                                            <Button.Green value="Salvar" type="submit" />
+                                                        </C.ButtonContainer>
+                                                    </form>
+                                                </Modal.Edit>
                                                 <Modal.Alert
                                                     itemId={() => { setAdminUserId(user.idAdmin) }}
                                                     closeModal={() => { setAdminUserId(0) }}
@@ -253,6 +381,7 @@ export function Usuario() {
                         <C.InputsContainer>
                             <Input.Root>
                                 <Input.Input
+                                    onChange={(e) => setSearchUser(e.target.value)}
                                     isWithIcon
                                     errorText={false}
                                     inputSize={sizes.sm}

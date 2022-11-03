@@ -23,6 +23,7 @@ export function Especialidade() {
 
     const [specialty, setSpecialty] = useState([]);
     const [specialtyId, setSpecialtyId] = useState<number>();
+    const [search, setSearch] = useState<string>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -30,15 +31,34 @@ export function Especialidade() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/${hospitalId}`).then((response) => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then(response => {
             setSpecialty(response.data);
         });
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/${hospitalId}`).then((response) => {
-            setSpecialty(response.data);
-        });
+        if (search) {
+            axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+                params: {
+                    search: search,
+                    idHospital: hospitalId
+                }
+            }).then(response => {
+                setSpecialty(response.data);
+            });
+        } else {
+            axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+                params: {
+                    idHospital: hospitalId
+                }
+            }).then(response => {
+                setSpecialty(response.data);
+            });
+        }
 
         setIsFormSubmitted(false);
 
@@ -48,6 +68,17 @@ export function Especialidade() {
 
         formRef.current.reset();
     }, [isFormSubmitted]);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+            params: {
+                search: search,
+                idHospital: hospitalId
+            }
+        }).then(response => {
+            setSpecialty(response.data);
+        })
+    }, [search]);
 
     async function insertSpecialty(event: FormEvent) {
         event.preventDefault();
@@ -87,7 +118,11 @@ export function Especialidade() {
     }
 
     async function deleteSpecialty() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/${specialtyId}`);
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/`, {
+            params: {
+                idEspecialidade: specialtyId
+            }
+        });
 
         setIsFormSubmitted(true);
 
@@ -131,6 +166,7 @@ export function Especialidade() {
                     <C.InputsContainer>
                         <Input.Root>
                             <Input.Input
+                                onChange={(e) => setSearch(e.target.value)}
                                 isWithIcon
                                 errorText={false}
                                 inputSize={sizes.lg}

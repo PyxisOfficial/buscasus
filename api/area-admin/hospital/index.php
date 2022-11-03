@@ -7,34 +7,28 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
-$method = $_SERVER['REQUEST_METHOD'];
-switch($method) {
-    case "GET":
-        $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital
-        FROM tbHospital h
-        INNER JOIN tbTelefone t
-        ON h.idHospital = t.idHospital";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
 
-        echo json_encode($hospital);
-        break;
+    $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital FROM tbHospital h
+    INNER JOIN tbTelefone t
+    ON h.idHospital = t.idHospital
+    WHERE h.nomeHospital LIKE '%$search%'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    case "DELETE":
-        $idHospital = $_GET['idHospital'];
-        $idTelefone = $_GET['idTelefone'];
+    echo json_encode($hospital);
+} else {
+    $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital
+    FROM tbHospital h
+    INNER JOIN tbTelefone t
+    ON h.idHospital = t.idHospital";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $sql = "DELETE FROM tbHospital WHERE idHospital = :idHospital";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idHospital', $idHospital);
-        $stmt->execute();
-
-        $sql = "DELETE FROM tbTelefone WHERE idTelefone = :idTelefone";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':idTelefone', $idTelefone);
-        $stmt->execute();
-        break;
+    echo json_encode($hospital);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeHospital'])) {
@@ -88,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeHospital'])) {
     $numTelefone = $_GET['numTelefone'];
     $aberturaHospital = $_GET['aberturaHospital'];
     $fechamentoHospital = $_GET['fechamentoHospital'];
-    $cnpjHospital = $_GET['cnpjHospital'];
     $ufHospital = $_GET['ufHospital'];
     $logradouroHospital = $_GET['logradouroHospital'];
     $complementoHospital = $_GET['complementoHospital'];
@@ -98,34 +91,71 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeHospital'])) {
     $fotoHospital = $_GET['fotoHospital'];
     $idHospital = $_GET['idHospital'];
     $idTelefone = $_GET['idTelefone'];
-    
-    $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, cnpjHospital = :cnpjHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital, cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital, fotoHospital = :fotoHospital WHERE idHospital = :idHospital";
+    $files = @$_FILES['picture'];
+
+    if (isset($files)) {
+        $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital, cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital, fotoHospital = :fotoHospital WHERE idHospital = :idHospital";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nomeHospital', $nomeHospital);
+        $stmt->bindParam(':emailHospital', $emailHospital);
+        $stmt->bindParam(':aberturaHospital', $aberturaHospital);
+        $stmt->bindParam(':fechamentoHospital', $fechamentoHospital);
+        $stmt->bindParam(':ufHospital', $ufHospital);
+        $stmt->bindParam(':logradouroHospital', $logradouroHospital);
+        $stmt->bindParam(':complementoHospital', $complementoHospital);
+        $stmt->bindParam(':cepHospital', $cepHospital);
+        $stmt->bindParam(':cidadeHospital', $cidadeHospital);
+        $stmt->bindParam(':bairroHospital', $bairroHospital);
+        $stmt->bindParam(':fotoHospital', $fotoHospital);
+        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->execute();
+
+        $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':numTelefone', $numTelefone);
+        $stmt->bindValue(':idTelefone', $idTelefone);
+        $stmt->execute();
+
+        $filename = $files['name'];
+        $templocation = $files['tmp_name'];
+        $file_destination = '../img/' . $filename;
+        move_uploaded_file($templocation, $file_destination);
+    } else {
+        $sql = "UPDATE tbHospital SET nomeHospital = :nomeHospital, emailHospital = :emailHospital, aberturaHospital = :aberturaHospital, fechamentoHospital = :fechamentoHospital, ufHospital = :ufHospital, logradouroHospital = :logradouroHospital, complementoHospital = :complementoHospital, cepHospital = :cepHospital, cidadeHospital = :cidadeHospital, bairroHospital = :bairroHospital WHERE idHospital = :idHospital";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':nomeHospital', $nomeHospital);
+        $stmt->bindParam(':emailHospital', $emailHospital);
+        $stmt->bindParam(':aberturaHospital', $aberturaHospital);
+        $stmt->bindParam(':fechamentoHospital', $fechamentoHospital);
+        $stmt->bindParam(':ufHospital', $ufHospital);
+        $stmt->bindParam(':logradouroHospital', $logradouroHospital);
+        $stmt->bindParam(':complementoHospital', $complementoHospital);
+        $stmt->bindParam(':cepHospital', $cepHospital);
+        $stmt->bindParam(':cidadeHospital', $cidadeHospital);
+        $stmt->bindParam(':bairroHospital', $bairroHospital);
+        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->execute();
+
+        $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':numTelefone', $numTelefone);
+        $stmt->bindValue(':idTelefone', $idTelefone);
+        $stmt->execute();
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
+    $idHospital = $_GET['idHospital'];
+    $idTelefone = $_GET['idTelefone'];
+
+    $sql = "DELETE FROM tbHospital WHERE idHospital = :idHospital";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':nomeHospital', $nomeHospital);
-    $stmt->bindParam(':emailHospital', $emailHospital);
-    $stmt->bindParam(':aberturaHospital', $aberturaHospital);
-    $stmt->bindParam(':fechamentoHospital', $fechamentoHospital);
-    $stmt->bindParam(':cnpjHospital', $cnpjHospital);
-    $stmt->bindParam(':ufHospital', $ufHospital);
-    $stmt->bindParam(':logradouroHospital', $logradouroHospital);
-    $stmt->bindParam(':complementoHospital', $complementoHospital);
-    $stmt->bindParam(':cepHospital', $cepHospital);
-    $stmt->bindParam(':cidadeHospital', $cidadeHospital);
-    $stmt->bindParam(':bairroHospital', $bairroHospital);
-    $stmt->bindParam(':fotoHospital', $fotoHospital);
     $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
 
-    $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
+    $sql = "DELETE FROM tbTelefone WHERE idTelefone = :idTelefone";
     $stmt = $conn->prepare($sql);
-    $stmt->bindValue(':numTelefone', $numTelefone);
     $stmt->bindValue(':idTelefone', $idTelefone);
     $stmt->execute();
-
-    $files = $_FILES['picture'];
-    $filename = $files['name'];
-    $templocation = $files['tmp_name'];
-    $file_destination = '../img/' . $filename;
-    move_uploaded_file($templocation, $file_destination);
 }
 ?>

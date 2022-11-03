@@ -25,6 +25,7 @@ export function Medico() {
     const [medicId, setMedicId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
     const [medicPhoto, setMedicPhoto] = useState<any>();
+    const [search, setSearch] = useState<string>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -32,21 +33,45 @@ export function Medico() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then(response => {
             setMedics(response.data);
         });
 
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/${hospitalId}`).then((response) => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then(response => {
             setSpecialty(response.data);
         });
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-hospital/medico/${hospitalId}`).then((response) => {
-            setMedics(response.data);
-        });
+        if (search) {
+            axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+                params: {
+                    search: search,
+                    idHospital: hospitalId
+                }
+            }).then(response => {
+                setMedics(response.data);
+            });
+        } else {
+            axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+                params: {
+                    idHospital: hospitalId
+                }
+            }).then(response => {
+                setMedics(response.data);
+            });
+        }
 
         setIsFormSubmitted(false);
+        setMedicPhoto(null);
 
         setTimeout(() => {
             setIsToastOpened(false);
@@ -54,6 +79,17 @@ export function Medico() {
 
         formRef.current.reset();
     }, [isFormSubmitted]);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            params: {
+                search: search,
+                idHospital: hospitalId
+            }
+        }).then(response => {
+            setMedics(response.data);
+        });
+    }, [search]);
 
     async function insertMedic(event: FormEvent) {
         event.preventDefault();
@@ -85,14 +121,12 @@ export function Medico() {
         const data: any = Object.fromEntries(formData);
 
         const allFormData = new FormData(event.target as HTMLFormElement);
-        medicPhoto ? allFormData.append("picture", medicPhoto[0]) : allFormData.append("picture", "");
+        medicPhoto ? allFormData.append("picture", medicPhoto[0]) : null;
         allFormData.append('_method', 'PUT');
 
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData, {
             params: {
                 nomeMedico: data.nomeMedico,
-                cpfMedico: data.cpfMedico,
-                crmMedico: data.crmMedico,
                 fotoMedico: data.fotoMedico.name,
                 idEspecialidade: data.idEspecialidade,
                 idMedico: medicId
@@ -106,7 +140,11 @@ export function Medico() {
     }
 
     async function deleteMedic() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/${medicId}`);
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/`, {
+            params: {
+                idMedico: medicId
+            }
+        });
 
         setIsFormSubmitted(true);
 
@@ -205,6 +243,7 @@ export function Medico() {
                     <C.InputsContainer>
                         <Input.Root>
                             <Input.Input
+                                onChange={(e) => setSearch(e.target.value)}
                                 isWithIcon
                                 errorText={false}
                                 inputSize={sizes.lg}
@@ -233,7 +272,6 @@ export function Medico() {
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
-
                         {medics.map((medic: any, key) =>
                             <C.InnerTr key={key}>
                                 <C.Td>{medic.nomeMedico}</C.Td>
@@ -275,29 +313,27 @@ export function Medico() {
                                                     />
                                                 </Label>
 
-                                                <Label htmlFor="cpfMedicoModal">
+                                                <Label>
                                                     CPF
                                                     <Input.Input
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="cpfMedicoModal"
-                                                        name="cpfMedico"
                                                         defaultValue={medic.cpfMedico}
+                                                        disabled
                                                     />
                                                 </Label>
 
-                                                <Label htmlFor="crmMedicoModal">
+                                                <Label>
                                                     CRM
                                                     <Input.Input
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="crmMedicoModal"
-                                                        name="crmMedico"
                                                         defaultValue={medic.crmMedico}
+                                                        disabled
                                                     />
                                                 </Label>
 

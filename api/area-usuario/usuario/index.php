@@ -7,17 +7,26 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+
+    $sql = "SELECT * FROM tbUsuario WHERE nomeUsuario LIKE '%$search%'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $usuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($usuario);
+} else {
+    $sql = "SELECT * FROM tbUsuario";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $usuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($usuario);
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
-    case "GET":
-        $sql = "SELECT * FROM tbUsuario";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        echo json_encode($user);
-        break;
-
     case "POST":
         $nomeUsuario = $_POST['nomeUsuario'];
         $dtNasctoUsuario = $_POST['dtNasctoUsuario'];

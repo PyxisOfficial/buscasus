@@ -24,6 +24,7 @@ export function Hospital() {
     const [hospitalId, setHospitalId] = useState<number>();
     const [phoneId, setPhoneId] = useState<number>();
     const [hospitalPhoto, setHospitalPhoto] = useState<any>();
+    const [search, setSearch] = useState<string>();
 
     const formRef = useRef<any>();
 
@@ -34,11 +35,22 @@ export function Hospital() {
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-admin/hospital/`).then((response) => {
-            setHospital(response.data);
-        });
+        if (search) {
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+                params: {
+                    search: search
+                }
+            }).then(response => {
+                setHospital(response.data);
+            });
+        } else {
+            axios.get(`http://localhost/buscaSusWeb/api/area-admin/hospital/`).then((response) => {
+                setHospital(response.data);
+            });
+        }
 
         setIsFormSubmitted(false);
+        setHospitalPhoto(null);
 
         setTimeout(() => {
             setIsToastOpened(false);
@@ -46,6 +58,16 @@ export function Hospital() {
 
         formRef.current.reset();
     }, [isFormSubmitted]);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+            params: {
+                search: search,
+            }
+        }).then(response => {
+            setHospital(response.data);
+        });
+    }, [search]);
 
     async function insertHospital(event: FormEvent) {
         event.preventDefault();
@@ -84,7 +106,7 @@ export function Hospital() {
         const data: any = Object.fromEntries(formData);
 
         const allFormData = new FormData(event.target as HTMLFormElement);
-        hospitalPhoto ? allFormData.append("picture", hospitalPhoto[0]) : allFormData.append("picture", "");
+        hospitalPhoto ? allFormData.append("picture", hospitalPhoto[0]) : null;
         allFormData.append('_method', 'PUT');
 
         await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', allFormData, {
@@ -94,7 +116,6 @@ export function Hospital() {
                 numTelefone: data.numTelefone,
                 aberturaHospital: data.aberturaHospital,
                 fechamentoHospital: data.fechamentoHospital,
-                cnpjHospital: data.cnpjHospital,
                 ufHospital: data.ufHospital,
                 logradouroHospital: data.logradouroHospital,
                 complementoHospital: data.complementoHospital,
@@ -304,6 +325,7 @@ export function Hospital() {
                         <C.InputsContainer>
                             <Input.Root>
                                 <Input.Input
+                                    onChange={(e) => setSearch(e.target.value)}
                                     isWithIcon
                                     errorText={false}
                                     inputSize={sizes.sm}
@@ -435,16 +457,15 @@ export function Hospital() {
                                                     </C.InputContainer>
 
                                                     <C.InputContainer>
-                                                        <C.Label htmlFor="cnpjHospitalModal">
+                                                        <C.Label>
                                                             CNPJ
                                                             <Input.Input
                                                                 isWithIcon={false}
                                                                 errorText={false}
                                                                 inputSize={sizes.sm}
                                                                 type="text"
-                                                                name="cnpjHospital"
-                                                                id="cnpjHospitalModal"
                                                                 defaultValue={hosp.cnpjHospital}
+                                                                disabled
                                                             />
                                                         </C.Label>
 
