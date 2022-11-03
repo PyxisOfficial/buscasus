@@ -11,9 +11,11 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
             INNER JOIN tbEspecialidade e 
-            ON m.idEspecialidade = e.idEspecialidade 
+            ON m.idEspecialidade = e.idEspecialidade
+            INNER JOIN tbTelefone t
+            ON m.idMedico = t.idMedico 
             WHERE m.nomeMedico LIKE '%$search%' AND m.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -31,9 +33,11 @@ if (isset($_GET['search'])) {
 } else {
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
             INNER JOIN tbEspecialidade e 
-            ON m.idEspecialidade = e.idEspecialidade 
+            ON m.idEspecialidade = e.idEspecialidade
+            INNER JOIN tbTelefone t
+            ON m.idMedico = t.idMedico 
             WHERE m.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -47,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $nomeMedico = $_POST['nomeMedico'];
     $cpfMedico = $_POST['cpfMedico'];
     $crmMedico = $_POST['crmMedico'];
+    $numTelefone = $_POST['numTelefone'];
     $fotoMedico = $_POST['fotoMedico'];
     $idEspecialidade = $_POST['idEspecialidade'];
     $idHospital = $_POST['idHospital'];
@@ -60,6 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $stmt->bindParam(':idEspecialidade', $idEspecialidade);
     $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
+    $lastMedId = $conn->lastInsertId();
+
+    $sql = "INSERT INTO tbTelefone(idTelefone, numTelefone, idMedico) VALUES(null, :numTelefone, :idMedico)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':numTelefone', $numTelefone);
+    $stmt->bindParam(':idMedico', $lastMedId);
+    $stmt->execute();
         
     $files = $_FILES['picture'];
     $filename = $files['name'];
@@ -70,9 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
     $nomeMedico = $_GET['nomeMedico'];
+    $numTelefone = $_GET['numTelefone'];
     $fotoMedico = $_GET['fotoMedico'];
     $idEspecialidade = $_GET['idEspecialidade'];
     $idMedico = $_GET['idMedico'];
+    $idTelefone = $_GET['idTelefone'];
     $files = @$_FILES['picture'];
 
     if (isset($files)) {
@@ -82,6 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
         $stmt->bindParam(':idEspecialidade', $idEspecialidade);
         $stmt->bindParam(':fotoMedico', $fotoMedico);
         $stmt->bindParam(':idMedico', $idMedico);
+        $stmt->execute();
+
+        $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':numTelefone', $numTelefone);
+        $stmt->bindValue(':idTelefone', $idTelefone);
         $stmt->execute();
 
         $filename = $files['name'];
@@ -95,15 +115,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
         $stmt->bindParam(':idEspecialidade', $idEspecialidade);
         $stmt->bindParam(':idMedico', $idMedico);
         $stmt->execute();
+
+        $sql = "UPDATE tbTelefone SET numTelefone = :numTelefone WHERE idTelefone = :idTelefone";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':numTelefone', $numTelefone);
+        $stmt->bindValue(':idTelefone', $idTelefone);
+        $stmt->execute();
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
     $idMedico = $_GET['idMedico'];
+    $idTelefone = $_GET['idTelefone'];
 
     $sql = "DELETE FROM tbMedico WHERE idMedico = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idMedico);
+    $stmt->execute();
+
+    $sql = "DELETE FROM tbTelefone WHERE idTelefone = :idTelefone";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':idTelefone', $idTelefone);
     $stmt->execute();
 }
 ?>

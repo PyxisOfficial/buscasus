@@ -7,24 +7,6 @@ export const Container = styled.div`
     height: 100%;
 `
 
-export const AdminColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 45%;
-    height: 100%;
-`
-
-export const UserColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 10px;
-`
-
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -33,6 +15,7 @@ export const FormContainer = styled.div`
     margin-bottom: 25px;
     padding: 16px 20px;
     white-space: nowrap;
+    height: 374px;
 `
 
 export const Title = styled.h3`
@@ -65,7 +48,7 @@ export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
     background-color: #fff;
     border-radius: 10px;
-    height: 50%;
+    height: 100%;
 `
 
 export const TableContainerHeader = styled.div`

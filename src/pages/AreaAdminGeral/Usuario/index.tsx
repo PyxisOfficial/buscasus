@@ -21,12 +21,10 @@ export function Usuario() {
     const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
     const [messageToast, setMessageToast] = useState<string>();
 
-    const [users, setUsers] = useState([]);
     const [adminUsers, setAdminUsers] = useState([]);
     const [adminUserId, setAdminUserId] = useState<number>();
     const [hospital, setHospital] = useState([]);
     const [searchAdmin, setSearchAdmin] = useState<string>();
-    const [searchUser, setSearchUser] = useState<string>();
 
     const formRef = useRef<any>();
 
@@ -36,10 +34,6 @@ export function Usuario() {
     useEffect(() => {
         axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
             setAdminUsers(response.data);
-        });
-
-        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/').then((response) => {
-            setUsers(response.data);
         });
 
         axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/').then((response) => {
@@ -79,15 +73,7 @@ export function Usuario() {
         }).then(response => {
             setAdminUsers(response.data);
         });
-
-        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/', {
-            params: {
-                search: searchUser,
-            }
-        }).then((response) => {
-            setUsers(response.data);
-        });
-    }, [searchAdmin, searchUser]);
+    }, [searchAdmin]);
 
     async function insertUser(event: FormEvent) {
         event.preventDefault();
@@ -131,7 +117,11 @@ export function Usuario() {
     }
 
     async function deleteUser() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-admin/admin/${adminUserId}`);
+        await axios.delete('http://localhost/buscaSusWeb/api/area-admin/admin/', {
+            params: {
+                idAdmin: adminUserId
+            }
+        });
 
         setIsFormSubmitted(true);
 
@@ -149,248 +139,110 @@ export function Usuario() {
             </Toast.Root>
 
             <C.Container>
-                <C.AdminColumn>
-                    <C.FormContainer>
-                        <C.Title>Cadastrar novo administrador de um hospital</C.Title>
-                        <form ref={formRef} onSubmit={insertUser} autoComplete="off">
-                            <C.InputContainer>
-                                <Label htmlFor="loginAdmin">
-                                    Nome de usuário
+                <C.FormContainer>
+                    <C.Title>Cadastrar novo administrador de um hospital</C.Title>
+                    <form ref={formRef} onSubmit={insertUser} autoComplete="off">
+                        <C.InputContainer>
+                            <Label htmlFor="loginAdmin">
+                                Nome de usuário
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.sm}
+                                    type="text"
+                                    name="loginAdmin"
+                                    id="loginAdmin"
+                                />
+                            </Label>
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <Label htmlFor="senhaAdmin">
+                                Senha
+                                <Input.Root>
                                     <Input.Input
                                         isWithIcon={false}
                                         errorText={false}
                                         inputSize={sizes.sm}
-                                        type="text"
-                                        name="loginAdmin"
-                                        id="loginAdmin"
+                                        type={isPasswordVisible ? "text" : "password"}
+                                        name="senhaAdmin"
+                                        id="senhaAdmin"
                                     />
-                                </Label>
-                            </C.InputContainer>
-                            <C.InputContainer>
-                                <Label htmlFor="senhaAdmin">
-                                    Senha
-                                    <Input.Root>
-                                        <Input.Input
-                                            isWithIcon={false}
-                                            errorText={false}
-                                            inputSize={sizes.sm}
-                                            type={isPasswordVisible ? "text" : "password"}
-                                            name="senhaAdmin"
-                                            id="senhaAdmin"
-                                        />
 
-                                        <Input.RightIcon
-                                            topPosition={1}
-                                            rightPosition={4}
-                                            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                                        >
-                                            {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                        </Input.RightIcon>
+                                    <Input.RightIcon
+                                        topPosition={1}
+                                        rightPosition={4}
+                                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                    >
+                                        {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                    </Input.RightIcon>
 
-                                    </Input.Root>
-                                </Label>
-                            </C.InputContainer>
-                            <C.InputContainer>
-                                <Label htmlFor="confirmarSenha">
-                                    Confirmar senha
-                                    <Input.Root>
-                                        <Input.Input
-                                            isWithIcon={false}
-                                            errorText={false}
-                                            inputSize={sizes.sm}
-                                            type={isConfirmPasswordVisible ? "text" : "password"}
-                                            id="confirmarSenha"
-                                        />
-
-                                        <Input.RightIcon
-                                            topPosition={1}
-                                            rightPosition={4}
-                                            onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
-                                        >
-                                            {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                        </Input.RightIcon>
-
-                                    </Input.Root>
-                                </Label>
-                            </C.InputContainer>
-                            <C.InputContainer>
-                                <Label htmlFor="idHospital">
-                                    Hospital
-                                    <C.Select name="idHospital">
-                                        <option value="0">Selecione</option>
-                                        {hospital.map((hosp: any) =>
-                                            <option
-                                                key={hosp.idHospital}
-                                                value={hosp.idHospital}
-                                            >
-                                                {hosp.nomeHospital}
-                                            </option>
-                                        )}
-                                    </C.Select>
-                                </Label>
-
-
-                            </C.InputContainer>
-                            <C.ButtonContainer>
-                                <Button.Gray value="Cancelar" type="reset" />
-                                <Button.Green value="Salvar" type="submit" />
-                            </C.ButtonContainer>
-                        </form>
-                    </C.FormContainer>
-
-                    <C.TableContainer>
-                        <C.TableContainerHeader>
-                            <h3>Administradores cadastrados</h3>
-                            <C.InputsContainer>
+                                </Input.Root>
+                            </Label>
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <Label htmlFor="confirmarSenha">
+                                Confirmar senha
                                 <Input.Root>
                                     <Input.Input
-                                        onChange={(e) => setSearchAdmin(e.target.value)}
-                                        isWithIcon
+                                        isWithIcon={false}
                                         errorText={false}
                                         inputSize={sizes.sm}
-                                        id="adminSearch"
-                                        type="search"
-                                        placeholder="Buscar"
+                                        type={isConfirmPasswordVisible ? "text" : "password"}
+                                        id="confirmarSenha"
                                     />
-                                    <Input.LeftIcon
-                                        htmlFor="adminSearch"
-                                        topPosition={4}
-                                        leftPosition={5}
+
+                                    <Input.RightIcon
+                                        topPosition={1}
+                                        rightPosition={4}
+                                        onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
                                     >
-                                        <MagnifyingGlass size={16} />
-                                    </Input.LeftIcon>
+                                        {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                    </Input.RightIcon>
+
                                 </Input.Root>
-                                <Button.Pdf />
-                            </C.InputsContainer>
-                        </C.TableContainerHeader>
+                            </Label>
+                        </C.InputContainer>
+                        <C.InputContainer>
+                            <Label htmlFor="idHospital">
+                                Hospital
+                                <C.Select name="idHospital">
+                                    <option value="0">Selecione</option>
+                                    {hospital.map((hosp: any) =>
+                                        <option
+                                            key={hosp.idHospital}
+                                            value={hosp.idHospital}
+                                        >
+                                            {hosp.nomeHospital}
+                                        </option>
+                                    )}
+                                </C.Select>
+                            </Label>
 
-                        <C.Table>
-                            <C.Thead>
-                                <C.Tr>
-                                    <C.Th>Nome de usuário</C.Th>
-                                    <C.Th>Senha</C.Th>
-                                    <C.Th>Id do Hospital</C.Th>
-                                    <C.Th></C.Th>
-                                </C.Tr>
-                            </C.Thead>
-                            <C.Tbody>
-                                {adminUsers.map((user: any, key) =>
-                                    <C.InnerTr key={key}>
-                                        <C.Td>{user.loginAdmin}</C.Td>
-                                        <C.Td>{user.senhaAdmin}</C.Td>
-                                        <C.Td>{user.idHospital}</C.Td>
-                                        <C.Td>
-                                            <C.ButtonContainer>
-                                                <Modal.Edit
-                                                    itemId={() => { setAdminUserId(user.idAdmin) }}
-                                                    closeModal={() => { setAdminUserId(0) }}
-                                                    title='Editar administrador'
-                                                >
-                                                    <form onSubmit={editUser} autoComplete="off">
-                                                        <C.InputContainer>
-                                                            <Label htmlFor="loginAdminModal">
-                                                                Nome de usuário
-                                                                <Input.Input
-                                                                    isWithIcon={false}
-                                                                    errorText={false}
-                                                                    inputSize={sizes.xl}
-                                                                    type="text"
-                                                                    name="loginAdmin"
-                                                                    id="loginAdminModal"
-                                                                    defaultValue={user.loginAdmin}
-                                                                    disabled
-                                                                />
-                                                            </Label>
-                                                        </C.InputContainer>
-                                                        <C.InputContainer>
-                                                            <Label htmlFor="senhaAdminModal">
-                                                                Nova senha
-                                                                <Input.Root>
-                                                                    <Input.Input
-                                                                        isWithIcon={false}
-                                                                        errorText={false}
-                                                                        inputSize={sizes.xl}
-                                                                        type={isPasswordVisible ? "text" : "password"}
-                                                                        name="senhaAdmin"
-                                                                        id="senhaAdminModal"
-                                                                    />
 
-                                                                    <Input.RightIcon
-                                                                        topPosition={1}
-                                                                        rightPosition={4}
-                                                                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                                                                    >
-                                                                        {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                                                    </Input.RightIcon>
+                        </C.InputContainer>
+                        <C.ButtonContainer>
+                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
 
-                                                                </Input.Root>
-                                                            </Label>
-                                                        </C.InputContainer>
-                                                        <C.InputContainer>
-                                                            <Label htmlFor="confirmarSenhaModal">
-                                                                Confirmar nova senha
-                                                                <Input.Root>
-                                                                    <Input.Input
-                                                                        isWithIcon={false}
-                                                                        errorText={false}
-                                                                        inputSize={sizes.xl}
-                                                                        type={isConfirmPasswordVisible ? "text" : "password"}
-                                                                        id="confirmarSenhaModal"
-                                                                    />
-
-                                                                    <Input.RightIcon
-                                                                        topPosition={1}
-                                                                        rightPosition={4}
-                                                                        onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
-                                                                    >
-                                                                        {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                                                    </Input.RightIcon>
-
-                                                                </Input.Root>
-                                                            </Label>
-                                                        </C.InputContainer>
-                                                        <C.ButtonContainer>
-                                                            <AlertDialog.Cancel asChild>
-                                                                <Button.Gray value="Fechar" type="button" />
-                                                            </AlertDialog.Cancel>
-                                                            <Button.Green value="Salvar" type="submit" />
-                                                        </C.ButtonContainer>
-                                                    </form>
-                                                </Modal.Edit>
-                                                <Modal.Alert
-                                                    itemId={() => { setAdminUserId(user.idAdmin) }}
-                                                    closeModal={() => { setAdminUserId(0) }}
-                                                    title="Excluir administrador"
-                                                    modalAction={deleteUser}
-                                                    cancel='Cancelar'
-                                                    submit='Excluir'
-                                                >
-                                                    Deseja excluir o administrador selecionado?
-                                                </Modal.Alert>
-                                            </C.ButtonContainer>
-                                        </C.Td>
-                                    </C.InnerTr>
-                                )}
-                            </C.Tbody>
-                        </C.Table>
-                    </C.TableContainer>
-                </C.AdminColumn>
-                <C.UserColumn>
+                <C.TableContainer>
                     <C.TableContainerHeader>
-                        <h3>Usuários cadastrados</h3>
+                        <h3>Administradores cadastrados</h3>
                         <C.InputsContainer>
                             <Input.Root>
                                 <Input.Input
-                                    onChange={(e) => setSearchUser(e.target.value)}
+                                    onChange={(e) => setSearchAdmin(e.target.value)}
                                     isWithIcon
                                     errorText={false}
                                     inputSize={sizes.sm}
-                                    id="userSearch"
+                                    id="adminSearch"
                                     type="search"
                                     placeholder="Buscar"
                                 />
                                 <Input.LeftIcon
-                                    htmlFor="userSearch"
+                                    htmlFor="adminSearch"
                                     topPosition={4}
                                     leftPosition={5}
                                 >
@@ -400,25 +252,117 @@ export function Usuario() {
                             <Button.Pdf />
                         </C.InputsContainer>
                     </C.TableContainerHeader>
+
                     <C.Table>
                         <C.Thead>
                             <C.Tr>
-                                <C.Th>Id</C.Th>
-                                <C.Th>Nome</C.Th>
-                                <C.Th>CPF</C.Th>
+                                <C.Th>Nome de usuário</C.Th>
+                                <C.Th>Senha</C.Th>
+                                <C.Th>Id do Hospital</C.Th>
+                                <C.Th></C.Th>
                             </C.Tr>
                         </C.Thead>
                         <C.Tbody>
-                            {users.map((user: any, key) =>
+                            {adminUsers.map((user: any, key) =>
                                 <C.InnerTr key={key}>
-                                    <C.Td>{user.idUsuario}</C.Td>
-                                    <C.Td>{user.nomeUsuario}</C.Td>
-                                    <C.Td>{user.cpfUsuario}</C.Td>
+                                    <C.Td>{user.loginAdmin}</C.Td>
+                                    <C.Td>{user.senhaAdmin}</C.Td>
+                                    <C.Td>{user.idHospital}</C.Td>
+                                    <C.Td>
+                                        <C.ButtonContainer>
+                                            <Modal.Edit
+                                                itemId={() => { setAdminUserId(user.idAdmin) }}
+                                                closeModal={() => { setAdminUserId(0) }}
+                                                title='Editar administrador'
+                                            >
+                                                <form onSubmit={editUser} autoComplete="off">
+                                                    <C.InputContainer>
+                                                        <Label htmlFor="loginAdminModal">
+                                                            Nome de usuário
+                                                            <Input.Input
+                                                                isWithIcon={false}
+                                                                errorText={false}
+                                                                inputSize={sizes.xl}
+                                                                type="text"
+                                                                name="loginAdmin"
+                                                                id="loginAdminModal"
+                                                                defaultValue={user.loginAdmin}
+                                                                disabled
+                                                            />
+                                                        </Label>
+                                                    </C.InputContainer>
+                                                    <C.InputContainer>
+                                                        <Label htmlFor="senhaAdminModal">
+                                                            Nova senha
+                                                            <Input.Root>
+                                                                <Input.Input
+                                                                    isWithIcon={false}
+                                                                    errorText={false}
+                                                                    inputSize={sizes.xl}
+                                                                    type={isPasswordVisible ? "text" : "password"}
+                                                                    name="senhaAdmin"
+                                                                    id="senhaAdminModal"
+                                                                />
+
+                                                                <Input.RightIcon
+                                                                    topPosition={1}
+                                                                    rightPosition={4}
+                                                                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                                                >
+                                                                    {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                                                </Input.RightIcon>
+
+                                                            </Input.Root>
+                                                        </Label>
+                                                    </C.InputContainer>
+                                                    <C.InputContainer>
+                                                        <Label htmlFor="confirmarSenhaModal">
+                                                            Confirmar nova senha
+                                                            <Input.Root>
+                                                                <Input.Input
+                                                                    isWithIcon={false}
+                                                                    errorText={false}
+                                                                    inputSize={sizes.xl}
+                                                                    type={isConfirmPasswordVisible ? "text" : "password"}
+                                                                    id="confirmarSenhaModal"
+                                                                />
+
+                                                                <Input.RightIcon
+                                                                    topPosition={1}
+                                                                    rightPosition={4}
+                                                                    onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                                                                >
+                                                                    {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                                                </Input.RightIcon>
+
+                                                            </Input.Root>
+                                                        </Label>
+                                                    </C.InputContainer>
+                                                    <C.ButtonContainer>
+                                                        <AlertDialog.Cancel asChild>
+                                                            <Button.Gray value="Fechar" type="button" />
+                                                        </AlertDialog.Cancel>
+                                                        <Button.Green value="Salvar" type="submit" />
+                                                    </C.ButtonContainer>
+                                                </form>
+                                            </Modal.Edit>
+                                            <Modal.Alert
+                                                itemId={() => { setAdminUserId(user.idAdmin) }}
+                                                closeModal={() => { setAdminUserId(0) }}
+                                                title="Excluir administrador"
+                                                modalAction={deleteUser}
+                                                cancel='Cancelar'
+                                                submit='Excluir'
+                                            >
+                                                Deseja excluir o administrador selecionado?
+                                            </Modal.Alert>
+                                        </C.ButtonContainer>
+                                    </C.Td>
                                 </C.InnerTr>
                             )}
                         </C.Tbody>
                     </C.Table>
-                </C.UserColumn>
+                </C.TableContainer>
             </C.Container>
         </MenuBackground>
     )

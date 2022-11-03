@@ -9,15 +9,14 @@ import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, Caret
 import * as C from './styles'
 
 export function VisaoGeralAdmin() {
-    const [usersCount, setUsersCount] = useState<string>();
     const [hospitalsCount, setHospitalsCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
 
     const date = new Date();
-    const weekDay = date.getDay();
+    let weekDay = date.getDay();
     let day: any = "" + date.getDate();
     let month: any = date.getMonth() + 1;
-    const year = "" + date.getFullYear();
+    let year = "" + date.getFullYear();
 
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
@@ -33,14 +32,6 @@ export function VisaoGeralAdmin() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/', {
-            params: {
-                count: true
-            }
-        }).then((response) => {
-            setUsersCount(response.data.idUsuario);
-        });
-
         axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
             params: {
                 count: true
@@ -72,8 +63,8 @@ export function VisaoGeralAdmin() {
                         <C.Icons color='#49B28C'>
                             <Users size={70} />
                             <C.TextContainer>
-                                <span>Usuários</span>
-                                <span>{usersCount}</span>
+                                <span></span>
+                                <span></span>
                             </C.TextContainer>
                         </C.Icons>
                         <C.Icons color='#349684'>

@@ -23,6 +23,7 @@ export function Medico() {
 
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
+    const [phoneId, setPhoneId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
     const [medicPhoto, setMedicPhoto] = useState<any>();
     const [search, setSearch] = useState<string>();
@@ -101,12 +102,16 @@ export function Medico() {
         allFormData.append("nomeMedico", data.nomeMedico);
         allFormData.append("cpfMedico", data.cpfMedico);
         allFormData.append("crmMedico", data.crmMedico);
+        allFormData.append("numTelefone", data.numTelefone);
         allFormData.append("fotoMedico", data.fotoMedico.name);
         allFormData.append("idEspecialidade", data.idEspecialidade);
         allFormData.append("idHospital", hospitalId);
         allFormData.append("picture", medicPhoto[0]);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData);
+        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData).then(response => {
+            console.log(response.data);
+
+        });
 
         setIsFormSubmitted(true);
 
@@ -127,9 +132,11 @@ export function Medico() {
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData, {
             params: {
                 nomeMedico: data.nomeMedico,
+                numTelefone: data.numTelefone,
                 fotoMedico: data.fotoMedico.name,
                 idEspecialidade: data.idEspecialidade,
-                idMedico: medicId
+                idMedico: medicId,
+                idTelefone: phoneId
             }
         });
 
@@ -142,7 +149,8 @@ export function Medico() {
     async function deleteMedic() {
         await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/`, {
             params: {
-                idMedico: medicId
+                idMedico: medicId,
+                idTelefone: phoneId
             }
         });
 
@@ -201,6 +209,19 @@ export function Medico() {
                                 id="crmMedico"
                                 name="crmMedico"
                                 placeholder='SP/123456'
+                            />
+                        </Label>
+
+                        <Label htmlFor="numTelefone">
+                            Telefone
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.md}
+                                type="text"
+                                id="numTelefone"
+                                name="numTelefone"
+                                placeholder='(99) 99999-9999'
                             />
                         </Label>
 
@@ -288,6 +309,7 @@ export function Medico() {
                                                     <C.Text><b>Nome:</b> {medic.nomeMedico}</C.Text>
                                                     <C.Text><b>CPF:</b> {medic.cpfMedico}</C.Text>
                                                     <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
+                                                    <C.Text><b>Telefone:</b> {medic.numTelefone}</C.Text>
                                                     <C.Text><b>Especialidade:</b> {medic.nomeEspecialidade}</C.Text>
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
@@ -295,8 +317,8 @@ export function Medico() {
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Edit
-                                            itemId={() => { setMedicId(medic.idMedico) }}
-                                            closeModal={() => { setMedicId(0) }}
+                                            itemId={() => [setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
+                                            closeModal={() => [setMedicId(0), setPhoneId(0)]}
                                             title='Editar médico'
                                         >
                                             <C.Form onSubmit={editMedic} autoComplete="off">
@@ -337,6 +359,19 @@ export function Medico() {
                                                     />
                                                 </Label>
 
+                                                <Label htmlFor="numTelefoneModal">
+                                                    Telefone
+                                                    <Input.Input
+                                                        isWithIcon={false}
+                                                        errorText={false}
+                                                        inputSize={sizes.md}
+                                                        type="text"
+                                                        id="numTelefoneModal"
+                                                        name="numTelefone"
+                                                        defaultValue={medic.numTelefone}
+                                                    />
+                                                </Label>
+
                                                 <Label>
                                                     Especialidade
 
@@ -372,8 +407,8 @@ export function Medico() {
                                             </C.Form>
                                         </Modal.Edit>
                                         <Modal.Alert
-                                            itemId={() => { setMedicId(medic.idMedico) }}
-                                            closeModal={() => { setMedicId(0) }}
+                                            itemId={() => [setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
+                                            closeModal={() => [setMedicId(0), setPhoneId(0)]}
                                             title="Excluir médico"
                                             modalAction={deleteMedic}
                                             cancel='Cancelar'

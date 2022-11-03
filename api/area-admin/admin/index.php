@@ -54,10 +54,11 @@ switch($method) {
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM tbAdmin WHERE idAdmin = :id";
-        $path = explode('/', $_SERVER['REQUEST_URI']);
+        $idAdmin = $_GET['idAdmin'];
+
+        $sql = "DELETE FROM tbAdmin WHERE idAdmin = :idAdmin";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[5]);
+        $stmt->bindParam(':idAdmin', $idAdmin);
         $stmt->execute();
         break;
 }
