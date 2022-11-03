@@ -26,6 +26,7 @@ export function Medico() {
     const [phoneId, setPhoneId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
     const [medicPhoto, setMedicPhoto] = useState<any>();
+    const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
     const [search, setSearch] = useState<string>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
@@ -119,7 +120,7 @@ export function Medico() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
-        medicPhoto ? formData.append("picture", medicPhoto[0]) : null;
+        medicPhotoModal ? formData.append("picture", medicPhotoModal[0]) : null;
         formData.append('_method', 'PUT');
 
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData, {
@@ -237,16 +238,22 @@ export function Medico() {
 
                         <Label>
                             Foto do médico
-                            <input
-                                onChange={(e) => setMedicPhoto(e.target.files)}
-                                type="file"
-                                accept=".jpg, .png"
-                                name="fotoMedico"
-                            />
+                            <C.ImageInputContainer>
+                                <C.NameImageInput>{medicPhoto ? medicPhoto[0].name : null}</C.NameImageInput>
+                                <C.ImageLabel>Escolher foto
+                                    <input
+                                        onChange={(e) => setMedicPhoto(e.target.files)}
+                                        type="file"
+                                        accept=".jpg, .png"
+                                        name="fotoMedico"
+                                        hidden
+                                    />
+                                </C.ImageLabel>
+                            </C.ImageInputContainer>
                         </Label>
                     </C.InputsContainer>
                     <C.ButtonContainer>
-                        <Button.Gray value="Cancelar" type="reset" />
+                        <Button.Gray onClick={() => setMedicPhoto(null)} value="Cancelar" type="reset" />
                         <Button.Green value="Salvar" type="submit" />
                     </C.ButtonContainer>
                 </form>
@@ -311,7 +318,7 @@ export function Medico() {
                                         </Modal.Info>
                                         <Modal.Edit
                                             itemId={() => [setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
-                                            closeModal={() => [setMedicId(0), setPhoneId(0)]}
+                                            closeModal={() => [setMedicId(0), setPhoneId(0), setMedicPhotoModal(null)]}
                                             title='Editar médico'
                                         >
                                             <C.Form onSubmit={editMedic} autoComplete="off">
@@ -383,17 +390,23 @@ export function Medico() {
 
                                                 <Label>
                                                     Foto do médico
-                                                    <input
-                                                        onChange={(e) => setMedicPhoto(e.target.files)}
-                                                        type="file"
-                                                        accept=".jpg, .png"
-                                                        name="fotoMedico"
-                                                    />
+                                                    <C.ImageInputContainer>
+                                                        <C.NameImageInput>{medicPhotoModal ? medicPhotoModal[0].name : null}</C.NameImageInput>
+                                                        <C.ImageLabel>Escolher foto
+                                                            <input
+                                                                onChange={(e) => setMedicPhotoModal(e.target.files)}
+                                                                type="file"
+                                                                accept=".jpg, .png"
+                                                                name="fotoMedico"
+                                                                hidden
+                                                            />
+                                                        </C.ImageLabel>
+                                                    </C.ImageInputContainer>
                                                 </Label>
 
                                                 <C.ButtonContainer>
                                                     <AlertDialog.Cancel asChild>
-                                                        <Button.Gray value="Fechar" type="button" />
+                                                        <Button.Gray onClick={() => setMedicPhotoModal(null)} value="Fechar" type="button" />
                                                     </AlertDialog.Cancel>
                                                     <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>

@@ -60,6 +60,40 @@ export const ButtonContainer = styled.div`
     margin-top: 12px;
 `
 
+export const ImageInputContainer = styled.div`
+    display: flex;
+    align-items: center;
+    width: 200px;
+    padding: 4px 8px 4px 4px;
+    border-radius: 12px;
+    background-color: #cccccc;
+    gap: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+`
+
+export const NameImageInput = styled.span`
+    display: flex;
+    align-items: center;
+    width: 110px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #000;
+    border: none;
+    padding-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+`
+
+export const ImageLabel = styled.label`
+    font-size: 14px;
+    cursor: pointer;
+`
+
 export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
     width: 55%;
