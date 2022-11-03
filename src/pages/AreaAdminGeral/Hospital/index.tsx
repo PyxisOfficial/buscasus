@@ -74,24 +74,22 @@ export function Hospital() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
+        formData.append("nomeHospital", data.nomeHospital);
+        formData.append("emailHospital", data.emailHospital);
+        formData.append("numTelefone", data.numTelefone);
+        formData.append("aberturaHospital", data.aberturaHospital);
+        formData.append("fechamentoHospital", data.fechamentoHospital);
+        formData.append("cnpjHospital", data.cnpjHospital);
+        formData.append("ufHospital", data.ufHospital);
+        formData.append("logradouroHospital", data.logradouroHospital);
+        formData.append("complementoHospital", data.complementoHospital);
+        formData.append("cepHospital", data.cepHospital);
+        formData.append("cidadeHospital", data.cidadeHospital);
+        formData.append("bairroHospital", data.bairroHospital);
+        formData.append("fotoHospital", data.fotoHospital.name);
+        formData.append("picture", hospitalPhoto[0]);
 
-        const allFormData = new FormData(event.target as HTMLFormElement);
-        allFormData.append("nomeHospital", data.nomeHospital);
-        allFormData.append("emailHospital", data.emailHospital);
-        allFormData.append("numTelefone", data.numTelefone);
-        allFormData.append("aberturaHospital", data.aberturaHospital);
-        allFormData.append("fechamentoHospital", data.fechamentoHospital);
-        allFormData.append("cnpjHospital", data.cnpjHospital);
-        allFormData.append("ufHospital", data.ufHospital);
-        allFormData.append("logradouroHospital", data.logradouroHospital);
-        allFormData.append("complementoHospital", data.complementoHospital);
-        allFormData.append("cepHospital", data.cepHospital);
-        allFormData.append("cidadeHospital", data.cidadeHospital);
-        allFormData.append("bairroHospital", data.bairroHospital);
-        allFormData.append("fotoHospital", data.fotoHospital.name);
-        allFormData.append("picture", hospitalPhoto[0]);
-
-        await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', allFormData);
+        await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData);
 
         setIsFormSubmitted(true);
 
@@ -104,12 +102,10 @@ export function Hospital() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
+        hospitalPhoto ? formData.append("picture", hospitalPhoto[0]) : null;
+        formData.append('_method', 'PUT');
 
-        const allFormData = new FormData(event.target as HTMLFormElement);
-        hospitalPhoto ? allFormData.append("picture", hospitalPhoto[0]) : null;
-        allFormData.append('_method', 'PUT');
-
-        await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', allFormData, {
+        await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData, {
             params: {
                 nomeHospital: data.nomeHospital,
                 emailHospital: data.emailHospital,

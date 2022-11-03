@@ -79,6 +79,10 @@ a:-webkit-any-link {
     text-decoration: none;
 }
 
+.sidebar-item:focus {
+    outline: none;
+}
+
 .sidebar-item.active {
     font-weight: bold;
     padding: 12px;

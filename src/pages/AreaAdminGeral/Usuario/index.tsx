@@ -80,16 +80,11 @@ export function Usuario() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
+        formData.append("loginAdmin", data.loginAdmin);
+        formData.append("senhaAdmin", data.senhaAdmin);
+        formData.append("idHospital", data.idHospital);
 
-        const allFormData = new FormData(event.target as HTMLFormElement);
-        allFormData.append("loginAdmin", data.loginAdmin);
-        allFormData.append("senhaAdmin", data.senhaAdmin);
-        allFormData.append("idHospital", data.idHospital);
-
-        await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', allFormData).then((response) => {
-            console.log(response.data);
-
-        })
+        await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', formData);
 
         setIsFormSubmitted(true);
 

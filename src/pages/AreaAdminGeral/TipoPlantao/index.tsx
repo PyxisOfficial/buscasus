@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { MenuBackground } from '../../../components/Menu';
-import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
@@ -15,48 +15,36 @@ import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
 
-export function Especialidade() {
+export function TipoPlantao() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
     const [messageToast, setMessageToast] = useState<string>();
 
-    const [specialty, setSpecialty] = useState([]);
-    const [specialtyId, setSpecialtyId] = useState<number>();
+    const [dutyType, setDutyType] = useState([]);
+    const [dutyTypeId, setDutyTypeId] = useState<number>();
     const [search, setSearch] = useState<string>();
-
-    const getHospitalId: any = localStorage.getItem("hospital_id");
-    const hospitalId = JSON.parse(getHospitalId);
 
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
-            params: {
-                idHospital: hospitalId
-            }
-        }).then(response => {
-            setSpecialty(response.data);
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then(response => {
+            setDutyType(response.data);
         });
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', {
                 params: {
                     search: search,
-                    idHospital: hospitalId
                 }
             }).then(response => {
-                setSpecialty(response.data);
+                setDutyType(response.data);
             });
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
-                params: {
-                    idHospital: hospitalId
-                }
-            }).then(response => {
-                setSpecialty(response.data);
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then(response => {
+                setDutyType(response.data);
             });
         }
 
@@ -70,66 +58,64 @@ export function Especialidade() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', {
             params: {
                 search: search,
-                idHospital: hospitalId
             }
         }).then(response => {
-            setSpecialty(response.data);
+            setDutyType(response.data);
         })
     }, [search]);
 
-    async function insertSpecialty(event: FormEvent) {
+    async function insertDutyType(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
-        formData.append("nomeEspecialidade", data.nomeEspecialidade);
-        formData.append("idHospital", hospitalId);
+        formData.append("tipoPlantao", data.tipoPlantao);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', formData);
+        await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', formData);
 
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setMessageToast("Especialidade cadastrada com sucesso!");
+        setMessageToast("Tipo de plantão cadastrado com sucesso!");
     }
 
-    async function editSpecialty(event: FormEvent) {
+    async function editDutyType(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
 
-        await axios.put('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', null, {
+        await axios.put('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', null, {
             params: {
-                nomeEspecialidade: data.nomeEspecialidade,
-                idEspecialidade: specialtyId
+                tipoPlantao: data.tipoPlantao,
+                idTipoPlantao: dutyTypeId
             }
         });
 
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setMessageToast("Especialidade editada com sucesso!");
+        setMessageToast("Tipo de plantão editado com sucesso!");
     }
 
-    async function deleteSpecialty() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/`, {
+    async function deleteDutyType() {
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/`, {
             params: {
-                idEspecialidade: specialtyId
+                idTipoPlantao: dutyTypeId
             }
         });
 
         setIsFormSubmitted(true);
 
         setIsToastOpened(true);
-        setMessageToast("Especialidade excluída com sucesso!");
+        setMessageToast("Tipo de plantão excluído com sucesso!");
     }
 
     return (
-        <MenuBackground menuLinks={<MenuLinksHospital />}>
+        <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
             <Toast.Root
                 onOpenChange={isToastOpened}
@@ -138,18 +124,18 @@ export function Especialidade() {
             </Toast.Root>
 
             <C.FormContainer>
-                <h3>Cadastrar uma nova especialidade</h3>
-                <form ref={formRef} onSubmit={insertSpecialty} autoComplete="off">
-                    <Label htmlFor="nomeEspecialidade">
-                        Especialidade
+                <h3>Cadastrar um novo tipo de plantão</h3>
+                <form ref={formRef} onSubmit={insertDutyType} autoComplete="off">
+                    <Label htmlFor="tipoPlantao">
+                        Tipo de plantão
                         <Input.Input
                             isWithIcon={false}
                             errorText={false}
                             inputSize={sizes.lg}
                             type="text"
-                            id="nomeEspecialidade"
-                            name="nomeEspecialidade"
-                            placeholder='Pediatra'
+                            id="tipoPlantao"
+                            name="tipoPlantao"
+                            placeholder="COVID"
                         />
                     </Label>
                     <C.ButtonContainer>
@@ -160,7 +146,7 @@ export function Especialidade() {
             </C.FormContainer>
             <C.TableContainer>
                 <C.TableContainerHeader>
-                    <h3>Especialidades cadastradas</h3>
+                    <h3>Tipos de plantões cadastrados</h3>
                     <C.InputsContainer>
                         <Input.Root>
                             <Input.Input
@@ -186,32 +172,32 @@ export function Especialidade() {
                 <C.Table>
                     <C.Thead>
                         <C.Tr>
-                            <C.Th>Especialidade</C.Th>
+                            <C.Th>Tipos de plantões</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
-                        {specialty.map((spe: any, key) =>
+                        {dutyType.map((dt: any, key) =>
                             <C.InnerTr key={key}>
-                                <C.Td>{spe.nomeEspecialidade}</C.Td>
+                                <C.Td>{dt.tipoPlantao}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Edit
-                                            itemId={() => { setSpecialtyId(spe.idEspecialidade) }}
-                                            closeModal={() => { setSpecialtyId(0) }}
-                                            title='Editar especialidade'
+                                            itemId={() => { setDutyTypeId(dt.idTipoPlantao) }}
+                                            closeModal={() => { setDutyTypeId(0) }}
+                                            title='Editar tipo de plantão'
                                         >
-                                            <C.Form onSubmit={editSpecialty} autoComplete="off">
-                                                <Label htmlFor="nomeEspecialidadeModal">
-                                                    Nome
+                                            <C.Form onSubmit={editDutyType} autoComplete="off">
+                                                <Label htmlFor="tipoPlantaoModal">
+                                                    Tipo de plantão
                                                     <Input.Input
                                                         isWithIcon={false}
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="nomeEspecialidadeModal"
-                                                        name="nomeEspecialidade"
-                                                        defaultValue={spe.nomeEspecialidade}
+                                                        id="tipoPlantaoModal"
+                                                        name="tipoPlantao"
+                                                        defaultValue={dt.tipoPlantao}
                                                     />
                                                 </Label>
 
@@ -224,14 +210,14 @@ export function Especialidade() {
                                             </C.Form>
                                         </Modal.Edit>
                                         <Modal.Alert
-                                            itemId={() => { setSpecialtyId(spe.idEspecialidade) }}
-                                            closeModal={() => { setSpecialtyId(0) }}
-                                            title="Excluir especialidade"
-                                            modalAction={deleteSpecialty}
+                                            itemId={() => { setDutyTypeId(dt.idTipoPlantao) }}
+                                            closeModal={() => { setDutyTypeId(0) }}
+                                            title="Excluir tipo de plantão"
+                                            modalAction={deleteDutyType}
                                             cancel='Cancelar'
                                             submit='Excluir'
                                         >
-                                            Deseja excluir a especialidade selecionada?
+                                            Deseja excluir o tipo de plantão selecionado?
                                         </Modal.Alert>
                                     </C.ButtonContainer>
                                 </C.Td>

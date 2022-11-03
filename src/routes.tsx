@@ -9,6 +9,7 @@ import { Plantao } from './pages/AreaHospital/Plantao';
 import { VisaoGeralAdmin } from './pages/AreaAdminGeral/VisaoGeral';
 import { Hospital } from './pages/AreaAdminGeral/Hospital';
 import { Usuario } from './pages/AreaAdminGeral/Usuario';
+import { TipoPlantao } from './pages/AreaAdminGeral/TipoPlantao';
 
 import UseAuth from './hooks/useAuth';
 
@@ -36,6 +37,7 @@ export default function AppRoutes() {
                 <Route path="/visao-geral-admin" element={<PrivateAdmin Item={VisaoGeralAdmin} />} />
                 <Route path="/hospitais" element={<PrivateAdmin Item={Hospital} />} />
                 <Route path="/usuarios" element={<PrivateAdmin Item={Usuario} />} />
+                <Route path="/tipo-plantao" element={<PrivateAdmin Item={TipoPlantao} />} />
             </Routes>
         </Router>
     )

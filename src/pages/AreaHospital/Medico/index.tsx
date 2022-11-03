@@ -97,21 +97,16 @@ export function Medico() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
+        formData.append("nomeMedico", data.nomeMedico);
+        formData.append("cpfMedico", data.cpfMedico);
+        formData.append("crmMedico", data.crmMedico);
+        formData.append("numTelefone", data.numTelefone);
+        formData.append("fotoMedico", data.fotoMedico.name);
+        formData.append("idEspecialidade", data.idEspecialidade);
+        formData.append("idHospital", hospitalId);
+        formData.append("picture", medicPhoto[0]);
 
-        const allFormData = new FormData(event.target as HTMLFormElement);
-        allFormData.append("nomeMedico", data.nomeMedico);
-        allFormData.append("cpfMedico", data.cpfMedico);
-        allFormData.append("crmMedico", data.crmMedico);
-        allFormData.append("numTelefone", data.numTelefone);
-        allFormData.append("fotoMedico", data.fotoMedico.name);
-        allFormData.append("idEspecialidade", data.idEspecialidade);
-        allFormData.append("idHospital", hospitalId);
-        allFormData.append("picture", medicPhoto[0]);
-
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData).then(response => {
-            console.log(response.data);
-
-        });
+        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
 
         setIsFormSubmitted(true);
 
@@ -124,12 +119,10 @@ export function Medico() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
+        medicPhoto ? formData.append("picture", medicPhoto[0]) : null;
+        formData.append('_method', 'PUT');
 
-        const allFormData = new FormData(event.target as HTMLFormElement);
-        medicPhoto ? allFormData.append("picture", medicPhoto[0]) : null;
-        allFormData.append('_method', 'PUT');
-
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', allFormData, {
+        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData, {
             params: {
                 nomeMedico: data.nomeMedico,
                 numTelefone: data.numTelefone,
