@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     width: 100%;
     height: 100%;
@@ -15,8 +16,15 @@ export const FormContainer = styled.div`
     margin-bottom: 25px;
     padding: 16px 20px;
     white-space: nowrap;
-    height: 374px;
+    width: 70%;
+    height: 24%;
 `
+
+export const Form = styled.form`
+    display: flex;
+    gap: 12px;
+`
+
 
 export const Title = styled.h3`
     margin-bottom: 16px;

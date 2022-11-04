@@ -136,7 +136,7 @@ export function Usuario() {
             <C.Container>
                 <C.FormContainer>
                     <C.Title>Cadastrar novo administrador de um hospital</C.Title>
-                    <form ref={formRef} onSubmit={insertUser} autoComplete="off">
+                    <C.Form ref={formRef} onSubmit={insertUser} autoComplete="off">
                         <C.InputContainer>
                             <Label htmlFor="loginAdmin">
                                 Nome de usuário
@@ -219,7 +219,7 @@ export function Usuario() {
                             <Button.Gray value="Cancelar" type="reset" />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
-                    </form>
+                    </C.Form>
                 </C.FormContainer>
 
                 <C.TableContainer>
