@@ -1,7 +1,3 @@
-interface PieChartProps {
-   title: string;
-}
-
 function PieChart() {
    google.charts.load('current', {'packages':['corechart']});
    google.charts.setOnLoadCallback(drawChart);

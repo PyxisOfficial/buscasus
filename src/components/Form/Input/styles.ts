@@ -87,6 +87,7 @@ export const ImageInputContainer = styled.div`
     border-radius: 16px;
     background-color: #cccccc;
     gap: 8px;
+    white-space: nowrap;
     cursor: pointer;
 `
 

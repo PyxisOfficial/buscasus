@@ -3,11 +3,11 @@ import axios from 'axios';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
+import { Chart } from '../../../components/Charts';
 
 import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, CaretDown } from 'phosphor-react';
 
 import * as C from './styles'
-import { Chart } from '../../../components/Charts';
 
 export function VisaoGeralAdmin() {
     const [hospitalsCount, setHospitalsCount] = useState<string>();

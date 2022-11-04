@@ -26,6 +26,7 @@ export const FormContainer = styled.div`
     margin-bottom: 25px;
     padding: 16px 20px;
     white-space: nowrap;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
 export const Title = styled.h3`
@@ -60,45 +61,12 @@ export const ButtonContainer = styled.div`
     margin-top: 12px;
 `
 
-export const ImageInputContainer = styled.div`
-    display: flex;
-    align-items: center;
-    width: 200px;
-    padding: 4px 8px 4px 4px;
-    border-radius: 12px;
-    background-color: #cccccc;
-    gap: 8px;
-    cursor: pointer;
-    white-space: nowrap;
-`
-
-export const NameImageInput = styled.span`
-    display: flex;
-    align-items: center;
-    width: 110px;
-    height: 24px;
-    border-radius: 12px;
-    background-color: #fff;
-    font-size: 14px;
-    color: #000;
-    border: none;
-    padding-left: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-`
-
-export const ImageLabel = styled.label`
-    font-size: 14px;
-    cursor: pointer;
-`
-
 export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
     width: 55%;
     background-color: #fff;
-    border-radius: 10px;  
+    border-radius: 10px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
 export const TableContainerHeader = styled.div`

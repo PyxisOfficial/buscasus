@@ -17,14 +17,14 @@ export const FormContainer = styled.div`
     padding: 16px 20px;
     white-space: nowrap;
     width: 70%;
-    height: 24%;
+    height: 160px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
 export const Form = styled.form`
     display: flex;
     gap: 12px;
 `
-
 
 export const Title = styled.h3`
     margin-bottom: 16px;
@@ -37,16 +37,9 @@ export const InputsContainer = styled.div`
     gap: 8px;
 `
 
-export const InputContainer = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-bottom: 16px;
-`
-
 export const ButtonContainer = styled.div`
     display: flex;
+    justify-content: flex-end;
     float: right;
     gap: 8px;
     margin-top: 12px;
@@ -56,7 +49,9 @@ export const TableContainer = styled.div`
     padding: 10px 10px 58px 10px;
     background-color: #fff;
     border-radius: 10px;
+    width: 70%;
     height: 100%;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
 export const TableContainerHeader = styled.div`

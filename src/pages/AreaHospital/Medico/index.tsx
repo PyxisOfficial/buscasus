@@ -240,9 +240,9 @@ export function Medico() {
                             Foto do médico
                             <InputImage.Root>
                                 <InputImage.NameImage nameImgInput={medicPhoto ? medicPhoto[0].name : null} />
-                                <InputImage.Label 
-                                    name='fotoMedico' 
-                                    inputAction={(e) => setMedicPhoto(e.target.files)}
+                                <InputImage.Label
+                                    name='fotoMedico'
+                                    inputAction={(e: any) => setMedicPhoto(e.target.files)}
                                 />
                             </InputImage.Root>
                         </Label>
@@ -385,18 +385,13 @@ export function Medico() {
 
                                                 <Label>
                                                     Foto do médico
-                                                    <C.ImageInputContainer>
-                                                        <C.NameImageInput>{medicPhotoModal ? medicPhotoModal[0].name : null}</C.NameImageInput>
-                                                        <C.ImageLabel>Escolher foto
-                                                            <input
-                                                                onChange={(e) => setMedicPhotoModal(e.target.files)}
-                                                                type="file"
-                                                                accept=".jpg, .png"
-                                                                name="fotoMedico"
-                                                                hidden
-                                                            />
-                                                        </C.ImageLabel>
-                                                    </C.ImageInputContainer>
+                                                    <InputImage.Root>
+                                                        <InputImage.NameImage nameImgInput={medicPhotoModal ? medicPhotoModal[0].name : null} />
+                                                        <InputImage.Label
+                                                            name='fotoMedico'
+                                                            inputAction={(e: any) => setMedicPhotoModal(e.target.files)}
+                                                        />
+                                                    </InputImage.Root>
                                                 </Label>
 
                                                 <C.ButtonContainer>
