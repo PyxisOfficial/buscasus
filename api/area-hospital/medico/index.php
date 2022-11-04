@@ -18,7 +18,9 @@ if (isset($_GET['search'])) {
             ON m.idMedico = t.idMedico 
             WHERE m.nomeMedico LIKE '%$search%' 
             OR e.nomeEspecialidade LIKE '%$search%'
-            or m.crmMedico LIKE '%$search%'
+            OR m.crmMedico LIKE '%$search%'
+            OR m.telefoneMedico LIKE '%$search%'
+            OR m.cpfMedico LIKE '%$cpfMedico%'
             AND m.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
