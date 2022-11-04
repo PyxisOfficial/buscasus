@@ -163,96 +163,98 @@ export function Medico() {
                 <Toast.Description>{messageToast}</Toast.Description>
             </Toast.Root>
 
-            <C.FormContainer>
-                <h3>Cadastrar um novo médico</h3>
-                <form ref={formRef} onSubmit={insertMedic} autoComplete="off">
-                    <C.InputsContainer>
-                        <Label htmlFor="nomeMedico">
-                            Nome
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.md}
-                                type="text"
-                                id="nomeMedico"
-                                name="nomeMedico"
-                                placeholder='Mário de Andrade'
-                            />
-                        </Label>
-
-                        <Label htmlFor="cpfMedico">
-                            CPF
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.md}
-                                type="text"
-                                id="cpfMedico"
-                                name="cpfMedico"
-                                placeholder='123.456.789-00'
-                            />
-                        </Label>
-
-                        <Label htmlFor="crmMedico">
-                            CRM
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.md}
-                                type="text"
-                                id="crmMedico"
-                                name="crmMedico"
-                                placeholder='SP/123456'
-                            />
-                        </Label>
-
-                        <Label htmlFor="numTelefone">
-                            Telefone
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.md}
-                                type="text"
-                                id="numTelefone"
-                                name="numTelefone"
-                                placeholder='(99) 99999-9999'
-                            />
-                        </Label>
-
-                        <Label htmlFor="idEspecialidade">
-                            Especialidade
-
-                            <C.Select name="idEspecialidade">
-                                <option value="0">Selecione</option>
-                                {specialty.map((spe: any) =>
-                                    <option
-                                        key={spe.idEspecialidade}
-                                        value={spe.idEspecialidade}
-                                    >
-                                        {spe.nomeEspecialidade}
-                                    </option>
-                                )}
-                            </C.Select>
-
-                        </Label>
-
-                        <Label>
-                            Foto do médico
-                            <InputImage.Root>
-                                <InputImage.NameImage nameImgInput={medicPhoto ? medicPhoto[0].name : null} />
-                                <InputImage.Label
-                                    name='fotoMedico'
-                                    inputAction={(e: any) => setMedicPhoto(e.target.files)}
+            <C.InsertContainer>
+                <C.FormContainer>
+                    <h3>Cadastrar um novo médico</h3>
+                    <form ref={formRef} onSubmit={insertMedic} autoComplete="off">
+                        <C.InputsContainer>
+                            <Label htmlFor="nomeMedico">
+                                Nome
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    id="nomeMedico"
+                                    name="nomeMedico"
+                                    placeholder='Mário de Andrade'
                                 />
-                            </InputImage.Root>
-                        </Label>
-                    </C.InputsContainer>
-                    <C.ButtonContainer>
-                        <Button.Gray onClick={() => setMedicPhoto(null)} value="Cancelar" type="reset" />
-                        <Button.Green value="Salvar" type="submit" />
-                    </C.ButtonContainer>
-                </form>
-            </C.FormContainer>
+                            </Label>
+
+                            <Label htmlFor="cpfMedico">
+                                CPF
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    id="cpfMedico"
+                                    name="cpfMedico"
+                                    placeholder='123.456.789-00'
+                                />
+                            </Label>
+
+                            <Label htmlFor="crmMedico">
+                                CRM
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    id="crmMedico"
+                                    name="crmMedico"
+                                    placeholder='SP/123456'
+                                />
+                            </Label>
+
+                            <Label htmlFor="numTelefone">
+                                Telefone
+                                <Input.Input
+                                    isWithIcon={false}
+                                    errorText={false}
+                                    inputSize={sizes.md}
+                                    type="text"
+                                    id="numTelefone"
+                                    name="numTelefone"
+                                    placeholder='(99) 99999-9999'
+                                />
+                            </Label>
+
+                            <Label htmlFor="idEspecialidade">
+                                Especialidade
+
+                                <C.Select name="idEspecialidade">
+                                    <option value="0">Selecione</option>
+                                    {specialty.map((spe: any) =>
+                                        <option
+                                            key={spe.idEspecialidade}
+                                            value={spe.idEspecialidade}
+                                        >
+                                            {spe.nomeEspecialidade}
+                                        </option>
+                                    )}
+                                </C.Select>
+
+                            </Label>
+
+                            <Label>
+                                Foto do médico
+                                <InputImage.Root>
+                                    <InputImage.NameImage nameImgInput={medicPhoto ? medicPhoto[0].name : null} />
+                                    <InputImage.Label
+                                        name='fotoMedico'
+                                        inputAction={(e: any) => setMedicPhoto(e.target.files)}
+                                    />
+                                </InputImage.Root>
+                            </Label>
+                        </C.InputsContainer>
+                        <C.ButtonContainer>
+                            <Button.Gray onClick={() => setMedicPhoto(null)} value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
+            </C.InsertContainer>
             <C.TableContainer>
                 <C.TableContainerHeader>
                     <h3>Médicos cadastrados</h3>

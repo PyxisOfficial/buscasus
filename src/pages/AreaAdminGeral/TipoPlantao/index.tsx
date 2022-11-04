@@ -123,27 +123,29 @@ export function TipoPlantao() {
                 <Toast.Description>{messageToast}</Toast.Description>
             </Toast.Root>
 
-            <C.FormContainer>
-                <h3>Cadastrar um novo tipo de plantão</h3>
-                <form ref={formRef} onSubmit={insertDutyType} autoComplete="off">
-                    <Label htmlFor="tipoPlantao">
-                        Tipo de plantão
-                        <Input.Input
-                            isWithIcon={false}
-                            errorText={false}
-                            inputSize={sizes.lg}
-                            type="text"
-                            id="tipoPlantao"
-                            name="tipoPlantao"
-                            placeholder="COVID"
-                        />
-                    </Label>
-                    <C.ButtonContainer>
-                        <Button.Gray value="Cancelar" type="reset" />
-                        <Button.Green value="Salvar" type="submit" />
-                    </C.ButtonContainer>
-                </form>
-            </C.FormContainer>
+            <C.InsertContainer>
+                <C.FormContainer>
+                    <h3>Cadastrar um novo tipo de plantão</h3>
+                    <form ref={formRef} onSubmit={insertDutyType} autoComplete="off">
+                        <Label htmlFor="tipoPlantao">
+                            Tipo de plantão
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.lg}
+                                type="text"
+                                id="tipoPlantao"
+                                name="tipoPlantao"
+                                placeholder="COVID"
+                            />
+                        </Label>
+                        <C.ButtonContainer>
+                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
+            </C.InsertContainer>
             <C.TableContainer>
                 <C.TableContainerHeader>
                     <h3>Tipos de plantões cadastrados</h3>

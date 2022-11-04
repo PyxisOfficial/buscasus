@@ -133,92 +133,94 @@ export function Usuario() {
                 <Toast.Description>{messageToast}</Toast.Description>
             </Toast.Root>
 
-            <C.FormContainer>
-                <C.Title>Cadastrar novo administrador de um hospital</C.Title>
-                <form ref={formRef} onSubmit={insertUser} autoComplete="off">
-                    <C.InputsContainer>
-                        <Label htmlFor="loginAdmin">
-                            Nome de usuário
-                            <Input.Input
-                                isWithIcon={false}
-                                errorText={false}
-                                inputSize={sizes.sm}
-                                type="text"
-                                name="loginAdmin"
-                                id="loginAdmin"
-                            />
-                        </Label>
-
-
-                        <Label htmlFor="senhaAdmin">
-                            Senha
-                            <Input.Root>
+            <C.InsertContainer>
+                <C.FormContainer>
+                    <C.Title>Cadastrar novo administrador de um hospital</C.Title>
+                    <form ref={formRef} onSubmit={insertUser} autoComplete="off">
+                        <C.InputsContainer>
+                            <Label htmlFor="loginAdmin">
+                                Nome de usuário
                                 <Input.Input
                                     isWithIcon={false}
                                     errorText={false}
                                     inputSize={sizes.sm}
-                                    type={isPasswordVisible ? "text" : "password"}
-                                    name="senhaAdmin"
-                                    id="senhaAdmin"
+                                    type="text"
+                                    name="loginAdmin"
+                                    id="loginAdmin"
                                 />
-
-                                <Input.RightIcon
-                                    topPosition={1}
-                                    rightPosition={4}
-                                    onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                                >
-                                    {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                </Input.RightIcon>
-
-                            </Input.Root>
-                        </Label>
+                            </Label>
 
 
-                        <Label htmlFor="confirmarSenha">
-                            Confirmar senha
-                            <Input.Root>
-                                <Input.Input
-                                    isWithIcon={false}
-                                    errorText={false}
-                                    inputSize={sizes.sm}
-                                    type={isConfirmPasswordVisible ? "text" : "password"}
-                                    id="confirmarSenha"
-                                />
+                            <Label htmlFor="senhaAdmin">
+                                Senha
+                                <Input.Root>
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.sm}
+                                        type={isPasswordVisible ? "text" : "password"}
+                                        name="senhaAdmin"
+                                        id="senhaAdmin"
+                                    />
 
-                                <Input.RightIcon
-                                    topPosition={1}
-                                    rightPosition={4}
-                                    onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
-                                >
-                                    {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                </Input.RightIcon>
-
-                            </Input.Root>
-                        </Label>
-
-                        <Label htmlFor="idHospital">
-                            Hospital
-                            <C.Select name="idHospital">
-                                <option value="0">Selecione</option>
-                                {hospital.map((hosp: any) =>
-                                    <option
-                                        key={hosp.idHospital}
-                                        value={hosp.idHospital}
+                                    <Input.RightIcon
+                                        topPosition={1}
+                                        rightPosition={4}
+                                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                                     >
-                                        {hosp.nomeHospital}
-                                    </option>
-                                )}
-                            </C.Select>
-                        </Label>
-                    </C.InputsContainer>
+                                        {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                    </Input.RightIcon>
+
+                                </Input.Root>
+                            </Label>
 
 
-                    <C.ButtonContainer>
-                        <Button.Gray value="Cancelar" type="reset" />
-                        <Button.Green value="Salvar" type="submit" />
-                    </C.ButtonContainer>
-                </form>
-            </C.FormContainer>
+                            <Label htmlFor="confirmarSenha">
+                                Confirmar senha
+                                <Input.Root>
+                                    <Input.Input
+                                        isWithIcon={false}
+                                        errorText={false}
+                                        inputSize={sizes.sm}
+                                        type={isConfirmPasswordVisible ? "text" : "password"}
+                                        id="confirmarSenha"
+                                    />
+
+                                    <Input.RightIcon
+                                        topPosition={1}
+                                        rightPosition={4}
+                                        onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                                    >
+                                        {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                    </Input.RightIcon>
+
+                                </Input.Root>
+                            </Label>
+
+                            <Label htmlFor="idHospital">
+                                Hospital
+                                <C.Select name="idHospital">
+                                    <option value="0">Selecione</option>
+                                    {hospital.map((hosp: any) =>
+                                        <option
+                                            key={hosp.idHospital}
+                                            value={hosp.idHospital}
+                                        >
+                                            {hosp.nomeHospital}
+                                        </option>
+                                    )}
+                                </C.Select>
+                            </Label>
+                        </C.InputsContainer>
+
+
+                        <C.ButtonContainer>
+                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
+            </C.InsertContainer>
 
             <C.TableContainer>
                 <C.TableContainerHeader>

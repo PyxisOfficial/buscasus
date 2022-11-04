@@ -137,27 +137,29 @@ export function Especialidade() {
                 <Toast.Description>{messageToast}</Toast.Description>
             </Toast.Root>
 
-            <C.FormContainer>
-                <h3>Cadastrar uma nova especialidade</h3>
-                <form ref={formRef} onSubmit={insertSpecialty} autoComplete="off">
-                    <Label htmlFor="nomeEspecialidade">
-                        Especialidade
-                        <Input.Input
-                            isWithIcon={false}
-                            errorText={false}
-                            inputSize={sizes.lg}
-                            type="text"
-                            id="nomeEspecialidade"
-                            name="nomeEspecialidade"
-                            placeholder='Pediatra'
-                        />
-                    </Label>
-                    <C.ButtonContainer>
-                        <Button.Gray value="Cancelar" type="reset" />
-                        <Button.Green value="Salvar" type="submit" />
-                    </C.ButtonContainer>
-                </form>
-            </C.FormContainer>
+            <C.InsertContainer>
+                <C.FormContainer>
+                    <h3>Cadastrar uma nova especialidade</h3>
+                    <form ref={formRef} onSubmit={insertSpecialty} autoComplete="off">
+                        <Label htmlFor="nomeEspecialidade">
+                            Especialidade
+                            <Input.Input
+                                isWithIcon={false}
+                                errorText={false}
+                                inputSize={sizes.lg}
+                                type="text"
+                                id="nomeEspecialidade"
+                                name="nomeEspecialidade"
+                                placeholder='Pediatra'
+                            />
+                        </Label>
+                        <C.ButtonContainer>
+                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Green value="Salvar" type="submit" />
+                        </C.ButtonContainer>
+                    </form>
+                </C.FormContainer>
+            </C.InsertContainer>
             <C.TableContainer>
                 <C.TableContainerHeader>
                     <h3>Especialidades cadastradas</h3>
