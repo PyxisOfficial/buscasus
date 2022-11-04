@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { X } from 'phosphor-react'
 
 export const DashboardContent  = styled.div`
    display: flex;
@@ -40,7 +41,7 @@ export const LeftContainer = styled.div`
    flex-direction: column;
    height: 100%;
    width: 48%;
-   gap: 30px;
+   gap: 20px;
 `
 
 export const RightContainer = styled.div`
@@ -101,8 +102,8 @@ export const ChartContainer = styled(Container)`
 export const RightTopContainer = styled.div`
    display: flex;
    width: 100%;
-   height: 40vh;
-   gap: 30px;
+   height: 45%;
+   gap: 20px;
 `
 
 export const CardsContainer = styled.div`
@@ -111,7 +112,7 @@ export const CardsContainer = styled.div`
    flex-direction: column;
    align-items: center;
    justify-content: space-between;
-   gap: 24px;
+   gap: 20px;
 `
 
 export const Card = styled(Container)`
@@ -134,7 +135,7 @@ export const CardDescription = styled.div`
 `
 
 export const TextCard = styled.span`
-   font-size: 2.5rem;
+   font-size: 2rem;
    font-weight: 600;
 `
 
@@ -162,11 +163,14 @@ export const NegativeData = styled.div`
 
 export const RequestContainer = styled(Container)`
    flex-direction: column;
+   width: 100%;
    height: 100%;
    padding: 10px 20px;
    gap: 20px;
 `
 export const RequestList = styled.div`
+   display: flex;
+   flex-direction: column;
    width: 100%;
    height: 100%;
 `
@@ -174,9 +178,67 @@ export const RequestList = styled.div`
 export const RequestListItem = styled.div`
    display: flex;
    flex-direction: column;
+   gap: 8px;
+   background-color: #cccccc;
+   padding: 16px; 
+   border-radius: 8px;
+   cursor: pointer;
+   transition: ease-in-out .4s;
+
+   &:hover {
+      background-color: #bbbbbb;
+   }
 `
 
 export const ItemHeader = styled.div`
    display: flex;
    justify-content: space-between;
+`
+
+export const ItemContent = styled.div`
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+`
+
+export const ItemDesc = styled.p`
+   width: 28vw;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+`
+
+export const Close = styled(X)`
+    cursor: pointer;
+`
+
+export const DialogHeader = styled.div`
+   display: flex;
+   justify-content: space-between;
+`
+
+export const DialogHeaderEnd = styled.div`
+   display: flex;
+   gap: 8px;
+`
+
+export const Time  = styled.span`
+   color: #496461;
+`
+
+export const DialogDescription = styled.div`
+   min-width: 300px;
+   max-width: 500px;
+   padding-top: 16px;
+`
+
+export const DialogFooter = styled.div`
+   padding-top: 10px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+`
+
+export const Email = styled.span`
+   color: #496461;
 `

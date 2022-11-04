@@ -55,6 +55,7 @@ export const AlertDialogTrigger = styled(AlertDialog.Trigger)`
 export const DialogHeader = styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     gap: 12px;
     border-bottom: 1px solid #313131;

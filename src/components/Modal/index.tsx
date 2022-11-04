@@ -30,15 +30,15 @@ function AlertModal({ children, itemId, closeModal, title, modalAction, cancel, 
                 <C.AlertDialogOverlay />
                 <C.AlertDialogContent>
                     <C.DialogHeader>
+                        <C.AlertDialogTitle>
+                            {title}
+                        </C.AlertDialogTitle>
                         <AlertDialog.Cancel asChild>
                             <C.Close
                                 size={20}
                                 onClick={closeModal}
                             />
                         </AlertDialog.Cancel>
-                        <C.AlertDialogTitle>
-                            {title}
-                        </C.AlertDialogTitle>
                     </C.DialogHeader>
                     <C.AlertDialogDescription>
                         {children}
@@ -72,15 +72,15 @@ function EditModal({ children, itemId, closeModal, title }: ModalProps) {
                 <C.AlertDialogOverlay />
                 <C.AlertDialogContent>
                     <C.DialogHeader>
+                        <C.AlertDialogTitle>
+                            {title}
+                        </C.AlertDialogTitle>
                         <AlertDialog.Cancel asChild>
                             <C.Close
                                 size={20}
                                 onClick={closeModal}
                             />
                         </AlertDialog.Cancel>
-                        <C.AlertDialogTitle>
-                            {title}
-                        </C.AlertDialogTitle>
                     </C.DialogHeader>
                     <C.AlertDialogDescription>
                         {children}
@@ -105,15 +105,15 @@ function InfoDialogModal({ children, itemId, closeModal, title }: ModalProps) {
                 <C.DialogOverlay />
                 <C.DialogContent>
                     <C.DialogHeader>
+                        <C.DialogTitle>
+                            {title}
+                        </C.DialogTitle>
                         <Dialog.Close asChild>
                             <C.Close
                                 size={20}
                                 onClick={closeModal}
                             />
                         </Dialog.Close>
-                        <C.DialogTitle>
-                            {title}
-                        </C.DialogTitle>
                     </C.DialogHeader>
                     <C.DialogDescription>
                         {children}
@@ -137,15 +137,15 @@ function LogoutModal({ children, itemId, closeModal, title, modalAction }: Modal
                 <C.AlertDialogOverlay />
                 <C.AlertDialogContent>
                     <C.DialogHeader>
+                        <C.AlertDialogTitle>
+                            {title}
+                        </C.AlertDialogTitle>
                         <AlertDialog.Cancel asChild>
                             <C.Close
                                 size={20}
                                 onClick={closeModal}
                             />
                         </AlertDialog.Cancel>
-                        <C.AlertDialogTitle>
-                            {title}
-                        </C.AlertDialogTitle>
                     </C.DialogHeader>
                     <C.AlertDialogDescription>
                         {children}
@@ -157,9 +157,44 @@ function LogoutModal({ children, itemId, closeModal, title, modalAction }: Modal
     )
 }
 
+interface DialogModalRootProps {
+    children: ReactNode,
+}
+
+export function DialogModalRoot({children}: DialogModalRootProps) {
+    return (
+        <Dialog.Root>
+            {children}
+        </Dialog.Root>
+    )
+}
+
+interface DialogModalContentProps  {
+    children: ReactNode;
+}
+
+export function DialogModalContent({children}: DialogModalContentProps) {
+    return (
+        <Dialog.Portal>
+            <C.DialogOverlay />
+            <C.DialogContent>
+                {children}
+            </C.DialogContent>
+        </Dialog.Portal>
+    )
+}
+
 export const Modal = {
     Alert: AlertModal,
     Edit: EditModal,
     Info: InfoDialogModal,
-    Logout: LogoutModal
+    Logout: LogoutModal,
 }
+
+export const DialogModal = {
+    Root: DialogModalRoot,
+    Content: DialogModalContent,
+}
+
+
+

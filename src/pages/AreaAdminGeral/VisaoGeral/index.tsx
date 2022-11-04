@@ -4,8 +4,11 @@ import axios from 'axios';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Chart } from '../../../components/Charts';
+import { DialogModal } from '../../../components/Modal';
+import { Button } from '../../../components/Button';
+import * as Dialog  from '@radix-ui/react-dialog'
 
-import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, CaretDown } from 'phosphor-react';
+import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'phosphor-react';
 
 import * as C from './styles'
 
@@ -141,16 +144,44 @@ export function VisaoGeralAdmin() {
                             </C.Card>
                         </C.CardsContainer>
                         <C.RequestContainer>
-                            <h3>Solicitações de Suporte</h3>
+                            <h3>Reclamações</h3>
                             <C.RequestList>
-                                <C.RequestListItem>
-                                    <C.ItemHeader>
-                                        Usuário
-                                        Tempo
-                                    </C.ItemHeader>
-                                    Assunto
-                                    <p>Descrição</p>
-                                </C.RequestListItem>
+                                <DialogModal.Root>
+                                    <Dialog.Trigger asChild>
+                                        <C.RequestListItem>
+                                            <C.ItemHeader>
+                                                <span>Médico ausente</span>
+                                                <span>Tempo</span>
+                                            </C.ItemHeader>
+                                            <C.ItemContent>
+                                                <C.ItemDesc>
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe delectus sint repudiandae quod corporis, 
+                                                    nostrum, nobis impedit illum quasi aut iste voluptates hic, modi praesentium error aliquid debitis distinctio eos!
+                                                </C.ItemDesc>
+                                            </C.ItemContent>
+                                        </C.RequestListItem>
+                                    </Dialog.Trigger>
+                                    <DialogModal.Content>
+                                        <C.DialogHeader>
+                                            <h3>Médico ausente</h3>
+                                            <C.DialogHeaderEnd>
+                                            <C.Time>Há 20 minutos</C.Time>
+                                                <Dialog.Close asChild>
+                                                    <C.Close size={20} />
+                                                </Dialog.Close>
+                                            </C.DialogHeaderEnd>
+                                        </C.DialogHeader>
+                                        <C.DialogDescription>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, perferendis! 
+                                            Sapiente excepturi voluptate earum quas, iure tenetur incidunt necessitatibus distinctio est, 
+                                            itaque deleniti dignissimos cum temporibus. Enim a similique iste?
+                                        </C.DialogDescription>
+                                        <C.DialogFooter>
+                                            <C.Email>gabrieldantas@email.com</C.Email>
+                                            <Button.Green type='submit' value='Marcar como lido'/>
+                                        </C.DialogFooter>
+                                    </DialogModal.Content>
+                                </DialogModal.Root>
                             </C.RequestList>
                         </C.RequestContainer>
                     </C.RightTopContainer>

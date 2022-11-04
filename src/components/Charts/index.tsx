@@ -6,11 +6,11 @@ function PieChart() {
 
      var data = google.visualization.arrayToDataTable([
        ['Task', 'Hours per Day'],
-       ['Work',     30],
-       ['Eat',      2],
-       ['Commute',  2],
-       ['Watch TV', 2],
-       ['Sleep',    7]
+       ['Ortopedia',     14],
+       ['Pediatria',      22],
+       ['Ginecologia',  30],
+       ['Oftalmologia', 2],
+       ['Anestesiologia',    25]
      ]);
 
      var options = {
@@ -19,6 +19,7 @@ function PieChart() {
        'height':320,
        'backgroundColor': 'transparent',
        'chartArea': {left: 0, right: 0, top: 15, bottom: 0, width: '100%', height: '100%'},
+        colors: ['#496461', '#45CA99', '#349684', '#67C5A2', '#287365']
      };
 
      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -51,7 +52,7 @@ function AreaChart() {
           hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0},
           'width': '100%',
-          'height': 150,
+          'height': 165,
           'backgroundColor': 'transparent',
         };
 
