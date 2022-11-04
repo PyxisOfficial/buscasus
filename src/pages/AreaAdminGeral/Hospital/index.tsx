@@ -6,7 +6,7 @@ import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
-import { Input, sizes } from '../../../components/Form/Input';
+import { Input, InputImage, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Toast } from '../../../components/Toast';
 
@@ -305,18 +305,13 @@ export function Hospital() {
                         </C.Label>
 
                         <C.Label>
-                            <C.ImageInputContainer>
-                                <C.NameImageInput>{hospitalPhoto ? hospitalPhoto[0].name : null}</C.NameImageInput>
-                                <C.ImageLabel>Escolher foto
-                                    <input
-                                        onChange={(e) => setHospitalPhoto(e.target.files)}
-                                        type="file"
-                                        accept=".jpg, .png"
-                                        name="fotoHospital"
-                                        hidden
-                                    />
-                                </C.ImageLabel>
-                            </C.ImageInputContainer>
+                            <InputImage.Root>
+                                <InputImage.NameImage nameImgInput={hospitalPhoto ? hospitalPhoto[0].name : null} />
+                                <InputImage.Label 
+                                    name='fotoHospital' 
+                                    inputAction={(e) => setHospitalPhoto(e.target.files)}
+                                />
+                            </InputImage.Root>
                         </C.Label>
                         <C.ButtonContainer>
                             <Button.Gray onClick={() => setHospitalPhoto(null)} value="Cancelar" type="reset" />

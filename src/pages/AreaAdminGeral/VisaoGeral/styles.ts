@@ -98,18 +98,6 @@ export const ChartContainer = styled(Container)`
    gap: 8px;
 `
 
-export const ChartMonth = styled.img`
-   width: 100%;
-   height: 20vh;
-   background-color: #496461;
-`
-
-export const ChartUsers = styled.div`
-   width: 100%;
-   height: 32vh;
-   background-color: #496461;
-`
-
 export const RightTopContainer = styled.div`
    display: flex;
    width: 100%;

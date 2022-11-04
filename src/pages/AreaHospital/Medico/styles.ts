@@ -45,7 +45,7 @@ export const ImageInputContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 4px 8px 4px 4px;
-    border-radius: 12px;
+    border-radius: 16px;
     background-color: #cccccc;
     gap: 8px;
     cursor: pointer;

@@ -6,7 +6,7 @@ import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Modal } from '../../../components/Modal';
-import { Input, sizes } from '../../../components/Form/Input';
+import { Input, InputImage, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
 import { Toast } from '../../../components/Toast';
@@ -238,18 +238,13 @@ export function Medico() {
 
                         <Label>
                             Foto do médico
-                            <C.ImageInputContainer>
-                                <C.NameImageInput>{medicPhoto ? medicPhoto[0].name : null}</C.NameImageInput>
-                                <C.ImageLabel>Escolher foto
-                                    <input
-                                        onChange={(e) => setMedicPhoto(e.target.files)}
-                                        type="file"
-                                        accept=".jpg, .png"
-                                        name="fotoMedico"
-                                        hidden
-                                    />
-                                </C.ImageLabel>
-                            </C.ImageInputContainer>
+                            <InputImage.Root>
+                                <InputImage.NameImage nameImgInput={medicPhoto ? medicPhoto[0].name : null} />
+                                <InputImage.Label 
+                                    name='fotoMedico' 
+                                    inputAction={(e) => setMedicPhoto(e.target.files)}
+                                />
+                            </InputImage.Root>
                         </Label>
                     </C.InputsContainer>
                     <C.ButtonContainer>

@@ -7,6 +7,7 @@ import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, CaretDown } from 'phosphor-react';
 
 import * as C from './styles'
+import { Chart } from '../../../components/Charts';
 
 export function VisaoGeralAdmin() {
     const [hospitalsCount, setHospitalsCount] = useState<string>();
@@ -83,14 +84,12 @@ export function VisaoGeralAdmin() {
                         </C.Icons>
                     </C.Quantities>
                     <C.ChartContainer>
-                        <h3>Fluxo mensal de Usuários</h3>
-                        <C.ChartMonth />
+                        <h3>Algum dado qualquer</h3>
+                        <Chart.Area />
                     </C.ChartContainer>
                     <C.ChartContainer>
-                        <h3>Idade dos usuários</h3>
-                        <C.ChartUsers>
-
-                        </C.ChartUsers>
+                        <h3>Especialidades mais pesquisadas</h3>
+                            <Chart.Pie />
                     </C.ChartContainer>
                 </C.LeftContainer>
                 <C.Line />
@@ -100,11 +99,11 @@ export function VisaoGeralAdmin() {
                             <C.Card>
                                 <C.CardTitle>
                                     <UserPlus size={25} />
-                                    <h4>Novos Usuários</h4>
+                                    <h4>Não sei</h4>
                                 </C.CardTitle>
                                 <C.CardDescription>
                                     <C.TextCard>
-                                        230
+                                        0
                                     </C.TextCard>
                                     <C.PositiveData>
                                         <CaretUp size={20} weight='bold' />

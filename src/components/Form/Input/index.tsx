@@ -107,6 +107,48 @@ function InputErrorMessage({ children, errorText }: InputErrorMessageProps) {
     )
 }
 
+interface InputImageRootProps {
+    children: ReactNode
+}
+
+function InputImageRoot({children}: InputImageRootProps) {
+    return (
+        <C.ImageInputContainer>
+            {children}
+        </C.ImageInputContainer>
+    )
+}
+
+interface NameImageInputProps {
+    nameImgInput: any;
+}
+
+
+function NameImageInput({nameImgInput}: NameImageInputProps) {
+    return (
+        <C.NameImageInput>{nameImgInput}</C.NameImageInput>
+    )
+}
+
+interface ImageLabelProps {
+    inputAction: any;
+    name: string;
+}
+
+function ImageLabel({inputAction, name}: ImageLabelProps) {
+    return (
+        <C.ImageLabel>Escolher foto
+            <input
+                onChange={inputAction}
+                type="file"
+                accept=".jpg, .png"
+                name={name}
+                hidden
+            />
+        </C.ImageLabel>
+    )
+}
+
 export const Input = {
     Root: InputRoot,
     Input: InputInput,
@@ -114,4 +156,10 @@ export const Input = {
     LeftIcon: InputLeftIcon,
     RightIcon: InputRightIcon,
     ErrorMessage: InputErrorMessage
+}
+
+export const InputImage = {
+    Root: InputImageRoot,
+    NameImage: NameImageInput,
+    Label: ImageLabel
 }
