@@ -10,7 +10,7 @@ $conn = $connection->connect();
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
 
-    $sql = "SELECT * FROM tbAdmin WHERE loginAdmin LIKE '%$search%'";
+    $sql = "SELECT * FROM tbAdmin WHERE loginAdmin LIKE '%$search%' OR idAdmin LIKE '%$search%'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);

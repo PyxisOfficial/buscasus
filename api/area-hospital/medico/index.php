@@ -16,7 +16,10 @@ if (isset($_GET['search'])) {
             ON m.idEspecialidade = e.idEspecialidade
             INNER JOIN tbTelefone t
             ON m.idMedico = t.idMedico 
-            WHERE m.nomeMedico LIKE '%$search%' AND m.idHospital = :id";
+            WHERE m.nomeMedico LIKE '%$search%' 
+            OR e.nomeEspecialidade LIKE '%$search%'
+            or m.crmMedico LIKE '%$search%'
+            AND m.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
