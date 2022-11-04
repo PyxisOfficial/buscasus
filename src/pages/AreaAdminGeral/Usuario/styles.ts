@@ -54,7 +54,7 @@ export const ButtonContainer = styled.div`
 `
 
 export const TableContainer = styled.div`
-    padding: 10px 10px 58px 10px;
+    padding: 16px 20px 68px 20px;
     background-color: #fff;
     border-radius: 10px;
     width: 70%;
