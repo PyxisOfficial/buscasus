@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
-import { LineChart, PieChart } from '../../../components/Charts';
+import { BarChart, PieChart } from '../../../components/Charts';
 import { DialogModal } from '../../../components/Modal';
 import { Button } from '../../../components/Button';
 import * as Dialog  from '@radix-ui/react-dialog'
@@ -87,8 +87,8 @@ export function VisaoGeralAdmin() {
                         </C.Icons>
                     </C.Quantities>
                     <C.ChartContainer>
-                        <h3>Algum dado qualquer</h3>
-                        <LineChart.Area />
+                        <h3>Quantidade de pesquisas por semana do mês</h3>
+                        <BarChart.Area />
                     </C.ChartContainer>
                     <C.ChartContainer>
                         <h3>Especialidades mais pesquisadas</h3>

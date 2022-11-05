@@ -78,33 +78,39 @@ function PieSpecialty() {
 //AREA CHART
 
 function AreaChart() {
-   google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+   google.charts.load("current", {packages:['corechart']});
+   google.charts.setOnLoadCallback(drawChart);
+   function drawChart() {
+     var data = google.visualization.arrayToDataTable([
+       ["Element", "Density", { role: "style" } ],
+       ["Semana 1", 8.94, "#496461"],
+       ["Semana 2", 10.49, "#45CA99"],
+       ["Semana 3", 19.30, "#349684"],
+       ["Semana 4", 21.45, "#287365"]
+     ]);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2013',  1000,      400],
-          ['2014',  1170,      460],
-          ['2015',  660,       1120],
-          ['2016',  1030,      540]
-        ]);
+     var view = new google.visualization.DataView(data);
+     view.setColumns([0, 1,
+                      { calc: "stringify",
+                        sourceColumn: 1,
+                        type: "string",
+                        role: "annotation" },
+                      2]);
 
-        var options = {
-          title: 'Company Performance',
-          hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0},
-          'width': '100%',
-          'height': 165,
-          'backgroundColor': 'transparent',
-        };
-
-        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-
+     var options = {
+       title: "",
+       width: '100%',
+       height: 165,
+       bar: {groupWidth: "95%"},
+       legend: { position: "none" },
+      'backgroundColor': 'transparent',
+      'chartArea': {left: 20, right: 20, top: 15, bottom: 20},
+     };
+     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+     chart.draw(view, options);
+ }
    return (
-      <div id="chart_div"></div>
+      <div id="columnchart_values"></div>
    )
 }
 
@@ -113,6 +119,6 @@ export const PieChart = {
    Region: PieRegion,
 }
 
-export const LineChart = {
+export const BarChart = {
    Area: AreaChart,
 }
