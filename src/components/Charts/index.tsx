@@ -1,4 +1,52 @@
-function PieChart() {
+//PIE CHART
+const options = {
+   title: 'Chart Title',
+   'width': '100%',
+   'height':320,
+   'backgroundColor': 'transparent',
+   'chartArea': {left: 0, right: 0, top: 15, bottom: 0, width: '100%', height: '100%'},
+    colors: ['#496461', '#45CA99', '#349684', '#67C5A2', '#287365'],
+    is3D: true,
+    fontSize: 18,
+    legend: {
+      position: 'labeled', 
+      textStyle: {
+         color: '#000',
+      }
+   },
+    pieSliceText: 'none'
+ };
+
+function PieRegion() {
+   google.charts.load('current', {'packages':['corechart']});
+   google.charts.setOnLoadCallback(drawChart);
+
+   function drawChart() {
+
+     var data = google.visualization.arrayToDataTable([
+       ['Task', 'Hours per Day'],
+       ['Zona Norte', 5],
+       ['Zona Sul', 2],
+       ['Zona Oeste',  4],
+       ['Zona Leste',  7],
+       ['Zona Central', 2]
+     ]);
+
+     {options}
+
+     var chart = new google.visualization.PieChart(document.getElementById('piechartRegion'));
+
+     chart.draw(data, options);
+   }
+   
+   return (
+      <div>
+         <div id="piechartRegion"></div>
+      </div>
+   )
+}
+
+function PieSpecialty() {
    google.charts.load('current', {'packages':['corechart']});
    google.charts.setOnLoadCallback(drawChart);
 
@@ -13,26 +61,21 @@ function PieChart() {
        ['Anestesiologia',    25]
      ]);
 
-     var options = {
-       title: 'Chart Title',
-       'width': '100%',
-       'height':320,
-       'backgroundColor': 'transparent',
-       'chartArea': {left: 0, right: 0, top: 15, bottom: 0, width: '100%', height: '100%'},
-        colors: ['#496461', '#45CA99', '#349684', '#67C5A2', '#287365']
-     };
+     {options}
 
-     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+     var chart = new google.visualization.PieChart(document.getElementById('piechartSpecialty'));
 
      chart.draw(data, options);
    }
    
    return (
       <div>
-         <div id="piechart"></div>
+         <div id="piechartSpecialty"></div>
       </div>
    )
 }
+
+//AREA CHART
 
 function AreaChart() {
    google.charts.load('current', {'packages':['corechart']});
@@ -65,7 +108,11 @@ function AreaChart() {
    )
 }
 
-export const Chart = {
-   Pie: PieChart,
+export const PieChart = {
+   Specialty: PieSpecialty,
+   Region: PieRegion,
+}
+
+export const LineChart = {
    Area: AreaChart,
 }

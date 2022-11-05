@@ -126,5 +126,15 @@ export const Select = styled.select`
     border-radius: 6px;
     outline: none;
     padding: 2px 6px 2px 6px;
-    border: 1px solid #b3a9a9;
+    border: 1px solid #E6E6E6;
+    transition: border .3s;
+    box-shadow: inset 0px 5px 2px rgba(32, 32, 64, 0.01), 
+                inset 0px 3px 2px rgba(32, 32, 64, 0.05), 
+                inset 0px 1px 1px rgba(32, 32, 64, 0.09), 
+                inset 0px 0px 1px rgba(32, 32, 64, 0.1);
+
+    &:focus {
+        outline: 0;
+        border: 1px solid #287365;
+    }
 `

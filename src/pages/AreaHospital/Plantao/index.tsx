@@ -8,6 +8,7 @@ import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
 import { Toast } from '../../../components/Toast';
+import { Checkbox } from '../../../components/Checkbox';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -196,10 +197,9 @@ export function Plantao() {
                                 )}
                             </C.Select>
                         </Label>
-
                         <C.CheckboxContainer>
-                            <input type="checkbox" onChange={() => setIsMultipleDateActive(!isMultipleDateActive)} />
-                            Selecionar múltiplas datas com mesmo horário
+                            <Checkbox checkAction={() => setIsMultipleDateActive(!isMultipleDateActive)}/>
+                            Selecionar múltiplas datas com o mesmo horário
                         </C.CheckboxContainer>
 
                         <Calendar

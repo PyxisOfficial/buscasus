@@ -49,6 +49,7 @@ export const RightContainer = styled.div`
    flex-direction: column;
    height: 100%;
    width: 48%;
+   gap: 20px;
 `
 
 export const Line =  styled.div`
@@ -104,6 +105,12 @@ export const RightTopContainer = styled.div`
    width: 100%;
    height: 45%;
    gap: 20px;
+`
+
+export const RightBottomContainer = styled.div`
+   display: flex;
+   width: 100%;
+   height: 45%;
 `
 
 export const CardsContainer = styled.div`

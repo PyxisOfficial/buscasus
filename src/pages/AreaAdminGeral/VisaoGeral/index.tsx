@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
-import { Chart } from '../../../components/Charts';
+import { LineChart, PieChart } from '../../../components/Charts';
 import { DialogModal } from '../../../components/Modal';
 import { Button } from '../../../components/Button';
 import * as Dialog  from '@radix-ui/react-dialog'
@@ -88,11 +88,11 @@ export function VisaoGeralAdmin() {
                     </C.Quantities>
                     <C.ChartContainer>
                         <h3>Algum dado qualquer</h3>
-                        <Chart.Area />
+                        <LineChart.Area />
                     </C.ChartContainer>
                     <C.ChartContainer>
                         <h3>Especialidades mais pesquisadas</h3>
-                            <Chart.Pie />
+                            <PieChart.Specialty />
                     </C.ChartContainer>
                 </C.LeftContainer>
                 <C.Line />
@@ -185,6 +185,10 @@ export function VisaoGeralAdmin() {
                             </C.RequestList>
                         </C.RequestContainer>
                     </C.RightTopContainer>
+                    <C.ChartContainer>
+                        <h3>Regiões com mais hospitais cadastrados</h3>
+                        <PieChart.Region />
+                    </C.ChartContainer>
                 </C.RightContainer>
             </C.DashboardContent>
         </MenuBackground>
