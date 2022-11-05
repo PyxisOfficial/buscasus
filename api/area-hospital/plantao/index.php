@@ -45,22 +45,24 @@ if (isset($_GET['search'])) {
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
     case "POST":
-        $dataPlantao = $_POST['dataPlantao'];
+        $datasPlantao = $_POST['dataPlantao'];
         $inicioPlantao = $_POST['inicioPlantao'];
         $fimPlantao = $_POST['fimPlantao'];
         $idTipoPlantao = $_POST['idTipoPlantao'];
         $idMedico = $_POST['idMedico'];
         $idHospital = $_POST['idHospital'];
-        
-        $sql = "INSERT INTO tbPlantao(idPlantao, dataPlantao, inicioPlantao, fimPlantao, idTipoPlantao, idMedico, idHospital) VALUES(null, :dataPlantao, :inicioPlantao, :fimPlantao, :idTipoPlantao, :idMedico, :idHospital)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':dataPlantao', $dataPlantao);
-        $stmt->bindParam(':inicioPlantao', $inicioPlantao);
-        $stmt->bindParam(':fimPlantao', $fimPlantao);
-        $stmt->bindParam(':idTipoPlantao', $idTipoPlantao);
-        $stmt->bindParam(':idMedico', $idMedico);
-        $stmt->bindParam(':idHospital', $idHospital);
-        $stmt->execute();
+
+        for ($i = 0; $i < $datasPlantao; $i++) {
+            $sql = "INSERT INTO tbPlantao(idPlantao, dataPlantao, inicioPlantao, fimPlantao, idTipoPlantao, idMedico, idHospital) VALUES(null, :dataPlantao, :inicioPlantao, :fimPlantao, :idTipoPlantao, :idMedico, :idHospital)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':dataPlantao', $datasPlantao[$i]);
+            $stmt->bindParam(':inicioPlantao', $inicioPlantao);
+            $stmt->bindParam(':fimPlantao', $fimPlantao);
+            $stmt->bindParam(':idTipoPlantao', $idTipoPlantao);
+            $stmt->bindParam(':idMedico', $idMedico);
+            $stmt->bindParam(':idHospital', $idHospital);
+            $stmt->execute();
+        }
         break;
 
     case "PUT":

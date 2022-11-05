@@ -7,11 +7,19 @@ export const Container = styled.div`
     width: 100%;
 `
 
+export const FormColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+`
+
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 36%;
+    width: 30%;
+    height: 100%;
     background-color: #fff;
     border-radius: 10px;
     margin-bottom: 24px;
@@ -19,6 +27,33 @@ export const FormContainer = styled.div`
     white-space: nowrap;
     gap: 16px;
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+`
+
+export const SelectedDatesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 40%;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    white-space: nowrap;
+    gap: 16px;
+    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+`
+
+export const SelectedDates = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+`
+
+export const Date = styled.span`
+    color: #fff;
+    background-color: #3eb08f;
+    border-radius: 4px;
+    padding: 4px;
 `
 
 export const Form = styled.form`
@@ -62,7 +97,7 @@ export const ButtonContainer = styled.div`
 
 export const TableContainer = styled.div`
     padding: 16px 20px 68px 20px;
-    width: 60%;
+    width: 100%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
