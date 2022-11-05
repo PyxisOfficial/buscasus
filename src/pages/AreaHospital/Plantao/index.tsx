@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { DutyCalendar } from '../../../components/Calendar';
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Modal } from '../../../components/Modal';
@@ -14,10 +13,13 @@ import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
 
-import { Value } from 'react-multi-date-picker';
+import { Calendar, Value } from "react-multi-date-picker";
 
 export function Plantao() {
     const [dates, setDates] = useState<Value>();
+    const [arrayDates, setArrayDates] = useState<any>([]);
+
+    const [isMultipleDateActive, setIsMultipleDateActive] = useState<boolean>();
 
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
@@ -32,6 +34,9 @@ export function Plantao() {
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
+
+    const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const weekDays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 
     useEffect(() => {
         axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
@@ -92,6 +97,26 @@ export function Plantao() {
             setDuty(response.data);
         });
     }, [search]);
+
+    useEffect(() => {
+        if (dates) {
+            for (let i = 0; i < dates.length; i++) {
+                var date: any = new Date(dates[i]).toISOString().split('T');
+            }
+            if (date) {
+                setArrayDates((prevTeste: any) => [...prevTeste, date[0]]);
+            }
+        }
+    }, [dates]);
+
+    useEffect(() => {
+        if (isMultipleDateActive == false) {
+            setArrayDates([]);
+            setDates('');
+        }
+    }, [isMultipleDateActive]);
+
+    console.log(arrayDates);
 
     async function deleteDuty() {
         await axios.delete('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
@@ -172,13 +197,23 @@ export function Plantao() {
                             </C.Select>
                         </Label>
 
-                        <DutyCalendar
-                            dates={dates}
-                            setDates={setDates}
+                        <C.CheckboxContainer>
+                            <input type="checkbox" onChange={() => setIsMultipleDateActive(!isMultipleDateActive)} />
+                            Selecionar múltiplas datas com mesmo horário
+                        </C.CheckboxContainer>
+
+                        <Calendar
+                            multiple={isMultipleDateActive}
+                            value={dates}
+                            onChange={setDates}
+                            format="DD/MM/YYYY"
+                            months={months}
+                            weekDays={weekDays}
+                            className="green"
                         />
 
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" onClick={() => setDates([])} />
+                            <Button.Gray value="Cancelar" type="reset" onClick={() => [setDates([]), setArrayDates([])]} />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </C.Form>

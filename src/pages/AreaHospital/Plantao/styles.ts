@@ -11,7 +11,7 @@ export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 25%;
+    width: 36%;
     background-color: #fff;
     border-radius: 10px;
     margin-bottom: 24px;
@@ -42,6 +42,12 @@ export const InputContainer = styled.div`
     flex-direction: row;
 `
 
+export const CheckboxContainer = styled.label`
+    display: flex;
+    align-items: center;
+    gap: 4px;
+`
+
 export const ButtonContainer = styled.div`
     display: flex;
     float: right;
@@ -51,7 +57,7 @@ export const ButtonContainer = styled.div`
 
 export const TableContainer = styled.div`
     padding: 16px 20px 68px 20px;
-    width: 70%;
+    width: 60%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
