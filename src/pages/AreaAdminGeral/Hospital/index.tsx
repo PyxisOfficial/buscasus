@@ -141,7 +141,7 @@ export function Hospital() {
         formData.append("cnpjHospital", cnpjInputValue);
         formData.append("ufHospital", ufInputValue);
         formData.append("logradouroHospital", publicPlaceInputValue);
-        formData.append("complementoHospital", complementInputValue);
+        complementInputValue ? formData.append("complementoHospital", complementInputValue) : formData.append("complementoHospital", '');
         formData.append("cepHospital", cepInputValue);
         formData.append("cidadeHospital", cityInputValue);
         formData.append("bairroHospital", districtInputValue);
@@ -480,7 +480,7 @@ export function Hospital() {
                                                         <C.Text><b>UF:</b> {hosp.ufHospital}</C.Text>
                                                         <C.Text><b>Logradouro:</b> {hosp.logradouroHospital}</C.Text>
 
-                                                        {hosp.complementoHospital == null ?
+                                                        {hosp.complementoHospital ?
                                                             <C.Text><b>Complemento:</b> {hosp.complementoHospital}</C.Text> :
                                                             null
                                                         }
