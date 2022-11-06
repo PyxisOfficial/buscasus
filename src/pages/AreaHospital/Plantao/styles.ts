@@ -17,8 +17,7 @@ export const FormColumn = styled.div`
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 30%;
+    width: 36%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;

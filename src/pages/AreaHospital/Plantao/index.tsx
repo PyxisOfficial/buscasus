@@ -15,12 +15,12 @@ import { MagnifyingGlass } from 'phosphor-react';
 import * as C from './styles';
 
 import { Calendar, Value } from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 
 export function Plantao() {
     const [startTime, setStartTime] = useState<any>([]);
     const [endTime, setEndTime] = useState<any>([]);
     const [dates, setDates] = useState<Value>();
-    const [arrayDates, setArrayDates] = useState<any>([]);
 
     const [isMultipleDateActive, setIsMultipleDateActive] = useState<boolean>();
 
@@ -102,40 +102,29 @@ export function Plantao() {
     }, [search]);
 
     useEffect(() => {
-        if (dates && isMultipleDateActive) {
-            let date: any = [];
-            for (let i = 0; i < dates.length; i++) {
-                date = new Date(dates[i]).toISOString().split('T');
-            }
-            if (date) setArrayDates([...arrayDates, date[0]]);
-        } else {
-            let date: any = new Date(dates);
-            let month = '' + (date.getMonth() + 1);
-            let day = '' + (date.getDate());
-            let year = '' + (date.getFullYear());
-
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-
-            let formattedDate = year + '-' + month + '-' + day;
-
-            if (dates) setArrayDates([formattedDate]);
-        }
-    }, [dates]);
-
-    useEffect(() => {
         if (isMultipleDateActive == false) {
-            setArrayDates([]);
             setDates('');
         }
     }, [isMultipleDateActive]);
+
+    function formatDate(date: any) {
+        let d: any = new Date(date);
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + (d.getDate());
+        let year = '' + (d.getFullYear());
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return `${year}-${month}-${day}`;
+    }
 
     async function insertDuty(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
         const data: any = Object.fromEntries(formData);
-        arrayDates.map((date: any) => formData.append("dataPlantao[]", date));
+        dates.length > 1 ? dates.map((date: any) => formData.append("dataPlantao[]", formatDate(date))) : formData.append("dataPlantao[]", formatDate(dates));
         formData.append("inicioPlantao", startTime);
         formData.append("fimPlantao", endTime);
         formData.append("idTipoPlantao", data.idTipoPlantao);
@@ -145,6 +134,7 @@ export function Plantao() {
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/plantao/', formData);
 
         setIsFormSubmitted(true);
+        setDates('');
 
         setIsToastOpened(true);
         setMessageToast("Plantão cadastrado com sucesso!");
@@ -229,8 +219,8 @@ export function Plantao() {
                             </C.Select>
                         </Label>
                         <C.CheckboxContainer>
-                            <Checkbox checkAction={() => setIsMultipleDateActive(!isMultipleDateActive)} />
-                            Selecionar múltiplas datas com o mesmo horário
+                            <Checkbox isCheckboxChecked={isMultipleDateActive} checkAction={() => [setIsMultipleDateActive(!isMultipleDateActive)]} />
+                            Selecionar múltiplas datas com os mesmos horários
                         </C.CheckboxContainer>
 
                         <Calendar
@@ -242,10 +232,16 @@ export function Plantao() {
                             weekDays={weekDays}
                             className="green"
                             showOtherDays
+                            plugins={[
+                                <DatePanel
+                                    position="right"
+                                    header="Data(s)"
+                                />]
+                            }
                         />
 
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" onClick={() => [setDates(''), setArrayDates([]), setStartTime([]), setEndTime([])]} />
+                            <Button.Gray value="Cancelar" type="reset" onClick={() => [setDates(''), setStartTime([]), setEndTime([]), setIsMultipleDateActive(false)]} />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </C.Form>
