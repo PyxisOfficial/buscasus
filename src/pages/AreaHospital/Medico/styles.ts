@@ -147,7 +147,11 @@ export const Select = styled.select<{
     border-radius: 6px;
     outline: none;
     padding: 2px 6px 2px 6px;
+<<<<<<< HEAD
+    border: ${(props) => props.errorText ? '1px solid #e94a4f' : '1px solid #d1d1d1;'};
+=======
     border: ${(props) => props.errorText ? '1px solid #e94a4f' : '1px solid #E6E6E6;'};
+>>>>>>> 79fea02163efcc6e60169c7c427b0694a0b5a8f9
     transition: border .3s;
     box-shadow: inset 0px 5px 2px rgba(32, 32, 64, 0.01), 
                 inset 0px 3px 2px rgba(32, 32, 64, 0.05), 

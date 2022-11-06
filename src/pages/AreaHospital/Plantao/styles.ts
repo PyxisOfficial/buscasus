@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    justify-content: space-around;
     align-self: center;
     width: 100%;
+    gap: 30px;
 `
 
 export const FormColumn = styled.div`
@@ -17,11 +17,9 @@ export const FormColumn = styled.div`
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 36%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
-    margin-bottom: 24px;
     padding: 16px 20px;
     white-space: nowrap;
     gap: 16px;
@@ -63,17 +61,28 @@ export const Form = styled.form`
 
 export const InputsContainer = styled.div`
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 8px;
 `
 
-export const InputContainer = styled.div`
+export const InputDateContainer = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: row;
     gap: 40px;
+`
+
+export const InputContainer = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+`
+
+export const InnerFormContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
 `
 
 export const CheckboxContainer = styled.label`
@@ -89,14 +98,13 @@ export const CheckboxContainer = styled.label`
 
 export const ButtonContainer = styled.div`
     display: flex;
-    float: right;
+    justify-content: flex-end;
     gap: 8px;
-    margin-top: 12px;
 `
 
 export const TableContainer = styled.div`
     padding: 16px 20px 20px 20px;
-    width: 100%;
+    width: 85%;
     height: 100%;
     background-color: #fff;
     border-radius: 10px;
@@ -109,7 +117,7 @@ export const TableContainerHeader = styled.div`
 `
 
 export const Table = styled.table`
-    height: 76vh;
+    height: 80vh;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -190,7 +198,7 @@ export const Select = styled.select`
     border-radius: 6px;
     outline: none;
     padding: 2px 6px 2px 6px;
-    border: 1px solid #E6E6E6;
+    border: 1px solid #d1d1d1;
     transition: border .3s;
     box-shadow: inset 0px 5px 2px rgba(32, 32, 64, 0.01), 
                 inset 0px 3px 2px rgba(32, 32, 64, 0.05), 

@@ -215,6 +215,81 @@ a:-webkit-any-link {
   background-color: var(--rmdp-deselect-green);
 }
 
+.myDatePicker {
+  z-index: 0 !important;
+}
+
+.rmdp-prime.rmdp-wrapper {
+  border: 1px solid #3eb08f;
+}
+
+.rmdp-prime .rmdp-border-right {
+  border-right: 1px solid #3eb08f !important; 
+}
+
+.rmdp-shadow {
+  box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+.rmdp-header {
+  background-color: #3eb08f;
+  border-top-left-radius: 8px;
+  border: none !important;
+}
+
+.rmdp-header span {
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 1.3em !important;
+}
+
+.rmdp-panel-header {
+  background-color: #3eb08f;
+  border-top-right-radius: 8px;
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 1em !important;
+  border: none !important;
+}
+
+.green .rmdp-arrow {
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+}
+
+.rmdp-wrapper {
+  border-radius: 8px;
+}
+
+.rmdp-day-picker {
+  padding: 12px;
+  width: 100%;
+  height: 100%;
+}
+
+.rmdp-day {
+  width: 4vw;
+  height: 8vh;
+}
+
+.rmdp-week-day {
+  font-size: 18px;
+  font-weight: bold;
+  width: 4vw;
+}
+
+.rmdp-day span{
+  font-size: 24px;
+  border-radius: 8px !important;
+  left: 0;
+  right: 0;
+  color: #313131;
+}
+
+.rmdp-day.rmdp-deactive span {
+  color: #909090 !important;
+}
+
 `;
 
 export default GlobalStyle;

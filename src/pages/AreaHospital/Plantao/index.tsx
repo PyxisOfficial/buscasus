@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { Calendar, Value } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import "react-multi-date-picker/styles/layouts/prime.css"
 
 export function Plantao() {
     const [startTime, setStartTime] = useState<any>([]);
@@ -37,7 +38,7 @@ export function Plantao() {
     const hospitalId = JSON.parse(getHospitalId);
 
     const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const weekDays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+    const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
     useEffect(() => {
         axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
@@ -162,62 +163,66 @@ export function Plantao() {
                 <C.FormContainer>
                     <h3>Cadastrar um novo plantão</h3>
                     <C.Form onSubmit={insertDuty} autoComplete="off">
-                        <Label htmlFor="TipoPlantao">
-                            Tipo do plantão
-                            <C.Select name="idTipoPlantao">
-                                <option value="0">Selecione</option>
-                                {dutyType.map((dt: any) =>
-                                    <option
-                                        key={dt.idTipoPlantao}
-                                        value={dt.idTipoPlantao}
-                                    >
-                                        {dt.tipoPlantao}
-                                    </option>
-                                )}
-                            </C.Select>
-                        </Label>
-                        <C.InputContainer>
-                            <Label htmlFor="inicioPlantao">
-                                Início
-                                <Input.Input
-                                    onChange={(e) => setStartTime(e.target.value)}
-                                    isWithIcon={false}
-                                    errorText={false}
-                                    inputSize={sizes.xs}
-                                    type="time"
-                                    id="inicioPlantao"
-                                />
-                            </Label>
-                            <Label htmlFor="fimPlantao">
-                                Fim
-                                <Input.Input
-                                    onChange={(e) => setEndTime(e.target.value)}
-                                    isWithIcon={false}
-                                    errorText={false}
-                                    inputSize={sizes.xs}
-                                    type="time"
-                                    id="fimPlantao"
-                                />
-                            </Label>
-                        </C.InputContainer>
-                        <Label htmlFor="idMedico">
-                            Médico
-                            <C.Select name="idMedico">
-                                <option value="0">Selecione</option>
-                                {medics.map((medic: any) =>
-                                    <option
-                                        key={medic.idMedico}
-                                        value={medic.idMedico}
-                                    >
-                                        {medic.nomeMedico}
-                                    </option>
-                                )}
-                            </C.Select>
-                        </Label>
-                        <C.CheckboxContainer>
-                            <Checkbox isCheckboxChecked={isMultipleDateActive} checkAction={() => [setIsMultipleDateActive(!isMultipleDateActive)]} />
-                            Selecionar múltiplas datas com os mesmos horários
-                        </C.CheckboxContainer>
+                            <C.InnerFormContainer>
+                                <C.InputContainer>
+                                    <Label htmlFor="TipoPlantao">
+                                        Tipo do plantão
+                                        <C.Select name="idTipoPlantao">
+                                            <option value="0">Selecione</option>
+                                            {dutyType.map((dt: any) =>
+                                                <option
+                                                    key={dt.idTipoPlantao}
+                                                    value={dt.idTipoPlantao}
+                                                >
+                                                    {dt.tipoPlantao}
+                                                </option>
+                                            )}
+                                        </C.Select>
+                                    </Label>
+                                    <Label htmlFor="idMedico">
+                                        Médico
+                                        <C.Select name="idMedico">
+                                            <option value="0">Selecione</option>
+                                            {medics.map((medic: any) =>
+                                                <option
+                                                    key={medic.idMedico}
+                                                    value={medic.idMedico}
+                                                >
+                                                    {medic.nomeMedico}
+                                                </option>
+                                            )}
+                                        </C.Select>
+                                    </Label>
+                                </C.InputContainer>
+                                <C.InputContainer>
+                                    <Label htmlFor="inicioPlantao">
+                                        Início
+                                        <Input.Input
+                                            onChange={(e) => setStartTime(e.target.value)}
+                                            isWithIcon={false}
+                                            errorText={false}
+                                            inputSize={sizes.xs}
+                                            type="time"
+                                            id="inicioPlantao"
+                                        />
+                                    </Label>
+                                    <Label htmlFor="fimPlantao">
+                                        Fim
+                                        <Input.Input
+                                            onChange={(e) => setEndTime(e.target.value)}
+                                            isWithIcon={false}
+                                            errorText={false}
+                                            inputSize={sizes.xs}
+                                            type="time"
+                                            id="fimPlantao"
+                                        />
+                                    </Label>
+                                </C.InputContainer>
+                            </C.InnerFormContainer>
+                            <C.CheckboxContainer>
+                                <Checkbox isCheckboxChecked={isMultipleDateActive} checkAction={() => [setIsMultipleDateActive(!isMultipleDateActive)]} />
+                                Selecionar múltiplas datas com os mesmos horários
+                            </C.CheckboxContainer>
 
                         <Calendar
                             multiple={isMultipleDateActive}
@@ -226,8 +231,9 @@ export function Plantao() {
                             format="DD/MM/YYYY"
                             months={months}
                             weekDays={weekDays}
-                            className="green"
+                            className="rmdp-prime green myDatePicker"
                             showOtherDays
+                            disableYearPicker
                             plugins={[
                                 <DatePanel
                                     position="right"
