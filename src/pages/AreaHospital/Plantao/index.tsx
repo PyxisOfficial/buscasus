@@ -252,17 +252,6 @@ export function Plantao() {
                 </C.FormContainer>
 
                 <C.FormColumn>
-                    <C.SelectedDatesContainer>
-                        <h3>Horário(s) e data(s) selecionado(s)</h3>
-
-                        <C.SelectedDates>
-                            {dates ? arrayDates.map((dates: any, key: any) =>
-                                <C.Date key={key}>{dates} {startTime} {endTime}</C.Date>
-                            ) : null
-                            }
-                        </C.SelectedDates>
-
-                    </C.SelectedDatesContainer>
                     <C.TableContainer>
                         <C.TableContainerHeader>
                             <h3>Plantões cadastrados</h3>

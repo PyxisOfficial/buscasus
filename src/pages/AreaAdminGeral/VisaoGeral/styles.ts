@@ -186,11 +186,16 @@ export const RequestListItem = styled.div`
    display: flex;
    flex-direction: column;
    gap: 8px;
-   background-color: #cccccc;
+   background-color: #FBFBFD;
    padding: 16px; 
    border-radius: 8px;
    cursor: pointer;
    transition: ease-in-out .4s;
+   filter: drop-shadow(0px 11px 4px rgba(0, 0, 0, 0.01)) 
+           drop-shadow(0px 6px 4px rgba(0, 0, 0, 0.05)) 
+           drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.09)) 
+           drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1)) 
+           drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1));
 
    &:hover {
       background-color: #bbbbbb;

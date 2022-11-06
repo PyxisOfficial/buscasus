@@ -73,8 +73,8 @@ export const InputContainer = styled.div`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     flex-direction: row;
+    gap: 40px;
 `
 
 export const CheckboxContainer = styled.label`
@@ -96,7 +96,7 @@ export const ButtonContainer = styled.div`
 `
 
 export const TableContainer = styled.div`
-    padding: 16px 20px 68px 20px;
+    padding: 16px 20px 20px 20px;
     width: 100%;
     height: 100%;
     background-color: #fff;
@@ -110,7 +110,7 @@ export const TableContainerHeader = styled.div`
 `
 
 export const Table = styled.table`
-    height: 100%;
+    height: 76vh;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -187,6 +187,7 @@ export const InfoImg = styled.img`
     object-fit: cover;
 `
 export const Select = styled.select`
+    width: 250px;   
     border-radius: 6px;
     outline: none;
     padding: 2px 6px 2px 6px;

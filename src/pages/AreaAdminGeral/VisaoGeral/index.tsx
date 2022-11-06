@@ -67,8 +67,8 @@ export function VisaoGeralAdmin() {
                         <C.Icons color='#49B28C'>
                             <Users size={70} />
                             <C.TextContainer>
-                                <span></span>
-                                <span></span>
+                                <span>N/I</span>
+                                <span>0</span>
                             </C.TextContainer>
                         </C.Icons>
                         <C.Icons color='#349684'>
@@ -102,7 +102,7 @@ export function VisaoGeralAdmin() {
                             <C.Card>
                                 <C.CardTitle>
                                     <UserPlus size={25} />
-                                    <h4>Não sei</h4>
+                                    <h4>N/I</h4>
                                 </C.CardTitle>
                                 <C.CardDescription>
                                     <C.TextCard>
@@ -151,7 +151,7 @@ export function VisaoGeralAdmin() {
                                         <C.RequestListItem>
                                             <C.ItemHeader>
                                                 <span>Médico ausente</span>
-                                                <span>Tempo</span>
+                                                <span>Há 20 minutos</span>
                                             </C.ItemHeader>
                                             <C.ItemContent>
                                                 <C.ItemDesc>
