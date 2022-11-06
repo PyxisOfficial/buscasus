@@ -20,12 +20,6 @@ import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "react-multi-date-picker/styles/layouts/prime.css"
 
 export function Plantao() {
-    const [startTime, setStartTime] = useState<any>([]);
-    const [endTime, setEndTime] = useState<any>([]);
-    const [dates, setDates] = useState<Value>();
-
-    const [isMultipleDateActive, setIsMultipleDateActive] = useState<boolean>();
-
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [duty, setDuty] = useState([]);
@@ -33,6 +27,19 @@ export function Plantao() {
     const [medics, setMedics] = useState([]);
     const [dutyType, setDutyType] = useState([]);
     const [search, setSearch] = useState<string>();
+
+    const [dutyTypeInputValue, setDutyTypeInputValue] = useState<any>();
+    const [startTime, setStartTime] = useState<any>();
+    const [endTime, setEndTime] = useState<any>();
+    const [medicInputValue, setMedicInputValue] = useState<any>();
+    const [dates, setDates] = useState<Value>();
+
+    const [isDutyTypeInputWithError, setIsDutyTypeInputWithError] = useState<boolean>();
+    const [isStartTimeInputWithError, setIsStartTimeInputWithError] = useState<boolean>();
+    const [isEndTimeInputWithError, setIsEndTimeInputWithError] = useState<boolean>();
+    const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
+
+    const [isMultipleDateActive, setIsMultipleDateActive] = useState<boolean>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -45,21 +52,15 @@ export function Plantao() {
             params: {
                 idHospital: hospitalId
             }
-        }).then((response) => {
-            setDuty(response.data);
-        });
+        }).then((response) => setDuty(response.data));
 
         axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
             params: {
                 idHospital: hospitalId
             }
-        }).then((response) => {
-            setMedics(response.data);
-        });
+        }).then((response) => setMedics(response.data));
 
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then((response) => {
-            setDutyType(response.data);
-        });
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then((response) => setDutyType(response.data));
     }, []);
 
     useEffect(() => {
@@ -69,17 +70,13 @@ export function Plantao() {
                     search: search,
                     idHospital: hospitalId
                 }
-            }).then(response => {
-                setDuty(response.data);
-            });
+            }).then(response => setDuty(response.data));
         } else {
             axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
                 params: {
                     idHospital: hospitalId
                 }
-            }).then((response) => {
-                setDuty(response.data);
-            });
+            }).then((response) => setDuty(response.data));
         }
 
         setIsFormSubmitted(false);
@@ -91,15 +88,11 @@ export function Plantao() {
                 search: search,
                 idHospital: hospitalId
             }
-        }).then(response => {
-            setDuty(response.data);
-        });
+        }).then(response => setDuty(response.data));
     }, [search]);
 
     useEffect(() => {
-        if (isMultipleDateActive == false) {
-            setDates('');
-        }
+        if (isMultipleDateActive == false) setDates('');
     }, [isMultipleDateActive]);
 
     function formatDate(date: any) {
@@ -117,20 +110,26 @@ export function Plantao() {
     async function insertDuty(event: FormEvent) {
         event.preventDefault();
 
+        if (!startTime) setIsStartTimeInputWithError(true);
+        if (!endTime) setIsEndTimeInputWithError(true);
+        if (dutyTypeInputValue == 0 || !dutyTypeInputValue) setIsDutyTypeInputWithError(true);
+        if (medicInputValue == 0 || !medicInputValue) setIsMedicInputWithError(true);
+
         const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
         dates.length > 1 ? dates.map((date: any) => formData.append("dataPlantao[]", formatDate(date))) : formData.append("dataPlantao[]", formatDate(dates));
         formData.append("inicioPlantao", startTime);
         formData.append("fimPlantao", endTime);
-        formData.append("idTipoPlantao", data.idTipoPlantao);
-        formData.append("idMedico", data.idMedico);
+        formData.append("idTipoPlantao", dutyTypeInputValue);
+        formData.append("idMedico", medicInputValue);
         formData.append("idHospital", hospitalId);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/plantao/', formData);
+        if (dates && startTime && endTime && dutyTypeInputValue > 0 && medicInputValue > 0) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/plantao/', formData);
 
-        setIsFormSubmitted(true);
-        setDates('');
-        toast.success("Plantão cadastrado com sucesso!");
+            setIsFormSubmitted(true);
+            setDates('');
+            toast.success("Plantão cadastrado com sucesso!");
+        }
     }
 
     async function deleteDuty() {
@@ -163,66 +162,76 @@ export function Plantao() {
                 <C.FormContainer>
                     <h3>Cadastrar um novo plantão</h3>
                     <C.Form onSubmit={insertDuty} autoComplete="off">
-                            <C.InnerFormContainer>
-                                <C.InputContainer>
-                                    <Label htmlFor="TipoPlantao">
-                                        Tipo do plantão
-                                        <C.Select name="idTipoPlantao">
-                                            <option value="0">Selecione</option>
-                                            {dutyType.map((dt: any) =>
-                                                <option
-                                                    key={dt.idTipoPlantao}
-                                                    value={dt.idTipoPlantao}
-                                                >
-                                                    {dt.tipoPlantao}
-                                                </option>
-                                            )}
-                                        </C.Select>
-                                    </Label>
-                                    <Label htmlFor="idMedico">
-                                        Médico
-                                        <C.Select name="idMedico">
-                                            <option value="0">Selecione</option>
-                                            {medics.map((medic: any) =>
-                                                <option
-                                                    key={medic.idMedico}
-                                                    value={medic.idMedico}
-                                                >
-                                                    {medic.nomeMedico}
-                                                </option>
-                                            )}
-                                        </C.Select>
-                                    </Label>
-                                </C.InputContainer>
-                                <C.InputContainer>
-                                    <Label htmlFor="inicioPlantao">
-                                        Início
-                                        <Input.Input
-                                            onChange={(e) => setStartTime(e.target.value)}
-                                            isWithIcon={false}
-                                            errorText={false}
-                                            inputSize={sizes.xs}
-                                            type="time"
-                                            id="inicioPlantao"
-                                        />
-                                    </Label>
-                                    <Label htmlFor="fimPlantao">
-                                        Fim
-                                        <Input.Input
-                                            onChange={(e) => setEndTime(e.target.value)}
-                                            isWithIcon={false}
-                                            errorText={false}
-                                            inputSize={sizes.xs}
-                                            type="time"
-                                            id="fimPlantao"
-                                        />
-                                    </Label>
-                                </C.InputContainer>
-                            </C.InnerFormContainer>
-                            <C.CheckboxContainer>
-                                <Checkbox isCheckboxChecked={isMultipleDateActive} checkAction={() => [setIsMultipleDateActive(!isMultipleDateActive)]} />
-                                Selecionar múltiplas datas com os mesmos horários
-                            </C.CheckboxContainer>
+                        <C.InnerFormContainer>
+                            <C.InputContainer>
+                                <Label htmlFor="TipoPlantao">
+                                    Tipo do plantão
+                                    <C.Select
+                                        onChange={(e) => setDutyTypeInputValue(e.target.value)}
+                                        onBlur={() => dutyTypeInputValue != 0 ? setIsDutyTypeInputWithError(false) : setIsDutyTypeInputWithError(true)}
+                                        errorText={isDutyTypeInputWithError}
+                                    >
+                                        <option value="0">Selecione</option>
+                                        {dutyType.map((dt: any) =>
+                                            <option
+                                                key={dt.idTipoPlantao}
+                                                value={dt.idTipoPlantao}
+                                            >
+                                                {dt.tipoPlantao}
+                                            </option>
+                                        )}
+                                    </C.Select>
+                                </Label>
+                                <Label htmlFor="idMedico">
+                                    Médicos
+                                    <C.Select
+                                        onChange={(e) => setMedicInputValue(e.target.value)}
+                                        onBlur={() => medicInputValue != 0 ? setIsMedicInputWithError(false) : setIsMedicInputWithError(true)}
+                                        errorText={isMedicInputWithError}
+                                    >
+                                        <option value="0">Selecione</option>
+                                        {medics.map((medic: any) =>
+                                            <option
+                                                key={medic.idMedico}
+                                                value={medic.idMedico}
+                                            >
+                                                {medic.nomeMedico}
+                                            </option>
+                                        )}
+                                    </C.Select>
+                                </Label>
+                            </C.InputContainer>
+                            <C.InputContainer>
+                                <Label htmlFor="inicioPlantao">
+                                    Início
+                                    <Input.Input
+                                        onChange={(e) => setStartTime(e.target.value)}
+                                        onBlur={() => startTime ? setIsStartTimeInputWithError(false) : setIsStartTimeInputWithError(true)}
+                                        isWithIcon={false}
+                                        errorText={isStartTimeInputWithError}
+                                        inputSize={sizes.xs}
+                                        type="time"
+                                        id="inicioPlantao"
+                                    />
+                                </Label>
+                                <Label htmlFor="fimPlantao">
+                                    Fim
+                                    <Input.Input
+                                        onChange={(e) => setEndTime(e.target.value)}
+                                        onBlur={() => endTime ? setIsEndTimeInputWithError(false) : setIsEndTimeInputWithError(true)}
+                                        isWithIcon={false}
+                                        errorText={isEndTimeInputWithError}
+                                        inputSize={sizes.xs}
+                                        type="time"
+                                        id="fimPlantao"
+                                    />
+                                </Label>
+                            </C.InputContainer>
+                        </C.InnerFormContainer>
+                        <C.CheckboxContainer>
+                            <Checkbox isCheckboxChecked={isMultipleDateActive} checkAction={() => [setIsMultipleDateActive(!isMultipleDateActive)]} />
+                            Selecionar múltiplas datas com os mesmos horários
+                        </C.CheckboxContainer>
 
                         <Calendar
                             multiple={isMultipleDateActive}
@@ -243,7 +252,13 @@ export function Plantao() {
                         />
 
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" onClick={() => [setDates(''), setStartTime([]), setEndTime([]), setIsMultipleDateActive(false)]} />
+                            <Button.Gray
+                                value="Cancelar"
+                                type="reset"
+                                onClick={() => [
+                                    setDates(''), setDutyTypeInputValue(null), setMedicInputValue(null), setStartTime(null), setEndTime(null), setIsMultipleDateActive(false),
+                                    setIsDutyTypeInputWithError(false), setIsMedicInputWithError(false), setIsStartTimeInputWithError(false), setIsEndTimeInputWithError(false)
+                                ]} />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </C.Form>

@@ -23,6 +23,12 @@ export function Especialidade() {
     const [specialtyId, setSpecialtyId] = useState<number>();
     const [search, setSearch] = useState<string>();
 
+    const [specialtyInputValue, setSpecialtyInputValue] = useState<any>();
+    const [isSpecialtyInputWithError, setIsSpecialtyInputWithError] = useState<boolean>();
+
+    const [specialtyInputValueModal, setSpecialtyInputValueModal] = useState<any>();
+    const [isSpecialtyInputModalWithError, setIsSpecialtyInputModalWithError] = useState<boolean>();
+
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
 
@@ -33,9 +39,7 @@ export function Especialidade() {
             params: {
                 idHospital: hospitalId
             }
-        }).then(response => {
-            setSpecialty(response.data);
-        });
+        }).then(response => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
@@ -45,18 +49,16 @@ export function Especialidade() {
                     search: search,
                     idHospital: hospitalId
                 }
-            }).then(response => {
-                setSpecialty(response.data);
-            });
+            }).then(response => setSpecialty(response.data));
         } else {
             axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
                 params: {
                     idHospital: hospitalId
                 }
-            }).then(response => {
-                setSpecialty(response.data);
-            });
+            }).then(response => setSpecialty(response.data));
         }
+
+        setSpecialtyInputValue(null);
 
         setIsFormSubmitted(false);
 
@@ -69,41 +71,43 @@ export function Especialidade() {
                 search: search,
                 idHospital: hospitalId
             }
-        }).then(response => {
-            setSpecialty(response.data);
-        })
+        }).then(response => setSpecialty(response.data));
     }, [search]);
 
     async function insertSpecialty(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
-        formData.append("nomeEspecialidade", data.nomeEspecialidade);
+        formData.append("nomeEspecialidade", specialtyInputValue);
         formData.append("idHospital", hospitalId);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', formData);
+        if (!specialtyInputValue) setIsSpecialtyInputWithError(true);
 
-        setIsFormSubmitted(true);
+        if (specialtyInputValue) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', formData);
 
-        toast.success("Especialidade cadastrada com sucesso!");
+            setIsFormSubmitted(true);
+
+            toast.success("Especialidade cadastrada com sucesso!");
+        }
     }
 
     async function editSpecialty(event: FormEvent) {
         event.preventDefault();
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
+        if (!specialtyInputValueModal) setIsSpecialtyInputModalWithError(true);
 
-        await axios.put('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', null, {
-            params: {
-                nomeEspecialidade: data.nomeEspecialidade,
-                idEspecialidade: specialtyId
-            }
-        });
+        if (specialtyInputValueModal) {
+            await axios.put('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', null, {
+                params: {
+                    nomeEspecialidade: specialtyInputValueModal,
+                    idEspecialidade: specialtyId
+                }
+            });
 
-        setIsFormSubmitted(true);
-        toast.success("Especialidade editada com sucesso!");
+            setIsFormSubmitted(true);
+            toast.success("Especialidade editada com sucesso!");
+        }
     }
 
     async function deleteSpecialty() {
@@ -139,8 +143,10 @@ export function Especialidade() {
                         <Label htmlFor="nomeEspecialidade">
                             Especialidade
                             <Input.Input
+                                onChange={(e) => setSpecialtyInputValue(e.target.value)}
+                                onBlur={() => specialtyInputValue ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
                                 isWithIcon={false}
-                                errorText={false}
+                                errorText={isSpecialtyInputWithError}
                                 inputSize={sizes.lg}
                                 type="text"
                                 id="nomeEspecialidade"
@@ -149,7 +155,11 @@ export function Especialidade() {
                             />
                         </Label>
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Gray
+                                onClick={() => [setSpecialtyInputValue(null), setIsSpecialtyInputWithError(false)]}
+                                value="Cancelar"
+                                type="reset"
+                            />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </form>
@@ -194,16 +204,18 @@ export function Especialidade() {
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Edit
-                                            itemId={() => { setSpecialtyId(spe.idEspecialidade) }}
-                                            closeModal={() => { setSpecialtyId(0) }}
+                                            itemId={() => [setSpecialtyId(spe.idEspecialidade), setSpecialtyInputValueModal(spe.nomeEspecialidade)]}
+                                            closeModal={() => [setSpecialtyId(0), setSpecialtyInputValueModal(null), setIsSpecialtyInputModalWithError(false)]}
                                             title='Editar especialidade'
                                         >
                                             <C.Form onSubmit={editSpecialty} autoComplete="off">
                                                 <Label htmlFor="nomeEspecialidadeModal">
                                                     Nome
                                                     <Input.Input
+                                                        onChange={(e) => setSpecialtyInputValueModal(e.target.value)}
+                                                        onBlur={() => specialtyInputValueModal ? setIsSpecialtyInputModalWithError(false) : setIsSpecialtyInputModalWithError(true)}
                                                         isWithIcon={false}
-                                                        errorText={false}
+                                                        errorText={isSpecialtyInputModalWithError}
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="nomeEspecialidadeModal"
@@ -214,7 +226,11 @@ export function Especialidade() {
 
                                                 <C.ButtonContainer>
                                                     <AlertDialog.Cancel asChild>
-                                                        <Button.Gray value="Fechar" type="button" />
+                                                        <Button.Gray
+                                                            onClick={() => [setSpecialtyId(0), setSpecialtyInputValueModal(null), setIsSpecialtyInputModalWithError(false)]}
+                                                            value="Fechar"
+                                                            type="button"
+                                                        />
                                                     </AlertDialog.Cancel>
                                                     <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>

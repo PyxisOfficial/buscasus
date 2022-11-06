@@ -111,7 +111,7 @@ interface InputImageRootProps {
     children: ReactNode
 }
 
-function InputImageRoot({children}: InputImageRootProps) {
+function InputImageRoot({ children }: InputImageRootProps) {
     return (
         <C.ImageInputContainer>
             {children}
@@ -124,7 +124,7 @@ interface NameImageInputProps {
 }
 
 
-function NameImageInput({nameImgInput}: NameImageInputProps) {
+function NameImageInput({ nameImgInput }: NameImageInputProps) {
     return (
         <C.NameImageInput>{nameImgInput}</C.NameImageInput>
     )
@@ -132,17 +132,15 @@ function NameImageInput({nameImgInput}: NameImageInputProps) {
 
 interface ImageLabelProps {
     inputAction: any;
-    name: string;
 }
 
-function ImageLabel({inputAction, name}: ImageLabelProps) {
+function ImageLabel({ inputAction }: ImageLabelProps) {
     return (
         <C.ImageLabel>Escolher foto
             <input
                 onChange={inputAction}
                 type="file"
                 accept=".jpg, .png"
-                name={name}
                 hidden
             />
         </C.ImageLabel>

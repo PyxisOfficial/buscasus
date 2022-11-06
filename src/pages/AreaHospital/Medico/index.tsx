@@ -142,7 +142,7 @@ export function Medico() {
                 params: {
                     nomeMedico: medicInputValueModal,
                     numTelefone: phoneInputValueModal,
-                    fotoMedico: medicPhotoModal,
+                    fotoMedico: medicPhotoModal ? medicPhotoModal[0].name : null,
                     idEspecialidade: specialtyInputValueModal,
                     idMedico: medicId,
                     idTelefone: phoneId
@@ -246,7 +246,6 @@ export function Medico() {
                                 Especialidade
 
                                 <C.Select
-                                    name="idEspecialidade"
                                     onChange={(e) => setSpecialtyInputValue(e.target.value)}
                                     onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
                                     errorText={isSpecialtyInputWithError}
@@ -269,7 +268,6 @@ export function Medico() {
                                 <InputImage.Root>
                                     <InputImage.NameImage nameImgInput={medicPhoto ? medicPhoto[0].name : null} />
                                     <InputImage.Label
-                                        name='fotoMedico'
                                         inputAction={(e: any) => setMedicPhoto(e.target.files)}
                                     />
                                 </InputImage.Root>
@@ -411,7 +409,6 @@ export function Medico() {
 
                                                     <C.Select
                                                         onChange={(e) => setSpecialtyInputValueModal(e.target.value)}
-                                                        name="idEspecialidade"
                                                     >
                                                         <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
                                                         {specialty.map((spe: any) =>
@@ -430,7 +427,6 @@ export function Medico() {
                                                     <InputImage.Root>
                                                         <InputImage.NameImage nameImgInput={medicPhotoModal ? medicPhotoModal[0].name : null} />
                                                         <InputImage.Label
-                                                            name='fotoMedico'
                                                             inputAction={(e: any) => setMedicPhotoModal(e.target.files)}
                                                         />
                                                     </InputImage.Root>
