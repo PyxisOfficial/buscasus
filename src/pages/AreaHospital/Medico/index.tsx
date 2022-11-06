@@ -9,17 +9,15 @@ import { Modal } from '../../../components/Modal';
 import { Input, InputImage, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
-import { Toast } from '../../../components/Toast';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Medico() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-
-    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [messageToast, setMessageToast] = useState<string>();
 
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
@@ -75,10 +73,6 @@ export function Medico() {
         setIsFormSubmitted(false);
         setMedicPhoto(null);
 
-        setTimeout(() => {
-            setIsToastOpened(false);
-        }, 2000);
-
         formRef.current.reset();
     }, [isFormSubmitted]);
 
@@ -110,9 +104,7 @@ export function Medico() {
         await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Médico cadastrado com sucesso!");
+        toast.success("Médico cadastrado com sucesso!");
     }
 
     async function editMedic(event: FormEvent) {
@@ -135,9 +127,7 @@ export function Medico() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Médico editado com sucesso!");
+        toast.success("Médico editado com sucesso!");
     }
 
     async function deleteMedic() {
@@ -149,19 +139,23 @@ export function Medico() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Médico excluído com sucesso!");
+        toast.success("Médico excluído com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
 
-            <Toast.Root
-                onOpenChange={isToastOpened}
-            >
-                <Toast.Description>{messageToast}</Toast.Description>
-            </Toast.Root>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <C.InsertContainer>
                 <C.FormContainer>

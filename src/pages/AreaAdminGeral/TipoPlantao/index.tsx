@@ -9,17 +9,15 @@ import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
-import { Toast } from '../../../components/Toast';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function TipoPlantao() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-
-    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [messageToast, setMessageToast] = useState<string>();
 
     const [dutyType, setDutyType] = useState([]);
     const [dutyTypeId, setDutyTypeId] = useState<number>();
@@ -50,10 +48,6 @@ export function TipoPlantao() {
 
         setIsFormSubmitted(false);
 
-        setTimeout(() => {
-            setIsToastOpened(false);
-        }, 2000);
-
         formRef.current.reset();
     }, [isFormSubmitted]);
 
@@ -77,9 +71,7 @@ export function TipoPlantao() {
         await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', formData);
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Tipo de plantão cadastrado com sucesso!");
+        toast.success("Tipo de plantão cadastrado com sucesso!");
     }
 
     async function editDutyType(event: FormEvent) {
@@ -96,9 +88,7 @@ export function TipoPlantao() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Tipo de plantão editado com sucesso!");
+        toast.success("Tipo de plantão editado com sucesso!");
     }
 
     async function deleteDutyType() {
@@ -109,19 +99,23 @@ export function TipoPlantao() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Tipo de plantão excluído com sucesso!");
+        toast.success("Tipo de plantão excluído com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
-            <Toast.Root
-                onOpenChange={isToastOpened}
-            >
-                <Toast.Description>{messageToast}</Toast.Description>
-            </Toast.Root>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <C.InsertContainer>
                 <C.FormContainer>

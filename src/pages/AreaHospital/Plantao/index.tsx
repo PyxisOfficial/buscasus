@@ -7,12 +7,13 @@ import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
-import { Toast } from '../../../components/Toast';
 import { Checkbox } from '../../../components/Checkbox';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Calendar, Value } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
@@ -25,9 +26,6 @@ export function Plantao() {
     const [isMultipleDateActive, setIsMultipleDateActive] = useState<boolean>();
 
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-
-    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [messageToast, setMessageToast] = useState<string>();
 
     const [duty, setDuty] = useState([]);
     const [dutyId, setDutyId] = useState<number>();
@@ -84,10 +82,6 @@ export function Plantao() {
         }
 
         setIsFormSubmitted(false);
-
-        setTimeout(() => {
-            setIsToastOpened(false);
-        }, 2000);
     }, [isFormSubmitted]);
 
     useEffect(() => {
@@ -135,9 +129,7 @@ export function Plantao() {
 
         setIsFormSubmitted(true);
         setDates('');
-
-        setIsToastOpened(true);
-        setMessageToast("Plantão cadastrado com sucesso!");
+        toast.success("Plantão cadastrado com sucesso!");
     }
 
     async function deleteDuty() {
@@ -148,19 +140,23 @@ export function Plantao() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Plantão excluído com sucesso!");
+        toast.success("Plantão excluído com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
 
-            <Toast.Root
-                onOpenChange={isToastOpened}
-            >
-                <Toast.Description>{messageToast}</Toast.Description>
-            </Toast.Root>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <C.Container>
                 <C.FormContainer>

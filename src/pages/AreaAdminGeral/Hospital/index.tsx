@@ -8,17 +8,15 @@ import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
 import { Input, InputImage, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
-import { Toast } from '../../../components/Toast';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Hospital() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-
-    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [messageToast, setMessageToast] = useState<string>();
 
     const [hospital, setHospital] = useState([]);
     const [hospitalId, setHospitalId] = useState<number>();
@@ -52,10 +50,6 @@ export function Hospital() {
 
         setIsFormSubmitted(false);
         setHospitalPhoto(null);
-
-        setTimeout(() => {
-            setIsToastOpened(false);
-        }, 2000);
 
         formRef.current.reset();
     }, [isFormSubmitted]);
@@ -93,9 +87,7 @@ export function Hospital() {
         await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData);
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Hospital cadastrado com sucesso!");
+        toast.success("Hospital cadastrado com sucesso!");
     }
 
     async function editHospital(event: FormEvent) {
@@ -126,9 +118,7 @@ export function Hospital() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Hospital editado com sucesso!");
+        toast.success("Hospital editado com sucesso!");
     }
 
     async function deleteHospital() {
@@ -140,19 +130,23 @@ export function Hospital() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Hospital excluído com sucesso!");
+        toast.success("Hospital excluído com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
-            <Toast.Root
-                onOpenChange={isToastOpened}
-            >
-                <Toast.Description>{messageToast}</Toast.Description>
-            </Toast.Root>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <C.Container>
                 <C.FormContainer>

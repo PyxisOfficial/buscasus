@@ -9,17 +9,15 @@ import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
-import { Toast } from '../../../components/Toast';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
 import * as C from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Especialidade() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-
-    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [messageToast, setMessageToast] = useState<string>();
 
     const [specialty, setSpecialty] = useState([]);
     const [specialtyId, setSpecialtyId] = useState<number>();
@@ -62,10 +60,6 @@ export function Especialidade() {
 
         setIsFormSubmitted(false);
 
-        setTimeout(() => {
-            setIsToastOpened(false);
-        }, 2000);
-
         formRef.current.reset();
     }, [isFormSubmitted]);
 
@@ -92,8 +86,7 @@ export function Especialidade() {
 
         setIsFormSubmitted(true);
 
-        setIsToastOpened(true);
-        setMessageToast("Especialidade cadastrada com sucesso!");
+        toast.success("Especialidade cadastrada com sucesso!");
     }
 
     async function editSpecialty(event: FormEvent) {
@@ -110,9 +103,7 @@ export function Especialidade() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Especialidade editada com sucesso!");
+        toast.success("Especialidade editada com sucesso!");
     }
 
     async function deleteSpecialty() {
@@ -123,19 +114,23 @@ export function Especialidade() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Especialidade excluída com sucesso!");
+        toast.success("Especialidade excluída com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
 
-            <Toast.Root
-                onOpenChange={isToastOpened}
-            >
-                <Toast.Description>{messageToast}</Toast.Description>
-            </Toast.Root>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <C.InsertContainer>
                 <C.FormContainer>

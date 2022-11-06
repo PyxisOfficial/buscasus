@@ -66,7 +66,7 @@ export function VisaoGeralHospital() {
                 </C.LeftContainer>
                 <C.Line />
                 <C.RightContainer>
-                    as
+                    
                 </C.RightContainer>
             </C.DashboardContent>
         </MenuBackground>

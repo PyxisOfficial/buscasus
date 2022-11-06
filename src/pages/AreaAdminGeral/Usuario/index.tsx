@@ -8,18 +8,16 @@ import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
-import { Toast } from '../../../components/Toast';
 import { Label } from '../../../components/Form/Label';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass, EyeSlash, Eye } from 'phosphor-react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import * as C from './styles';
 
 export function Usuario() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-
-    const [isToastOpened, setIsToastOpened] = useState<boolean>(false);
-    const [messageToast, setMessageToast] = useState<string>();
 
     const [adminUsers, setAdminUsers] = useState([]);
     const [adminUserId, setAdminUserId] = useState<number>();
@@ -58,10 +56,6 @@ export function Usuario() {
 
         setIsFormSubmitted(false);
 
-        setTimeout(() => {
-            setIsToastOpened(false);
-        }, 2000);
-
         formRef.current.reset();
     }, [isFormSubmitted]);
 
@@ -87,9 +81,7 @@ export function Usuario() {
         await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', formData);
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Administrador cadastrado com sucesso!");
+        toast.success("Administrador cadastrado com sucesso!");
     }
 
     async function editUser(event: FormEvent) {
@@ -106,9 +98,7 @@ export function Usuario() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Administrador editado com sucesso!");
+        toast.success("Administrador editado com sucesso!");
     }
 
     async function deleteUser() {
@@ -119,19 +109,23 @@ export function Usuario() {
         });
 
         setIsFormSubmitted(true);
-
-        setIsToastOpened(true);
-        setMessageToast("Administrador excluído com sucesso!");
+        toast.success("Administrador excluído com sucesso!");
     }
 
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
-            <Toast.Root
-                onOpenChange={isToastOpened}
-            >
-                <Toast.Description>{messageToast}</Toast.Description>
-            </Toast.Root>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <C.InsertContainer>
                 <C.FormContainer>
