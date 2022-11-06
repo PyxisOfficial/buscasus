@@ -23,7 +23,6 @@ export function Medico() {
     const [medicId, setMedicId] = useState<number>();
     const [phoneId, setPhoneId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
-    const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
     const [search, setSearch] = useState<string>();
 
     const [medicInputValue, setMedicInputValue] = useState<any>();
@@ -32,12 +31,18 @@ export function Medico() {
     const [phoneInputValue, setPhoneInputValue] = useState<any>();
     const [specialtyInputValue, setSpecialtyInputValue] = useState<any>();
     const [medicPhoto, setMedicPhoto] = useState<any>();
-
     const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
     const [isCpfInputWithError, setIsCpfInputWithError] = useState<boolean>();
     const [isCrmInputWithError, setIsCrmInputWithError] = useState<boolean>();
     const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
     const [isSpecialtyInputWithError, setIsSpecialtyInputWithError] = useState<boolean>();
+
+    const [medicInputValueModal, setMedicInputValueModal] = useState<any>();
+    const [phoneInputValueModal, setPhoneInputValueModal] = useState<any>();
+    const [specialtyInputValueModal, setSpecialtyInputValueModal] = useState<any>();
+    const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
+    const [isMedicInputModalWithError, setIsMedicInputModalWithError] = useState<boolean>();
+    const [isPhoneInputModalWithError, setIsPhoneInputModalWithError] = useState<boolean>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -49,17 +54,13 @@ export function Medico() {
             params: {
                 idHospital: hospitalId
             }
-        }).then(response => {
-            setMedics(response.data);
-        });
+        }).then(response => setMedics(response.data));
 
         axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
             params: {
                 idHospital: hospitalId
             }
-        }).then(response => {
-            setSpecialty(response.data);
-        });
+        }).then(response => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
@@ -69,17 +70,13 @@ export function Medico() {
                     search: search,
                     idHospital: hospitalId
                 }
-            }).then(response => {
-                setMedics(response.data);
-            });
+            }).then(response => setMedics(response.data));
         } else {
             axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
                 params: {
                     idHospital: hospitalId
                 }
-            }).then(response => {
-                setMedics(response.data);
-            });
+            }).then(response => setMedics(response.data));
         }
 
         setMedicInputValue(null);
@@ -99,9 +96,7 @@ export function Medico() {
                 search: search,
                 idHospital: hospitalId
             }
-        }).then(response => {
-            setMedics(response.data);
-        });
+        }).then(response => setMedics(response.data));
     }, [search]);
 
     async function insertMedic(event: FormEvent) {
@@ -123,7 +118,7 @@ export function Medico() {
         if (!phoneInputValue) setIsPhoneInputWithError(true);
         if (specialtyInputValue == 0 || !specialtyInputValue) setIsSpecialtyInputWithError(true);
 
-        if (medicInputValue && cpfInputValue && crmInputValue && phoneInputValue && specialtyInputValue) {
+        if (medicInputValue && cpfInputValue && crmInputValue && phoneInputValue && specialtyInputValue > 0) {
             await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
 
             setIsFormSubmitted(true);
@@ -136,23 +131,27 @@ export function Medico() {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
         medicPhotoModal ? formData.append("picture", medicPhotoModal[0]) : null;
         formData.append('_method', 'PUT');
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData, {
-            params: {
-                nomeMedico: data.nomeMedico,
-                numTelefone: data.numTelefone,
-                fotoMedico: data.fotoMedico.name,
-                idEspecialidade: data.idEspecialidade,
-                idMedico: medicId,
-                idTelefone: phoneId
-            }
-        });
+        if (!medicInputValueModal) setIsMedicInputModalWithError(true);
+        if (!phoneInputValueModal) setIsPhoneInputModalWithError(true);
 
-        setIsFormSubmitted(true);
-        toast.success("Médico editado com sucesso!");
+        if (medicInputValueModal && phoneInputValueModal && specialtyInputValueModal != 0) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData, {
+                params: {
+                    nomeMedico: medicInputValueModal,
+                    numTelefone: phoneInputValueModal,
+                    fotoMedico: medicPhotoModal,
+                    idEspecialidade: specialtyInputValueModal,
+                    idMedico: medicId,
+                    idTelefone: phoneId
+                }
+            });
+
+            setIsFormSubmitted(true);
+            toast.success("Médico editado com sucesso!");
+        }
     }
 
     async function deleteMedic() {
@@ -249,7 +248,7 @@ export function Medico() {
                                 <C.Select
                                     name="idEspecialidade"
                                     onChange={(e) => setSpecialtyInputValue(e.target.value)}
-                                    onBlur={() => specialtyInputValue ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
+                                    onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
                                     errorText={isSpecialtyInputWithError}
                                 >
                                     <option value="0">Selecione</option>
@@ -332,10 +331,7 @@ export function Medico() {
                                 <C.Td>{medic.crmMedico}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
-                                        <Modal.Info
-                                            closeModal={() => { setMedicId(0) }}
-                                            title='Informações do médico'
-                                        >
+                                        <Modal.Info title='Informações do médico'>
                                             <C.InfoModalContent>
                                                 <C.InfoContainer>
                                                     <C.Text><b>Nome:</b> {medic.nomeMedico}</C.Text>
@@ -349,16 +345,22 @@ export function Medico() {
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Edit
-                                            itemId={() => [setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
-                                            closeModal={() => [setMedicId(0), setPhoneId(0), setMedicPhotoModal(null)]}
+                                            itemId={() => [setMedicInputValueModal(medic.nomeMedico), setPhoneInputValueModal(medic.numTelefone), setSpecialtyInputValueModal(medic.idEspecialidade), setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
+                                            closeModal={() => [
+                                                setMedicId(0), setPhoneId(0),
+                                                setMedicInputValueModal(null), setPhoneInputValueModal(null), setSpecialtyInputValueModal(null), setMedicPhotoModal(null),
+                                                setIsMedicInputModalWithError(false), setIsPhoneInputModalWithError(false)
+                                            ]}
                                             title='Editar médico'
                                         >
                                             <C.Form onSubmit={editMedic} autoComplete="off">
                                                 <Label htmlFor="nomeMedicoModal">
                                                     Nome
                                                     <Input.Input
+                                                        onChange={(e) => setMedicInputValueModal(e.target.value)}
+                                                        onBlur={() => medicInputValueModal ? setIsMedicInputModalWithError(false) : setIsMedicInputModalWithError(true)}
                                                         isWithIcon={false}
-                                                        errorText={false}
+                                                        errorText={isMedicInputModalWithError}
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="nomeMedicoModal"
@@ -371,7 +373,6 @@ export function Medico() {
                                                     CPF
                                                     <Input.Input
                                                         isWithIcon={false}
-                                                        errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         defaultValue={medic.cpfMedico}
@@ -383,7 +384,6 @@ export function Medico() {
                                                     CRM
                                                     <Input.Input
                                                         isWithIcon={false}
-                                                        errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         defaultValue={medic.crmMedico}
@@ -394,8 +394,10 @@ export function Medico() {
                                                 <Label htmlFor="numTelefoneModal">
                                                     Telefone
                                                     <Input.Input
+                                                        onChange={(e) => setPhoneInputValueModal(e.target.value)}
+                                                        onBlur={() => phoneInputValueModal ? setIsPhoneInputModalWithError(false) : setIsPhoneInputModalWithError(true)}
                                                         isWithIcon={false}
-                                                        errorText={false}
+                                                        errorText={isPhoneInputModalWithError}
                                                         inputSize={sizes.md}
                                                         type="text"
                                                         id="numTelefoneModal"
@@ -408,7 +410,7 @@ export function Medico() {
                                                     Especialidade
 
                                                     <C.Select
-                                                        errorText={false}
+                                                        onChange={(e) => setSpecialtyInputValueModal(e.target.value)}
                                                         name="idEspecialidade"
                                                     >
                                                         <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
@@ -436,7 +438,15 @@ export function Medico() {
 
                                                 <C.ButtonContainer>
                                                     <AlertDialog.Cancel asChild>
-                                                        <Button.Gray onClick={() => setMedicPhotoModal(null)} value="Fechar" type="button" />
+                                                        <Button.Gray
+                                                            onClick={() => [
+                                                                setMedicId(0), setPhoneId(0),
+                                                                setMedicInputValueModal(null), setPhoneInputValueModal(null), setSpecialtyInputValueModal(null), setMedicPhotoModal(null),
+                                                                setIsMedicInputModalWithError(false), setIsPhoneInputModalWithError(false)
+                                                            ]}
+                                                            value="Fechar"
+                                                            type="button"
+                                                        />
                                                     </AlertDialog.Cancel>
                                                     <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>
