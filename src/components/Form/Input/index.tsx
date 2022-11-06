@@ -24,7 +24,7 @@ function InputRoot({ children }: InputRootProps) {
 }
 
 interface InputInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    errorText: boolean;
+    errorText: any;
     inputSize: string;
     isWithIcon: boolean;
 }

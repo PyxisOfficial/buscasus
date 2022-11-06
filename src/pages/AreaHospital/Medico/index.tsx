@@ -23,9 +23,21 @@ export function Medico() {
     const [medicId, setMedicId] = useState<number>();
     const [phoneId, setPhoneId] = useState<number>();
     const [specialty, setSpecialty] = useState([]);
-    const [medicPhoto, setMedicPhoto] = useState<any>();
     const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
     const [search, setSearch] = useState<string>();
+
+    const [medicInputValue, setMedicInputValue] = useState<any>();
+    const [cpfInputValue, setCpfInputValue] = useState<any>();
+    const [crmInputValue, setCrmInputValue] = useState<any>();
+    const [phoneInputValue, setPhoneInputValue] = useState<any>();
+    const [specialtyInputValue, setSpecialtyInputValue] = useState<any>();
+    const [medicPhoto, setMedicPhoto] = useState<any>();
+
+    const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
+    const [isCpfInputWithError, setIsCpfInputWithError] = useState<boolean>();
+    const [isCrmInputWithError, setIsCrmInputWithError] = useState<boolean>();
+    const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
+    const [isSpecialtyInputWithError, setIsSpecialtyInputWithError] = useState<boolean>();
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
@@ -70,9 +82,14 @@ export function Medico() {
             });
         }
 
-        setIsFormSubmitted(false);
+        setMedicInputValue(null);
+        setCpfInputValue(null);
+        setCrmInputValue(null);
+        setPhoneInputValue(null);
+        setSpecialtyInputValue(null);
         setMedicPhoto(null);
 
+        setIsFormSubmitted(false);
         formRef.current.reset();
     }, [isFormSubmitted]);
 
@@ -90,21 +107,29 @@ export function Medico() {
     async function insertMedic(event: FormEvent) {
         event.preventDefault();
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
-        formData.append("nomeMedico", data.nomeMedico);
-        formData.append("cpfMedico", data.cpfMedico);
-        formData.append("crmMedico", data.crmMedico);
-        formData.append("numTelefone", data.numTelefone);
-        formData.append("fotoMedico", data.fotoMedico.name);
-        formData.append("idEspecialidade", data.idEspecialidade);
+        const formData: any = new FormData(event.target as HTMLFormElement);
+        formData.append("nomeMedico", medicInputValue);
+        formData.append("cpfMedico", cpfInputValue);
+        formData.append("crmMedico", crmInputValue);
+        formData.append("numTelefone", phoneInputValue);
+        medicPhoto ? formData.append("fotoMedico", medicPhoto[0].name) : formData.append("fotoMedico", null);
+        formData.append("idEspecialidade", specialtyInputValue);
         formData.append("idHospital", hospitalId);
-        formData.append("picture", medicPhoto[0]);
+        medicPhoto ? formData.append("picture", medicPhoto[0]) : formData.append("picture", null);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
+        if (!medicInputValue) setIsMedicInputWithError(true);
+        if (!cpfInputValue) setIsCpfInputWithError(true);
+        if (!crmInputValue) setIsCrmInputWithError(true);
+        if (!phoneInputValue) setIsPhoneInputWithError(true);
+        if (specialtyInputValue == 0 || !specialtyInputValue) setIsSpecialtyInputWithError(true);
 
-        setIsFormSubmitted(true);
-        toast.success("Médico cadastrado com sucesso!");
+        if (medicInputValue && cpfInputValue && crmInputValue && phoneInputValue && specialtyInputValue) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
+
+            setIsFormSubmitted(true);
+
+            toast.success("Médico cadastrado com sucesso!");
+        }
     }
 
     async function editMedic(event: FormEvent) {
@@ -165,12 +190,13 @@ export function Medico() {
                             <Label htmlFor="nomeMedico">
                                 Nome
                                 <Input.Input
+                                    onChange={(e) => setMedicInputValue(e.target.value)}
+                                    onBlur={() => medicInputValue ? setIsMedicInputWithError(false) : setIsMedicInputWithError(true)}
                                     isWithIcon={false}
-                                    errorText={false}
+                                    errorText={isMedicInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="nomeMedico"
-                                    name="nomeMedico"
                                     placeholder='Mário de Andrade'
                                 />
                             </Label>
@@ -178,12 +204,13 @@ export function Medico() {
                             <Label htmlFor="cpfMedico">
                                 CPF
                                 <Input.Input
+                                    onChange={(e) => setCpfInputValue(e.target.value)}
+                                    onBlur={() => cpfInputValue ? setIsCpfInputWithError(false) : setIsCpfInputWithError(true)}
                                     isWithIcon={false}
-                                    errorText={false}
+                                    errorText={isCpfInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="cpfMedico"
-                                    name="cpfMedico"
                                     placeholder='123.456.789-00'
                                 />
                             </Label>
@@ -191,12 +218,13 @@ export function Medico() {
                             <Label htmlFor="crmMedico">
                                 CRM
                                 <Input.Input
+                                    onChange={(e) => setCrmInputValue(e.target.value)}
+                                    onBlur={() => crmInputValue ? setIsCrmInputWithError(false) : setIsCrmInputWithError(true)}
                                     isWithIcon={false}
-                                    errorText={false}
+                                    errorText={isCrmInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="crmMedico"
-                                    name="crmMedico"
                                     placeholder='SP/123456'
                                 />
                             </Label>
@@ -204,12 +232,13 @@ export function Medico() {
                             <Label htmlFor="numTelefone">
                                 Telefone
                                 <Input.Input
+                                    onChange={(e) => setPhoneInputValue(e.target.value)}
+                                    onBlur={() => phoneInputValue ? setIsPhoneInputWithError(false) : setIsPhoneInputWithError(true)}
                                     isWithIcon={false}
-                                    errorText={false}
+                                    errorText={isPhoneInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="numTelefone"
-                                    name="numTelefone"
                                     placeholder='(99) 99999-9999'
                                 />
                             </Label>
@@ -217,7 +246,12 @@ export function Medico() {
                             <Label htmlFor="idEspecialidade">
                                 Especialidade
 
-                                <C.Select name="idEspecialidade">
+                                <C.Select
+                                    name="idEspecialidade"
+                                    onChange={(e) => setSpecialtyInputValue(e.target.value)}
+                                    onBlur={() => specialtyInputValue ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
+                                    errorText={isSpecialtyInputWithError}
+                                >
                                     <option value="0">Selecione</option>
                                     {specialty.map((spe: any) =>
                                         <option
@@ -243,7 +277,14 @@ export function Medico() {
                             </Label>
                         </C.InputsContainer>
                         <C.ButtonContainer>
-                            <Button.Gray onClick={() => setMedicPhoto(null)} value="Cancelar" type="reset" />
+                            <Button.Gray
+                                onClick={() => [
+                                    setMedicInputValue(null), setCpfInputValue(null), setCrmInputValue(null), setPhoneInputValue(null), setSpecialtyInputValue(null), setMedicPhoto(null),
+                                    setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false), setIsSpecialtyInputWithError(false)
+                                ]}
+                                value="Cancelar"
+                                type="reset"
+                            />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </form>
@@ -366,7 +407,10 @@ export function Medico() {
                                                 <Label>
                                                     Especialidade
 
-                                                    <C.Select name="idEspecialidade">
+                                                    <C.Select
+                                                        errorText={false}
+                                                        name="idEspecialidade"
+                                                    >
                                                         <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
                                                         {specialty.map((spe: any) =>
                                                             <option
