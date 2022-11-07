@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { BarChart, PieChart } from '../../../components/Charts';
@@ -7,6 +10,10 @@ import { Activity, Syringe, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'pho
 import * as C from './styles'
 
 export function VisaoGeralHospital() {
+    const [claimCount, setClaimCount] = useState<string>();
+    const [dutyCount, setDutyCount] = useState<string>();
+    const [medicsCount, setMedicsCount] = useState<string>();
+
     const date = new Date();
     let weekDay = date.getDay();
     let day: any = "" + date.getDate();
@@ -26,6 +33,32 @@ export function VisaoGeralHospital() {
         6: "sábado"
     }
 
+    const getHospitalId: any = localStorage.getItem("hospital_id");
+    const hospitalId = JSON.parse(getHospitalId);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-usuario/reclamacao/', {
+            params: {
+                hospitalCount: true,
+                idHospital: hospitalId
+            }
+        }).then(response => setClaimCount(response.data.idReclamacao));
+
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/plantao/', {
+            params: {
+                hospitalCount: true,
+                idHospital: hospitalId
+            }
+        }).then(response => setDutyCount(response.data.idPlantao));
+
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            params: {
+                hospitalCount: true,
+                idHospital: hospitalId
+            }
+        }).then(response => setMedicsCount(response.data.idMedico));
+    }, []);
+
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
             <C.TopContainer>
@@ -38,26 +71,26 @@ export function VisaoGeralHospital() {
                 <C.LeftContainer>
                     <C.Quantities>
                         <C.Icons color='#49B28C'>
-                                <ChatCenteredDots size={70} />
-                                <C.TextContainer>
-                                    <span>Reclamações</span>
-                                    <span>0</span>
-                                </C.TextContainer>
-                            </C.Icons>
-                            <C.Icons color='#349684'>
-                                <Activity size={70} />
-                                <C.TextContainer>
-                                    <span>Plantões</span>
-                                    <span>0</span>
-                                </C.TextContainer>
-                            </C.Icons>
-                            <C.Icons color='#496461'>
-                                <Syringe size={70} />
-                                <C.TextContainer>
-                                    <span>Médicos</span>
-                                    <span>0</span>
-                                </C.TextContainer>
-                            </C.Icons>
+                            <ChatCenteredDots size={70} />
+                            <C.TextContainer>
+                                <span>Reclamações</span>
+                                <span>{claimCount}</span>
+                            </C.TextContainer>
+                        </C.Icons>
+                        <C.Icons color='#349684'>
+                            <Activity size={70} />
+                            <C.TextContainer>
+                                <span>Plantões</span>
+                                <span>{dutyCount}</span>
+                            </C.TextContainer>
+                        </C.Icons>
+                        <C.Icons color='#496461'>
+                            <Syringe size={70} />
+                            <C.TextContainer>
+                                <span>Médicos</span>
+                                <span>{medicsCount}</span>
+                            </C.TextContainer>
+                        </C.Icons>
                     </C.Quantities>
                     <C.ChartContainer>
                         <h3>Ausências nos últimos 4 meses</h3>

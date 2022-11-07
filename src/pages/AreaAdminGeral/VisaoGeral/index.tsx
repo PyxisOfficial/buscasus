@@ -40,17 +40,13 @@ export function VisaoGeralAdmin() {
             params: {
                 count: true
             }
-        }).then((response) => {
-            setHospitalsCount(response.data.idHospital);
-        });
+        }).then(response => setHospitalsCount(response.data.idHospital));
 
         axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
             params: {
                 count: true
             }
-        }).then((response) => {
-            setMedicsCount(response.data.idMedico);
-        });
+        }).then(response => setMedicsCount(response.data.idMedico));
     }, []);
 
     return (

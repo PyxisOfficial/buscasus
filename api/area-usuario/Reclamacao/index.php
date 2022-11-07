@@ -7,17 +7,27 @@ include '../../Connection.php';
 $connection = new Connection;
 $conn = $connection->connect();
 
+if (isset($_GET['hospitalCount'])) {
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT COUNT(idReclamacao) AS idReclamacao FROM tbReclamacao WHERE idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $reclamacao = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($reclamacao);
+} else {
+    $sql = "SELECT * FROM tbReclamacao";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $reclamacao = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($reclamacao);
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
-    case "GET":
-        $sql = "SELECT * FROM tbReclamacao";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $reclamacao = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        echo json_encode($reclamacao);
-        break;
-
     case "POST":
         $emailUsuario = $_POST['emailUsuario'];
         $tipoReclamacao = $_POST['tipoReclamacao'];
