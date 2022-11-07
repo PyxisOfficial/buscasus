@@ -1,6 +1,6 @@
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
-import { PieChart } from '../../../components/Charts';
+import { BarChart, PieChart } from '../../../components/Charts';
 
 import { Activity, Syringe, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'phosphor-react';
 
@@ -60,13 +60,24 @@ export function VisaoGeralHospital() {
                             </C.Icons>
                     </C.Quantities>
                     <C.ChartContainer>
-                        <h3>Médicos por especialidade</h3>
+                        <h3>Ausências nos últimos 4 meses</h3>
+                        <BarChart.Line />
+                    </C.ChartContainer>
+                    <C.ChartContainer>
+                        <h3>Porcentagem de médicos por especialidade</h3>
                         <PieChart.Specialty />
                     </C.ChartContainer>
                 </C.LeftContainer>
                 <C.Line />
                 <C.RightContainer>
-                    
+                    <C.ChartContainer>
+                        <h3>Satisfação dos pacientes</h3>
+                        <PieChart.Opinion />
+                    </C.ChartContainer>
+                    <C.ChartContainer>
+                        <h3>Pesquisas pelo hospital no último mês</h3>
+                        <BarChart.Search />
+                    </C.ChartContainer>
                 </C.RightContainer>
             </C.DashboardContent>
         </MenuBackground>

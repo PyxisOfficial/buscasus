@@ -333,7 +333,7 @@ export function Hospital() {
                                     onBlur={(e) => [cepInputValue ? setIsCepInputWithError(false) : setIsCepInputWithError(true), getCep(e.target.value)]}
                                     isWithIcon={false}
                                     errorText={isCepInputWithError}
-                                    inputSize={sizes.xs}
+                                    inputSize={sizes.sm}
                                     type="text"
                                     name="cepHospital"
                                     id="cepHospital"
@@ -358,7 +358,7 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={publicPlaceInputValue}
                                 isWithIcon={false}
-                                inputSize={sizes.md}
+                                inputSize={sizes.xl}
                                 type="text"
                                 id="logradouroHospital"
                                 disabled
@@ -370,7 +370,7 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={cityInputValue}
                                 isWithIcon={false}
-                                inputSize={sizes.md}
+                                inputSize={sizes.xl}
                                 type="text"
                                 id="cidadeHospital"
                                 disabled
@@ -382,7 +382,7 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={districtInputValue}
                                 isWithIcon={false}
-                                inputSize={sizes.md}
+                                inputSize={sizes.xl}
                                 type="text"
                                 id="bairroHospital"
                                 disabled
@@ -395,7 +395,7 @@ export function Hospital() {
                                 onChange={(e) => setComplementInputValue(e.target.value)}
                                 isWithIcon={false}
                                 errorText={false}
-                                inputSize={sizes.md}
+                                inputSize={sizes.xl}
                                 type="text"
                                 id="complementoHospital"
                             />
@@ -435,7 +435,7 @@ export function Hospital() {
                                     onChange={(e) => setSearch(e.target.value)}
                                     isWithIcon
                                     errorText={false}
-                                    inputSize={sizes.sm}
+                                    inputSize={sizes.md}
                                     id="search"
                                     type="search"
                                     placeholder="Buscar"
@@ -542,7 +542,7 @@ export function Hospital() {
                                                             onBlur={() => phoneInputValueModal ? setIsPhoneInputModalWithError(false) : setIsPhoneInputModalWithError(true)}
                                                             isWithIcon={false}
                                                             errorText={isPhoneInputModalWithError}
-                                                            inputSize={sizes.sm}
+                                                            inputSize={sizes.xl}
                                                             type="text"
                                                             id="numTelefoneModal"
                                                             defaultValue={hosp.numTelefone}
@@ -600,7 +600,7 @@ export function Hospital() {
                                                                 onBlur={(e) => [cepInputValueModal ? setIsCepInputModalWithError(false) : setIsCepInputModalWithError(true), getCepModal(e.target.value)]}
                                                                 isWithIcon={false}
                                                                 errorText={isCepInputModalWithError}
-                                                                inputSize={sizes.xs}
+                                                                inputSize={sizes.sm}
                                                                 type="text"
                                                                 id="cepHospitalModal"
                                                                 defaultValue={hosp.cepHospital}
@@ -628,7 +628,7 @@ export function Hospital() {
                                                             onChange={(e) => setPublicPlaceInputValueModal(e.target.value)}
                                                             isWithIcon={false}
                                                             errorText={false}
-                                                            inputSize={sizes.md}
+                                                            inputSize={sizes.xlx}
                                                             type="text"
                                                             id="logradouroHospitalModal"
                                                             value={cepModal ? publicPlaceInputValueModal : hosp.logradouroHospital}
@@ -642,7 +642,7 @@ export function Hospital() {
                                                             onChange={(e) => setCityInputValueModal(e.target.value)}
                                                             isWithIcon={false}
                                                             errorText={false}
-                                                            inputSize={sizes.md}
+                                                            inputSize={sizes.xl}
                                                             type="text"
                                                             id="cidadeHospitalModal"
                                                             value={cepModal ? cityInputValueModal : hosp.cidadeHospital}
@@ -656,7 +656,7 @@ export function Hospital() {
                                                             onChange={(e) => setDistrictInputValueModal(e.target.value)}
                                                             isWithIcon={false}
                                                             errorText={false}
-                                                            inputSize={sizes.md}
+                                                            inputSize={sizes.xl}
                                                             type="text"
                                                             id="bairroHospitalModal"
                                                             value={cepModal ? districtInputValueModal : hosp.bairroHospital}
@@ -670,7 +670,7 @@ export function Hospital() {
                                                             onChange={(e) => setComplementInputValueModal(e.target.value)}
                                                             isWithIcon={false}
                                                             errorText={false}
-                                                            inputSize={sizes.md}
+                                                            inputSize={sizes.xl}
                                                             type="text"
                                                             id="complementoHospitalModal"
                                                             defaultValue={hosp.complementoHospital}
