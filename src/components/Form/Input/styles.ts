@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { IMaskInput } from 'react-imask';
 
 export const InputContainer = styled.div`
     position: relative;
 `
 
-export const Input = styled.input<{
+export const Input = styled(IMaskInput)<{
     errorText: boolean;
     size: any;
     isWithIcon: boolean;

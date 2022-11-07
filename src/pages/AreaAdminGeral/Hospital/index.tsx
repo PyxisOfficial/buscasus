@@ -1,6 +1,8 @@
 import { FormEvent, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
+import { cnpj } from 'cpf-cnpj-validator';
+
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { MenuBackground } from '../../../components/Menu';
@@ -160,21 +162,23 @@ export function Hospital() {
         hospitalPhoto ? formData.append("fotoHospital", hospitalPhoto[0].name) : formData.append("fotoHospital", null);
         hospitalPhoto ? formData.append("picture", hospitalPhoto[0]) : formData.append("picture", null);
 
+        const cnpjValidation = cnpj.isValid(cnpjInputValue);
+
         if (!hospitalInputValue) setIsHospitalInputWithError(true);
         if (!emailInputValue) setIsEmailInputWithError(true);
-        if (!phoneInputValue) setIsPhoneInputWithError(true);
+        if (!phoneInputValue || phoneInputValue.length != 14) setIsPhoneInputWithError(true);
         if (!startTimeInputValue) setIsStartTimeInputWithError(true);
         if (!endTimeInputValue) setIsEndTimeInputWithError(true);
-        if (!cnpjInputValue) setIsCnpjInputWithError(true);
-        if (!cepInputValue) setIsCepInputWithError(true);
+        if (!cnpjInputValue || !cnpjValidation) setIsCnpjInputWithError(true);
+        if (!cepInputValue || cepInputValue.length != 9) setIsCepInputWithError(true);
         if (!ufInputValue) setIsUfInputWithError(true);
         if (!publicPlaceInputValue) setIsPublicPlaceInputWithError(true);
         if (!cityInputValue) setIsCityInputWithError(true);
         if (!districtInputValue) setIsDistrictInputWithError(true);
         if (!hospitalPhoto) setIsHospitalPhotoWithError(true);
 
-        if (hospitalInputValue && emailInputValue && phoneInputValue && startTimeInputValue && endTimeInputValue && cnpjInputValue && ufInputValue
-            && publicPlaceInputValue && cepInputValue && cityInputValue && districtInputValue && hospitalPhoto) {
+        if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation && ufInputValue
+            && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData);
 
             setIsFormSubmitted(true);
@@ -191,13 +195,13 @@ export function Hospital() {
 
         if (!hospitalInputValueModal) setIsHospitalInputModalWithError(true);
         if (!emailInputValueModal) setIsEmailInputModalWithError(true);
-        if (!phoneInputValueModal) setIsPhoneInputModalWithError(true);
+        if (!phoneInputValueModal || phoneInputValueModal.length != 9) setIsPhoneInputModalWithError(true);
         if (!startTimeInputValueModal) setIsStartTimeInputModalWithError(true);
         if (!endTimeInputValueModal) setIsEndTimeInputModalWithError(true);
         if (!cepInputValueModal) setIsCepInputModalWithError(true);
 
-        if (hospitalInputValueModal && emailInputValueModal && phoneInputValueModal && startTimeInputValueModal && endTimeInputValueModal && cnpjInputValueModal && ufInputValueModal
-            && publicPlaceInputValueModal && cepInputValueModal && cityInputValueModal && districtInputValueModal) {
+        if (hospitalInputValueModal && emailInputValueModal && phoneInputValueModal.length == 14 && startTimeInputValueModal && endTimeInputValueModal && cnpjInputValueModal && ufInputValueModal
+            && publicPlaceInputValueModal && cepInputValueModal.length == 9 && cityInputValueModal && districtInputValueModal) {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData, {
                 params: {
                     nomeHospital: hospitalInputValueModal,
@@ -290,8 +294,9 @@ export function Hospital() {
                         <C.Label htmlFor="numTelefone">
                             Número de telefone do hospital
                             <Input.Input
+                                mask="(00) 0000-0000"
                                 onChange={(e) => setPhoneInputValue(e.target.value)}
-                                onBlur={() => phoneInputValue ? setIsPhoneInputWithError(false) : setIsPhoneInputWithError(true)}
+                                onBlur={() => phoneInputValue.length == 14 ? setIsPhoneInputWithError(false) : setIsPhoneInputWithError(true)}
                                 isWithIcon={false}
                                 errorText={isPhoneInputWithError}
                                 inputSize={sizes.sm}
@@ -332,8 +337,9 @@ export function Hospital() {
                             <C.Label htmlFor="cnpjHospital">
                                 CNPJ
                                 <Input.Input
+                                    mask="00.000.000/0000-00"
                                     onChange={(e) => setCnpjInputValue(e.target.value)}
-                                    onBlur={() => cnpjInputValue ? setIsCnpjInputWithError(false) : setIsCnpjInputWithError(true)}
+                                    onBlur={(e) => [cnpjInputValue ? setIsCnpjInputWithError(false) : setIsCnpjInputWithError(true), cnpj.isValid(e.target.value) ? setIsCnpjInputWithError(false) : setIsCnpjInputWithError(true)]}
                                     isWithIcon={false}
                                     errorText={isCnpjInputWithError}
                                     inputSize={sizes.sm}
@@ -345,8 +351,9 @@ export function Hospital() {
                             <C.Label htmlFor="cepHospital">
                                 CEP
                                 <Input.Input
+                                    mask="00000-000"
                                     onChange={(e) => setCepInputValue(e.target.value)}
-                                    onBlur={(e) => [cepInputValue ? setIsCepInputWithError(false) : setIsCepInputWithError(true), getCep(e.target.value)]}
+                                    onBlur={(e) => [cepInputValue.length == 9 ? setIsCepInputWithError(false) : setIsCepInputWithError(true), getCep(e.target.value)]}
                                     isWithIcon={false}
                                     errorText={isCepInputWithError}
                                     inputSize={sizes.sm}
@@ -560,8 +567,9 @@ export function Hospital() {
                                                     <C.Label htmlFor="numTelefoneModal">
                                                         Número de telefone do hospital
                                                         <Input.Input
+                                                            mask="(00) 0000-0000"
                                                             onChange={(e) => setPhoneInputValueModal(e.target.value)}
-                                                            onBlur={() => phoneInputValueModal ? setIsPhoneInputModalWithError(false) : setIsPhoneInputModalWithError(true)}
+                                                            onBlur={() => phoneInputValueModal.length == 14 ? setIsPhoneInputModalWithError(false) : setIsPhoneInputModalWithError(true)}
                                                             isWithIcon={false}
                                                             errorText={isPhoneInputModalWithError}
                                                             inputSize={sizes.xl}
@@ -618,8 +626,9 @@ export function Hospital() {
                                                         <C.Label htmlFor="cepHospitalModal">
                                                             CEP
                                                             <Input.Input
+                                                                mask="00000-000"
                                                                 onChange={(e) => setCepInputValueModal(e.target.value)}
-                                                                onBlur={(e) => [cepInputValueModal ? setIsCepInputModalWithError(false) : setIsCepInputModalWithError(true), getCepModal(e.target.value)]}
+                                                                onBlur={(e) => [cepInputValueModal.length == 9 ? setIsCepInputModalWithError(false) : setIsCepInputModalWithError(true), getCepModal(e.target.value)]}
                                                                 isWithIcon={false}
                                                                 errorText={isCepInputModalWithError}
                                                                 inputSize={sizes.sm}

@@ -136,7 +136,6 @@ export function TipoPlantao() {
                                 type="text"
                                 id="tipoPlantao"
                                 name="tipoPlantao"
-                                placeholder="COVID"
                             />
                         </Label>
                         <C.ButtonContainer>

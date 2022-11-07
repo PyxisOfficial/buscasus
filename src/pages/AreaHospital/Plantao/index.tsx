@@ -7,7 +7,7 @@ import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
-import { Checkbox } from '../../../components/Checkbox';
+import { Checkbox } from '../../../components/Form/Checkbox';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { MagnifyingGlass } from 'phosphor-react';

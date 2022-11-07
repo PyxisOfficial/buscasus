@@ -27,11 +27,13 @@ interface InputInputProps extends InputHTMLAttributes<HTMLInputElement> {
     errorText?: any;
     inputSize: string;
     isWithIcon: boolean;
+    mask?: any;
 }
 
-function InputInput({ errorText, inputSize, isWithIcon, ...props }: InputInputProps) {
+function InputInput({ errorText, inputSize, isWithIcon, mask, ...props }: InputInputProps) {
     return (
         <C.Input
+            mask={mask}
             size={inputSize}
             isWithIcon={isWithIcon}
             errorText={errorText}
