@@ -375,12 +375,8 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={publicPlaceInputValue}
                                 isWithIcon={false}
-<<<<<<< HEAD
                                 errorText={isPublicPlaceInputWithError}
                                 inputSize={sizes.md}
-=======
-                                inputSize={sizes.xl}
->>>>>>> ededec93a821b1af2aadc22351ebaf1a5bc5d620
                                 type="text"
                                 id="logradouroHospital"
                                 disabled
@@ -392,12 +388,8 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={cityInputValue}
                                 isWithIcon={false}
-<<<<<<< HEAD
                                 errorText={isCityInputWithError}
                                 inputSize={sizes.md}
-=======
-                                inputSize={sizes.xl}
->>>>>>> ededec93a821b1af2aadc22351ebaf1a5bc5d620
                                 type="text"
                                 id="cidadeHospital"
                                 disabled
@@ -409,12 +401,8 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={districtInputValue}
                                 isWithIcon={false}
-<<<<<<< HEAD
                                 errorText={isDistrictInputWithError}
                                 inputSize={sizes.md}
-=======
-                                inputSize={sizes.xl}
->>>>>>> ededec93a821b1af2aadc22351ebaf1a5bc5d620
                                 type="text"
                                 id="bairroHospital"
                                 disabled
@@ -662,7 +650,7 @@ export function Hospital() {
                                                             onChange={(e) => setPublicPlaceInputValueModal(e.target.value)}
                                                             isWithIcon={false}
                                                             errorText={false}
-                                                            inputSize={sizes.xlx}
+                                                            inputSize={sizes.xl}
                                                             type="text"
                                                             id="logradouroHospitalModal"
                                                             value={cepModal ? publicPlaceInputValueModal : hosp.logradouroHospital}
