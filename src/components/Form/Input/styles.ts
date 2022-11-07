@@ -83,12 +83,16 @@ export const ErrorMessage = styled.p<{
     transition: .5s;
 `
 
-export const ImageInputContainer = styled.div`
+export const ImageInputContainer = styled.div<{
+    error: any;
+}>`
     display: flex;
     align-items: center;
     width: 200px;
     padding: 2px 6px 2px 2px;
     border-radius: 16px;
+    border: ${(props) => props.error ? '1px solid #e94a4f' : '1px solid #d1d1d1'};
+    transition: border .3s;
     background-color: #cccccc;
     gap: 8px;
     white-space: nowrap;

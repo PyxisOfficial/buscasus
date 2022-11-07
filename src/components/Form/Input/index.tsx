@@ -109,11 +109,14 @@ function InputErrorMessage({ children, errorText }: InputErrorMessageProps) {
 
 interface InputImageRootProps {
     children: ReactNode
+    error?: any;
 }
 
-function InputImageRoot({ children }: InputImageRootProps) {
+function InputImageRoot({ children, error }: InputImageRootProps) {
     return (
-        <C.ImageInputContainer>
+        <C.ImageInputContainer
+            error={error}
+        >
             {children}
         </C.ImageInputContainer>
     )

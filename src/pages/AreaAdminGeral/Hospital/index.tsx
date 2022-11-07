@@ -43,6 +43,10 @@ export function Hospital() {
     const [isEndTimeInputWithError, setIsEndTimeInputWithError] = useState<boolean>();
     const [isCnpjInputWithError, setIsCnpjInputWithError] = useState<boolean>();
     const [isCepInputWithError, setIsCepInputWithError] = useState<boolean>();
+    const [isUfInputWithError, setIsUfInputWithError] = useState<boolean>();
+    const [isPublicPlaceInputWithError, setIsPublicPlaceInputWithError] = useState<boolean>();
+    const [isCityInputWithError, setIsCityInputWithError] = useState<boolean>();
+    const [isDistrictInputWithError, setIsDistrictInputWithError] = useState<boolean>();
     const [isHospitalPhotoWithError, setIsHospitalPhotoWithError] = useState<boolean>();
 
     const [hospitalInputValueModal, setHospitalInputValueModal] = useState<any>();
@@ -64,7 +68,6 @@ export function Hospital() {
     const [isStartTimeInputModalWithError, setIsStartTimeInputModalWithError] = useState<boolean>();
     const [isEndTimeInputModalWithError, setIsEndTimeInputModalWithError] = useState<boolean>();
     const [isCepInputModalWithError, setIsCepInputModalWithError] = useState<boolean>();
-    const [isHospitalPhotoModalWithError, setIsHospitalPhotoModalWithError] = useState<boolean>();
 
     const [cep, setCep] = useState<any>();
     const [cepModal, setCepModal] = useState<any>();
@@ -119,6 +122,11 @@ export function Hospital() {
             setPublicPlaceInputValue(cep.logradouro);
             setCityInputValue(cep.localidade);
             setDistrictInputValue(cep.bairro);
+
+            setIsUfInputWithError(false);
+            setIsPublicPlaceInputWithError(false);
+            setIsCityInputWithError(false);
+            setIsDistrictInputWithError(false);
         }
 
         if (cepModal) {
@@ -128,6 +136,10 @@ export function Hospital() {
             setDistrictInputValueModal(cepModal.bairro);
         }
     }, [cep, cepModal]);
+
+    useEffect(() => {
+        setIsHospitalPhotoWithError(false);
+    }, [hospitalPhoto]);
 
     async function insertHospital(event: FormEvent) {
         event.preventDefault();
@@ -155,6 +167,10 @@ export function Hospital() {
         if (!endTimeInputValue) setIsEndTimeInputWithError(true);
         if (!cnpjInputValue) setIsCnpjInputWithError(true);
         if (!cepInputValue) setIsCepInputWithError(true);
+        if (!ufInputValue) setIsUfInputWithError(true);
+        if (!publicPlaceInputValue) setIsPublicPlaceInputWithError(true);
+        if (!cityInputValue) setIsCityInputWithError(true);
+        if (!districtInputValue) setIsDistrictInputWithError(true);
         if (!hospitalPhoto) setIsHospitalPhotoWithError(true);
 
         if (hospitalInputValue && emailInputValue && phoneInputValue && startTimeInputValue && endTimeInputValue && cnpjInputValue && ufInputValue
@@ -345,6 +361,7 @@ export function Hospital() {
                                 <Input.Input
                                     defaultValue={ufInputValue}
                                     isWithIcon={false}
+                                    errorText={isUfInputWithError}
                                     inputSize={sizes.xs}
                                     type="text"
                                     id="cepHospital"
@@ -358,6 +375,7 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={publicPlaceInputValue}
                                 isWithIcon={false}
+                                errorText={isPublicPlaceInputWithError}
                                 inputSize={sizes.md}
                                 type="text"
                                 id="logradouroHospital"
@@ -370,6 +388,7 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={cityInputValue}
                                 isWithIcon={false}
+                                errorText={isCityInputWithError}
                                 inputSize={sizes.md}
                                 type="text"
                                 id="cidadeHospital"
@@ -382,6 +401,7 @@ export function Hospital() {
                             <Input.Input
                                 defaultValue={districtInputValue}
                                 isWithIcon={false}
+                                errorText={isDistrictInputWithError}
                                 inputSize={sizes.md}
                                 type="text"
                                 id="bairroHospital"
@@ -402,7 +422,9 @@ export function Hospital() {
                         </C.Label>
 
                         <C.Label>
-                            <InputImage.Root>
+                            <InputImage.Root
+                                error={isHospitalPhotoWithError}
+                            >
                                 <InputImage.NameImage nameImgInput={hospitalPhoto ? hospitalPhoto[0].name : null} />
                                 <InputImage.Label
                                     inputAction={(e: any) => setHospitalPhoto(e.target.files)}
@@ -417,7 +439,8 @@ export function Hospital() {
                                     setCityInputValue(null), setDistrictInputValue(null), setComplementInputValue(null), setHospitalPhoto(null),
                                     setIsHospitalInputWithError(false), setIsEmailInputWithError(false), setIsPhoneInputWithError(false),
                                     setIsStartTimeInputWithError(false), setIsEndTimeInputWithError(false), setIsCnpjInputWithError(false), setIsCepInputWithError(false),
-                                    setIsHospitalPhotoWithError(false)
+                                    setIsUfInputWithError(false), setIsPublicPlaceInputWithError(false), setIsCityInputWithError(false),
+                                    setIsDistrictInputWithError(false), setIsHospitalPhotoWithError(false)
                                 ]}
                                 value="Cancelar"
                                 type="reset"
@@ -503,8 +526,7 @@ export function Hospital() {
                                                     setEndTimeInputValueModal(null), setCnpjInputValueModal(null), setCepInputValueModal(null), setUfInputValueModal(null), setPublicPlaceInputValueModal(null),
                                                     setCityInputValueModal(null), setDistrictInputValueModal(null), setComplementInputValueModal(null), setHospitalPhotoModal(null),
                                                     setIsHospitalInputModalWithError(false), setIsEmailInputModalWithError(false), setIsPhoneInputModalWithError(false),
-                                                    setIsStartTimeInputModalWithError(false), setIsEndTimeInputModalWithError(false), setIsCepInputModalWithError(false),
-                                                    setIsHospitalPhotoModalWithError(false)
+                                                    setIsStartTimeInputModalWithError(false), setIsEndTimeInputModalWithError(false), setIsCepInputModalWithError(false)
                                                 ]}
                                                 title='Editar hospital'
                                             >
@@ -694,8 +716,7 @@ export function Hospital() {
                                                                     setEndTimeInputValueModal(null), setCnpjInputValueModal(null), setCepInputValueModal(null), setUfInputValueModal(null), setPublicPlaceInputValueModal(null),
                                                                     setCityInputValueModal(null), setDistrictInputValueModal(null), setComplementInputValueModal(null), setHospitalPhotoModal(null),
                                                                     setIsHospitalInputModalWithError(false), setIsEmailInputModalWithError(false), setIsPhoneInputModalWithError(false),
-                                                                    setIsStartTimeInputModalWithError(false), setIsEndTimeInputModalWithError(false), setIsCepInputModalWithError(false),
-                                                                    setIsHospitalPhotoModalWithError(false)
+                                                                    setIsStartTimeInputModalWithError(false), setIsEndTimeInputModalWithError(false), setIsCepInputModalWithError(false)
                                                                 ]}
                                                                 value="Fechar"
                                                                 type="button"
