@@ -82,7 +82,8 @@ export const InputContainer = styled.div`
 
 export const InnerFormContainer = styled.div`
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
 `
 
 export const CheckboxContainer = styled.label`
