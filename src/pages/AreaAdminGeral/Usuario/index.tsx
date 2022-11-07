@@ -183,7 +183,7 @@ export function Usuario() {
                                         rightPosition={4}
                                         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                                     >
-                                        {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                        {isPasswordVisible ? <EyeSlash size={20} /> : <Eye size={20} />}
                                     </Input.RightIcon>
 
                                 </Input.Root>
@@ -208,7 +208,7 @@ export function Usuario() {
                                         rightPosition={4}
                                         onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
                                     >
-                                        {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                        {isConfirmPasswordVisible ? <EyeSlash size={20} /> : <Eye size={20} />}
                                     </Input.RightIcon>
 
                                 </Input.Root>

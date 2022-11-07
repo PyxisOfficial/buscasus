@@ -339,7 +339,15 @@ export function Medico() {
                                                     <C.Text><b>Especialidade:</b> {medic.nomeEspecialidade}</C.Text>
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
-                                                <C.InfoImg src={`http://localhost/buscaSusWeb/api/area-hospital/img/${medic.fotoMedico}`} />
+                                                <C.InfoImg 
+                                                    src={`http://localhost/buscaSusWeb/api/area-hospital/img/${medic.fotoMedico}`}   
+                                                    onError={(e) =>
+                                                        (e.target.onerror = null)(
+                                                          (e.target.src =
+                                                            "http://localhost/buscaSusWeb/api/area-hospital/img/placeholder.png")
+                                                        )
+                                                    }
+                                                    />
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Edit
