@@ -73,7 +73,7 @@ export function TipoReclamacao() {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', formData);
 
             setIsFormSubmitted(true);
-            toast.success("Tipo de reclamação cadastrada com sucesso!");
+            toast.success("Tipo de reclamação cadastrado com sucesso!");
         }
     }
 
@@ -91,7 +91,7 @@ export function TipoReclamacao() {
             });
 
             setIsFormSubmitted(true);
-            toast.success("Tipo de reclamação editada com sucesso!");
+            toast.success("Tipo de reclamação editado com sucesso!");
         }
     }
 
@@ -103,7 +103,7 @@ export function TipoReclamacao() {
         });
 
         setIsFormSubmitted(true);
-        toast.success("Tipo de reclamação excluída com sucesso!");
+        toast.success("Tipo de reclamação excluído com sucesso!");
     }
 
     return (
@@ -150,7 +150,7 @@ export function TipoReclamacao() {
             </C.InsertContainer>
             <C.TableContainer>
                 <C.TableContainerHeader>
-                    <h3>Tipos de reclamações cadastradas</h3>
+                    <h3>Tipos de reclamações cadastrados</h3>
                     <C.InputsContainer>
                         <Input.Root>
                             <Input.Input
@@ -189,11 +189,11 @@ export function TipoReclamacao() {
                                         <Modal.Edit
                                             itemId={() => [setClaimTypeId(claim.idTipoReclamacao), setClaimTypeInputValueModal(claim.tipoReclamacao)]}
                                             closeModal={() => [setClaimTypeId(0), setClaimTypeInputValueModal(null), setIsClaimTypeInputModalWithError(false)]}
-                                            title='Editar tipo de plantão'
+                                            title='Editar tipo de reclamação'
                                         >
                                             <C.Form onSubmit={editClaimType} autoComplete="off">
-                                                <Label htmlFor="tipoPlantaoModal">
-                                                    Tipo de plantão
+                                                <Label htmlFor="tipoReclamacaoModal">
+                                                    Tipo de reclamação
                                                     <Input.Input
                                                         onChange={(e) => setClaimTypeInputValueModal(e.target.value)}
                                                         onBlur={() => claimTypeInputValueModal ? setIsClaimTypeInputModalWithError(false) : setIsClaimTypeInputModalWithError(true)}
@@ -201,8 +201,7 @@ export function TipoReclamacao() {
                                                         errorText={isClaimTypeInputModalWithError}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        id="tipoPlantaoModal"
-                                                        name="tipoPlantao"
+                                                        id="tipoReclamacaoModal"
                                                         defaultValue={claim.tipoReclamacao}
                                                     />
                                                 </Label>
@@ -222,12 +221,12 @@ export function TipoReclamacao() {
                                         <Modal.Alert
                                             itemId={() => { setClaimTypeId(claim.idTipoReclamacao) }}
                                             closeModal={() => { setClaimTypeId(0) }}
-                                            title="Excluir tipo de plantão"
+                                            title="Excluir tipo de reclamação"
                                             modalAction={deleteClaimType}
                                             cancel='Cancelar'
                                             submit='Excluir'
                                         >
-                                            Deseja excluir o tipo de plantão selecionado?
+                                            Deseja excluir o tipo de reclamação selecionado?
                                         </Modal.Alert>
                                     </C.ButtonContainer>
                                 </C.Td>

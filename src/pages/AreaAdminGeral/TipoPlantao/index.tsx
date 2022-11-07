@@ -202,7 +202,6 @@ export function TipoPlantao() {
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="tipoPlantaoModal"
-                                                        name="tipoPlantao"
                                                         defaultValue={dt.tipoPlantao}
                                                     />
                                                 </Label>
