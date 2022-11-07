@@ -281,7 +281,7 @@ export function Usuario() {
                         <C.Tr>
                             <C.Th>Nome de usuário</C.Th>
                             <C.Th>Senha</C.Th>
-                            <C.Th>Id do Hospital</C.Th>
+                            <C.Th>Nome do hospital</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
                     </C.Thead>
@@ -289,8 +289,8 @@ export function Usuario() {
                         {adminUsers.map((user: any, key) =>
                             <C.InnerTr key={key}>
                                 <C.Td>{user.loginAdmin}</C.Td>
-                                <C.Td>{user.senhaAdmin}</C.Td>
-                                <C.Td>{user.idHospital}</C.Td>
+                                <C.OccultedTd>{user.senhaAdmin}</C.OccultedTd>
+                                <C.Td>{user.nomeHospital}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Edit

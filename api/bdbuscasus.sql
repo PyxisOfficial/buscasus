@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2022 at 08:25 PM
+-- Generation Time: Nov 07, 2022 at 02:42 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -40,10 +40,10 @@ CREATE TABLE `tbadmin` (
 --
 
 INSERT INTO `tbadmin` (`idAdmin`, `loginAdmin`, `senhaAdmin`, `tipoAdmin`, `idHospital`) VALUES
-(1, 'admin', '123', 1, 0),
-(2, 'hospital', '123', 0, 1),
-(3, 'hospital2', '123', 0, 2),
-(4, 'hospital3', '123', 0, 3);
+(1, 'admin', '12345678', 1, 0),
+(2, 'hospital', '12345678', 0, 1),
+(3, 'hospital2', '12345678', 0, 2),
+(4, 'hospital3', '12345678', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -217,6 +217,13 @@ CREATE TABLE `tbtipoplantao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `tbtipoplantao`
+--
+
+INSERT INTO `tbtipoplantao` (`idTipoPlantao`, `tipoPlantao`) VALUES
+(1, 'COVID');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -327,7 +334,7 @@ ALTER TABLE `tbtelefone`
 -- AUTO_INCREMENT for table `tbtipoplantao`
 --
 ALTER TABLE `tbtipoplantao`
-  MODIFY `idTipoPlantao` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTipoPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
