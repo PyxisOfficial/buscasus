@@ -60,7 +60,7 @@ export function Plantao() {
             }
         }).then((response) => setMedics(response.data));
 
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then((response) => setDutyType(response.data));
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/').then((response) => setDutyType(response.data));
     }, []);
 
     useEffect(() => {
