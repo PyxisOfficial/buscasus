@@ -108,11 +108,11 @@ function AreaChart() {
    google.charts.setOnLoadCallback(drawChart);
    function drawChart() {
      var data = google.visualization.arrayToDataTable([
-       ["Element", "Density", { role: "style" } ],
-       ["Semana 1", 8.94, "#496461"],
-       ["Semana 2", 10.49, "#45CA99"],
-       ["Semana 3", 19.30, "#349684"],
-       ["Semana 4", 21.45, "#287365"]
+      ["Element", "Pesquisas", { role: "style" } ],
+      ["Semana 1", 25, "#496461"],
+      ["Semana 2", 16, "#45CA99"],
+      ["Semana 3", 14, "#349684"],
+      ["Semana 4", 30, "#287365"]
      ]);
 
      var view = new google.visualization.DataView(data);
@@ -145,11 +145,11 @@ function AreaSearch() {
    google.charts.setOnLoadCallback(drawChart);
    function drawChart() {
      var data = google.visualization.arrayToDataTable([
-       ["Element", "Density", { role: "style" } ],
-       ["Semana 1", 8.94, "#496461"],
-       ["Semana 2", 10.49, "#45CA99"],
-       ["Semana 3", 19.30, "#349684"],
-       ["Semana 4", 21.45, "#287365"]
+       ["Element", "Pesquisas", { role: "style" } ],
+       ["Semana 1", 25, "#496461"],
+       ["Semana 2", 16, "#45CA99"],
+       ["Semana 3", 14, "#349684"],
+       ["Semana 4", 30, "#287365"]
      ]);
 
      var view = new google.visualization.DataView(data);
