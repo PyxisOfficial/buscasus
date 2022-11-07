@@ -7,7 +7,8 @@ export function MenuLinksAdmin() {
             <NavLink to="/visao-geral-admin" className="sidebar-item">Visão Geral</NavLink>
             <NavLink to="/hospitais" className="sidebar-item">Hospitais</NavLink>
             <NavLink to="/usuarios" className="sidebar-item">Usuários</NavLink>
-            <NavLink to="/tipo-plantao" className="sidebar-item">Tipos de Plantões</NavLink>
+            <NavLink to="/tipo-plantao" className="sidebar-item">Tipo de Plantão</NavLink>
+            <NavLink to="/tipo-reclamacao" className="sidebar-item">Tipo de Reclamação</NavLink>
         </C.SideBar>
     )
 }

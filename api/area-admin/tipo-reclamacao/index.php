@@ -10,7 +10,7 @@ $conn = $connection->connect();
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
 
-    $sql = "SELECT * FROM tbtipoReclamacao WHERE tipoReclamacao LIKE '%$search%'";
+    $sql = "SELECT * FROM tbTipoReclamacao WHERE tipoReclamacao LIKE '%$search%'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $tipoReclamacao = $stmt->fetchAll(PDO::FETCH_ASSOC);

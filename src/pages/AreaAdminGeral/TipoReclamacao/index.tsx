@@ -16,37 +16,37 @@ import { MagnifyingGlass } from 'phosphor-react';
 import * as C from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
-export function TipoPlantao() {
+export function TipoReclamacao() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
-    const [dutyType, setDutyType] = useState([]);
-    const [dutyTypeId, setDutyTypeId] = useState<number>();
+    const [claimType, setClaimType] = useState([]);
+    const [claimTypeId, setClaimTypeId] = useState<number>();
     const [search, setSearch] = useState<string>();
 
-    const [dutyTypeInputValue, setDutyTypeInputValue] = useState<any>();
-    const [isDutyTypeInputWithError, setIsDutyTypeInputWithError] = useState<boolean>();
+    const [claimTypeInputValue, setClaimTypeInputValue] = useState<any>();
+    const [isClaimTypeInputWithError, setIsClaimTypeInputWithError] = useState<boolean>();
 
-    const [dutyTypeInputValueModal, setDutyTypeInputValueModal] = useState<any>();
-    const [isDutyTypeInputModalWithError, setIsDutyTypeInputModalWithError] = useState<boolean>();
+    const [claimTypeInputValueModal, setClaimTypeInputValueModal] = useState<any>();
+    const [isClaimTypeInputModalWithError, setIsClaimTypeInputModalWithError] = useState<boolean>();
 
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/').then(response => setDutyType(response.data));
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/').then(response => setClaimType(response.data));
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/', {
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', {
                 params: {
                     search: search,
                 }
-            }).then(response => setDutyType(response.data));
+            }).then(response => setClaimType(response.data));
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/').then(response => setDutyType(response.data));
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/').then(response => setClaimType(response.data));
         }
 
-        setDutyTypeInputValue(null);
+        setClaimTypeInputValue(null);
 
         setIsFormSubmitted(false);
 
@@ -54,56 +54,56 @@ export function TipoPlantao() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/', {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', {
             params: {
                 search: search,
             }
-        }).then(response => setDutyType(response.data));
+        }).then(response => setClaimType(response.data));
     }, [search]);
 
-    async function insertDutyType(event: FormEvent) {
+    async function insertClaimType(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
-        formData.append("tipoPlantao", dutyTypeInputValue);
+        formData.append("tipoReclamacao", claimTypeInputValue);
 
-        if (!dutyTypeInputValue) setIsDutyTypeInputWithError(true);
+        if (!claimTypeInputValue) setIsClaimTypeInputWithError(true);
 
-        if (dutyTypeInputValue) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/', formData);
+        if (claimTypeInputValue) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', formData);
 
             setIsFormSubmitted(true);
-            toast.success("Tipo de plantão cadastrado com sucesso!");
+            toast.success("Tipo de reclamação cadastrada com sucesso!");
         }
     }
 
-    async function editDutyType(event: FormEvent) {
+    async function editClaimType(event: FormEvent) {
         event.preventDefault();
 
-        if (!dutyTypeInputValueModal) setIsDutyTypeInputModalWithError(true);
+        if (!claimTypeInputValueModal) setIsClaimTypeInputModalWithError(true);
 
-        if (dutyTypeInputValueModal) {
-            await axios.put('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/', null, {
+        if (claimTypeInputValueModal) {
+            await axios.put('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', null, {
                 params: {
-                    tipoPlantao: dutyTypeInputValueModal,
-                    idTipoPlantao: dutyTypeId
+                    tipoReclamacao: claimTypeInputValueModal,
+                    idTipoReclamacao: claimTypeId
                 }
             });
 
             setIsFormSubmitted(true);
-            toast.success("Tipo de plantão editado com sucesso!");
+            toast.success("Tipo de reclamação editada com sucesso!");
         }
     }
 
-    async function deleteDutyType() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/`, {
+    async function deleteClaimType() {
+        await axios.delete('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', {
             params: {
-                idTipoPlantao: dutyTypeId
+                idTipoReclamacao: claimTypeId
             }
         });
 
         setIsFormSubmitted(true);
-        toast.success("Tipo de plantão excluído com sucesso!");
+        toast.success("Tipo de reclamação excluída com sucesso!");
     }
 
     return (
@@ -123,23 +123,23 @@ export function TipoPlantao() {
 
             <C.InsertContainer>
                 <C.FormContainer>
-                    <h3>Cadastrar um novo tipo de plantão</h3>
-                    <form ref={formRef} onSubmit={insertDutyType} autoComplete="off">
+                    <h3>Cadastrar um novo tipo de reclamação</h3>
+                    <form ref={formRef} onSubmit={insertClaimType} autoComplete="off">
                         <Label htmlFor="tipoPlantao">
-                            Tipo de plantão
+                            Tipo de reclamação
                             <Input.Input
-                                onChange={(e) => setDutyTypeInputValue(e.target.value)}
-                                onBlur={() => dutyTypeInputValue ? setIsDutyTypeInputWithError(false) : setIsDutyTypeInputWithError(true)}
+                                onChange={(e) => setClaimTypeInputValue(e.target.value)}
+                                onBlur={() => claimTypeInputValue ? setIsClaimTypeInputWithError(false) : setIsClaimTypeInputWithError(true)}
                                 isWithIcon={false}
-                                errorText={isDutyTypeInputWithError}
+                                errorText={isClaimTypeInputWithError}
                                 inputSize={sizes.lg}
                                 type="text"
-                                id="tipoPlantao"
+                                id="tipoReclamacao"
                             />
                         </Label>
                         <C.ButtonContainer>
                             <Button.Gray
-                                onClick={() => [setDutyTypeInputValue(null), setIsDutyTypeInputWithError(false)]}
+                                onClick={() => [setClaimTypeInputValue(null), setIsClaimTypeInputWithError(false)]}
                                 value="Cancelar"
                                 type="reset"
                             />
@@ -150,7 +150,7 @@ export function TipoPlantao() {
             </C.InsertContainer>
             <C.TableContainer>
                 <C.TableContainerHeader>
-                    <h3>Tipos de plantões cadastrados</h3>
+                    <h3>Tipos de reclamações cadastradas</h3>
                     <C.InputsContainer>
                         <Input.Root>
                             <Input.Input
@@ -176,41 +176,41 @@ export function TipoPlantao() {
                 <C.Table>
                     <C.Thead>
                         <C.Tr>
-                            <C.Th>Tipos de plantões</C.Th>
+                            <C.Th>Tipos de reclamações</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
-                        {dutyType.map((dt: any, key) =>
+                        {claimType.map((claim: any, key) =>
                             <C.InnerTr key={key}>
-                                <C.Td>{dt.tipoPlantao}</C.Td>
+                                <C.Td>{claim.tipoReclamacao}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Edit
-                                            itemId={() => [setDutyTypeId(dt.idTipoPlantao), setDutyTypeInputValueModal(dt.tipoPlantao)]}
-                                            closeModal={() => [setDutyTypeId(0), setDutyTypeInputValueModal(null), setIsDutyTypeInputModalWithError(false)]}
+                                            itemId={() => [setClaimTypeId(claim.idTipoReclamacao), setClaimTypeInputValueModal(claim.tipoReclamacao)]}
+                                            closeModal={() => [setClaimTypeId(0), setClaimTypeInputValueModal(null), setIsClaimTypeInputModalWithError(false)]}
                                             title='Editar tipo de plantão'
                                         >
-                                            <C.Form onSubmit={editDutyType} autoComplete="off">
+                                            <C.Form onSubmit={editClaimType} autoComplete="off">
                                                 <Label htmlFor="tipoPlantaoModal">
                                                     Tipo de plantão
                                                     <Input.Input
-                                                        onChange={(e) => setDutyTypeInputValueModal(e.target.value)}
-                                                        onBlur={() => dutyTypeInputValueModal ? setIsDutyTypeInputModalWithError(false) : setIsDutyTypeInputModalWithError(true)}
+                                                        onChange={(e) => setClaimTypeInputValueModal(e.target.value)}
+                                                        onBlur={() => claimTypeInputValueModal ? setIsClaimTypeInputModalWithError(false) : setIsClaimTypeInputModalWithError(true)}
                                                         isWithIcon={false}
-                                                        errorText={isDutyTypeInputModalWithError}
+                                                        errorText={isClaimTypeInputModalWithError}
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="tipoPlantaoModal"
                                                         name="tipoPlantao"
-                                                        defaultValue={dt.tipoPlantao}
+                                                        defaultValue={claim.tipoReclamacao}
                                                     />
                                                 </Label>
 
                                                 <C.ButtonContainer>
                                                     <AlertDialog.Cancel asChild>
                                                         <Button.Gray
-                                                            onClick={() => [setDutyTypeInputValueModal(null), setIsDutyTypeInputModalWithError(false)]}
+                                                            onClick={() => [setClaimTypeInputValueModal(null), setIsClaimTypeInputModalWithError(false)]}
                                                             value="Fechar"
                                                             type="button"
                                                         />
@@ -220,10 +220,10 @@ export function TipoPlantao() {
                                             </C.Form>
                                         </Modal.Edit>
                                         <Modal.Alert
-                                            itemId={() => { setDutyTypeId(dt.idTipoPlantao) }}
-                                            closeModal={() => { setDutyTypeId(0) }}
+                                            itemId={() => { setClaimTypeId(claim.idTipoReclamacao) }}
+                                            closeModal={() => { setClaimTypeId(0) }}
                                             title="Excluir tipo de plantão"
-                                            modalAction={deleteDutyType}
+                                            modalAction={deleteClaimType}
                                             cancel='Cancelar'
                                             submit='Excluir'
                                         >

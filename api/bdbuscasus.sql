@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 01:37 PM
+-- Generation Time: Nov 07, 2022 at 02:12 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -301,6 +301,12 @@ ALTER TABLE `tbtipoplantao`
   ADD PRIMARY KEY (`idTipoPlantao`);
 
 --
+-- Indexes for table `tbtiporeclamacao`
+--
+ALTER TABLE `tbtiporeclamacao`
+  ADD PRIMARY KEY (`idTipoReclamacao`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -350,7 +356,13 @@ ALTER TABLE `tbtelefone`
 -- AUTO_INCREMENT for table `tbtipoplantao`
 --
 ALTER TABLE `tbtipoplantao`
-  MODIFY `idTipoPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idTipoPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbtiporeclamacao`
+--
+ALTER TABLE `tbtiporeclamacao`
+  MODIFY `idTipoReclamacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
