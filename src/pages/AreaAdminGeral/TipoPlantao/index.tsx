@@ -23,12 +23,16 @@ export function TipoPlantao() {
     const [dutyTypeId, setDutyTypeId] = useState<number>();
     const [search, setSearch] = useState<string>();
 
+    const [dutyTypeInputValue, setDutyTypeInputValue] = useState<any>();
+    const [isDutyTypeInputWithError, setIsDutyTypeInputWithError] = useState<boolean>();
+
+    const [dutyTypeInputValueModal, setDutyTypeInputValueModal] = useState<any>();
+    const [isDutyTypeInputModalWithError, setIsDutyTypeInputModalWithError] = useState<boolean>();
+
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then(response => {
-            setDutyType(response.data);
-        });
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then(response => setDutyType(response.data));
     }, []);
 
     useEffect(() => {
@@ -37,14 +41,12 @@ export function TipoPlantao() {
                 params: {
                     search: search,
                 }
-            }).then(response => {
-                setDutyType(response.data);
-            });
+            }).then(response => setDutyType(response.data));
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then(response => {
-                setDutyType(response.data);
-            });
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/').then(response => setDutyType(response.data));
         }
+
+        setDutyTypeInputValue(null);
 
         setIsFormSubmitted(false);
 
@@ -56,39 +58,41 @@ export function TipoPlantao() {
             params: {
                 search: search,
             }
-        }).then(response => {
-            setDutyType(response.data);
-        })
+        }).then(response => setDutyType(response.data));
     }, [search]);
 
     async function insertDutyType(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
-        formData.append("tipoPlantao", data.tipoPlantao);
+        formData.append("tipoPlantao", dutyTypeInputValue);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', formData);
+        if (!dutyTypeInputValue) setIsDutyTypeInputWithError(true);
 
-        setIsFormSubmitted(true);
-        toast.success("Tipo de plantão cadastrado com sucesso!");
+        if (dutyTypeInputValue) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', formData);
+
+            setIsFormSubmitted(true);
+            toast.success("Tipo de plantão cadastrado com sucesso!");
+        }
     }
 
     async function editDutyType(event: FormEvent) {
         event.preventDefault();
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
+        if (!dutyTypeInputValueModal) setIsDutyTypeInputModalWithError(true);
 
-        await axios.put('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', null, {
-            params: {
-                tipoPlantao: data.tipoPlantao,
-                idTipoPlantao: dutyTypeId
-            }
-        });
+        if (dutyTypeInputValueModal) {
+            await axios.put('http://localhost/buscaSusWeb/api/area-admin/tipoPlantao/', null, {
+                params: {
+                    tipoPlantao: dutyTypeInputValueModal,
+                    idTipoPlantao: dutyTypeId
+                }
+            });
 
-        setIsFormSubmitted(true);
-        toast.success("Tipo de plantão editado com sucesso!");
+            setIsFormSubmitted(true);
+            toast.success("Tipo de plantão editado com sucesso!");
+        }
     }
 
     async function deleteDutyType() {
@@ -124,8 +128,10 @@ export function TipoPlantao() {
                         <Label htmlFor="tipoPlantao">
                             Tipo de plantão
                             <Input.Input
+                                onChange={(e) => setDutyTypeInputValue(e.target.value)}
+                                onBlur={() => dutyTypeInputValue ? setIsDutyTypeInputWithError(false) : setIsDutyTypeInputWithError(true)}
                                 isWithIcon={false}
-                                errorText={false}
+                                errorText={isDutyTypeInputWithError}
                                 inputSize={sizes.lg}
                                 type="text"
                                 id="tipoPlantao"
@@ -134,7 +140,11 @@ export function TipoPlantao() {
                             />
                         </Label>
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Gray
+                                onClick={() => [setDutyTypeInputValue(null), setIsDutyTypeInputWithError(false)]}
+                                value="Cancelar"
+                                type="reset"
+                            />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </form>
@@ -179,16 +189,18 @@ export function TipoPlantao() {
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Edit
-                                            itemId={() => { setDutyTypeId(dt.idTipoPlantao) }}
-                                            closeModal={() => { setDutyTypeId(0) }}
+                                            itemId={() => [setDutyTypeId(dt.idTipoPlantao), setDutyTypeInputValueModal(dt.tipoPlantao)]}
+                                            closeModal={() => [setDutyTypeId(0), setDutyTypeInputValueModal(null), setIsDutyTypeInputModalWithError(false)]}
                                             title='Editar tipo de plantão'
                                         >
                                             <C.Form onSubmit={editDutyType} autoComplete="off">
                                                 <Label htmlFor="tipoPlantaoModal">
                                                     Tipo de plantão
                                                     <Input.Input
+                                                        onChange={(e) => setDutyTypeInputValueModal(e.target.value)}
+                                                        onBlur={() => dutyTypeInputValueModal ? setIsDutyTypeInputModalWithError(false) : setIsDutyTypeInputModalWithError(true)}
                                                         isWithIcon={false}
-                                                        errorText={false}
+                                                        errorText={isDutyTypeInputModalWithError}
                                                         inputSize={sizes.xl}
                                                         type="text"
                                                         id="tipoPlantaoModal"
@@ -199,7 +211,11 @@ export function TipoPlantao() {
 
                                                 <C.ButtonContainer>
                                                     <AlertDialog.Cancel asChild>
-                                                        <Button.Gray value="Fechar" type="button" />
+                                                        <Button.Gray
+                                                            onClick={() => [setDutyTypeInputValueModal(null), setIsDutyTypeInputModalWithError(false)]}
+                                                            value="Fechar"
+                                                            type="button"
+                                                        />
                                                     </AlertDialog.Cancel>
                                                     <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>

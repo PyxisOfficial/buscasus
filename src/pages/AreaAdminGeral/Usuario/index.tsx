@@ -24,19 +24,31 @@ export function Usuario() {
     const [hospital, setHospital] = useState([]);
     const [searchAdmin, setSearchAdmin] = useState<string>();
 
-    const formRef = useRef<any>();
+    const [loginInputValue, setLoginInputValue] = useState<any>();
+    const [passwordInputValue, setPasswordInputValue] = useState<any>();
+    const [confirmPasswordInputValue, setConfirmPasswordInputValue] = useState<any>();
+    const [hospitalInputValue, setHospitalInputValue] = useState<any>();
+    const [isLoginInputWithError, setIsLoginInputWithError] = useState<boolean>();
+    const [isPasswordInputWithError, setIsPasswordInputWithError] = useState<boolean>();
+    const [isConfirmPasswordInputWithError, setIsConfirmPasswordInputWithError] = useState<boolean>();
+    const [isHospitalInputWithError, setIsHospitalInputWithError] = useState<boolean>();
+
+    const [passwordInputValueModal, setPasswordInputValueModal] = useState<any>();
+    const [confirmPasswordInputValueModal, setConfirmPasswordInputValueModal] = useState<any>();
+    const [isPasswordInputModalWithError, setIsPasswordInputModalWithError] = useState<boolean>();
+    const [isConfirmPasswordInputModalWithError, setIsConfirmPasswordInputModalWithError] = useState<boolean>();
 
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
 
-    useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
-            setAdminUsers(response.data);
-        });
+    const [isPasswordModalVisible, setIsPasswordModalVisible] = useState<boolean>(false);
+    const [isConfirmPasswordModalVisible, setIsConfirmPasswordModalVisible] = useState<boolean>(false);
 
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/').then((response) => {
-            setHospital(response.data);
-        });
+    const formRef = useRef<any>();
+
+    useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then(response => setAdminUsers(response.data));
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/').then(response => setHospital(response.data));
     }, []);
 
     useEffect(() => {
@@ -45,14 +57,15 @@ export function Usuario() {
                 params: {
                     search: searchAdmin
                 }
-            }).then((response) => {
-                setAdminUsers(response.data);
-            });
+            }).then(response => setAdminUsers(response.data));
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then((response) => {
-                setAdminUsers(response.data);
-            });
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/').then(response => setAdminUsers(response.data));
         }
+
+        setLoginInputValue(null);
+        setPasswordInputValue(null);
+        setConfirmPasswordInputValue(null);
+        setHospitalInputValue(null);
 
         setIsFormSubmitted(false);
 
@@ -64,41 +77,47 @@ export function Usuario() {
             params: {
                 search: searchAdmin,
             }
-        }).then(response => {
-            setAdminUsers(response.data);
-        });
+        }).then(response => setAdminUsers(response.data));
     }, [searchAdmin]);
 
     async function insertUser(event: FormEvent) {
         event.preventDefault();
 
+        if (!loginInputValue) setIsLoginInputWithError(true);
+        if (!passwordInputValue) setIsPasswordInputWithError(true);
+        if (confirmPasswordInputValue !== passwordInputValue || !confirmPasswordInputValue) setIsConfirmPasswordInputWithError(true);
+        if (hospitalInputValue == 0 || !hospitalInputValue) setIsHospitalInputWithError(true);
+
         const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
-        formData.append("loginAdmin", data.loginAdmin);
-        formData.append("senhaAdmin", data.senhaAdmin);
-        formData.append("idHospital", data.idHospital);
+        formData.append("loginAdmin", loginInputValue);
+        formData.append("senhaAdmin", passwordInputValue);
+        formData.append("idHospital", hospitalInputValue);
 
-        await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', formData);
+        if (loginInputValue && passwordInputValue && confirmPasswordInputValue && hospitalInputValue > 0 && passwordInputValue === confirmPasswordInputValue) {
+            await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', formData);
 
-        setIsFormSubmitted(true);
-        toast.success("Administrador cadastrado com sucesso!");
+            setIsFormSubmitted(true);
+            toast.success("Administrador cadastrado com sucesso!");
+        }
     }
 
     async function editUser(event: FormEvent) {
         event.preventDefault();
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const data: any = Object.fromEntries(formData);
+        if (!passwordInputValueModal) setIsPasswordInputModalWithError(true);
+        if (confirmPasswordInputValueModal !== confirmPasswordInputValueModal || !confirmPasswordInputValueModal) setIsConfirmPasswordInputModalWithError(true);
 
-        await axios.put('http://localhost/buscaSusWeb/api/area-admin/admin/', null, {
-            params: {
-                senhaAdmin: data.senhaAdmin,
-                idAdmin: adminUserId
-            }
-        });
+        if (passwordInputValueModal && confirmPasswordInputValueModal && passwordInputValueModal === confirmPasswordInputValueModal) {
+            await axios.put('http://localhost/buscaSusWeb/api/area-admin/admin/', null, {
+                params: {
+                    senhaAdmin: passwordInputValueModal,
+                    idAdmin: adminUserId
+                }
+            });
 
-        setIsFormSubmitted(true);
-        toast.success("Administrador editado com sucesso!");
+            setIsFormSubmitted(true);
+            toast.success("Administrador editado com sucesso!");
+        }
     }
 
     async function deleteUser() {
@@ -135,11 +154,12 @@ export function Usuario() {
                             <Label htmlFor="loginAdmin">
                                 Nome de usuário
                                 <Input.Input
+                                    onChange={(e) => setLoginInputValue(e.target.value)}
+                                    onBlur={() => loginInputValue ? setIsLoginInputWithError(false) : setIsLoginInputWithError(true)}
                                     isWithIcon={false}
-                                    errorText={false}
+                                    errorText={isLoginInputWithError}
                                     inputSize={sizes.sm}
                                     type="text"
-                                    name="loginAdmin"
                                     id="loginAdmin"
                                 />
                             </Label>
@@ -149,11 +169,12 @@ export function Usuario() {
                                 Senha
                                 <Input.Root>
                                     <Input.Input
+                                        onChange={(e) => setPasswordInputValue(e.target.value)}
+                                        onBlur={() => [passwordInputValue ? setIsPasswordInputWithError(false) : setIsPasswordInputWithError(true), passwordInputValue === confirmPasswordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)]}
                                         isWithIcon={false}
-                                        errorText={false}
+                                        errorText={isPasswordInputWithError}
                                         inputSize={sizes.sm}
                                         type={isPasswordVisible ? "text" : "password"}
-                                        name="senhaAdmin"
                                         id="senhaAdmin"
                                     />
 
@@ -173,8 +194,10 @@ export function Usuario() {
                                 Confirmar senha
                                 <Input.Root>
                                     <Input.Input
+                                        onChange={(e) => setConfirmPasswordInputValue(e.target.value)}
+                                        onBlur={() => confirmPasswordInputValue === passwordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)}
                                         isWithIcon={false}
-                                        errorText={false}
+                                        errorText={isConfirmPasswordInputWithError}
                                         inputSize={sizes.sm}
                                         type={isConfirmPasswordVisible ? "text" : "password"}
                                         id="confirmarSenha"
@@ -193,7 +216,11 @@ export function Usuario() {
 
                             <Label htmlFor="idHospital">
                                 Hospital
-                                <C.Select name="idHospital">
+                                <C.Select
+                                    onChange={(e) => setHospitalInputValue(e.target.value)}
+                                    onBlur={() => hospitalInputValue > 0 ? setIsHospitalInputWithError(false) : setIsHospitalInputWithError(true)}
+                                    errorText={isHospitalInputWithError}
+                                >
                                     <option value="0">Selecione</option>
                                     {hospital.map((hosp: any) =>
                                         <option
@@ -209,7 +236,14 @@ export function Usuario() {
 
 
                         <C.ButtonContainer>
-                            <Button.Gray value="Cancelar" type="reset" />
+                            <Button.Gray
+                                onClick={() => [
+                                    setLoginInputValue(null), setPasswordInputValue(null), setConfirmPasswordInputValue(null), setHospitalInputValue(null),
+                                    setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsConfirmPasswordInputWithError(false), setIsHospitalInputWithError(false)
+                                ]}
+                                value="Cancelar"
+                                type="reset"
+                            />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
                     </form>
@@ -260,8 +294,11 @@ export function Usuario() {
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <Modal.Edit
-                                            itemId={() => { setAdminUserId(user.idAdmin) }}
-                                            closeModal={() => { setAdminUserId(0) }}
+                                            itemId={() => setAdminUserId(user.idAdmin)}
+                                            closeModal={() => [
+                                                setAdminUserId(0), setPasswordInputValueModal(null), setConfirmPasswordInputValueModal(null),
+                                                setIsPasswordInputModalWithError(false), setIsConfirmPasswordInputWithError(false)
+                                            ]}
                                             title='Editar administrador'
                                         >
                                             <form onSubmit={editUser} autoComplete="off">
@@ -272,7 +309,6 @@ export function Usuario() {
                                                         errorText={false}
                                                         inputSize={sizes.xl}
                                                         type="text"
-                                                        name="loginAdmin"
                                                         id="loginAdminModal"
                                                         defaultValue={user.loginAdmin}
                                                         disabled
@@ -282,20 +318,21 @@ export function Usuario() {
                                                     Nova senha
                                                     <Input.Root>
                                                         <Input.Input
+                                                            onChange={(e) => setPasswordInputValueModal(e.target.value)}
+                                                            onBlur={() => [passwordInputValueModal ? setIsPasswordInputModalWithError(false) : setIsPasswordInputModalWithError(true), passwordInputValueModal === confirmPasswordInputValueModal ? setIsConfirmPasswordInputModalWithError(false) : setIsConfirmPasswordInputModalWithError(true)]}
                                                             isWithIcon={false}
-                                                            errorText={false}
+                                                            errorText={isPasswordInputModalWithError}
                                                             inputSize={sizes.xl}
-                                                            type={isPasswordVisible ? "text" : "password"}
-                                                            name="senhaAdmin"
+                                                            type={isPasswordModalVisible ? "text" : "password"}
                                                             id="senhaAdminModal"
                                                         />
 
                                                         <Input.RightIcon
                                                             topPosition={1}
                                                             rightPosition={4}
-                                                            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                                            onClick={() => setIsPasswordModalVisible(!isPasswordModalVisible)}
                                                         >
-                                                            {isPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                                            {isPasswordModalVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
                                                         </Input.RightIcon>
 
                                                     </Input.Root>
@@ -304,26 +341,35 @@ export function Usuario() {
                                                     Confirmar nova senha
                                                     <Input.Root>
                                                         <Input.Input
+                                                            onChange={(e) => setConfirmPasswordInputValueModal(e.target.value)}
+                                                            onBlur={() => confirmPasswordInputValueModal === passwordInputValueModal ? setIsConfirmPasswordInputModalWithError(false) : setIsConfirmPasswordInputModalWithError(true)}
                                                             isWithIcon={false}
-                                                            errorText={false}
+                                                            errorText={isConfirmPasswordInputModalWithError}
                                                             inputSize={sizes.xl}
-                                                            type={isConfirmPasswordVisible ? "text" : "password"}
+                                                            type={isConfirmPasswordModalVisible ? "text" : "password"}
                                                             id="confirmarSenhaModal"
                                                         />
 
                                                         <Input.RightIcon
                                                             topPosition={1}
                                                             rightPosition={4}
-                                                            onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                                                            onClick={() => setIsConfirmPasswordModalVisible(!isConfirmPasswordModalVisible)}
                                                         >
-                                                            {isConfirmPasswordVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
+                                                            {isConfirmPasswordModalVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
                                                         </Input.RightIcon>
 
                                                     </Input.Root>
                                                 </Label>
                                                 <C.ButtonContainer>
                                                     <AlertDialog.Cancel asChild>
-                                                        <Button.Gray value="Fechar" type="button" />
+                                                        <Button.Gray
+                                                            onClick={() => [
+                                                                setPasswordInputValueModal(null), setConfirmPasswordInputValueModal(null),
+                                                                setIsPasswordInputModalWithError(false), setIsConfirmPasswordInputModalWithError(false)
+                                                            ]}
+                                                            value="Fechar"
+                                                            type="button"
+                                                        />
                                                     </AlertDialog.Cancel>
                                                     <Button.Green value="Salvar" type="submit" />
                                                 </C.ButtonContainer>
