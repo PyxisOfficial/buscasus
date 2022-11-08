@@ -195,7 +195,7 @@ export function Hospital() {
 
         if (!hospitalInputValueModal) setIsHospitalInputModalWithError(true);
         if (!emailInputValueModal) setIsEmailInputModalWithError(true);
-        if (!phoneInputValueModal || phoneInputValueModal.length != 9) setIsPhoneInputModalWithError(true);
+        if (!phoneInputValueModal || phoneInputValueModal.length != 14) setIsPhoneInputModalWithError(true);
         if (!startTimeInputValueModal) setIsStartTimeInputModalWithError(true);
         if (!endTimeInputValueModal) setIsEndTimeInputModalWithError(true);
         if (!cepInputValueModal) setIsCepInputModalWithError(true);
@@ -271,7 +271,7 @@ export function Hospital() {
                             Nome do hospital
                             <Input.Input
                                 onChange={(e) => setHospitalInputValue(e.target.value)}
-                                onBlur={() => hospitalInputValue ? setIsHospitalInputWithError(false) : setIsHospitalInputWithError(true)}
+                                onBlur={() => hospitalInputValue ? setIsHospitalInputWithError(false) : null}
                                 isWithIcon={false}
                                 errorText={isHospitalInputWithError}
                                 inputSize={sizes.xl}
@@ -283,7 +283,7 @@ export function Hospital() {
                             Endereço de e-mail do hospital
                             <Input.Input
                                 onChange={(e) => setEmailInputValue(e.target.value)}
-                                onBlur={() => emailInputValue ? setIsEmailInputWithError(false) : setIsEmailInputWithError(true)}
+                                onBlur={() => emailInputValue ? setIsEmailInputWithError(false) : null}
                                 isWithIcon={false}
                                 errorText={isEmailInputWithError}
                                 inputSize={sizes.xl}
@@ -293,15 +293,16 @@ export function Hospital() {
                         </C.Label>
                         <C.Label htmlFor="numTelefone">
                             Número de telefone do hospital
-                            <Input.Input
+                            <Input.MaskedInput
                                 mask="(00) 0000-0000"
                                 onChange={(e) => setPhoneInputValue(e.target.value)}
-                                onBlur={() => phoneInputValue.length == 14 ? setIsPhoneInputWithError(false) : setIsPhoneInputWithError(true)}
+                                onBlur={() => phoneInputValue.length == 14 ? setIsPhoneInputWithError(false) : null}
                                 isWithIcon={false}
                                 errorText={isPhoneInputWithError}
                                 inputSize={sizes.sm}
                                 type="text"
                                 id="numTelefone"
+                                value={phoneInputValue}
                             />
                         </C.Label>
 
@@ -310,7 +311,7 @@ export function Hospital() {
                                 Horário de abertura
                                 <Input.Input
                                     onChange={(e) => setStartTimeInputValue(e.target.value)}
-                                    onBlur={() => startTimeInputValue ? setIsStartTimeInputWithError(false) : setIsStartTimeInputWithError(true)}
+                                    onBlur={() => startTimeInputValue ? setIsStartTimeInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isStartTimeInputWithError}
                                     inputSize={sizes.xs}
@@ -323,7 +324,7 @@ export function Hospital() {
                                 Horário de fechamento
                                 <Input.Input
                                     onChange={(e) => setEndTimeInputValue(e.target.value)}
-                                    onBlur={() => endTimeInputValue ? setIsEndTimeInputWithError(false) : setIsEndTimeInputWithError(true)}
+                                    onBlur={() => endTimeInputValue ? setIsEndTimeInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isEndTimeInputWithError}
                                     inputSize={sizes.xs}
@@ -336,30 +337,32 @@ export function Hospital() {
                         <C.InputContainer>
                             <C.Label htmlFor="cnpjHospital">
                                 CNPJ
-                                <Input.Input
+                                <Input.MaskedInput
                                     mask="00.000.000/0000-00"
                                     onChange={(e) => setCnpjInputValue(e.target.value)}
-                                    onBlur={(e) => [cnpjInputValue ? setIsCnpjInputWithError(false) : setIsCnpjInputWithError(true), cnpj.isValid(e.target.value) ? setIsCnpjInputWithError(false) : setIsCnpjInputWithError(true)]}
+                                    onBlur={(e) => cnpj.isValid(e.target.value) ? setIsCnpjInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isCnpjInputWithError}
                                     inputSize={sizes.sm}
                                     type="text"
                                     id="cnpjHospital"
+                                    value={cnpjInputValue}
                                 />
                             </C.Label>
 
                             <C.Label htmlFor="cepHospital">
                                 CEP
-                                <Input.Input
+                                <Input.MaskedInput
                                     mask="00000-000"
                                     onChange={(e) => setCepInputValue(e.target.value)}
-                                    onBlur={(e) => [cepInputValue.length == 9 ? setIsCepInputWithError(false) : setIsCepInputWithError(true), getCep(e.target.value)]}
+                                    onBlur={(e) => [cepInputValue.length == 9 ? setIsCepInputWithError(false) : null, getCep(e.target.value)]}
                                     isWithIcon={false}
                                     errorText={isCepInputWithError}
                                     inputSize={sizes.sm}
                                     type="text"
                                     name="cepHospital"
                                     id="cepHospital"
+                                    value={cepInputValue}
                                 />
                             </C.Label>
 
@@ -542,7 +545,7 @@ export function Hospital() {
                                                         Nome do hospital
                                                         <Input.Input
                                                             onChange={(e) => setHospitalInputValueModal(e.target.value)}
-                                                            onBlur={() => hospitalInputValueModal ? setIsHospitalInputModalWithError(false) : setIsHospitalInputModalWithError(true)}
+                                                            onBlur={() => hospitalInputValueModal ? setIsHospitalInputModalWithError(false) : null}
                                                             isWithIcon={false}
                                                             errorText={isHospitalInputModalWithError}
                                                             inputSize={sizes.xl}
@@ -555,7 +558,7 @@ export function Hospital() {
                                                         Endereço de e-mail do hospital
                                                         <Input.Input
                                                             onChange={(e) => setEmailInputValueModal(e.target.value)}
-                                                            onBlur={() => emailInputValueModal ? setIsEmailInputModalWithError(false) : setIsEmailInputModalWithError(true)}
+                                                            onBlur={() => emailInputValueModal ? setIsEmailInputModalWithError(false) : null}
                                                             isWithIcon={false}
                                                             errorText={isEmailInputModalWithError}
                                                             inputSize={sizes.xl}
@@ -566,16 +569,17 @@ export function Hospital() {
                                                     </C.Label>
                                                     <C.Label htmlFor="numTelefoneModal">
                                                         Número de telefone do hospital
-                                                        <Input.Input
+                                                        <Input.MaskedInput
                                                             mask="(00) 0000-0000"
                                                             onChange={(e) => setPhoneInputValueModal(e.target.value)}
-                                                            onBlur={() => phoneInputValueModal.length == 14 ? setIsPhoneInputModalWithError(false) : setIsPhoneInputModalWithError(true)}
+                                                            onBlur={() => phoneInputValueModal.length == 14 ? setIsPhoneInputModalWithError(false) : null}
                                                             isWithIcon={false}
                                                             errorText={isPhoneInputModalWithError}
                                                             inputSize={sizes.xl}
                                                             type="text"
                                                             id="numTelefoneModal"
                                                             defaultValue={hosp.numTelefone}
+                                                            value={phoneInputValueModal}
                                                         />
                                                     </C.Label>
 
@@ -584,7 +588,7 @@ export function Hospital() {
                                                             Horário de abertura
                                                             <Input.Input
                                                                 onChange={(e) => setStartTimeInputValueModal(e.target.value)}
-                                                                onBlur={() => startTimeInputValueModal ? setIsStartTimeInputModalWithError(false) : setIsStartTimeInputModalWithError(true)}
+                                                                onBlur={() => startTimeInputValueModal ? setIsStartTimeInputModalWithError(false) : null}
                                                                 isWithIcon={false}
                                                                 errorText={isStartTimeInputModalWithError}
                                                                 inputSize={sizes.xs}
@@ -598,7 +602,7 @@ export function Hospital() {
                                                             Horário de fechamento
                                                             <Input.Input
                                                                 onChange={(e) => setEndTimeInputValueModal(e.target.value)}
-                                                                onBlur={() => endTimeInputValueModal ? setIsEndTimeInputModalWithError(false) : setIsEndTimeInputModalWithError(true)}
+                                                                onBlur={() => endTimeInputValueModal ? setIsEndTimeInputModalWithError(false) : null}
                                                                 isWithIcon={false}
                                                                 errorText={isEndTimeInputModalWithError}
                                                                 inputSize={sizes.xs}
@@ -625,16 +629,17 @@ export function Hospital() {
 
                                                         <C.Label htmlFor="cepHospitalModal">
                                                             CEP
-                                                            <Input.Input
+                                                            <Input.MaskedInput
                                                                 mask="00000-000"
                                                                 onChange={(e) => setCepInputValueModal(e.target.value)}
-                                                                onBlur={(e) => [cepInputValueModal.length == 9 ? setIsCepInputModalWithError(false) : setIsCepInputModalWithError(true), getCepModal(e.target.value)]}
+                                                                onBlur={(e) => [cepInputValueModal.length == 9 ? setIsCepInputModalWithError(false) : null, getCepModal(e.target.value)]}
                                                                 isWithIcon={false}
                                                                 errorText={isCepInputModalWithError}
                                                                 inputSize={sizes.sm}
                                                                 type="text"
                                                                 id="cepHospitalModal"
                                                                 defaultValue={hosp.cepHospital}
+                                                                value={cepInputValueModal}
                                                             />
                                                         </C.Label>
 

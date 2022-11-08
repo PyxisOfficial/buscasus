@@ -32,7 +32,7 @@ export function Plantao() {
     const [startTime, setStartTime] = useState<any>();
     const [endTime, setEndTime] = useState<any>();
     const [medicInputValue, setMedicInputValue] = useState<any>();
-    const [dates, setDates] = useState<Value>();
+    const [dates, setDates] = useState<any>();
 
     const [isDutyTypeInputWithError, setIsDutyTypeInputWithError] = useState<boolean>();
     const [isStartTimeInputWithError, setIsStartTimeInputWithError] = useState<boolean>();
@@ -168,7 +168,7 @@ export function Plantao() {
                                     Tipo do plantão
                                     <C.Select
                                         onChange={(e) => setDutyTypeInputValue(e.target.value)}
-                                        onBlur={() => dutyTypeInputValue != 0 ? setIsDutyTypeInputWithError(false) : setIsDutyTypeInputWithError(true)}
+                                        onBlur={() => dutyTypeInputValue != 0 ? setIsDutyTypeInputWithError(false) : null}
                                         errorText={isDutyTypeInputWithError}
                                     >
                                         <option value="0">Selecione</option>
@@ -186,7 +186,7 @@ export function Plantao() {
                                     Médicos
                                     <C.Select
                                         onChange={(e) => setMedicInputValue(e.target.value)}
-                                        onBlur={() => medicInputValue != 0 ? setIsMedicInputWithError(false) : setIsMedicInputWithError(true)}
+                                        onBlur={() => medicInputValue != 0 ? setIsMedicInputWithError(false) : null}
                                         errorText={isMedicInputWithError}
                                     >
                                         <option value="0">Selecione</option>
@@ -206,7 +206,7 @@ export function Plantao() {
                                     Início
                                     <Input.Input
                                         onChange={(e) => setStartTime(e.target.value)}
-                                        onBlur={() => startTime ? setIsStartTimeInputWithError(false) : setIsStartTimeInputWithError(true)}
+                                        onBlur={() => startTime ? setIsStartTimeInputWithError(false) : null}
                                         isWithIcon={false}
                                         errorText={isStartTimeInputWithError}
                                         inputSize={sizes.xs}
@@ -218,7 +218,7 @@ export function Plantao() {
                                     Fim
                                     <Input.Input
                                         onChange={(e) => setEndTime(e.target.value)}
-                                        onBlur={() => endTime ? setIsEndTimeInputWithError(false) : setIsEndTimeInputWithError(true)}
+                                        onBlur={() => endTime ? setIsEndTimeInputWithError(false) : null}
                                         isWithIcon={false}
                                         errorText={isEndTimeInputWithError}
                                         inputSize={sizes.xs}

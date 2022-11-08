@@ -144,7 +144,7 @@ export function Especialidade() {
                             Especialidade
                             <Input.Input
                                 onChange={(e) => setSpecialtyInputValue(e.target.value)}
-                                onBlur={() => specialtyInputValue ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
+                                onBlur={() => specialtyInputValue ? setIsSpecialtyInputWithError(false) : null}
                                 isWithIcon={false}
                                 errorText={isSpecialtyInputWithError}
                                 inputSize={sizes.lg}
@@ -213,7 +213,7 @@ export function Especialidade() {
                                                     Nome
                                                     <Input.Input
                                                         onChange={(e) => setSpecialtyInputValueModal(e.target.value)}
-                                                        onBlur={() => specialtyInputValueModal ? setIsSpecialtyInputModalWithError(false) : setIsSpecialtyInputModalWithError(true)}
+                                                        onBlur={() => specialtyInputValueModal ? setIsSpecialtyInputModalWithError(false) : null}
                                                         isWithIcon={false}
                                                         errorText={isSpecialtyInputModalWithError}
                                                         inputSize={sizes.xl}

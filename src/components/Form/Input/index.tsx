@@ -27,12 +27,31 @@ interface InputInputProps extends InputHTMLAttributes<HTMLInputElement> {
     errorText?: any;
     inputSize: string;
     isWithIcon: boolean;
-    mask?: any;
 }
 
-function InputInput({ errorText, inputSize, isWithIcon, mask, ...props }: InputInputProps) {
+function InputInput({ errorText, inputSize, isWithIcon, ...props }: InputInputProps) {
     return (
         <C.Input
+            size={inputSize}
+            isWithIcon={isWithIcon}
+            errorText={errorText}
+            {...props}
+        />
+    )
+}
+
+interface InputMaskProps extends InputHTMLAttributes<HTMLInputElement> {
+    errorText?: any;
+    inputSize: string;
+    isWithIcon: boolean;
+    mask?: any;
+    value?: any;
+}
+
+function InputMask({ errorText, inputSize, isWithIcon, mask, value, ...props }: InputMaskProps) {
+    return (
+        <C.MaskedInput
+            value={value}
             mask={mask}
             size={inputSize}
             isWithIcon={isWithIcon}
@@ -155,6 +174,7 @@ function ImageLabel({ inputAction }: ImageLabelProps) {
 export const Input = {
     Root: InputRoot,
     Input: InputInput,
+    MaskedInput: InputMask,
     Login: InputLogin,
     LeftIcon: InputLeftIcon,
     RightIcon: InputRightIcon,

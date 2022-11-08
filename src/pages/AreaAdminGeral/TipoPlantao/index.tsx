@@ -129,7 +129,7 @@ export function TipoPlantao() {
                             Tipo de plantão
                             <Input.Input
                                 onChange={(e) => setDutyTypeInputValue(e.target.value)}
-                                onBlur={() => dutyTypeInputValue ? setIsDutyTypeInputWithError(false) : setIsDutyTypeInputWithError(true)}
+                                onBlur={() => dutyTypeInputValue ? setIsDutyTypeInputWithError(false) : null}
                                 isWithIcon={false}
                                 errorText={isDutyTypeInputWithError}
                                 inputSize={sizes.lg}
@@ -196,7 +196,7 @@ export function TipoPlantao() {
                                                     Tipo de plantão
                                                     <Input.Input
                                                         onChange={(e) => setDutyTypeInputValueModal(e.target.value)}
-                                                        onBlur={() => dutyTypeInputValueModal ? setIsDutyTypeInputModalWithError(false) : setIsDutyTypeInputModalWithError(true)}
+                                                        onBlur={() => dutyTypeInputValueModal ? setIsDutyTypeInputModalWithError(false) : null}
                                                         isWithIcon={false}
                                                         errorText={isDutyTypeInputModalWithError}
                                                         inputSize={sizes.xl}

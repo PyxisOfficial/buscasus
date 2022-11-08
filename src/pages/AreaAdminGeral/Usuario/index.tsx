@@ -155,7 +155,7 @@ export function Usuario() {
                                 Nome de usuário
                                 <Input.Input
                                     onChange={(e) => setLoginInputValue(e.target.value)}
-                                    onBlur={() => loginInputValue ? setIsLoginInputWithError(false) : setIsLoginInputWithError(true)}
+                                    onBlur={() => loginInputValue ? setIsLoginInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isLoginInputWithError}
                                     inputSize={sizes.sm}
@@ -170,7 +170,7 @@ export function Usuario() {
                                 <Input.Root>
                                     <Input.Input
                                         onChange={(e) => setPasswordInputValue(e.target.value)}
-                                        onBlur={() => [passwordInputValue ? setIsPasswordInputWithError(false) : setIsPasswordInputWithError(true), passwordInputValue === confirmPasswordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)]}
+                                        onBlur={() => [passwordInputValue ? setIsPasswordInputWithError(false) : null, passwordInputValue === confirmPasswordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)]}
                                         isWithIcon={false}
                                         errorText={isPasswordInputWithError}
                                         inputSize={sizes.sm}
@@ -218,7 +218,7 @@ export function Usuario() {
                                 Hospital
                                 <C.Select
                                     onChange={(e) => setHospitalInputValue(e.target.value)}
-                                    onBlur={() => hospitalInputValue > 0 ? setIsHospitalInputWithError(false) : setIsHospitalInputWithError(true)}
+                                    onBlur={() => hospitalInputValue > 0 ? setIsHospitalInputWithError(false) : null}
                                     errorText={isHospitalInputWithError}
                                 >
                                     <option value="0">Selecione</option>
@@ -319,7 +319,7 @@ export function Usuario() {
                                                     <Input.Root>
                                                         <Input.Input
                                                             onChange={(e) => setPasswordInputValueModal(e.target.value)}
-                                                            onBlur={() => [passwordInputValueModal ? setIsPasswordInputModalWithError(false) : setIsPasswordInputModalWithError(true), passwordInputValueModal === confirmPasswordInputValueModal ? setIsConfirmPasswordInputModalWithError(false) : setIsConfirmPasswordInputModalWithError(true)]}
+                                                            onBlur={() => [passwordInputValueModal ? setIsPasswordInputModalWithError(false) : null, passwordInputValueModal === confirmPasswordInputValueModal ? setIsConfirmPasswordInputModalWithError(false) : setIsConfirmPasswordInputModalWithError(true)]}
                                                             isWithIcon={false}
                                                             errorText={isPasswordInputModalWithError}
                                                             inputSize={sizes.xl}

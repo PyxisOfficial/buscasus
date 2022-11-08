@@ -5,7 +5,32 @@ export const InputContainer = styled.div`
     position: relative;
 `
 
-export const Input = styled(IMaskInput)<{
+export const Input = styled.input<{
+    errorText: boolean;
+    size: any;
+    isWithIcon: boolean;
+}>`
+    width: ${(props) => props.size || '100%'};
+    padding: ${(props) => props.isWithIcon ? '4px 4px 4px 24px' : '4px 8px 4px 8px'};
+    border: ${(props) => props.errorText ? '1px solid #e94a4f' : '1px solid #d1d1d1;'};
+    border-radius: 8px;
+    transition: border .3s, background-color .3s;
+    box-shadow: inset 0px 5px 2px rgba(32, 32, 64, 0.01), 
+                inset 0px 3px 2px rgba(32, 32, 64, 0.05), 
+                inset 0px 1px 1px rgba(32, 32, 64, 0.09), 
+                inset 0px 0px 1px rgba(32, 32, 64, 0.1);
+
+    &:focus {
+        outline: 0;
+        border: 1px solid #287365;
+    }
+
+    ::placeholder {
+        color: #b3a9a9;
+    }
+`
+
+export const MaskedInput = styled(IMaskInput)<{
     errorText: boolean;
     size: any;
     isWithIcon: boolean;

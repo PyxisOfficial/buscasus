@@ -194,7 +194,7 @@ export function Medico() {
                                 Nome
                                 <Input.Input
                                     onChange={(e) => setMedicInputValue(e.target.value)}
-                                    onBlur={() => medicInputValue ? setIsMedicInputWithError(false) : setIsMedicInputWithError(true)}
+                                    onBlur={() => medicInputValue ? setIsMedicInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isMedicInputWithError}
                                     inputSize={sizes.md}
@@ -206,46 +206,49 @@ export function Medico() {
 
                             <Label htmlFor="cpfMedico">
                                 CPF
-                                <Input.Input
+                                <Input.MaskedInput
                                     mask="000.000.000-00"
                                     onChange={(e) => setCpfInputValue(e.target.value)}
-                                    onBlur={(e) => [cpfInputValue ? setIsCpfInputWithError(false) : setIsCpfInputWithError(true), cpf.isValid(e.target.value) ? setIsCpfInputWithError(false) : setIsCpfInputWithError(true)]}
+                                    onBlur={(e) => cpf.isValid(e.target.value) ? setIsCpfInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isCpfInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="cpfMedico"
                                     placeholder='123.456.789-00'
+                                    value={cpfInputValue}
                                 />
                             </Label>
 
                             <Label htmlFor="crmMedico">
                                 CRM
-                                <Input.Input
+                                <Input.MaskedInput
                                     mask="CRM/aa 000000"
                                     onChange={(e) => setCrmInputValue(e.target.value)}
-                                    onBlur={() => crmInputValue ? setIsCrmInputWithError(false) : setIsCrmInputWithError(true)}
+                                    onBlur={() => crmInputValue ? setIsCrmInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isCrmInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="crmMedico"
                                     placeholder='CRM/SP 123456'
+                                    value={crmInputValue}
                                 />
                             </Label>
 
                             <Label htmlFor="numTelefone">
                                 Telefone
-                                <Input.Input
+                                <Input.MaskedInput
                                     mask="(00) 00000-0000"
                                     onChange={(e) => setPhoneInputValue(e.target.value)}
-                                    onBlur={() => [phoneInputValue.length == 15 ? setIsPhoneInputWithError(false) : setIsPhoneInputWithError(true)]}
+                                    onBlur={() => phoneInputValue.length == 15 ? setIsPhoneInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isPhoneInputWithError}
                                     inputSize={sizes.md}
                                     type="text"
                                     id="numTelefone"
                                     placeholder='(99) 99999-9999'
+                                    value={phoneInputValue}
                                 />
                             </Label>
 
@@ -254,7 +257,7 @@ export function Medico() {
 
                                 <C.Select
                                     onChange={(e) => setSpecialtyInputValue(e.target.value)}
-                                    onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : setIsSpecialtyInputWithError(true)}
+                                    onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : null}
                                     errorText={isSpecialtyInputWithError}
                                 >
                                     <option value="0">Selecione</option>
@@ -287,7 +290,7 @@ export function Medico() {
                                     setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false), setIsSpecialtyInputWithError(false)
                                 ]}
                                 value="Cancelar"
-                                type="reset"
+                                type="button"
                             />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
@@ -348,11 +351,9 @@ export function Medico() {
                                                 </C.InfoContainer>
                                                 <C.InfoImg
                                                     src={`http://localhost/buscaSusWeb/api/area-hospital/img/${medic.fotoMedico}`}
-                                                    onError={(e) =>
-                                                        (e.target.onerror = null)(
-                                                            (e.target.src =
-                                                                "http://localhost/buscaSusWeb/api/area-hospital/img/placeholder.png")
-                                                        )
+                                                    onError={(e: any) => (e.target.onerror = null)(
+                                                        (e.target.src = "http://localhost/buscaSusWeb/api/area-hospital/img/placeholder.png")
+                                                    )
                                                     }
                                                 />
                                             </C.InfoModalContent>
@@ -406,7 +407,7 @@ export function Medico() {
 
                                                 <Label htmlFor="numTelefoneModal">
                                                     Telefone
-                                                    <Input.Input
+                                                    <Input.MaskedInput
                                                         mask="(00) 00000-0000"
                                                         onChange={(e) => setPhoneInputValueModal(e.target.value)}
                                                         onBlur={() => phoneInputValueModal.length == 15 ? setIsPhoneInputModalWithError(false) : setIsPhoneInputModalWithError(true)}
@@ -417,6 +418,7 @@ export function Medico() {
                                                         id="numTelefoneModal"
                                                         name="numTelefone"
                                                         defaultValue={medic.numTelefone}
+                                                        value={phoneInputValueModal}
                                                     />
                                                 </Label>
 

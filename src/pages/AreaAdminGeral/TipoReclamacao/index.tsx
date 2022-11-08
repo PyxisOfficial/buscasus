@@ -129,7 +129,7 @@ export function TipoReclamacao() {
                             Tipo de reclamação
                             <Input.Input
                                 onChange={(e) => setClaimTypeInputValue(e.target.value)}
-                                onBlur={() => claimTypeInputValue ? setIsClaimTypeInputWithError(false) : setIsClaimTypeInputWithError(true)}
+                                onBlur={() => claimTypeInputValue ? setIsClaimTypeInputWithError(false) : null}
                                 isWithIcon={false}
                                 errorText={isClaimTypeInputWithError}
                                 inputSize={sizes.lg}
@@ -196,7 +196,7 @@ export function TipoReclamacao() {
                                                     Tipo de reclamação
                                                     <Input.Input
                                                         onChange={(e) => setClaimTypeInputValueModal(e.target.value)}
-                                                        onBlur={() => claimTypeInputValueModal ? setIsClaimTypeInputModalWithError(false) : setIsClaimTypeInputModalWithError(true)}
+                                                        onBlur={() => claimTypeInputValueModal ? setIsClaimTypeInputModalWithError(false) : null}
                                                         isWithIcon={false}
                                                         errorText={isClaimTypeInputModalWithError}
                                                         inputSize={sizes.xl}
