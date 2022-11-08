@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2022 at 02:12 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Tempo de geração: 08-Nov-2022 às 21:52
+-- Versão do servidor: 10.4.21-MariaDB
+-- versão do PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bdbuscasus`
+-- Banco de dados: `bdbuscasus`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbadmin`
+-- Estrutura da tabela `tbadmin`
 --
 
 CREATE TABLE `tbadmin` (
@@ -36,19 +36,20 @@ CREATE TABLE `tbadmin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbadmin`
+-- Extraindo dados da tabela `tbadmin`
 --
 
 INSERT INTO `tbadmin` (`idAdmin`, `loginAdmin`, `senhaAdmin`, `tipoAdmin`, `idHospital`) VALUES
 (1, 'admin', '12345678', 1, 0),
 (2, 'hospital', '12345678', 0, 1),
 (3, 'hospital2', '12345678', 0, 2),
-(4, 'hospital3', '12345678', 0, 3);
+(4, 'hospital3', '12345678', 0, 3),
+(6, 'a', 's', 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbespecialidade`
+-- Estrutura da tabela `tbespecialidade`
 --
 
 CREATE TABLE `tbespecialidade` (
@@ -58,7 +59,7 @@ CREATE TABLE `tbespecialidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbespecialidade`
+-- Extraindo dados da tabela `tbespecialidade`
 --
 
 INSERT INTO `tbespecialidade` (`idEspecialidade`, `nomeEspecialidade`, `idHospital`) VALUES
@@ -79,7 +80,7 @@ INSERT INTO `tbespecialidade` (`idEspecialidade`, `nomeEspecialidade`, `idHospit
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbhospital`
+-- Estrutura da tabela `tbhospital`
 --
 
 CREATE TABLE `tbhospital` (
@@ -95,22 +96,23 @@ CREATE TABLE `tbhospital` (
   `cepHospital` varchar(10) NOT NULL,
   `cidadeHospital` varchar(50) NOT NULL,
   `bairroHospital` varchar(50) NOT NULL,
-  `fotoHospital` varchar(200) NOT NULL
+  `fotoHospital` varchar(200) NOT NULL,
+  `loginHospital` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbhospital`
+-- Extraindo dados da tabela `tbhospital`
 --
 
-INSERT INTO `tbhospital` (`idHospital`, `nomeHospital`, `emailHospital`, `aberturaHospital`, `fechamentoHospital`, `cnpjHospital`, `ufHospital`, `logradouroHospital`, `complementoHospital`, `cepHospital`, `cidadeHospital`, `bairroHospital`, `fotoHospital`) VALUES
-(1, 'Hospital Geral de Guaianazes', 'hospitalgeral@gmail.com', '00:00:00', '12:59:00', '96.192.941/0001-43', 'SP', 'Av. Miguel Achiole da Fonseca, 135', '', '08461-11', 'São Paulo', 'Jardim São Paulo', 'hospital-geral.jpg'),
-(2, 'Hospital Regional de Ferraz de Vasconcelos', 'hospitalferraz@gmail.com', '00:00:00', '23:59:00', '12.273.666/0001-00', 'SP', 'Rua Princesa Isabel', '', '08502-200', 'Ferraz de Vasconcelos', 'Vila Correa', 'regional-ferraz.jpg'),
-(3, 'Hospital Santa Maria', 'hospitalsantamaria@gmail.com', '00:00:00', '23:59:00', '28.526.827/0001-52', 'SP', 'Avenida Armando Salles de Oliveira', '', '08673-000', 'Suzano', 'Parque Suzano', 'santa-maria.jpg');
+INSERT INTO `tbhospital` (`idHospital`, `nomeHospital`, `emailHospital`, `aberturaHospital`, `fechamentoHospital`, `cnpjHospital`, `ufHospital`, `logradouroHospital`, `complementoHospital`, `cepHospital`, `cidadeHospital`, `bairroHospital`, `fotoHospital`, `loginHospital`) VALUES
+(1, 'Hospital Geral de Guaianazes', 'hospitalgeral@gmail.com', '00:00:00', '12:59:00', '96.192.941/0001-43', 'SP', 'Av. Miguel Achiole da Fonseca, 135', '', '08461-11', 'São Paulo', 'Jardim São Paulo', 'hospital-geral.jpg', 0),
+(2, 'Hospital Regional de Ferraz de Vasconcelos', 'hospitalferraz@gmail.com', '00:00:00', '23:59:00', '12.273.666/0001-00', 'SP', 'Rua Princesa Isabel', '', '08502-200', 'Ferraz de Vasconcelos', 'Vila Correa', 'regional-ferraz.jpg', 0),
+(3, 'Hospital Santa Maria', 'hospitalsantamaria@gmail.com', '00:00:00', '23:59:00', '28.526.827/0001-52', 'SP', 'Avenida Armando Salles de Oliveira', '', '08673-000', 'Suzano', 'Parque Suzano', 'santa-maria.jpg', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbmedico`
+-- Estrutura da tabela `tbmedico`
 --
 
 CREATE TABLE `tbmedico` (
@@ -125,7 +127,7 @@ CREATE TABLE `tbmedico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbmedico`
+-- Extraindo dados da tabela `tbmedico`
 --
 
 INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fotoMedico`, `ausenciasMedico`, `idEspecialidade`, `idHospital`) VALUES
@@ -141,7 +143,7 @@ INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fot
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbplantao`
+-- Estrutura da tabela `tbplantao`
 --
 
 CREATE TABLE `tbplantao` (
@@ -156,7 +158,7 @@ CREATE TABLE `tbplantao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbplantao`
+-- Extraindo dados da tabela `tbplantao`
 --
 
 INSERT INTO `tbplantao` (`idPlantao`, `dataPlantao`, `inicioPlantao`, `fimPlantao`, `idTipoPlantao`, `idMedico`, `presencaMedico`, `idHospital`) VALUES
@@ -165,7 +167,7 @@ INSERT INTO `tbplantao` (`idPlantao`, `dataPlantao`, `inicioPlantao`, `fimPlanta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbreclamacao`
+-- Estrutura da tabela `tbreclamacao`
 --
 
 CREATE TABLE `tbreclamacao` (
@@ -181,7 +183,7 @@ CREATE TABLE `tbreclamacao` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbtelefone`
+-- Estrutura da tabela `tbtelefone`
 --
 
 CREATE TABLE `tbtelefone` (
@@ -192,7 +194,7 @@ CREATE TABLE `tbtelefone` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbtelefone`
+-- Extraindo dados da tabela `tbtelefone`
 --
 
 INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idMedico`) VALUES
@@ -211,7 +213,7 @@ INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idMedico`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbtipoplantao`
+-- Estrutura da tabela `tbtipoplantao`
 --
 
 CREATE TABLE `tbtipoplantao` (
@@ -220,7 +222,7 @@ CREATE TABLE `tbtipoplantao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbtipoplantao`
+-- Extraindo dados da tabela `tbtipoplantao`
 --
 
 INSERT INTO `tbtipoplantao` (`idTipoPlantao`, `tipoPlantao`) VALUES
@@ -229,7 +231,7 @@ INSERT INTO `tbtipoplantao` (`idTipoPlantao`, `tipoPlantao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbtiporeclamacao`
+-- Estrutura da tabela `tbtiporeclamacao`
 --
 
 CREATE TABLE `tbtiporeclamacao` (
@@ -238,31 +240,31 @@ CREATE TABLE `tbtiporeclamacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `tbadmin`
+-- Índices para tabela `tbadmin`
 --
 ALTER TABLE `tbadmin`
   ADD PRIMARY KEY (`idAdmin`),
   ADD KEY `fk_idHospital` (`idHospital`);
 
 --
--- Indexes for table `tbespecialidade`
+-- Índices para tabela `tbespecialidade`
 --
 ALTER TABLE `tbespecialidade`
   ADD PRIMARY KEY (`idEspecialidade`),
   ADD KEY `fk_idHospital` (`idHospital`);
 
 --
--- Indexes for table `tbhospital`
+-- Índices para tabela `tbhospital`
 --
 ALTER TABLE `tbhospital`
   ADD PRIMARY KEY (`idHospital`);
 
 --
--- Indexes for table `tbmedico`
+-- Índices para tabela `tbmedico`
 --
 ALTER TABLE `tbmedico`
   ADD PRIMARY KEY (`idMedico`),
@@ -270,7 +272,7 @@ ALTER TABLE `tbmedico`
   ADD KEY `fk_idHospital` (`idHospital`);
 
 --
--- Indexes for table `tbplantao`
+-- Índices para tabela `tbplantao`
 --
 ALTER TABLE `tbplantao`
   ADD PRIMARY KEY (`idPlantao`),
@@ -279,7 +281,7 @@ ALTER TABLE `tbplantao`
   ADD KEY `fk_idTipoPlantao` (`idTipoPlantao`);
 
 --
--- Indexes for table `tbreclamacao`
+-- Índices para tabela `tbreclamacao`
 --
 ALTER TABLE `tbreclamacao`
   ADD PRIMARY KEY (`idReclamacao`),
@@ -287,7 +289,7 @@ ALTER TABLE `tbreclamacao`
   ADD KEY `fk_idHospital` (`idHospital`);
 
 --
--- Indexes for table `tbtelefone`
+-- Índices para tabela `tbtelefone`
 --
 ALTER TABLE `tbtelefone`
   ADD PRIMARY KEY (`idTelefone`),
@@ -295,71 +297,71 @@ ALTER TABLE `tbtelefone`
   ADD KEY `fk_idMedico` (`idMedico`);
 
 --
--- Indexes for table `tbtipoplantao`
+-- Índices para tabela `tbtipoplantao`
 --
 ALTER TABLE `tbtipoplantao`
   ADD PRIMARY KEY (`idTipoPlantao`);
 
 --
--- Indexes for table `tbtiporeclamacao`
+-- Índices para tabela `tbtiporeclamacao`
 --
 ALTER TABLE `tbtiporeclamacao`
   ADD PRIMARY KEY (`idTipoReclamacao`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `tbadmin`
+-- AUTO_INCREMENT de tabela `tbadmin`
 --
 ALTER TABLE `tbadmin`
-  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tbespecialidade`
+-- AUTO_INCREMENT de tabela `tbespecialidade`
 --
 ALTER TABLE `tbespecialidade`
   MODIFY `idEspecialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `tbhospital`
+-- AUTO_INCREMENT de tabela `tbhospital`
 --
 ALTER TABLE `tbhospital`
   MODIFY `idHospital` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tbmedico`
+-- AUTO_INCREMENT de tabela `tbmedico`
 --
 ALTER TABLE `tbmedico`
   MODIFY `idMedico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `tbplantao`
+-- AUTO_INCREMENT de tabela `tbplantao`
 --
 ALTER TABLE `tbplantao`
   MODIFY `idPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `tbreclamacao`
+-- AUTO_INCREMENT de tabela `tbreclamacao`
 --
 ALTER TABLE `tbreclamacao`
   MODIFY `idReclamacao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tbtelefone`
+-- AUTO_INCREMENT de tabela `tbtelefone`
 --
 ALTER TABLE `tbtelefone`
   MODIFY `idTelefone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `tbtipoplantao`
+-- AUTO_INCREMENT de tabela `tbtipoplantao`
 --
 ALTER TABLE `tbtipoplantao`
   MODIFY `idTipoPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tbtiporeclamacao`
+-- AUTO_INCREMENT de tabela `tbtiporeclamacao`
 --
 ALTER TABLE `tbtiporeclamacao`
   MODIFY `idTipoReclamacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;

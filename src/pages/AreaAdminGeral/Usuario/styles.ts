@@ -47,10 +47,15 @@ export const InputsContainer = styled.div`
 
 export const ButtonContainer = styled.div`
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     float: right;
     gap: 8px;
     margin-top: 12px;
+`
+
+export const HoverCardContainer = styled.div`
+    margin: 0 8px;
 `
 
 export const TableContainer = styled.div`

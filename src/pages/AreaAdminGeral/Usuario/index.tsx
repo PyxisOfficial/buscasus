@@ -10,8 +10,9 @@ import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
 import { ToastContainer, toast } from 'react-toastify';
+import { HoverCard } from '../../../components/HoverCard';
 
-import { MagnifyingGlass, EyeSlash, Eye } from 'phosphor-react';
+import { MagnifyingGlass, EyeSlash, Eye, Lock, LockOpen } from 'phosphor-react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as C from './styles';
@@ -280,7 +281,6 @@ export function Usuario() {
                     <C.Thead>
                         <C.Tr>
                             <C.Th>Nome de usuário</C.Th>
-                            <C.Th>Senha</C.Th>
                             <C.Th>Nome do hospital</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
@@ -289,10 +289,19 @@ export function Usuario() {
                         {adminUsers.map((user: any, key) =>
                             <C.InnerTr key={key}>
                                 <C.Td>{user.loginAdmin}</C.Td>
-                                <C.OccultedTd>{user.senhaAdmin}</C.OccultedTd>
                                 <C.Td>{user.nomeHospital}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
+                                        <C.HoverCardContainer>
+                                            <HoverCard.Root>
+                                                <HoverCard.Trigger>
+                                                    <LockOpen  size={30}/>
+                                                </HoverCard.Trigger>
+                                                <HoverCard.Content>
+                                                    {user.senhaAdmin}
+                                                </HoverCard.Content>
+                                            </HoverCard.Root>
+                                        </C.HoverCardContainer>
                                         <Modal.Edit
                                             itemId={() => setAdminUserId(user.idAdmin)}
                                             closeModal={() => [
