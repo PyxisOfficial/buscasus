@@ -6,7 +6,9 @@ import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { BarChart, PieChart } from '../../../components/Charts';
 import { DialogModal } from '../../../components/Modal';
 import { Button } from '../../../components/Button';
-import * as Dialog  from '@radix-ui/react-dialog'
+import { HoverCard } from '../../../components/HoverCard';
+import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
+import * as Dialog  from '@radix-ui/react-dialog';
 
 import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'phosphor-react';
 
@@ -63,7 +65,7 @@ export function VisaoGeralAdmin() {
                         <C.Icons color='#49B28C'>
                             <Users size={70} />
                             <C.TextContainer>
-                                <span>N/I</span>
+                                <span>Usuários Totais</span>
                                 <span>0</span>
                             </C.TextContainer>
                         </C.Icons>
@@ -98,16 +100,23 @@ export function VisaoGeralAdmin() {
                             <C.Card>
                                 <C.CardTitle>
                                     <UserPlus size={25} />
-                                    <h4>N/I</h4>
+                                    <h4>Usuários</h4>
                                 </C.CardTitle>
                                 <C.CardDescription>
                                     <C.TextCard>
                                         0
                                     </C.TextCard>
-                                    <C.PositiveData>
-                                        <CaretUp size={20} weight='bold' />
-                                        50%
-                                    </C.PositiveData>
+                                    <HoverCard.Root>
+                                        <HoverCardPrimitive.Trigger asChild>
+                                            <C.PositiveData>
+                                                <CaretUp size={20} weight='bold' />
+                                                50%
+                                            </C.PositiveData>
+                                        </HoverCardPrimitive.Trigger>
+                                        <HoverCard.Content>
+                                            Aumento de 50% comparado ao último mês
+                                        </HoverCard.Content>
+                                    </HoverCard.Root>
                                 </C.CardDescription>
                             </C.Card>
 
@@ -120,10 +129,17 @@ export function VisaoGeralAdmin() {
                                     <C.TextCard>
                                         12
                                     </C.TextCard>
-                                    <C.NegativeData>
-                                        <CaretUp size={20} weight='bold' />
-                                        20%
-                                    </C.NegativeData>
+                                    <HoverCard.Root>
+                                        <HoverCardPrimitive.Trigger asChild>
+                                        <C.NegativeData>
+                                            <CaretUp size={20} weight='bold' />
+                                            20%
+                                            </C.NegativeData>
+                                        </HoverCardPrimitive.Trigger>
+                                        <HoverCard.Content>
+                                            Aumento de 20% comparado ao último mês
+                                        </HoverCard.Content>
+                                    </HoverCard.Root>
                                 </C.CardDescription>
                             </C.Card>
 
