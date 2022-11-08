@@ -58,6 +58,19 @@ export const HoverCardContainer = styled.div`
     margin: 0 8px;
 `
 
+export const  PasswordContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+`
+
+export const GenPassContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+`
+
 export const TableContainer = styled.div`
     padding: 16px 20px 68px 20px;
     background-color: #fff;
@@ -126,10 +139,6 @@ export const Td = styled.td`
     text-align: left;
     width: 150px;
     white-space: nowrap;
-`
-
-export const OccultedTd = styled(Td)`
-    -webkit-text-security: disc;
 `
 
 export const Select = styled.select<{

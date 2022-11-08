@@ -8,7 +8,7 @@ import { Especialidade } from './pages/AreaHospital/Especialidade';
 import { Plantao } from './pages/AreaHospital/Plantao';
 import { VisaoGeralAdmin } from './pages/AreaAdminGeral/VisaoGeral';
 import { Hospital } from './pages/AreaAdminGeral/Hospital';
-import { Usuario } from './pages/AreaAdminGeral/Usuario';
+import { Admin } from './pages/AreaAdminGeral/Admin';
 import { TipoPlantao } from './pages/AreaAdminGeral/TipoPlantao';
 import { TipoReclamacao } from './pages/AreaAdminGeral/TipoReclamacao';
 
@@ -37,7 +37,7 @@ export default function AppRoutes() {
                 <Route path="/plantoes" element={<PrivateHospital Item={Plantao} />} />
                 <Route path="/visao-geral-admin" element={<PrivateAdmin Item={VisaoGeralAdmin} />} />
                 <Route path="/hospitais" element={<PrivateAdmin Item={Hospital} />} />
-                <Route path="/usuarios" element={<PrivateAdmin Item={Usuario} />} />
+                <Route path="/admin" element={<PrivateAdmin Item={Admin} />} />
                 <Route path="/tipo-plantao" element={<PrivateAdmin Item={TipoPlantao} />} />
                 <Route path="/tipo-reclamacao" element={<PrivateAdmin Item={TipoReclamacao} />} />
             </Routes>

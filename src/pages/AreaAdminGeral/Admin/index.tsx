@@ -12,12 +12,12 @@ import { Label } from '../../../components/Form/Label';
 import { ToastContainer, toast } from 'react-toastify';
 import { HoverCard } from '../../../components/HoverCard';
 
-import { MagnifyingGlass, EyeSlash, Eye, Lock, LockOpen } from 'phosphor-react';
+import { MagnifyingGlass, EyeSlash, Eye, Lock, LockOpen, Password } from 'phosphor-react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as C from './styles';
 
-export function Usuario() {
+export function Admin() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [adminUsers, setAdminUsers] = useState([]);
@@ -132,12 +132,24 @@ export function Usuario() {
         toast.success("Administrador excluído com sucesso!");
     }
 
+    function generatePassword() {
+        var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ@#+";
+        var passwordLength = 8;
+        var password = "";
+  
+        for (var i = 0; i < passwordLength; i++) {
+          var randomNumber = Math.floor(Math.random() * chars.length);
+          password += chars.substring(randomNumber, randomNumber + 1);
+        }
+        document.getElementById('senhaAdmin').value = password
+      }
+
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
             <ToastContainer
                 position="top-right"
-                autoClose={5000}
+                autoClose={4000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -166,30 +178,34 @@ export function Usuario() {
                             </Label>
 
 
-                            <Label htmlFor="senhaAdmin">
-                                Senha
-                                <Input.Root>
-                                    <Input.Input
-                                        onChange={(e) => setPasswordInputValue(e.target.value)}
-                                        onBlur={() => [passwordInputValue ? setIsPasswordInputWithError(false) : null, passwordInputValue === confirmPasswordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)]}
-                                        isWithIcon={false}
-                                        errorText={isPasswordInputWithError}
-                                        inputSize={sizes.sm}
-                                        type={isPasswordVisible ? "text" : "password"}
-                                        id="senhaAdmin"
-                                    />
-
-                                    <Input.RightIcon
-                                        topPosition={1}
-                                        rightPosition={4}
-                                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                                    >
-                                        {isPasswordVisible ? <EyeSlash size={20} /> : <Eye size={20} />}
-                                    </Input.RightIcon>
-
-                                </Input.Root>
-                            </Label>
-
+                            
+                                <Label htmlFor="senhaAdmin">
+                                    Senha
+                                    <C.PasswordContainer>
+                                        <Input.Root>
+                                            <Input.Input
+                                                onChange={(e) => setPasswordInputValue(e.target.value)}
+                                                onBlur={() => [passwordInputValue ? setIsPasswordInputWithError(false) : null, passwordInputValue === confirmPasswordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)]}
+                                                isWithIcon={false}
+                                                errorText={isPasswordInputWithError}
+                                                inputSize={sizes.sm}
+                                                type={isPasswordVisible ? "text" : "password"}
+                                                id="senhaAdmin"
+                                            />
+                                            <Input.RightIcon
+                                                topPosition={1}
+                                                rightPosition={4}
+                                                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                                            >
+                                                {isPasswordVisible ? <EyeSlash size={22} /> : <Eye size={22} />}
+                                            </Input.RightIcon>
+                                        </Input.Root>
+                                        <C.GenPassContainer onClick={generatePassword}>
+                                            <Password size={20}/>
+                                            Gerar senha
+                                        </C.GenPassContainer>
+                                    </C.PasswordContainer>
+                                </Label>
 
                             <Label htmlFor="confirmarSenha">
                                 Confirmar senha
@@ -209,7 +225,7 @@ export function Usuario() {
                                         rightPosition={4}
                                         onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
                                     >
-                                        {isConfirmPasswordVisible ? <EyeSlash size={20} /> : <Eye size={20} />}
+                                        {isConfirmPasswordVisible ? <EyeSlash size={22} /> : <Eye size={22} />}
                                     </Input.RightIcon>
 
                                 </Input.Root>
