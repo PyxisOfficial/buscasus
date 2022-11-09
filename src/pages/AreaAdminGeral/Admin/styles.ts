@@ -69,6 +69,7 @@ export const GenPassContainer = styled.div`
     align-items: center;
     gap: 4px;
     cursor: pointer;
+    user-select: none;
 `
 
 export const TableContainer = styled.div`

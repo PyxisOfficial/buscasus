@@ -58,7 +58,7 @@ export function Medico() {
             }
         }).then(response => setMedics(response.data));
 
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
             params: {
                 idHospital: hospitalId
             }

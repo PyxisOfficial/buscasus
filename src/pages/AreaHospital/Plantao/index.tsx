@@ -15,7 +15,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 import * as C from './styles';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Calendar, Value } from "react-multi-date-picker";
+import { Calendar } from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import "react-multi-date-picker/styles/layouts/prime.css"
 
@@ -25,16 +25,16 @@ export function Plantao() {
     const [duty, setDuty] = useState([]);
     const [dutyId, setDutyId] = useState<number>();
     const [medics, setMedics] = useState([]);
-    const [dutyType, setDutyType] = useState([]);
+    const [specialty, setSpecialty] = useState([]);
     const [search, setSearch] = useState<string>();
 
-    const [dutyTypeInputValue, setDutyTypeInputValue] = useState<any>();
+    const [specialtyInputValue, setSpecialtyInputValue] = useState<any>();
     const [startTime, setStartTime] = useState<any>();
     const [endTime, setEndTime] = useState<any>();
     const [medicInputValue, setMedicInputValue] = useState<any>();
     const [dates, setDates] = useState<any>();
 
-    const [isDutyTypeInputWithError, setIsDutyTypeInputWithError] = useState<boolean>();
+    const [isSpecialtyInputWithError, setIsSpecialtyInputWithError] = useState<boolean>();
     const [isStartTimeInputWithError, setIsStartTimeInputWithError] = useState<boolean>();
     const [isEndTimeInputWithError, setIsEndTimeInputWithError] = useState<boolean>();
     const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
@@ -52,15 +52,15 @@ export function Plantao() {
             params: {
                 idHospital: hospitalId
             }
-        }).then((response) => setDuty(response.data));
+        }).then(response => setDuty(response.data));
 
         axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
             params: {
                 idHospital: hospitalId
             }
-        }).then((response) => setMedics(response.data));
+        }).then(response => setMedics(response.data));
 
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-plantao/').then((response) => setDutyType(response.data));
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/').then((response) => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export function Plantao() {
                 params: {
                     idHospital: hospitalId
                 }
-            }).then((response) => setDuty(response.data));
+            }).then(response => setDuty(response.data));
         }
 
         setIsFormSubmitted(false);
@@ -112,18 +112,18 @@ export function Plantao() {
 
         if (!startTime) setIsStartTimeInputWithError(true);
         if (!endTime) setIsEndTimeInputWithError(true);
-        if (dutyTypeInputValue == 0 || !dutyTypeInputValue) setIsDutyTypeInputWithError(true);
+        if (specialtyInputValue == 0 || !specialtyInputValue) setIsSpecialtyInputWithError(true);
         if (medicInputValue == 0 || !medicInputValue) setIsMedicInputWithError(true);
 
         const formData = new FormData(event.target as HTMLFormElement);
         dates.length > 1 ? dates.map((date: any) => formData.append("dataPlantao[]", formatDate(date))) : formData.append("dataPlantao[]", formatDate(dates));
         formData.append("inicioPlantao", startTime);
         formData.append("fimPlantao", endTime);
-        formData.append("idTipoPlantao", dutyTypeInputValue);
+        formData.append("idEspecialidade", specialtyInputValue);
         formData.append("idMedico", medicInputValue);
         formData.append("idHospital", hospitalId);
 
-        if (dates && startTime && endTime && dutyTypeInputValue > 0 && medicInputValue > 0) {
+        if (dates && startTime && endTime && specialtyInputValue > 0 && medicInputValue > 0) {
             await axios.post('http://localhost/buscaSusWeb/api/area-hospital/plantao/', formData);
 
             setIsFormSubmitted(true);
@@ -164,20 +164,20 @@ export function Plantao() {
                     <C.Form onSubmit={insertDuty} autoComplete="off">
                         <C.InnerFormContainer>
                             <C.InputContainer>
-                                <Label htmlFor="TipoPlantao">
-                                    Tipo do plantão
+                                <Label>
+                                    Especialidade
                                     <C.Select
-                                        onChange={(e) => setDutyTypeInputValue(e.target.value)}
-                                        onBlur={() => dutyTypeInputValue != 0 ? setIsDutyTypeInputWithError(false) : null}
-                                        errorText={isDutyTypeInputWithError}
+                                        onChange={(e) => setSpecialtyInputValue(e.target.value)}
+                                        onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : null}
+                                        errorText={isSpecialtyInputWithError}
                                     >
                                         <option value="0">Selecione</option>
-                                        {dutyType.map((dt: any) =>
+                                        {specialty.map((spe: any) =>
                                             <option
-                                                key={dt.idTipoPlantao}
-                                                value={dt.idTipoPlantao}
+                                                key={spe.idEspecialidade}
+                                                value={spe.idEspecialidade}
                                             >
-                                                {dt.tipoPlantao}
+                                                {spe.nomeEspecialidade}
                                             </option>
                                         )}
                                     </C.Select>
@@ -256,8 +256,8 @@ export function Plantao() {
                                 value="Cancelar"
                                 type="reset"
                                 onClick={() => [
-                                    setDates(''), setDutyTypeInputValue(null), setMedicInputValue(null), setStartTime(null), setEndTime(null), setIsMultipleDateActive(false),
-                                    setIsDutyTypeInputWithError(false), setIsMedicInputWithError(false), setIsStartTimeInputWithError(false), setIsEndTimeInputWithError(false)
+                                    setDates(''), setSpecialtyInputValue(null), setMedicInputValue(null), setStartTime(null), setEndTime(null), setIsMultipleDateActive(false),
+                                    setIsSpecialtyInputWithError(false), setIsMedicInputWithError(false), setIsStartTimeInputWithError(false), setIsEndTimeInputWithError(false)
                                 ]} />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
@@ -297,6 +297,7 @@ export function Plantao() {
                                     <C.Th>Início</C.Th>
                                     <C.Th>Fim</C.Th>
                                     <C.Th>Médico</C.Th>
+                                    <C.Th>Especialidade</C.Th>
                                     <C.Th></C.Th>
                                 </C.Tr>
                             </C.Thead>
@@ -307,6 +308,7 @@ export function Plantao() {
                                         <C.Td>{duty.inicioPlantao}</C.Td>
                                         <C.Td>{duty.fimPlantao}</C.Td>
                                         <C.Td>{duty.nomeMedico}</C.Td>
+                                        <C.Td>{duty.nomeEspecialidade}</C.Td>
                                         <C.Td>
                                             <C.ButtonContainer>
 

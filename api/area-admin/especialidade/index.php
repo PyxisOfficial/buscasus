@@ -9,22 +9,17 @@ $conn = $connection->connect();
 
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $idHospital = @$_GET['idHospital'];
 
     $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade
-            WHERE nomeEspecialidade LIKE '%$search%' AND idHospital = :id";
+            WHERE nomeEspecialidade LIKE '%$search%'";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($especialidade);
 } else {
-    $idHospital = @$_GET['idHospital'];
-
-    $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade WHERE idHospital = :id";
+    $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -35,12 +30,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
     case "POST":
         $nomeEspecialidade = $_POST['nomeEspecialidade'];
-        $idHospital = $_POST['idHospital'];
 
-        $sql = "INSERT INTO tbEspecialidade(idEspecialidade, nomeEspecialidade, idHospital) VALUES(null, :nomeEspecialidade, :idHospital)";
+        $sql = "INSERT INTO tbEspecialidade(idEspecialidade, nomeEspecialidade) VALUES(null, :nomeEspecialidade)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nomeEspecialidade', $nomeEspecialidade);
-        $stmt->bindParam(':idHospital', $idHospital);
         $stmt->execute();
         break;
 
@@ -64,3 +57,4 @@ switch($method) {
         $stmt->execute();
         break;
 }
+?>

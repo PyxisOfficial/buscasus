@@ -11,12 +11,12 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico, t.idTipoPlantao, t.tipoPlantao 
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico, e.idEspecialidade e.nomeEspecialidade 
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
-    INNER JOIN tbTipoPlantao t
-    ON p.idTipoPlantao = t.idTipoPlantao
+    INNER JOIN tbEspecialidade e
+    ON e.idEspecialidade = e.idEspecialidade
     WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -37,12 +37,12 @@ if (isset($_GET['search'])) {
 } else {
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao ,m.nomeMedico, m.idMedico, t.idTipoPlantao, t.tipoPlantao
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico, e.idEspecialidade, e.nomeEspecialidade
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
-    INNER JOIN tbTipoPlantao t
-    ON p.idTipoPlantao = t.idTipoPlantao
+    INNER JOIN tbEspecialidade e
+    ON e.idEspecialidade = e.idEspecialidade
     WHERE p.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -58,40 +58,21 @@ switch($method) {
         $datasPlantao = $_POST['dataPlantao'];
         $inicioPlantao = $_POST['inicioPlantao'];
         $fimPlantao = $_POST['fimPlantao'];
-        $idTipoPlantao = $_POST['idTipoPlantao'];
+        $idEspecialidade = $_POST['idEspecialidade'];
         $idMedico = $_POST['idMedico'];
         $idHospital = $_POST['idHospital'];
 
         for ($i = 0; $i < $datasPlantao; $i++) {
-            $sql = "INSERT INTO tbPlantao(idPlantao, dataPlantao, inicioPlantao, fimPlantao, idTipoPlantao, idMedico, idHospital) VALUES(null, :dataPlantao, :inicioPlantao, :fimPlantao, :idTipoPlantao, :idMedico, :idHospital)";
+            $sql = "INSERT INTO tbPlantao(idPlantao, dataPlantao, inicioPlantao, fimPlantao, idEspecialidade, idMedico, idHospital) VALUES(null, :dataPlantao, :inicioPlantao, :fimPlantao, :idEspecialidade, :idMedico, :idHospital)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':dataPlantao', $datasPlantao[$i]);
             $stmt->bindParam(':inicioPlantao', $inicioPlantao);
             $stmt->bindParam(':fimPlantao', $fimPlantao);
-            $stmt->bindParam(':idTipoPlantao', $idTipoPlantao);
+            $stmt->bindParam(':idEspecialidade', $idEspecialidade);
             $stmt->bindParam(':idMedico', $idMedico);
             $stmt->bindParam(':idHospital', $idHospital);
             $stmt->execute();
         }
-        break;
-
-    case "PUT":
-        $idPlantao = $_GET['idPlantao'];
-        $dataPlantao = $_GET['dataPlantao'];
-        $inicioPlantao = $_GET['inicioPlantao'];
-        $fimPlantao = $_GET['fimPlantao'];
-        $idTipoPlantao = $_GET['idTipoPlantao'];
-        $idMedico = $_GET['idMedico'];
-
-        $sql = "UPDATE tbPlantao SET dataPlantao= :dataPlantao, inicioPlantao = :inicioPlantao, fimPlantao = :fimPlantao, idTipoPlantao = :idTipoPlantao, idMedico = :idMedico WHERE idPlantao = :idPlantao";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idPlantao', $idPlantao);
-        $stmt->bindParam(':dataPlantao', $dataPlantao);
-        $stmt->bindParam(':inicioPlantao', $inicioPlantao);
-        $stmt->bindParam(':fimPlantao', $fimPlantao);
-        $stmt->bindParam(':idTipoPlantao', $idTipoPlantao);
-        $stmt->bindParam(':idMedico', $idMedico);
-        $stmt->execute();
         break;
 
     case "DELETE":

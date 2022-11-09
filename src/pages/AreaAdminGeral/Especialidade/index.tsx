@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { MenuBackground } from '../../../components/Menu';
-import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
+import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
@@ -29,33 +29,21 @@ export function Especialidade() {
     const [specialtyInputValueModal, setSpecialtyInputValueModal] = useState<any>();
     const [isSpecialtyInputModalWithError, setIsSpecialtyInputModalWithError] = useState<boolean>();
 
-    const getHospitalId: any = localStorage.getItem("hospital_id");
-    const hospitalId = JSON.parse(getHospitalId);
-
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
-            params: {
-                idHospital: hospitalId
-            }
-        }).then(response => setSpecialty(response.data));
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/').then(response => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
                 params: {
-                    search: search,
-                    idHospital: hospitalId
+                    search: search
                 }
             }).then(response => setSpecialty(response.data));
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
-                params: {
-                    idHospital: hospitalId
-                }
-            }).then(response => setSpecialty(response.data));
+            axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/',).then(response => setSpecialty(response.data));
         }
 
         setSpecialtyInputValue(null);
@@ -66,10 +54,9 @@ export function Especialidade() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
             params: {
-                search: search,
-                idHospital: hospitalId
+                search: search
             }
         }).then(response => setSpecialty(response.data));
     }, [search]);
@@ -79,12 +66,11 @@ export function Especialidade() {
 
         const formData = new FormData(event.target as HTMLFormElement);
         formData.append("nomeEspecialidade", specialtyInputValue);
-        formData.append("idHospital", hospitalId);
 
         if (!specialtyInputValue) setIsSpecialtyInputWithError(true);
 
         if (specialtyInputValue) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', formData);
+            await axios.post('http://localhost/buscaSusWeb/api/area-admin/especialidade/', formData);
 
             setIsFormSubmitted(true);
 
@@ -98,7 +84,7 @@ export function Especialidade() {
         if (!specialtyInputValueModal) setIsSpecialtyInputModalWithError(true);
 
         if (specialtyInputValueModal) {
-            await axios.put('http://localhost/buscaSusWeb/api/area-hospital/especialidade/', null, {
+            await axios.put('http://localhost/buscaSusWeb/api/area-admin/especialidade/', null, {
                 params: {
                     nomeEspecialidade: specialtyInputValueModal,
                     idEspecialidade: specialtyId
@@ -111,7 +97,7 @@ export function Especialidade() {
     }
 
     async function deleteSpecialty() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/especialidade/`, {
+        await axios.delete(`http://localhost/buscaSusWeb/api/area-admin/especialidade/`, {
             params: {
                 idEspecialidade: specialtyId
             }
@@ -122,7 +108,7 @@ export function Especialidade() {
     }
 
     return (
-        <MenuBackground menuLinks={<MenuLinksHospital />}>
+        <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
             <ToastContainer
                 position="top-right"

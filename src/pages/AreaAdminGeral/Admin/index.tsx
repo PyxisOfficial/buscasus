@@ -1,8 +1,6 @@
 import { FormEvent, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
-
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
@@ -12,7 +10,7 @@ import { Label } from '../../../components/Form/Label';
 import { ToastContainer, toast } from 'react-toastify';
 import { HoverCard } from '../../../components/HoverCard';
 
-import { MagnifyingGlass, EyeSlash, Eye, Lock, LockOpen, Password } from 'phosphor-react';
+import { MagnifyingGlass, LockOpen, Password } from 'phosphor-react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as C from './styles';
@@ -27,23 +25,10 @@ export function Admin() {
 
     const [loginInputValue, setLoginInputValue] = useState<any>();
     const [passwordInputValue, setPasswordInputValue] = useState<any>();
-    const [confirmPasswordInputValue, setConfirmPasswordInputValue] = useState<any>();
     const [hospitalInputValue, setHospitalInputValue] = useState<any>();
     const [isLoginInputWithError, setIsLoginInputWithError] = useState<boolean>();
     const [isPasswordInputWithError, setIsPasswordInputWithError] = useState<boolean>();
-    const [isConfirmPasswordInputWithError, setIsConfirmPasswordInputWithError] = useState<boolean>();
     const [isHospitalInputWithError, setIsHospitalInputWithError] = useState<boolean>();
-
-    const [passwordInputValueModal, setPasswordInputValueModal] = useState<any>();
-    const [confirmPasswordInputValueModal, setConfirmPasswordInputValueModal] = useState<any>();
-    const [isPasswordInputModalWithError, setIsPasswordInputModalWithError] = useState<boolean>();
-    const [isConfirmPasswordInputModalWithError, setIsConfirmPasswordInputModalWithError] = useState<boolean>();
-
-    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
-
-    const [isPasswordModalVisible, setIsPasswordModalVisible] = useState<boolean>(false);
-    const [isConfirmPasswordModalVisible, setIsConfirmPasswordModalVisible] = useState<boolean>(false);
 
     const formRef = useRef<any>();
 
@@ -65,7 +50,6 @@ export function Admin() {
 
         setLoginInputValue(null);
         setPasswordInputValue(null);
-        setConfirmPasswordInputValue(null);
         setHospitalInputValue(null);
 
         setIsFormSubmitted(false);
@@ -81,12 +65,15 @@ export function Admin() {
         }).then(response => setAdminUsers(response.data));
     }, [searchAdmin]);
 
+    useEffect(() => {
+        setIsPasswordInputWithError(false);
+    }, [passwordInputValue]);
+
     async function insertUser(event: FormEvent) {
         event.preventDefault();
 
         if (!loginInputValue) setIsLoginInputWithError(true);
         if (!passwordInputValue) setIsPasswordInputWithError(true);
-        if (confirmPasswordInputValue !== passwordInputValue || !confirmPasswordInputValue) setIsConfirmPasswordInputWithError(true);
         if (hospitalInputValue == 0 || !hospitalInputValue) setIsHospitalInputWithError(true);
 
         const formData = new FormData(event.target as HTMLFormElement);
@@ -94,30 +81,11 @@ export function Admin() {
         formData.append("senhaAdmin", passwordInputValue);
         formData.append("idHospital", hospitalInputValue);
 
-        if (loginInputValue && passwordInputValue && confirmPasswordInputValue && hospitalInputValue > 0 && passwordInputValue === confirmPasswordInputValue) {
+        if (loginInputValue && passwordInputValue && hospitalInputValue > 0) {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', formData);
 
             setIsFormSubmitted(true);
             toast.success("Administrador cadastrado com sucesso!");
-        }
-    }
-
-    async function editUser(event: FormEvent) {
-        event.preventDefault();
-
-        if (!passwordInputValueModal) setIsPasswordInputModalWithError(true);
-        if (confirmPasswordInputValueModal !== confirmPasswordInputValueModal || !confirmPasswordInputValueModal) setIsConfirmPasswordInputModalWithError(true);
-
-        if (passwordInputValueModal && confirmPasswordInputValueModal && passwordInputValueModal === confirmPasswordInputValueModal) {
-            await axios.put('http://localhost/buscaSusWeb/api/area-admin/admin/', null, {
-                params: {
-                    senhaAdmin: passwordInputValueModal,
-                    idAdmin: adminUserId
-                }
-            });
-
-            setIsFormSubmitted(true);
-            toast.success("Administrador editado com sucesso!");
         }
     }
 
@@ -133,16 +101,16 @@ export function Admin() {
     }
 
     function generatePassword() {
-        var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ@#+";
-        var passwordLength = 8;
-        var password = "";
-  
-        for (var i = 0; i < passwordLength; i++) {
-          var randomNumber = Math.floor(Math.random() * chars.length);
-          password += chars.substring(randomNumber, randomNumber + 1);
+        let chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ@#+";
+        let passwordLength = 8;
+        let password = "";
+
+        for (let i = 0; i < passwordLength; i++) {
+            let randomNumber = Math.floor(Math.random() * chars.length);
+            password += chars.substring(randomNumber, randomNumber + 1);
         }
-        document.getElementById('senhaAdmin').value = password
-      }
+        setPasswordInputValue(password);
+    }
 
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
@@ -177,58 +145,25 @@ export function Admin() {
                                 />
                             </Label>
 
-
-                            
-                                <Label htmlFor="senhaAdmin">
-                                    Senha
-                                    <C.PasswordContainer>
-                                        <Input.Root>
-                                            <Input.Input
-                                                onChange={(e) => setPasswordInputValue(e.target.value)}
-                                                onBlur={() => [passwordInputValue ? setIsPasswordInputWithError(false) : null, passwordInputValue === confirmPasswordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)]}
-                                                isWithIcon={false}
-                                                errorText={isPasswordInputWithError}
-                                                inputSize={sizes.sm}
-                                                type={isPasswordVisible ? "text" : "password"}
-                                                id="senhaAdmin"
-                                            />
-                                            <Input.RightIcon
-                                                topPosition={1}
-                                                rightPosition={4}
-                                                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                                            >
-                                                {isPasswordVisible ? <EyeSlash size={22} /> : <Eye size={22} />}
-                                            </Input.RightIcon>
-                                        </Input.Root>
-                                        <C.GenPassContainer onClick={generatePassword}>
-                                            <Password size={20}/>
-                                            Gerar senha
-                                        </C.GenPassContainer>
-                                    </C.PasswordContainer>
-                                </Label>
-
-                            <Label htmlFor="confirmarSenha">
-                                Confirmar senha
-                                <Input.Root>
-                                    <Input.Input
-                                        onChange={(e) => setConfirmPasswordInputValue(e.target.value)}
-                                        onBlur={() => confirmPasswordInputValue === passwordInputValue ? setIsConfirmPasswordInputWithError(false) : setIsConfirmPasswordInputWithError(true)}
-                                        isWithIcon={false}
-                                        errorText={isConfirmPasswordInputWithError}
-                                        inputSize={sizes.sm}
-                                        type={isConfirmPasswordVisible ? "text" : "password"}
-                                        id="confirmarSenha"
-                                    />
-
-                                    <Input.RightIcon
-                                        topPosition={1}
-                                        rightPosition={4}
-                                        onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
-                                    >
-                                        {isConfirmPasswordVisible ? <EyeSlash size={22} /> : <Eye size={22} />}
-                                    </Input.RightIcon>
-
-                                </Input.Root>
+                            <Label htmlFor="senhaAdmin">
+                                Senha
+                                <C.PasswordContainer>
+                                    <Input.Root>
+                                        <Input.Input
+                                            isWithIcon={false}
+                                            errorText={isPasswordInputWithError}
+                                            inputSize={sizes.sm}
+                                            type="password"
+                                            id="senhaAdmin"
+                                            value={passwordInputValue}
+                                            disabled
+                                        />
+                                    </Input.Root>
+                                    <C.GenPassContainer onClick={generatePassword}>
+                                        <Password size={20} />
+                                        Gerar senha
+                                    </C.GenPassContainer>
+                                </C.PasswordContainer>
                             </Label>
 
                             <Label htmlFor="idHospital">
@@ -251,12 +186,11 @@ export function Admin() {
                             </Label>
                         </C.InputsContainer>
 
-
                         <C.ButtonContainer>
                             <Button.Gray
                                 onClick={() => [
-                                    setLoginInputValue(null), setPasswordInputValue(null), setConfirmPasswordInputValue(null), setHospitalInputValue(null),
-                                    setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsConfirmPasswordInputWithError(false), setIsHospitalInputWithError(false)
+                                    setLoginInputValue(null), setPasswordInputValue(null), setHospitalInputValue(null),
+                                    setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsHospitalInputWithError(false)
                                 ]}
                                 value="Cancelar"
                                 type="reset"
@@ -311,95 +245,13 @@ export function Admin() {
                                         <C.HoverCardContainer>
                                             <HoverCard.Root>
                                                 <HoverCard.Trigger>
-                                                    <LockOpen  size={30}/>
+                                                    <LockOpen size={30} />
                                                 </HoverCard.Trigger>
                                                 <HoverCard.Content>
                                                     {user.senhaAdmin}
                                                 </HoverCard.Content>
                                             </HoverCard.Root>
                                         </C.HoverCardContainer>
-                                        <Modal.Edit
-                                            itemId={() => setAdminUserId(user.idAdmin)}
-                                            closeModal={() => [
-                                                setAdminUserId(0), setPasswordInputValueModal(null), setConfirmPasswordInputValueModal(null),
-                                                setIsPasswordInputModalWithError(false), setIsConfirmPasswordInputWithError(false)
-                                            ]}
-                                            title='Editar administrador'
-                                        >
-                                            <form onSubmit={editUser} autoComplete="off">
-                                                <Label htmlFor="loginAdminModal">
-                                                    Nome de usuário
-                                                    <Input.Input
-                                                        isWithIcon={false}
-                                                        errorText={false}
-                                                        inputSize={sizes.xl}
-                                                        type="text"
-                                                        id="loginAdminModal"
-                                                        defaultValue={user.loginAdmin}
-                                                        disabled
-                                                    />
-                                                </Label>
-                                                <Label htmlFor="senhaAdminModal">
-                                                    Nova senha
-                                                    <Input.Root>
-                                                        <Input.Input
-                                                            onChange={(e) => setPasswordInputValueModal(e.target.value)}
-                                                            onBlur={() => [passwordInputValueModal ? setIsPasswordInputModalWithError(false) : null, passwordInputValueModal === confirmPasswordInputValueModal ? setIsConfirmPasswordInputModalWithError(false) : setIsConfirmPasswordInputModalWithError(true)]}
-                                                            isWithIcon={false}
-                                                            errorText={isPasswordInputModalWithError}
-                                                            inputSize={sizes.xl}
-                                                            type={isPasswordModalVisible ? "text" : "password"}
-                                                            id="senhaAdminModal"
-                                                        />
-
-                                                        <Input.RightIcon
-                                                            topPosition={1}
-                                                            rightPosition={4}
-                                                            onClick={() => setIsPasswordModalVisible(!isPasswordModalVisible)}
-                                                        >
-                                                            {isPasswordModalVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                                        </Input.RightIcon>
-
-                                                    </Input.Root>
-                                                </Label>
-                                                <Label htmlFor="confirmarSenhaModal">
-                                                    Confirmar nova senha
-                                                    <Input.Root>
-                                                        <Input.Input
-                                                            onChange={(e) => setConfirmPasswordInputValueModal(e.target.value)}
-                                                            onBlur={() => confirmPasswordInputValueModal === passwordInputValueModal ? setIsConfirmPasswordInputModalWithError(false) : setIsConfirmPasswordInputModalWithError(true)}
-                                                            isWithIcon={false}
-                                                            errorText={isConfirmPasswordInputModalWithError}
-                                                            inputSize={sizes.xl}
-                                                            type={isConfirmPasswordModalVisible ? "text" : "password"}
-                                                            id="confirmarSenhaModal"
-                                                        />
-
-                                                        <Input.RightIcon
-                                                            topPosition={1}
-                                                            rightPosition={4}
-                                                            onClick={() => setIsConfirmPasswordModalVisible(!isConfirmPasswordModalVisible)}
-                                                        >
-                                                            {isConfirmPasswordModalVisible ? <EyeSlash size={24} /> : <Eye size={24} />}
-                                                        </Input.RightIcon>
-
-                                                    </Input.Root>
-                                                </Label>
-                                                <C.ButtonContainer>
-                                                    <AlertDialog.Cancel asChild>
-                                                        <Button.Gray
-                                                            onClick={() => [
-                                                                setPasswordInputValueModal(null), setConfirmPasswordInputValueModal(null),
-                                                                setIsPasswordInputModalWithError(false), setIsConfirmPasswordInputModalWithError(false)
-                                                            ]}
-                                                            value="Fechar"
-                                                            type="button"
-                                                        />
-                                                    </AlertDialog.Cancel>
-                                                    <Button.Green value="Salvar" type="submit" />
-                                                </C.ButtonContainer>
-                                            </form>
-                                        </Modal.Edit>
                                         <Modal.Alert
                                             itemId={() => { setAdminUserId(user.idAdmin) }}
                                             closeModal={() => { setAdminUserId(0) }}

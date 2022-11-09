@@ -4,12 +4,11 @@ import { LoginHospital } from './pages/AreaLogin/LoginHospital';
 import { LoginAdmin } from './pages/AreaLogin/LoginAdmin';
 import { VisaoGeralHospital } from './pages/AreaHospital/VisaoGeral';
 import { Medico } from './pages/AreaHospital/Medico';
-import { Especialidade } from './pages/AreaHospital/Especialidade';
 import { Plantao } from './pages/AreaHospital/Plantao';
 import { VisaoGeralAdmin } from './pages/AreaAdminGeral/VisaoGeral';
 import { Hospital } from './pages/AreaAdminGeral/Hospital';
 import { Admin } from './pages/AreaAdminGeral/Admin';
-import { TipoPlantao } from './pages/AreaAdminGeral/TipoPlantao';
+import { Especialidade } from './pages/AreaAdminGeral/Especialidade';
 import { TipoReclamacao } from './pages/AreaAdminGeral/TipoReclamacao';
 
 import UseAuth from './hooks/useAuth';
@@ -33,12 +32,11 @@ export default function AppRoutes() {
                 <Route path="/login-admin" element={<LoginAdmin />} />
                 <Route path="/visao-geral-hospital" element={<PrivateHospital Item={VisaoGeralHospital} />} />
                 <Route path="/medicos" element={<PrivateHospital Item={Medico} />} />
-                <Route path="/especialidades" element={<PrivateHospital Item={Especialidade} />} />
                 <Route path="/plantoes" element={<PrivateHospital Item={Plantao} />} />
                 <Route path="/visao-geral-admin" element={<PrivateAdmin Item={VisaoGeralAdmin} />} />
                 <Route path="/hospitais" element={<PrivateAdmin Item={Hospital} />} />
                 <Route path="/admin" element={<PrivateAdmin Item={Admin} />} />
-                <Route path="/tipo-plantao" element={<PrivateAdmin Item={TipoPlantao} />} />
+                <Route path="/especialidades" element={<PrivateAdmin Item={Especialidade} />} />
                 <Route path="/tipo-reclamacao" element={<PrivateAdmin Item={TipoReclamacao} />} />
             </Routes>
         </Router>
