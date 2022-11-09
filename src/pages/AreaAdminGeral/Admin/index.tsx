@@ -10,6 +10,7 @@ import { Label } from '../../../components/Form/Label';
 import { ToastContainer, toast } from 'react-toastify';
 import { HoverCard } from '../../../components/HoverCard';
 
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { MagnifyingGlass, LockOpen, Password } from 'phosphor-react';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -139,13 +140,13 @@ export function Admin() {
                                     onBlur={() => loginInputValue ? setIsLoginInputWithError(false) : null}
                                     isWithIcon={false}
                                     errorText={isLoginInputWithError}
-                                    inputSize={sizes.sm}
+                                    inputSize={sizes.md}
                                     type="text"
                                     id="loginAdmin"
                                 />
                             </Label>
 
-                            <Label htmlFor="senhaAdmin">
+                            <Label htmlFor="senhaAdmin"  onClick={generatePassword}>
                                 Senha
                                 <C.PasswordContainer>
                                     <Input.Root>
@@ -159,8 +160,7 @@ export function Admin() {
                                             disabled
                                         />
                                     </Input.Root>
-                                    <C.GenPassContainer onClick={generatePassword}>
-                                        <Password size={20} />
+                                    <C.GenPassContainer>
                                         Gerar senha
                                     </C.GenPassContainer>
                                 </C.PasswordContainer>
@@ -210,7 +210,7 @@ export function Admin() {
                                 onChange={(e) => setSearchAdmin(e.target.value)}
                                 isWithIcon
                                 errorText={false}
-                                inputSize={sizes.sm}
+                                inputSize={sizes.lg}
                                 id="adminSearch"
                                 type="search"
                                 placeholder="Buscar"
@@ -248,7 +248,12 @@ export function Admin() {
                                                     <LockOpen size={30} />
                                                 </HoverCard.Trigger>
                                                 <HoverCard.Content>
-                                                    {user.senhaAdmin}
+                                                    <CopyToClipboard
+                                                    text={user.senhaAdmin}
+                                                    onCopy={() => alert('Senha copiada!')}
+                                                    >
+                                                        <C.ClipboardText>{user.senhaAdmin}</C.ClipboardText>
+                                                    </CopyToClipboard>
                                                 </HoverCard.Content>
                                             </HoverCard.Root>
                                         </C.HoverCardContainer>

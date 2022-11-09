@@ -73,7 +73,7 @@ export function VisaoGeralHospital() {
                         <C.Icons color='#49B28C'>
                             <ChatCenteredDots size={70} />
                             <C.TextContainer>
-                                <span>Reclamações</span>
+                                <span>Notificações</span>
                                 <span>{claimCount}</span>
                             </C.TextContainer>
                         </C.Icons>

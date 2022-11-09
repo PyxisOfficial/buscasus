@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { Cursor } from "phosphor-react";
 
 export const Container = styled.div`
     display: flex;
@@ -65,9 +67,14 @@ export const  PasswordContainer = styled.div`
 `
 
 export const GenPassContainer = styled.div`
+    color: #909090;
+    padding: 2px 4px;
+    border: 1px solid #909090;
+    border-radius: 8px;
+    background: #E7E7E7;
     display: flex;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
     cursor: pointer;
     user-select: none;
 `
@@ -159,4 +166,14 @@ export const Select = styled.select<{
         outline: 0;
         border: 1px solid #287365;
     }
+`
+
+export const ClipboardText = styled.span`
+    cursor: pointer;
+`
+
+export const d = styled.div`
+    width: 800px;
+    height: 800px;
+    background-color: black;
 `

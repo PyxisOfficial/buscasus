@@ -85,7 +85,7 @@ export function VisaoGeralAdmin() {
                         </C.Icons>
                     </C.Quantities>
                     <C.ChartContainer>
-                        <h3>Quantidade de pesquisas por semana do mês</h3>
+                        <h3>Quantidade de novos usuários por semana do mês</h3>
                         <BarChart.Area />
                     </C.ChartContainer>
                     <C.ChartContainer>
@@ -198,7 +198,7 @@ export function VisaoGeralAdmin() {
                         </C.RequestContainer>
                     </C.RightTopContainer>
                     <C.ChartContainer>
-                        <h3>Regiões com mais hospitais cadastrados</h3>
+                        <h3>Regiões mais utilizadas</h3>
                         <PieChart.Region />
                     </C.ChartContainer>
                 </C.RightContainer>

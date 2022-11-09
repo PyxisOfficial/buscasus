@@ -16,7 +16,7 @@ if (isset($_GET['search'])) {
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
     INNER JOIN tbEspecialidade e
-    ON e.idEspecialidade = e.idEspecialidade
+    ON p.idEspecialidade = e.idEspecialidade
     WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -42,7 +42,7 @@ if (isset($_GET['search'])) {
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
     INNER JOIN tbEspecialidade e
-    ON e.idEspecialidade = e.idEspecialidade
+    ON p.idEspecialidade = e.idEspecialidade
     WHERE p.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
