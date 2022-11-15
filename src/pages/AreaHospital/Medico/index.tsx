@@ -20,6 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function Medico() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+    const [repeatedCpfVerification, setRepeatedCpfVerification] = useState<any>();
 
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
@@ -83,6 +84,7 @@ export function Medico() {
 
         setMedicInputValue(null);
         setCpfInputValue(null);
+        setRepeatedCpfVerification(null);
         setCrmInputValue(null);
         setPhoneInputValue(null);
         setSpecialtyInputValue(null);
@@ -101,6 +103,14 @@ export function Medico() {
         }).then(response => setMedics(response.data));
     }, [search]);
 
+    useEffect(() => {
+        if (repeatedCpfVerification > 0) {
+            setIsCpfInputWithError(true);
+        } else {
+            setIsCpfInputWithError(false);
+        }
+    }, [repeatedCpfVerification]);
+
     async function insertMedic(event: FormEvent) {
         event.preventDefault();
 
@@ -117,12 +127,12 @@ export function Medico() {
         const cpfValidation = cpf.isValid(cpfInputValue);
 
         if (!medicInputValue) setIsMedicInputWithError(true);
-        if (!cpfInputValue || !cpfValidation) setIsCpfInputWithError(true);
+        if (!cpfInputValue || !cpfValidation || repeatedCpfVerification > 0) setIsCpfInputWithError(true);
         if (!crmInputValue) setIsCrmInputWithError(true);
         if (!phoneInputValue || phoneInputValue.length != 15) setIsPhoneInputWithError(true);
         if (specialtyInputValue == 0 || !specialtyInputValue) setIsSpecialtyInputWithError(true);
 
-        if (medicInputValue && cpfValidation && crmInputValue && phoneInputValue.length == 15 && specialtyInputValue > 0) {
+        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && specialtyInputValue > 0) {
             await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
 
             setIsFormSubmitted(true);
@@ -170,6 +180,14 @@ export function Medico() {
         toast.success("Médico excluído com sucesso!");
     }
 
+    function verifyIsCpfRepeated(cpf: any) {
+        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            params: {
+                repeatedCpf: cpf
+            }
+        }).then(response => setRepeatedCpfVerification(response.data.idMedico));
+    }
+
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
 
@@ -209,7 +227,7 @@ export function Medico() {
                                 <Input.MaskedInput
                                     mask="000.000.000-00"
                                     onChange={(e) => setCpfInputValue(e.target.value)}
-                                    onBlur={(e) => cpf.isValid(e.target.value) ? setIsCpfInputWithError(false) : null}
+                                    onBlur={(e) => [cpf.isValid(e.target.value) ? setIsCpfInputWithError(false) : null, verifyIsCpfRepeated(e.target.value)]}
                                     isWithIcon={false}
                                     errorText={isCpfInputWithError}
                                     inputSize={sizes.md}
@@ -286,7 +304,7 @@ export function Medico() {
                         <C.ButtonContainer>
                             <Button.Gray
                                 onClick={() => [
-                                    setMedicInputValue(null), setCpfInputValue(null), setCrmInputValue(null), setPhoneInputValue(null), setSpecialtyInputValue(null), setMedicPhoto(null),
+                                    setMedicInputValue(null), setCpfInputValue(null), setRepeatedCpfVerification(null), setCrmInputValue(null), setPhoneInputValue(null), setSpecialtyInputValue(null), setMedicPhoto(null),
                                     setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false), setIsSpecialtyInputWithError(false)
                                 ]}
                                 value="Cancelar"

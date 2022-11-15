@@ -1,8 +1,6 @@
 import { FormEvent, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
-
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { Modal } from '../../../components/Modal';
@@ -18,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function TipoReclamacao() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+    const [repeatedClaimTypeVerification, setRepeatedClaimTypeVerification] = useState<any>();
 
     const [claimType, setClaimType] = useState([]);
     const [claimTypeId, setClaimTypeId] = useState<number>();
@@ -25,9 +24,6 @@ export function TipoReclamacao() {
 
     const [claimTypeInputValue, setClaimTypeInputValue] = useState<any>();
     const [isClaimTypeInputWithError, setIsClaimTypeInputWithError] = useState<boolean>();
-
-    const [claimTypeInputValueModal, setClaimTypeInputValueModal] = useState<any>();
-    const [isClaimTypeInputModalWithError, setIsClaimTypeInputModalWithError] = useState<boolean>();
 
     const formRef = useRef<any>();
 
@@ -47,6 +43,7 @@ export function TipoReclamacao() {
         }
 
         setClaimTypeInputValue(null);
+        setRepeatedClaimTypeVerification(null);
 
         setIsFormSubmitted(false);
 
@@ -61,37 +58,27 @@ export function TipoReclamacao() {
         }).then(response => setClaimType(response.data));
     }, [search]);
 
+    useEffect(() => {
+        if (repeatedClaimTypeVerification > 0) {
+            setIsClaimTypeInputWithError(true);
+        } else {
+            setIsClaimTypeInputWithError(false);
+        }
+    }, [repeatedClaimTypeVerification]);
+
     async function insertClaimType(event: FormEvent) {
         event.preventDefault();
 
         const formData = new FormData(event.target as HTMLFormElement);
         formData.append("tipoReclamacao", claimTypeInputValue);
 
-        if (!claimTypeInputValue) setIsClaimTypeInputWithError(true);
+        if (!claimTypeInputValue || repeatedClaimTypeVerification > 0) setIsClaimTypeInputWithError(true);
 
-        if (claimTypeInputValue) {
+        if (claimTypeInputValue && repeatedClaimTypeVerification == 0) {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', formData);
 
             setIsFormSubmitted(true);
             toast.success("Tipo de reclamação cadastrado com sucesso!");
-        }
-    }
-
-    async function editClaimType(event: FormEvent) {
-        event.preventDefault();
-
-        if (!claimTypeInputValueModal) setIsClaimTypeInputModalWithError(true);
-
-        if (claimTypeInputValueModal) {
-            await axios.put('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', null, {
-                params: {
-                    tipoReclamacao: claimTypeInputValueModal,
-                    idTipoReclamacao: claimTypeId
-                }
-            });
-
-            setIsFormSubmitted(true);
-            toast.success("Tipo de reclamação editado com sucesso!");
         }
     }
 
@@ -104,6 +91,14 @@ export function TipoReclamacao() {
 
         setIsFormSubmitted(true);
         toast.success("Tipo de reclamação excluído com sucesso!");
+    }
+
+    function verifyIsClaimTypeRepeated(claim: any) {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/tipo-reclamacao/', {
+            params: {
+                repeatedClaim: claim
+            }
+        }).then(response => setRepeatedClaimTypeVerification(response.data.idTipoReclamacao));
     }
 
     return (
@@ -129,7 +124,7 @@ export function TipoReclamacao() {
                             Tipo de reclamação
                             <Input.Input
                                 onChange={(e) => setClaimTypeInputValue(e.target.value)}
-                                onBlur={() => claimTypeInputValue ? setIsClaimTypeInputWithError(false) : null}
+                                onBlur={(e) => [claimTypeInputValue ? setIsClaimTypeInputWithError(false) : null, verifyIsClaimTypeRepeated(e.target.value)]}
                                 isWithIcon={false}
                                 errorText={isClaimTypeInputWithError}
                                 inputSize={sizes.lg}
@@ -139,7 +134,7 @@ export function TipoReclamacao() {
                         </Label>
                         <C.ButtonContainer>
                             <Button.Gray
-                                onClick={() => [setClaimTypeInputValue(null), setIsClaimTypeInputWithError(false)]}
+                                onClick={() => [setClaimTypeInputValue(null), setRepeatedClaimTypeVerification(null), setIsClaimTypeInputWithError(false)]}
                                 value="Cancelar"
                                 type="reset"
                             />
@@ -170,7 +165,6 @@ export function TipoReclamacao() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
-                        <Button.Pdf />
                     </C.InputsContainer>
                 </C.TableContainerHeader>
                 <C.Table>
@@ -186,38 +180,6 @@ export function TipoReclamacao() {
                                 <C.Td>{claim.tipoReclamacao}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
-                                        <Modal.Edit
-                                            itemId={() => [setClaimTypeId(claim.idTipoReclamacao), setClaimTypeInputValueModal(claim.tipoReclamacao)]}
-                                            closeModal={() => [setClaimTypeId(0), setClaimTypeInputValueModal(null), setIsClaimTypeInputModalWithError(false)]}
-                                            title='Editar tipo de reclamação'
-                                        >
-                                            <C.Form onSubmit={editClaimType} autoComplete="off">
-                                                <Label htmlFor="tipoReclamacaoModal">
-                                                    Tipo de reclamação
-                                                    <Input.Input
-                                                        onChange={(e) => setClaimTypeInputValueModal(e.target.value)}
-                                                        onBlur={() => claimTypeInputValueModal ? setIsClaimTypeInputModalWithError(false) : null}
-                                                        isWithIcon={false}
-                                                        errorText={isClaimTypeInputModalWithError}
-                                                        inputSize={sizes.xl}
-                                                        type="text"
-                                                        id="tipoReclamacaoModal"
-                                                        defaultValue={claim.tipoReclamacao}
-                                                    />
-                                                </Label>
-
-                                                <C.ButtonContainer>
-                                                    <AlertDialog.Cancel asChild>
-                                                        <Button.Gray
-                                                            onClick={() => [setClaimTypeInputValueModal(null), setIsClaimTypeInputModalWithError(false)]}
-                                                            value="Fechar"
-                                                            type="button"
-                                                        />
-                                                    </AlertDialog.Cancel>
-                                                    <Button.Green value="Salvar" type="submit" />
-                                                </C.ButtonContainer>
-                                            </C.Form>
-                                        </Modal.Edit>
                                         <Modal.Alert
                                             itemId={() => { setClaimTypeId(claim.idTipoReclamacao) }}
                                             closeModal={() => { setClaimTypeId(0) }}

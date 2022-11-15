@@ -18,6 +18,7 @@ import * as C from './styles';
 
 export function Admin() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+    const [repeatedAdminVerification, setRepeatedAdminVerification] = useState<any>();
 
     const [adminUsers, setAdminUsers] = useState([]);
     const [adminUserId, setAdminUserId] = useState<number>();
@@ -50,6 +51,7 @@ export function Admin() {
         }
 
         setLoginInputValue(null);
+        setRepeatedAdminVerification(null);
         setPasswordInputValue(null);
         setHospitalInputValue(null);
 
@@ -70,10 +72,18 @@ export function Admin() {
         setIsPasswordInputWithError(false);
     }, [passwordInputValue]);
 
+    useEffect(() => {
+        if (repeatedAdminVerification > 0) {
+            setIsLoginInputWithError(true);
+        } else {
+            setIsLoginInputWithError(false);
+        }
+    }, [repeatedAdminVerification]);
+
     async function insertUser(event: FormEvent) {
         event.preventDefault();
 
-        if (!loginInputValue) setIsLoginInputWithError(true);
+        if (!loginInputValue || repeatedAdminVerification > 0) setIsLoginInputWithError(true);
         if (!passwordInputValue) setIsPasswordInputWithError(true);
         if (hospitalInputValue == 0 || !hospitalInputValue) setIsHospitalInputWithError(true);
 
@@ -82,7 +92,7 @@ export function Admin() {
         formData.append("senhaAdmin", passwordInputValue);
         formData.append("idHospital", hospitalInputValue);
 
-        if (loginInputValue && passwordInputValue && hospitalInputValue > 0) {
+        if (loginInputValue && repeatedAdminVerification == 0 && passwordInputValue && hospitalInputValue > 0) {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/admin/', formData);
 
             setIsFormSubmitted(true);
@@ -113,6 +123,14 @@ export function Admin() {
         setPasswordInputValue(password);
     }
 
+    function verifyIsAdminRepeated(admin: any) {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/admin/', {
+            params: {
+                repeatedAdmin: admin
+            }
+        }).then(response => setRepeatedAdminVerification(response.data.idAdmin));
+    }
+
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
 
@@ -137,7 +155,7 @@ export function Admin() {
                                 Nome de usuário
                                 <Input.Input
                                     onChange={(e) => setLoginInputValue(e.target.value)}
-                                    onBlur={() => loginInputValue ? setIsLoginInputWithError(false) : null}
+                                    onBlur={(e) => [loginInputValue ? setIsLoginInputWithError(false) : null, verifyIsAdminRepeated(e.target.value)]}
                                     isWithIcon={false}
                                     errorText={isLoginInputWithError}
                                     inputSize={sizes.md}
@@ -146,7 +164,7 @@ export function Admin() {
                                 />
                             </Label>
 
-                            <Label htmlFor="senhaAdmin"  onClick={generatePassword}>
+                            <Label htmlFor="senhaAdmin" onClick={generatePassword}>
                                 Senha
                                 <C.PasswordContainer>
                                     <Input.Root>
@@ -189,7 +207,7 @@ export function Admin() {
                         <C.ButtonContainer>
                             <Button.Gray
                                 onClick={() => [
-                                    setLoginInputValue(null), setPasswordInputValue(null), setHospitalInputValue(null),
+                                    setLoginInputValue(null), setRepeatedAdminVerification(null), setPasswordInputValue(null), setHospitalInputValue(null),
                                     setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsHospitalInputWithError(false)
                                 ]}
                                 value="Cancelar"
@@ -223,7 +241,6 @@ export function Admin() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
-                        <Button.Pdf />
                     </C.InputsContainer>
                 </C.TableContainerHeader>
 
@@ -249,8 +266,8 @@ export function Admin() {
                                                 </HoverCard.Trigger>
                                                 <HoverCard.Content>
                                                     <CopyToClipboard
-                                                    text={user.senhaAdmin}
-                                                    onCopy={() => alert('Senha copiada!')}
+                                                        text={user.senhaAdmin}
+                                                        onCopy={() => alert('Senha copiada!')}
                                                     >
                                                         <C.ClipboardText>{user.senhaAdmin}</C.ClipboardText>
                                                     </CopyToClipboard>

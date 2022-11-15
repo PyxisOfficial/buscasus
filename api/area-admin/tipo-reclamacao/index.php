@@ -16,6 +16,16 @@ if (isset($_GET['search'])) {
     $tipoReclamacao = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($tipoReclamacao);
+} else if (isset($_GET['repeatedClaim'])) {
+    $repeatedClaim = @$_GET['repeatedClaim'];
+
+    $sql = "SELECT COUNT(idTipoReclamacao) AS idTipoReclamacao FROM tbTipoReclamacao WHERE tipoReclamacao LIKE :tipoReclamacao";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':tipoReclamacao', $repeatedClaim);
+    $stmt->execute();
+    $tipoReclamacao = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($tipoReclamacao);
 } else {
     $sql = "SELECT * FROM tbTipoReclamacao";
     $stmt = $conn->prepare($sql);
@@ -33,17 +43,6 @@ switch($method) {
         $sql = "INSERT INTO tbTipoReclamacao(idTipoReclamacao, tipoReclamacao) VALUES(null, :tipoReclamacao)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':tipoReclamacao', $tipoReclamacao);
-        $stmt->execute();
-        break;
-
-    case "PUT":
-        $tipoReclamacao = $_GET['tipoReclamacao'];
-        $idTipoReclamacao = $_GET['idTipoReclamacao'];
-        
-        $sql = "UPDATE tbTipoReclamacao SET tipoReclamacao =:tipoReclamacao WHERE idTipoReclamacao =:idTipoReclamacao";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':tipoReclamacao', $tipoReclamacao);
-        $stmt->bindParam(':idTipoReclamacao', $idTipoReclamacao);
         $stmt->execute();
         break;
 

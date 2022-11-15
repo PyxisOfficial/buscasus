@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function Hospital() {
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+    const [repeatedCnpjVerification, setRepeatedCnpjVerification] = useState<any>();
 
     const [hospital, setHospital] = useState([]);
     const [hospitalId, setHospitalId] = useState<number>();
@@ -97,6 +98,7 @@ export function Hospital() {
         setStartTimeInputValue(null);
         setEndTimeInputValue(null);
         setCnpjInputValue(null);
+        setRepeatedCnpjVerification(null);
         setCepInputValue(null);
         setUfInputValue(null);
         setPublicPlaceInputValue(null);
@@ -143,6 +145,14 @@ export function Hospital() {
         setIsHospitalPhotoWithError(false);
     }, [hospitalPhoto]);
 
+    useEffect(() => {
+        if (repeatedCnpjVerification > 0) {
+            setIsCnpjInputWithError(true);
+        } else {
+            setIsCnpjInputWithError(false);
+        }
+    }, [repeatedCnpjVerification]);
+
     async function insertHospital(event: FormEvent) {
         event.preventDefault();
 
@@ -169,7 +179,7 @@ export function Hospital() {
         if (!phoneInputValue || phoneInputValue.length != 14) setIsPhoneInputWithError(true);
         if (!startTimeInputValue) setIsStartTimeInputWithError(true);
         if (!endTimeInputValue) setIsEndTimeInputWithError(true);
-        if (!cnpjInputValue || !cnpjValidation) setIsCnpjInputWithError(true);
+        if (!cnpjInputValue || !cnpjValidation || repeatedCnpjVerification > 0) setIsCnpjInputWithError(true);
         if (!cepInputValue || cepInputValue.length != 9) setIsCepInputWithError(true);
         if (!ufInputValue) setIsUfInputWithError(true);
         if (!publicPlaceInputValue) setIsPublicPlaceInputWithError(true);
@@ -177,8 +187,8 @@ export function Hospital() {
         if (!districtInputValue) setIsDistrictInputWithError(true);
         if (!hospitalPhoto) setIsHospitalPhotoWithError(true);
 
-        if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation && ufInputValue
-            && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
+        if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation
+            && repeatedCnpjVerification == 0 && ufInputValue && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
             await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData);
 
             setIsFormSubmitted(true);
@@ -246,6 +256,14 @@ export function Hospital() {
     function getCepModal(e: any) {
         const cep: any = e.replace(/\D/g, '');
         axios.get(`https://viacep.com.br/ws/${cep}/json/`).then(response => setCepModal(response.data));
+    }
+
+    function verifyIsCnpjRepeated(cnpj: any) {
+        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+            params: {
+                repeatedCnpj: cnpj
+            }
+        }).then(response => setRepeatedCnpjVerification(response.data.idHospital));
     }
 
     return (
@@ -340,7 +358,7 @@ export function Hospital() {
                                 <Input.MaskedInput
                                     mask="00.000.000/0000-00"
                                     onChange={(e) => setCnpjInputValue(e.target.value)}
-                                    onBlur={(e) => cnpj.isValid(e.target.value) ? setIsCnpjInputWithError(false) : null}
+                                    onBlur={(e) => [cnpj.isValid(e.target.value) ? setIsCnpjInputWithError(false) : null, verifyIsCnpjRepeated(e.target.value)]}
                                     isWithIcon={false}
                                     errorText={isCnpjInputWithError}
                                     inputSize={sizes.sm}
@@ -445,8 +463,8 @@ export function Hospital() {
                             <Button.Gray
                                 onClick={() => [
                                     setHospitalInputValue(null), setEmailInputValue(null), setPhoneInputValue(null), setStartTimeInputValue(null),
-                                    setEndTimeInputValue(null), setCnpjInputValue(null), setCepInputValue(null), setUfInputValue(null), setPublicPlaceInputValue(null),
-                                    setCityInputValue(null), setDistrictInputValue(null), setComplementInputValue(null), setHospitalPhoto(null),
+                                    setEndTimeInputValue(null), setCnpjInputValue(null), setRepeatedCnpjVerification(null), setCepInputValue(null), setUfInputValue(null), 
+                                    setPublicPlaceInputValue(null), setCityInputValue(null), setDistrictInputValue(null), setComplementInputValue(null), setHospitalPhoto(null),
                                     setIsHospitalInputWithError(false), setIsEmailInputWithError(false), setIsPhoneInputWithError(false),
                                     setIsStartTimeInputWithError(false), setIsEndTimeInputWithError(false), setIsCnpjInputWithError(false), setIsCepInputWithError(false),
                                     setIsUfInputWithError(false), setIsPublicPlaceInputWithError(false), setIsCityInputWithError(false),

@@ -17,8 +17,18 @@ if (isset($_GET['search'])) {
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($especialidade);
+} else if (isset($_GET['repeatedSpecialty'])) {
+    $repeatedSpecialty = @$_GET['repeatedSpecialty'];
+
+    $sql = "SELECT COUNT(idEspecialidade) AS idEspecialidade FROM tbEspecialidade WHERE nomeEspecialidade LIKE :nomeEspecialidade";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':nomeEspecialidade', $repeatedSpecialty);
+    $stmt->execute();
+    $especialidade = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($especialidade);
 } else {
-    $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade";
+    $sql = "SELECT * FROM tbEspecialidade";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -33,17 +43,6 @@ switch($method) {
 
         $sql = "INSERT INTO tbEspecialidade(idEspecialidade, nomeEspecialidade) VALUES(null, :nomeEspecialidade)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nomeEspecialidade', $nomeEspecialidade);
-        $stmt->execute();
-        break;
-
-    case "PUT":
-        $nomeEspecialidade = $_GET['nomeEspecialidade'];
-        $idEspecialidade = $_GET['idEspecialidade'];
-
-        $sql = "UPDATE tbEspecialidade SET nomeEspecialidade= :nomeEspecialidade WHERE idEspecialidade = :idEspecialidade";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
         $stmt->bindParam(':nomeEspecialidade', $nomeEspecialidade);
         $stmt->execute();
         break;

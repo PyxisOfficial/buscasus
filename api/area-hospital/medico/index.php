@@ -42,7 +42,17 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-} else {
+} else if (isset($_GET['repeatedCpf'])) {
+    $repeatedCpf = @$_GET['repeatedCpf'];
+
+    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE cpfMedico LIKE :cpf";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':cpf', $repeatedCpf);
+    $stmt->execute();
+    $medico = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($medico);
+} else if (isset($_GET['idHospital'])) {
     $idHospital = @$_GET['idHospital'];
 
     $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
@@ -53,6 +63,13 @@ if (isset($_GET['search'])) {
             WHERE m.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($medico);
+} else {
+    $sql = "SELECT * FROM tbMedico";
+    $stmt = $conn->prepare($sql);
     $stmt->execute();
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
