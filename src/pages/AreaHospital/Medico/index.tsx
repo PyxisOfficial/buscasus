@@ -270,7 +270,7 @@ export function Medico() {
                                 />
                             </Label>
 
-                            <Label htmlFor="idEspecialidade">
+                            <Label>
                                 Especialidade
 
                                 <C.Select
@@ -308,7 +308,7 @@ export function Medico() {
                                     setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false), setIsSpecialtyInputWithError(false)
                                 ]}
                                 value="Cancelar"
-                                type="button"
+                                type="reset"
                             />
                             <Button.Green value="Salvar" type="submit" />
                         </C.ButtonContainer>
