@@ -28,13 +28,13 @@ export function VisaoGeralAdmin() {
     if (day.length < 2) day = "0" + day;
 
     const weekDays: any = {
-        0: "domingo",
-        1: "segunda-feira",
-        2: "terça-feira",
-        3: "quarta-feira",
-        4: "quinta-feira",
-        5: "sexta-feira",
-        6: "sábado"
+        0: "Domingo",
+        1: "Segunda-feira",
+        2: "Terça-feira",
+        3: "Quarta-feira",
+        4: "Quinta-feira",
+        5: "Sexta-feira",
+        6: "Sábado"
     }
 
     useEffect(() => {

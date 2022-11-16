@@ -10,7 +10,6 @@ import { Hospital } from './pages/AreaAdminGeral/Hospital';
 import { Admin } from './pages/AreaAdminGeral/Admin';
 import { Especialidade } from './pages/AreaAdminGeral/Especialidade';
 import { TipoReclamacao } from './pages/AreaAdminGeral/TipoReclamacao';
-import { PrimeiroLogin } from './pages/AreaHospital/PrimeiroLogin';
 
 import UseAuth from './hooks/useAuth';
 
@@ -39,7 +38,6 @@ export default function AppRoutes() {
                 <Route path="/admin" element={<PrivateAdmin Item={Admin} />} />
                 <Route path="/especialidades" element={<PrivateAdmin Item={Especialidade} />} />
                 <Route path="/tipo-reclamacao" element={<PrivateAdmin Item={TipoReclamacao} />} />
-                <Route path="/primeiro-login" element={<PrimeiroLogin />} />
             </Routes>
         </Router>
     )

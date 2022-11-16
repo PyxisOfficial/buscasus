@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HoverCard } from '../../../components/HoverCard';
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { MagnifyingGlass, LockOpen, Password } from 'phosphor-react';
+import { MagnifyingGlass, LockSimple } from 'phosphor-react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as C from './styles';
@@ -262,7 +262,7 @@ export function Admin() {
                                         <C.HoverCardContainer>
                                             <HoverCard.Root>
                                                 <HoverCard.Trigger>
-                                                    <LockOpen size={30} />
+                                                    <LockSimple size={30} />
                                                 </HoverCard.Trigger>
                                                 <HoverCard.Content>
                                                     <CopyToClipboard

@@ -1,58 +1,42 @@
-import { useState, useEffect, FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
-import UseAuth from '../../../hooks/useAuth';
+import { useState, FormEvent } from 'react';
+import axios from 'axios';
 
 import { Input } from '../../../components/Form/Input';
-import { LoginError } from '../../../components/Form/LoginError';
 import { Button } from '../../../components/Button';
-import { Label } from '../../../components/Form/Label';
-import { User, Lock, Eye, EyeSlash } from 'phosphor-react';
+import { Lock, Eye, EyeSlash } from 'phosphor-react';
 
 import * as C from './styles';
 
-export function PrimeiroLogin() {
-    const { signIn }: any = UseAuth();
+interface FirstAccessProps {
+    hospitalId: number;
+}
 
-    const [userName, setUserName] = useState<string>();
+export function PrimeiroAcesso({ hospitalId }: FirstAccessProps) {
+
     const [password, setPassword] = useState<string>();
-    const [isUserNameWithError, setIsUserNameWithError] = useState<boolean>(false);
+    const [confirmPassword, setConfirmPassword] = useState<string>();
     const [isPasswordWithError, setIsPasswordWithError] = useState<boolean>(false);
-    const [isLoginWithError, setIsLoginWithError] = useState<boolean>(false);
+    const [isConfirmPasswordWithError, setIsConfirmPasswordWithError] = useState<boolean>(false);
 
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
-    const navigate = useNavigate();
-
-    function handleLogin(event: FormEvent) {
+    async function editAdmin(event: FormEvent) {
         event.preventDefault();
 
-        const isGeneralAdminActivated = true;
+        if (!password) setIsPasswordWithError(true);
+        if (!confirmPassword || password !== confirmPassword) setIsConfirmPasswordWithError(true);
 
-        if (!userName && !password) {
-            setIsUserNameWithError(true);
-            setIsPasswordWithError(true);
-            return;
+        if (password && confirmPassword && password === confirmPassword) {
+            await axios.put('http://localhost/buscaSusWeb/api/area-admin/admin/', null, {
+                params: {
+                    senhaAdmin: password,
+                    idHospital: hospitalId
+                }
+            });
+
+            localStorage.setItem("first_access", JSON.stringify(0));
+            location.reload();
         }
-
-        if (!userName) {
-            setIsUserNameWithError(true);
-            return;
-        }
-
-        if (!password) {
-            setIsPasswordWithError(true);
-            return;
-        }
-
-        const res = signIn(userName, password, isGeneralAdminActivated);
-
-        if (res) {
-            setIsLoginWithError(res);
-            return;
-        }
-
-        navigate("/visao-geral-admin");
     }
 
     return (
@@ -70,7 +54,7 @@ export function PrimeiroLogin() {
                 </C.LogoContainer>
 
                 <C.FormContainer>
-                    <C.Form onSubmit={handleLogin}>
+                    <C.Form onSubmit={editAdmin}>
                         <C.HeaderForm>
                             <C.HeaderFormTitle>Antes de entrar no sistema...</C.HeaderFormTitle>
                             Por questões de segurança, sempre pedimos para que nossos usuários troquem a senha em seu primeiro login. Isso não ocorrerá novamente.
@@ -81,7 +65,8 @@ export function PrimeiroLogin() {
                                 placeholder="Senha"
                                 id="userPassword"
                                 errorText={isPasswordWithError}
-                                onChange={(e: any) => [setPassword(e.target.value), setIsPasswordWithError(false)]}
+                                onChange={(e: any) => setPassword(e.target.value)}
+                                onBlur={() => [password ? setIsPasswordWithError(false) : null, password === confirmPassword ? setIsConfirmPasswordWithError(false) : null]}
                             />
 
                             <Input.LeftIcon
@@ -112,8 +97,9 @@ export function PrimeiroLogin() {
                                 type={isPasswordVisible ? "text" : "password"}
                                 placeholder="Confirmar Senha"
                                 id="userPassword"
-                                errorText={isPasswordWithError}
-                                onChange={(e: any) => [setPassword(e.target.value), setIsPasswordWithError(false)]}
+                                errorText={isConfirmPasswordWithError}
+                                onChange={(e: any) => setConfirmPassword(e.target.value)}
+                                onBlur={() => confirmPassword === password ? setIsConfirmPasswordWithError(false) : setIsConfirmPasswordWithError(true)}
                             />
 
                             <Input.LeftIcon
@@ -133,16 +119,14 @@ export function PrimeiroLogin() {
                             </Input.RightIcon>
 
                             <Input.ErrorMessage
-                                errorText={isPasswordWithError}
+                                errorText={isConfirmPasswordWithError}
                             >
-                                Por favor, insira a senha inserida acima.
+                                Por favor, insira a mesma senha do primeiro campo.
                             </Input.ErrorMessage>
                         </Input.Root>
 
                         <Button.Login value="Login" type="submit" />
                     </C.Form>
-
-                    <LoginError error={isLoginWithError} />
 
                 </C.FormContainer>
 

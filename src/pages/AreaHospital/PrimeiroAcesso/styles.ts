@@ -40,6 +40,7 @@ export const SloganTitle = styled.h4`
 
 export const FormContainer = styled.div`
     width: 400px;
+    height: 400px;
     background-color: #FBFBFD;
     -webkit-box-shadow: -13px 10px 15px -3px rgba(0, 0, 0, 0.1);
     box-shadow: -13px 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -72,26 +73,6 @@ export const HeaderForm = styled.div`
 
 export const HeaderFormTitle = styled.h2`
     color: #287365;
-`
-
-export const Button = styled.input`
-    width: 100%;
-    text-transform: uppercase;
-    font-size: 18px;
-    font-weight: bolder;
-    color: #fff;
-    background-color: #3eb08f;
-    padding: 10px;
-    border: 1px solid #3eb08f;
-    border-radius: 50px;
-    margin-top: 24px;
-    cursor: pointer;
-    transition: .4s;
-
-    &:hover {
-    color: #3eb08f;
-    background-color: #fff;
-}
 `
 
 export const Svg = styled.svg`

@@ -40,6 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 const token = Math.random().toString(36).substring(2);
                 localStorage.setItem("hospital_token", JSON.stringify({ token }));
                 localStorage.setItem("hospital_id", JSON.stringify(user[0].idHospital));
+                localStorage.setItem("first_access", JSON.stringify(user[0].primeiroAcesso));
                 setHospitalUser(true);
                 return;
 
@@ -65,6 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         localStorage.removeItem("hospital_token");
         localStorage.removeItem("admin_token");
         localStorage.removeItem("hospital_id");
+        localStorage.removeItem("first_access");
     }
 
     return (
