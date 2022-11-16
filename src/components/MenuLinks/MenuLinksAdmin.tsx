@@ -9,6 +9,7 @@ export function MenuLinksAdmin() {
             <NavLink to="/especialidades" className="sidebar-item">Especialidades</NavLink>
             <NavLink to="/admin" className="sidebar-item">Administradores</NavLink>
             <NavLink to="/tipo-reclamacao" className="sidebar-item">Tipo de Reclamação</NavLink>
+            <NavLink to="/usuarios" className="sidebar-item">Usuários</NavLink>
         </C.SideBar>
     )
 }

@@ -8,13 +8,14 @@ import { DialogModal } from '../../../components/Modal';
 import { Button } from '../../../components/Button';
 import { HoverCard } from '../../../components/HoverCard';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
-import * as Dialog  from '@radix-ui/react-dialog';
+import * as Dialog from '@radix-ui/react-dialog';
 
 import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'phosphor-react';
 
 import * as C from './styles'
 
 export function VisaoGeralAdmin() {
+    const [usersCount, setUsersCount] = useState<string>();
     const [hospitalsCount, setHospitalsCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
 
@@ -38,6 +39,12 @@ export function VisaoGeralAdmin() {
     }
 
     useEffect(() => {
+        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/', {
+            params: {
+                count: true
+            }
+        }).then(response => setUsersCount(response.data.idUsuario));
+
         axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
             params: {
                 count: true
@@ -66,7 +73,7 @@ export function VisaoGeralAdmin() {
                             <Users size={70} />
                             <C.TextContainer>
                                 <span>Usuários Totais</span>
-                                <span>0</span>
+                                <span>{usersCount}</span>
                             </C.TextContainer>
                         </C.Icons>
                         <C.Icons color='#349684'>
@@ -90,7 +97,7 @@ export function VisaoGeralAdmin() {
                     </C.ChartContainer>
                     <C.ChartContainer>
                         <h3>Especialidades mais pesquisadas</h3>
-                            <PieChart.Specialty />
+                        <PieChart.Specialty />
                     </C.ChartContainer>
                 </C.LeftContainer>
                 <C.Line />
@@ -131,9 +138,9 @@ export function VisaoGeralAdmin() {
                                     </C.TextCard>
                                     <HoverCard.Root>
                                         <HoverCardPrimitive.Trigger asChild>
-                                        <C.NegativeData>
-                                            <CaretUp size={20} weight='bold' />
-                                            20%
+                                            <C.NegativeData>
+                                                <CaretUp size={20} weight='bold' />
+                                                20%
                                             </C.NegativeData>
                                         </HoverCardPrimitive.Trigger>
                                         <HoverCard.Content>
@@ -167,7 +174,7 @@ export function VisaoGeralAdmin() {
                                             </C.ItemHeader>
                                             <C.ItemContent>
                                                 <C.ItemDesc>
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe delectus sint repudiandae quod corporis, 
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe delectus sint repudiandae quod corporis,
                                                     nostrum, nobis impedit illum quasi aut iste voluptates hic, modi praesentium error aliquid debitis distinctio eos!
                                                 </C.ItemDesc>
                                             </C.ItemContent>
@@ -177,20 +184,20 @@ export function VisaoGeralAdmin() {
                                         <C.DialogHeader>
                                             <h3>Médico ausente</h3>
                                             <C.DialogHeaderEnd>
-                                            <C.Time>Há 20 minutos</C.Time>
+                                                <C.Time>Há 20 minutos</C.Time>
                                                 <Dialog.Close asChild>
                                                     <C.Close size={20} />
                                                 </Dialog.Close>
                                             </C.DialogHeaderEnd>
                                         </C.DialogHeader>
                                         <C.DialogDescription>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, perferendis! 
-                                            Sapiente excepturi voluptate earum quas, iure tenetur incidunt necessitatibus distinctio est, 
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, perferendis!
+                                            Sapiente excepturi voluptate earum quas, iure tenetur incidunt necessitatibus distinctio est,
                                             itaque deleniti dignissimos cum temporibus. Enim a similique iste?
                                         </C.DialogDescription>
                                         <C.DialogFooter>
                                             <C.Email>gabrieldantas@email.com</C.Email>
-                                            <Button.Green type='submit' value='Marcar como lido'/>
+                                            <Button.Green type='submit' value='Marcar como lido' />
                                         </C.DialogFooter>
                                     </DialogModal.Content>
                                 </DialogModal.Root>

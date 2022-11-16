@@ -131,7 +131,6 @@ export function Especialidade() {
                                 type="text"
                                 id="nomeEspecialidade"
                                 name="nomeEspecialidade"
-                                placeholder='Pediatra'
                             />
                         </Label>
                         <C.ButtonContainer>

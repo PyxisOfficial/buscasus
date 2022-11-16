@@ -8,6 +8,7 @@ import { Plantao } from './pages/AreaHospital/Plantao';
 import { VisaoGeralAdmin } from './pages/AreaAdminGeral/VisaoGeral';
 import { Hospital } from './pages/AreaAdminGeral/Hospital';
 import { Admin } from './pages/AreaAdminGeral/Admin';
+import { Usuario } from './pages/AreaAdminGeral/Usuario';
 import { Especialidade } from './pages/AreaAdminGeral/Especialidade';
 import { TipoReclamacao } from './pages/AreaAdminGeral/TipoReclamacao';
 
@@ -36,6 +37,7 @@ export default function AppRoutes() {
                 <Route path="/visao-geral-admin" element={<PrivateAdmin Item={VisaoGeralAdmin} />} />
                 <Route path="/hospitais" element={<PrivateAdmin Item={Hospital} />} />
                 <Route path="/admin" element={<PrivateAdmin Item={Admin} />} />
+                <Route path="/usuarios" element={<PrivateAdmin Item={Usuario} />} />
                 <Route path="/especialidades" element={<PrivateAdmin Item={Especialidade} />} />
                 <Route path="/tipo-reclamacao" element={<PrivateAdmin Item={TipoReclamacao} />} />
             </Routes>
