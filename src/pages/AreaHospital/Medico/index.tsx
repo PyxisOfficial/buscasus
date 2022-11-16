@@ -272,23 +272,41 @@ export function Medico() {
 
                             <Label>
                                 Especialidade
-
-                                <C.Select
-                                    onChange={(e) => setSpecialtyInputValue(e.target.value)}
-                                    onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : null}
-                                    errorText={isSpecialtyInputWithError}
-                                >
-                                    <option value="0">Selecione</option>
-                                    {specialty.map((spe: any) =>
-                                        <option
-                                            key={spe.idEspecialidade}
-                                            value={spe.idEspecialidade}
+                                <Modal.Generic.Root>
+                                <Modal.Generic.Trigger>
+                                    Selecione
+                                </Modal.Generic.Trigger>
+                                <Modal.Generic.Content title='Especialidades do médico'>
+                                <C.ModalHeader>
+                                    <Input.Root>
+                                        <Input.Input
+                                            onChange={(e) => setSearchAdmin(e.target.value)}
+                                            isWithIcon
+                                            errorText={false}
+                                            inputSize={sizes.xl}
+                                            id="adminSearch"
+                                            type="search"
+                                            placeholder="Buscar"
+                                        />
+                                        <Input.LeftIcon
+                                            htmlFor="adminSearch"
+                                            topPosition={4}
+                                            leftPosition={5}
                                         >
-                                            {spe.nomeEspecialidade}
-                                        </option>
-                                    )}
-                                </C.Select>
-
+                                            <MagnifyingGlass size={16} />
+                                        </Input.LeftIcon>
+                                    </Input.Root>
+                                </C.ModalHeader>
+                                <C.ModalSelectedContainer>
+                                    {/* coloca os itens selecionados aqui */}
+                                </C.ModalSelectedContainer>
+                                <C.ModalList>
+                                    <C.ModalListItem>
+                                        Ortopedia
+                                    </C.ModalListItem>
+                                </C.ModalList>
+                                </Modal.Generic.Content>
+                            </Modal.Generic.Root>
                             </Label>
 
                             <Label>

@@ -92,6 +92,61 @@ function EditModal({ children, itemId, closeModal, title }: ModalProps) {
     )
 }
 
+interface GenericModalRootProps {
+    children: ReactNode;
+}
+
+function GenericModalRoot({children}: GenericModalRootProps) {
+    return (
+        <AlertDialog.Root>
+            {children}
+        </AlertDialog.Root>
+    )
+}
+
+interface GenericModalTriggerProps {
+    children: ReactNode;
+}
+
+function GenericModalTrigger({children}: GenericModalTriggerProps) {
+    return (
+        <AlertDialog.Trigger>
+            {children}
+        </AlertDialog.Trigger>
+    )
+}
+
+interface GenericModalContentProps {
+    children: ReactNode;
+    title: string;
+    closeModal?: any;
+    title: string;
+}
+
+function GenericModalContent({children, title, closeModal}: GenericModalContentProps) {
+    return(
+        <AlertDialog.Portal>
+            <C.AlertDialogOverlay />
+            <C.AlertDialogContent>
+                <C.DialogHeader>
+                    <C.AlertDialogTitle>
+                        {title}
+                    </C.AlertDialogTitle>
+                    <AlertDialog.Cancel asChild>
+                        <C.Close
+                            size={20}
+                            onClick={closeModal}
+                        />
+                    </AlertDialog.Cancel>
+                </C.DialogHeader>
+                <C.AlertDialogDescription>
+                    {children}
+                </C.AlertDialogDescription>
+            </C.AlertDialogContent>
+        </AlertDialog.Portal>
+    )
+}
+
 function InfoDialogModal({ children, itemId, closeModal, title }: ModalProps) {
     return (
         <Dialog.Root>
@@ -189,6 +244,11 @@ export const Modal = {
     Edit: EditModal,
     Info: InfoDialogModal,
     Logout: LogoutModal,
+    Generic: {
+        Root: GenericModalRoot,
+        Trigger: GenericModalTrigger,
+        Content: GenericModalContent
+    }
 }
 
 export const DialogModal = {
