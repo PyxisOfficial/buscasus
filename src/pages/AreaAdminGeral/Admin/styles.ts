@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Cursor } from "phosphor-react";
+import { Lock } from 'phosphor-react'
 
 export const Container = styled.div`
     display: flex;
@@ -176,4 +176,8 @@ export const d = styled.div`
     width: 800px;
     height: 800px;
     background-color: black;
+`
+
+export const NotHover = styled(Lock)`
+    color: #585858;
 `

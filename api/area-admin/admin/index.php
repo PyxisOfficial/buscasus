@@ -10,7 +10,7 @@ $conn = $connection->connect();
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
 
-    $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.idHospital, h.nomeHospital FROM tbAdmin a
+    $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso,a.idHospital, h.nomeHospital FROM tbAdmin a
     INNER JOIN tbHospital h
     ON a.idHospital = h.idHospital
     WHERE (loginAdmin LIKE '%$search%' AND tipoAdmin != 1) OR (idAdmin LIKE '%$search%' AND tipoAdmin != 1)";
@@ -30,7 +30,7 @@ if (isset($_GET['search'])) {
 
     echo json_encode($admin);
 } else {
-    $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.idHospital, h.nomeHospital FROM tbAdmin a
+    $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso,a.idHospital, h.nomeHospital FROM tbAdmin a
     INNER JOIN tbHospital h
     ON a.idHospital = h.idHospital
     WHERE tipoAdmin != 1";

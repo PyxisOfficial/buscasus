@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HoverCard } from '../../../components/HoverCard';
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { MagnifyingGlass, LockSimple } from 'phosphor-react';
+import { MagnifyingGlass, LockOpen } from 'phosphor-react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as C from './styles';
@@ -260,9 +260,13 @@ export function Admin() {
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <C.HoverCardContainer>
+                                        {user.primeiroAcesso == 0
+                                        ?
+                                            <C.NotHover size={30} />
+                                        :
                                             <HoverCard.Root>
                                                 <HoverCard.Trigger>
-                                                    <LockSimple size={30} />
+                                                    <LockOpen size={30} />
                                                 </HoverCard.Trigger>
                                                 <HoverCard.Content>
                                                     <CopyToClipboard
@@ -273,6 +277,7 @@ export function Admin() {
                                                     </CopyToClipboard>
                                                 </HoverCard.Content>
                                             </HoverCard.Root>
+                                        }
                                         </C.HoverCardContainer>
                                         <Modal.Alert
                                             itemId={() => { setAdminUserId(user.idAdmin) }}
