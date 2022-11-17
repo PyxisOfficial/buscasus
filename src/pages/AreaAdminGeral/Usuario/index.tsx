@@ -51,7 +51,6 @@ export function Usuario() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
-                        <Button.Pdf />
                     </C.InputsContainer>
                 </C.TableContainerHeader>
                 <C.Table>
