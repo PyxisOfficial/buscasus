@@ -10,9 +10,9 @@ $conn = $connection->connect();
 if (isset($_GET['hospitalCount'])) {
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT COUNT(idReclamacao) AS idReclamacao FROM tbReclamacao WHERE idHospital = :id";
+    $sql = "SELECT COUNT(idReclamacao) AS idReclamacao FROM tbReclamacao WHERE idHospital = :idHospital";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $idHospital);
+    $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
     $reclamacao = $stmt->fetch(PDO::FETCH_ASSOC);
 

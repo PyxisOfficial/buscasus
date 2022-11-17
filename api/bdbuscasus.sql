@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2022 at 01:39 AM
+-- Generation Time: Nov 17, 2022 at 10:40 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -192,26 +192,25 @@ CREATE TABLE `tbtelefone` (
   `idTelefone` int(11) NOT NULL,
   `numTelefone` varchar(15) NOT NULL,
   `idHospital` int(11) NOT NULL,
-  `idMedico` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL
+  `idMedico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbtelefone`
 --
 
-INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idMedico`, `idUsuario`) VALUES
-(1, '(11) 2551-3303', 1, 0, 0),
-(2, '(11) 4674-8400', 2, 0, 0),
-(3, '(11) 4746-5188', 3, 0, 0),
-(4, '(11) 32088-7614', 0, 1, 0),
-(5, '(11) 3560-9569', 0, 2, 0),
-(6, '(11) 2182-3782', 0, 3, 0),
-(7, '(11) 2425-6651', 0, 4, 0),
-(8, '(11) 2968-3134', 0, 5, 0),
-(9, '(11) 3318-0148', 0, 6, 0),
-(10, '(11) 3684-1273', 0, 7, 0),
-(11, '(11) 3269-2158', 0, 8, 0);
+INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idMedico`) VALUES
+(1, '(11) 2551-3303', 1, 0),
+(2, '(11) 4674-8400', 2, 0),
+(3, '(11) 4746-5188', 3, 0),
+(4, '(11) 32088-7614', 0, 1),
+(5, '(11) 3560-9569', 0, 2),
+(6, '(11) 2182-3782', 0, 3),
+(7, '(11) 2425-6651', 0, 4),
+(8, '(11) 2968-3134', 0, 5),
+(9, '(11) 3318-0148', 0, 6),
+(10, '(11) 3684-1273', 0, 7),
+(11, '(11) 3269-2158', 0, 8);
 
 -- --------------------------------------------------------
 
@@ -299,8 +298,7 @@ ALTER TABLE `tbreclamacao`
 ALTER TABLE `tbtelefone`
   ADD PRIMARY KEY (`idTelefone`),
   ADD KEY `fk_idHospital` (`idHospital`),
-  ADD KEY `fk_idMedico` (`idMedico`),
-  ADD KEY `fk_idUsuario` (`idUsuario`);
+  ADD KEY `fk_idMedico` (`idMedico`);
 
 --
 -- Indexes for table `tbtiporeclamacao`
