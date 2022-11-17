@@ -11,9 +11,7 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
-            INNER JOIN tbEspecialidade e 
-            ON m.idEspecialidade = e.idEspecialidade
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
             INNER JOIN tbTelefone t
             ON m.idMedico = t.idMedico 
             WHERE (m.nomeMedico LIKE '%$search%' AND m.idHospital = :id)
@@ -55,9 +53,7 @@ if (isset($_GET['search'])) {
 } else if (isset($_GET['idHospital'])) {
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, e.idEspecialidade, e.nomeEspecialidade FROM tbMedico m     
-            INNER JOIN tbEspecialidade e 
-            ON m.idEspecialidade = e.idEspecialidade
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
             INNER JOIN tbTelefone t
             ON m.idMedico = t.idMedico 
             WHERE m.idHospital = :id";

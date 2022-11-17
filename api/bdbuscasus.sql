@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2022 at 03:24 AM
+-- Generation Time: Nov 17, 2022 at 01:39 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -120,7 +120,6 @@ CREATE TABLE `tbmedico` (
   `crmMedico` varchar(13) NOT NULL,
   `fotoMedico` varchar(150) NOT NULL,
   `ausenciasMedico` int(11) NOT NULL,
-  `idEspecialidade` int(11) NOT NULL,
   `idHospital` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -128,15 +127,27 @@ CREATE TABLE `tbmedico` (
 -- Dumping data for table `tbmedico`
 --
 
-INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fotoMedico`, `ausenciasMedico`, `idEspecialidade`, `idHospital`) VALUES
-(1, 'Dorivaldo Benegripe', '550.428.460-00', 'CRM/SP 123456', 'medico.jpg', 2, 1, 1),
-(2, 'Paulo Mendonça', '229.761.370-99', 'CRM/SP 345676', 'medico-4.jpg', 3, 2, 1),
-(3, 'Liz Neiva Macena', '693.977.460-22', 'CRM/SP 574535', 'medico-6.jpg', 1, 3, 1),
-(4, 'Laura Morais Canário', '443.336.660-90', 'CRM/SP 468523', 'medico-7.jpg', 1, 4, 1),
-(5, 'Valentim Ramos Monte', '897.043.620-05', 'CRM/SP 468511', 'medico-1.png', 2, 5, 1),
-(6, 'Virgílio Aldeia Rangel', '354.471.870-79', 'CRM/SP 544633', 'medico-2.jpg', 1, 6, 1),
-(7, 'Izabella Leão Milheirão', '760.615.780-40', 'CRM/SP 655432', 'medico-8.png', 2, 7, 1),
-(8, 'Luna Serpa Olivares', '991.764.430-00', 'CRM/SP 842564', 'medico-5.png', 6, 8, 1);
+INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fotoMedico`, `ausenciasMedico`, `idHospital`) VALUES
+(1, 'Dorivaldo Benegripe', '550.428.460-00', 'CRM/SP 123456', 'medico.jpg', 2, 1),
+(2, 'Paulo Mendonça', '229.761.370-99', 'CRM/SP 345676', 'medico-4.jpg', 3, 1),
+(3, 'Liz Neiva Macena', '693.977.460-22', 'CRM/SP 574535', 'medico-6.jpg', 1, 1),
+(4, 'Laura Morais Canário', '443.336.660-90', 'CRM/SP 468523', 'medico-7.jpg', 1, 1),
+(5, 'Valentim Ramos Monte', '897.043.620-05', 'CRM/SP 468511', 'medico-1.png', 2, 1),
+(6, 'Virgílio Aldeia Rangel', '354.471.870-79', 'CRM/SP 544633', 'medico-2.jpg', 1, 1),
+(7, 'Izabella Leão Milheirão', '760.615.780-40', 'CRM/SP 655432', 'medico-8.png', 2, 1),
+(8, 'Luna Serpa Olivares', '991.764.430-00', 'CRM/SP 842564', 'medico-5.png', 6, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbmedicoespecialidade`
+--
+
+CREATE TABLE `tbmedicoespecialidade` (
+  `idMedicoEspecialidade` int(11) NOT NULL,
+  `idMedico` int(11) NOT NULL,
+  `idEspecialidade` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -255,8 +266,15 @@ ALTER TABLE `tbhospital`
 --
 ALTER TABLE `tbmedico`
   ADD PRIMARY KEY (`idMedico`),
-  ADD KEY `fk_idEspecialidade` (`idEspecialidade`),
   ADD KEY `fk_idHospital` (`idHospital`);
+
+--
+-- Indexes for table `tbmedicoespecialidade`
+--
+ALTER TABLE `tbmedicoespecialidade`
+  ADD PRIMARY KEY (`idMedicoEspecialidade`),
+  ADD KEY `fk_idMedico` (`idMedico`),
+  ADD KEY `fk_idEspecialidade` (`idEspecialidade`);
 
 --
 -- Indexes for table `tbplantao`
@@ -323,6 +341,12 @@ ALTER TABLE `tbhospital`
 --
 ALTER TABLE `tbmedico`
   MODIFY `idMedico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `tbmedicoespecialidade`
+--
+ALTER TABLE `tbmedicoespecialidade`
+  MODIFY `idMedicoEspecialidade` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbplantao`

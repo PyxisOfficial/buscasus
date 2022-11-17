@@ -362,7 +362,7 @@ export function Medico() {
                     <C.Thead>
                         <C.Tr>
                             <C.Th>Nome</C.Th>
-                            <C.Th>Especialidade</C.Th>
+                            <C.Th>CPF</C.Th>
                             <C.Th>CRM</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
@@ -371,7 +371,7 @@ export function Medico() {
                         {medics.map((medic: any, key) =>
                             <C.InnerTr key={key}>
                                 <C.Td>{medic.nomeMedico}</C.Td>
-                                <C.Td>{medic.nomeEspecialidade}</C.Td>
+                                <C.Td>{medic.cpfMedico}</C.Td>
                                 <C.Td>{medic.crmMedico}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
@@ -382,7 +382,7 @@ export function Medico() {
                                                     <C.Text><b>CPF:</b> {medic.cpfMedico}</C.Text>
                                                     <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
                                                     <C.Text><b>Telefone:</b> {medic.numTelefone}</C.Text>
-                                                    <C.Text><b>Especialidade:</b> {medic.nomeEspecialidade}</C.Text>
+                                                    <C.Text><b>Especialidades:</b> </C.Text>
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
                                                 <C.InfoImg
@@ -461,19 +461,6 @@ export function Medico() {
                                                 <Label>
                                                     Especialidade
 
-                                                    <C.Select
-                                                        onChange={(e) => setSpecialtyInputValueModal(e.target.value)}
-                                                    >
-                                                        <option value={medic.idEspecialidade}>{medic.nomeEspecialidade}</option>
-                                                        {specialty.map((spe: any) =>
-                                                            <option
-                                                                key={spe.idEspecialidade}
-                                                                value={spe.idEspecialidade}
-                                                            >
-                                                                {spe.nomeEspecialidade}
-                                                            </option>
-                                                        )}
-                                                    </C.Select>
                                                 </Label>
 
                                                 <Label>
