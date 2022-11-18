@@ -28,18 +28,18 @@ export function Especialidade() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/').then(response => setSpecialty(response.data));
+        axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/').then(response => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
+            axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/', {
                 params: {
                     search: search
                 }
             }).then(response => setSpecialty(response.data));
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/',).then(response => setSpecialty(response.data));
+            axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/',).then(response => setSpecialty(response.data));
         }
 
         setSpecialtyInputValue(null);
@@ -50,7 +50,7 @@ export function Especialidade() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
+        axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/', {
             params: {
                 search: search
             }
@@ -74,7 +74,7 @@ export function Especialidade() {
         if (!specialtyInputValue || repeatedSpecialtyVerification > 0) setIsSpecialtyInputWithError(true);
 
         if (specialtyInputValue && repeatedSpecialtyVerification == 0) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-admin/especialidade/', formData);
+            await axios.post('http://localhost/buscasus-web/api/area-admin/especialidade/', formData);
 
             setIsFormSubmitted(true);
 
@@ -83,7 +83,7 @@ export function Especialidade() {
     }
 
     async function deleteSpecialty() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-admin/especialidade/`, {
+        await axios.delete(`http://localhost/buscasus-web/api/area-admin/especialidade/`, {
             params: {
                 idEspecialidade: specialtyId
             }
@@ -94,7 +94,7 @@ export function Especialidade() {
     }
 
     function verifyIsSpecialtyRepeated(specialty: any) {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
+        axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/', {
             params: {
                 repeatedSpecialty: specialty
             }
@@ -166,6 +166,7 @@ export function Especialidade() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
+                        <Button.Pdf />
                     </C.InputsContainer>
                 </C.TableContainerHeader>
                 <C.Table>

@@ -78,18 +78,18 @@ export function Hospital() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get(`http://localhost/buscaSusWeb/api/area-admin/hospital/`).then((response) => setHospital(response.data));
+        axios.get(`http://localhost/buscasus-web/api/area-admin/hospital/`).then((response) => setHospital(response.data));
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+            axios.get('http://localhost/buscasus-web/api/area-admin/hospital/', {
                 params: {
                     search: search
                 }
             }).then(response => setHospital(response.data));
         } else {
-            axios.get(`http://localhost/buscaSusWeb/api/area-admin/hospital/`).then((response) => setHospital(response.data));
+            axios.get(`http://localhost/buscasus-web/api/area-admin/hospital/`).then((response) => setHospital(response.data));
         }
 
         setHospitalInputValue(null);
@@ -113,7 +113,7 @@ export function Hospital() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+        axios.get('http://localhost/buscasus-web/api/area-admin/hospital/', {
             params: {
                 search: search,
             }
@@ -189,7 +189,7 @@ export function Hospital() {
 
         if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation
             && repeatedCnpjVerification == 0 && ufInputValue && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData);
+            await axios.post('http://localhost/buscasus-web/api/area-admin/hospital/', formData);
 
             setIsFormSubmitted(true);
             toast.success("Hospital cadastrado com sucesso!");
@@ -212,7 +212,7 @@ export function Hospital() {
 
         if (hospitalInputValueModal && emailInputValueModal && phoneInputValueModal.length == 14 && startTimeInputValueModal && endTimeInputValueModal && cnpjInputValueModal && ufInputValueModal
             && publicPlaceInputValueModal && cepInputValueModal.length == 9 && cityInputValueModal && districtInputValueModal) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-admin/hospital/', formData, {
+            await axios.post('http://localhost/buscasus-web/api/area-admin/hospital/', formData, {
                 params: {
                     nomeHospital: hospitalInputValueModal,
                     emailHospital: emailInputValueModal,
@@ -237,7 +237,7 @@ export function Hospital() {
     }
 
     async function deleteHospital() {
-        await axios.delete('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+        await axios.delete('http://localhost/buscasus-web/api/area-admin/hospital/', {
             params: {
                 idHospital: hospitalId,
                 idTelefone: phoneId
@@ -259,7 +259,7 @@ export function Hospital() {
     }
 
     function verifyIsCnpjRepeated(cnpj: any) {
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/hospital/', {
+        axios.get('http://localhost/buscasus-web/api/area-admin/hospital/', {
             params: {
                 repeatedCnpj: cnpj
             }
@@ -540,7 +540,7 @@ export function Hospital() {
                                                         <C.Text><b>Cidade:</b> {hosp.cidadeHospital}</C.Text>
                                                         <C.Text><b>Bairro:</b> {hosp.bairroHospital}</C.Text>
                                                     </C.InfoContainer>
-                                                    <C.InfoImg src={`http://localhost/buscaSusWeb/api/area-admin/img/${hosp.fotoHospital}`} />
+                                                    <C.InfoImg src={`http://localhost/buscasus-web/api/area-admin/img/${hosp.fotoHospital}`} />
                                                 </C.InfoModalContent>
                                             </Modal.Info>
                                             <Modal.Edit

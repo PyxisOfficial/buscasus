@@ -16,11 +16,11 @@ export function Usuario() {
     const [search, setSearch] = useState<string>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/').then(response => setUsers(response.data));
+        axios.get('http://localhost/buscasus-web/api/area-usuario/usuario/').then(response => setUsers(response.data));
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-usuario/usuario/', {
+        axios.get('http://localhost/buscasus-web/api/area-usuario/usuario/', {
             params: {
                 search: search
             }
@@ -51,6 +51,7 @@ export function Usuario() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
+                        <Button.Pdf />
                     </C.InputsContainer>
                 </C.TableContainerHeader>
                 <C.Table>

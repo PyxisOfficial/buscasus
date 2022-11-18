@@ -13,7 +13,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [adminUser, setAdminUser] = useState<boolean>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/login/').then((response) => {
+        axios.get('http://localhost/buscasus-web/api/login/').then((response) => {
             setUsers(response.data);
         });
 

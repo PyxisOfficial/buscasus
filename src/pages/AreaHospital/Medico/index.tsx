@@ -53,13 +53,13 @@ export function Medico() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
             params: {
                 idHospital: hospitalId
             }
         }).then(response => setMedics(response.data));
 
-        axios.get('http://localhost/buscaSusWeb/api/area-admin/especialidade/', {
+        axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/', {
             params: {
                 idHospital: hospitalId
             }
@@ -68,14 +68,14 @@ export function Medico() {
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
                 params: {
                     search: search,
                     idHospital: hospitalId
                 }
             }).then(response => setMedics(response.data));
         } else {
-            axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+            axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
                 params: {
                     idHospital: hospitalId
                 }
@@ -95,7 +95,7 @@ export function Medico() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
             params: {
                 search: search,
                 idHospital: hospitalId
@@ -133,7 +133,7 @@ export function Medico() {
         if (specialtyInputValue == 0 || !specialtyInputValue) setIsSpecialtyInputWithError(true);
 
         if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && specialtyInputValue > 0) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData);
+            await axios.post('http://localhost/buscasus-web/api/area-hospital/medico/', formData);
 
             setIsFormSubmitted(true);
 
@@ -152,7 +152,7 @@ export function Medico() {
         if (!phoneInputValueModal || phoneInputValueModal.length != 15) setIsPhoneInputModalWithError(true);
 
         if (medicInputValueModal && phoneInputValueModal.length == 15 && specialtyInputValueModal != 0) {
-            await axios.post('http://localhost/buscaSusWeb/api/area-hospital/medico/', formData, {
+            await axios.post('http://localhost/buscasus-web/api/area-hospital/medico/', formData, {
                 params: {
                     nomeMedico: medicInputValueModal,
                     numTelefone: phoneInputValueModal,
@@ -169,7 +169,7 @@ export function Medico() {
     }
 
     async function deleteMedic() {
-        await axios.delete(`http://localhost/buscaSusWeb/api/area-hospital/medico/`, {
+        await axios.delete(`http://localhost/buscasus-web/api/area-hospital/medico/`, {
             params: {
                 idMedico: medicId,
                 idTelefone: phoneId
@@ -181,7 +181,7 @@ export function Medico() {
     }
 
     function verifyIsCpfRepeated(cpf: any) {
-        axios.get('http://localhost/buscaSusWeb/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
             params: {
                 repeatedCpf: cpf
             }
@@ -386,9 +386,9 @@ export function Medico() {
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
                                                 <C.InfoImg
-                                                    src={`http://localhost/buscaSusWeb/api/area-hospital/img/${medic.fotoMedico}`}
+                                                    src={`http://localhost/buscasus-web/api/area-hospital/img/${medic.fotoMedico}`}
                                                     onError={(e: any) => (e.target.onerror = null)(
-                                                        (e.target.src = "http://localhost/buscaSusWeb/api/area-hospital/img/placeholder.png")
+                                                        (e.target.src = "http://localhost/buscasus-web/api/area-hospital/img/placeholder.png")
                                                     )
                                                     }
                                                 />
