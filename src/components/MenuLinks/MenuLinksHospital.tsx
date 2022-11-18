@@ -7,6 +7,7 @@ export function MenuLinksHospital() {
             <NavLink to="/visao-geral-hospital" className="sidebar-item">Visão Geral</NavLink>
             <NavLink to="/medicos" className="sidebar-item">Médicos</NavLink>
             <NavLink to="/plantoes" className="sidebar-item">Plantões</NavLink>
+            <NavLink to="/plantao-do-dia" className="sidebar-item">Plantões do dia</NavLink>
         </C.SideBar>
     )
 }

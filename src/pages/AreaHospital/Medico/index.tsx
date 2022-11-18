@@ -280,7 +280,7 @@ export function Medico() {
                                 <C.ModalHeader>
                                     <Input.Root>
                                         <Input.Input
-                                            onChange={(e) => setSearchAdmin(e.target.value)}
+                                            onChange={(e) => setSearch(e.target.value)}
                                             isWithIcon
                                             errorText={false}
                                             inputSize={sizes.xl}

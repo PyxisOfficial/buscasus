@@ -5,6 +5,7 @@ import { LoginAdmin } from './pages/AreaLogin/LoginAdmin';
 import { VisaoGeralHospital } from './pages/AreaHospital/VisaoGeral';
 import { Medico } from './pages/AreaHospital/Medico';
 import { Plantao } from './pages/AreaHospital/Plantao';
+import { PlantaoDia } from './pages/AreaHospital/PlantaoDia';
 import { VisaoGeralAdmin } from './pages/AreaAdminGeral/VisaoGeral';
 import { Hospital } from './pages/AreaAdminGeral/Hospital';
 import { Admin } from './pages/AreaAdminGeral/Admin';
@@ -33,6 +34,7 @@ export default function AppRoutes() {
                 <Route path="/visao-geral-hospital" element={<PrivateHospital Item={VisaoGeralHospital} />} />
                 <Route path="/medicos" element={<PrivateHospital Item={Medico} />} />
                 <Route path="/plantoes" element={<PrivateHospital Item={Plantao} />} />
+                <Route path="/plantao-do-dia" element={<PrivateHospital Item={PlantaoDia} />} />
                 <Route path="/visao-geral-admin" element={<PrivateAdmin Item={VisaoGeralAdmin} />} />
                 <Route path="/hospitais" element={<PrivateAdmin Item={Hospital} />} />
                 <Route path="/admin" element={<PrivateAdmin Item={Admin} />} />
