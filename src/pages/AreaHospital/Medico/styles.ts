@@ -170,26 +170,21 @@ export const ModalList = styled.div`
     padding: 10px;
     width: 100%;
     height: 40vh;
-    border: 2px solid #287365;
+    border: 2px solid #3EB08F;
     border-radius: 8px;
     gap: 4px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-
 `
 
-export const ModalSelectedContainer = styled.div`
-    
-`
-
-export const ModalListItem = styled.div`
+export const ModalTrigger = styled.button`
+    color: #6a6a6a;
+    padding: 4px;
+    border: 1px solid #6a6a6a;
+    border-radius: 8px;
+    background: #E7E7E7;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    width: 100%;
-    padding: 4px;
-    background: #287365;
-    border-radius: 20px;
-    font-size: 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.90rem;
 `

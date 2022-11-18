@@ -5,6 +5,7 @@ import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
+import { Toggle } from '../../../components/Toggle';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -81,7 +82,11 @@ export function PlantaoDia() {
                                 <C.Td>{duty.inicioPlantao}</C.Td>
                                 <C.Td>{duty.fimPlantao}</C.Td>
                                 <C.Td>{duty.nomeMedico}</C.Td>
-                                <C.Td>(btn de presença aq)</C.Td>
+                                <C.Td>
+                                    <Toggle.Absence> 
+                                        Ausente 
+                                    </Toggle.Absence>  
+                                </C.Td>
                             </C.InnerTr>
                         )}
                     </C.Tbody>

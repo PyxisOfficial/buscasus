@@ -110,7 +110,7 @@ interface GenericModalTriggerProps {
 
 function GenericModalTrigger({children}: GenericModalTriggerProps) {
     return (
-        <AlertDialog.Trigger>
+        <AlertDialog.Trigger asChild>
             {children}
         </AlertDialog.Trigger>
     )

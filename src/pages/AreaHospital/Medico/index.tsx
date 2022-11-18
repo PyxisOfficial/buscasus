@@ -12,6 +12,7 @@ import { Input, InputImage, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
 import { ToastContainer, toast } from 'react-toastify';
+import { Toggle } from '../../../components/Toggle';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -271,12 +272,14 @@ export function Medico() {
                             </Label>
 
                             <Label>
-                                Especialidade
+                                Especialidades
                                 <Modal.Generic.Root>
                                 <Modal.Generic.Trigger>
-                                    Selecione
+                                    <C.ModalTrigger>
+                                        Selecione
+                                    </C.ModalTrigger>
                                 </Modal.Generic.Trigger>
-                                <Modal.Generic.Content title='Especialidades do médico'>
+                                <Modal.Generic.Content title='Especialidades'>
                                 <C.ModalHeader>
                                     <Input.Root>
                                         <Input.Input
@@ -297,13 +300,10 @@ export function Medico() {
                                         </Input.LeftIcon>
                                     </Input.Root>
                                 </C.ModalHeader>
-                                <C.ModalSelectedContainer>
-                                    {/* coloca os itens selecionados aqui */}
-                                </C.ModalSelectedContainer>
                                 <C.ModalList>
-                                    <C.ModalListItem>
+                                    <Toggle.Generic>
                                         Ortopedia
-                                    </C.ModalListItem>
+                                    </Toggle.Generic>
                                 </C.ModalList>
                                 </Modal.Generic.Content>
                             </Modal.Generic.Root>
