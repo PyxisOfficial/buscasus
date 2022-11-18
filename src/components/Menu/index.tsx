@@ -54,7 +54,7 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
                             <Button.Green
                                 value="Sair"
                                 type="button"
-                                onClick={() => [signOut(), navigate("/")]}
+                                onClick={() => [signOut(), navigate("/"), location.reload()]}
                             />
                         </C.ButtonContainer>
                     </Modal.Logout>
