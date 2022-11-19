@@ -27,7 +27,7 @@ export function PrimeiroAcesso({ hospitalId }: FirstAccessProps) {
         if (!confirmPassword || password !== confirmPassword) setIsConfirmPasswordWithError(true);
 
         if (password && confirmPassword && password === confirmPassword) {
-            await axios.put('http://localhost/buscasus-web/api/area-admin/admin/', null, {
+            await axios.put('http://localhost/buscasus/api/area-admin/admin/', null, {
                 params: {
                     senhaAdmin: password,
                     idHospital: hospitalId

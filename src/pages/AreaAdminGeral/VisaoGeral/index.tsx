@@ -39,19 +39,19 @@ export function VisaoGeralAdmin() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-usuario/usuario/', {
+        axios.get('http://localhost/buscasus/api/area-usuario/usuario/', {
             params: {
                 count: true
             }
         }).then(response => setUsersCount(response.data.idUsuario));
 
-        axios.get('http://localhost/buscasus-web/api/area-admin/hospital/', {
+        axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
             params: {
                 count: true
             }
         }).then(response => setHospitalsCount(response.data.idHospital));
 
-        axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
             params: {
                 count: true
             }

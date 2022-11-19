@@ -25,7 +25,7 @@ export function MenuBackground({ children, menuLinks }: MenuBackgroundProps) {
     const [hospitalName, setHospitalName] = useState<string>();
 
     useEffect(() => {
-        axios.get(`http://localhost/buscasus-web/api/login/${hospitalId}`).then((response) => {
+        axios.get(`http://localhost/buscasus/api/login/${hospitalId}`).then((response) => {
             setHospitalName(response.data.nomeHospital);
         });
     }, [])

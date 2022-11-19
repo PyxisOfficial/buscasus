@@ -20,7 +20,7 @@ export function PlantaoDia() {
     const hospitalId = JSON.parse(getHospitalId);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
                 todayDuty: true,
                 idHospital: hospitalId
@@ -29,7 +29,7 @@ export function PlantaoDia() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
                 todayDuty: true,
                 search: search,

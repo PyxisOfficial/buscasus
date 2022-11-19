@@ -13,9 +13,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [adminUser, setAdminUser] = useState<boolean>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/login/').then((response) => {
-            setUsers(response.data);
-        });
+        axios.get('http://localhost/buscasus/api/login/').then(response => setUsers(response.data));
 
         const HospitalToken = localStorage.getItem("hospital_token");
         const AdminToken = localStorage.getItem("admin_token");

@@ -16,11 +16,11 @@ export function Usuario() {
     const [search, setSearch] = useState<string>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-usuario/usuario/').then(response => setUsers(response.data));
+        axios.get('http://localhost/buscasus/api/area-usuario/usuario/').then(response => setUsers(response.data));
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-usuario/usuario/', {
+        axios.get('http://localhost/buscasus/api/area-usuario/usuario/', {
             params: {
                 search: search
             }

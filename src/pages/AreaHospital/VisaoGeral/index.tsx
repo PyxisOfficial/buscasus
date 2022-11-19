@@ -42,21 +42,21 @@ export function VisaoGeralHospital() {
     const firstAccess = JSON.parse(getFirstAccess);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-usuario/reclamacao/', {
+        axios.get('http://localhost/buscasus/api/area-usuario/reclamacao/', {
             params: {
                 hospitalCount: true,
                 idHospital: hospitalId
             }
         }).then(response => setClaimCount(response.data.idReclamacao));
 
-        axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
                 hospitalCount: true,
                 idHospital: hospitalId
             }
         }).then(response => setDutyCount(response.data.idPlantao));
 
-        axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
             params: {
                 hospitalCount: true,
                 idHospital: hospitalId

@@ -48,31 +48,31 @@ export function Plantao() {
     const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
                 idHospital: hospitalId
             }
         }).then(response => setDuty(response.data));
 
-        axios.get('http://localhost/buscasus-web/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
             params: {
                 idHospital: hospitalId
             }
         }).then(response => setMedics(response.data));
 
-        axios.get('http://localhost/buscasus-web/api/area-admin/especialidade/').then((response) => setSpecialty(response.data));
+        axios.get('http://localhost/buscasus/api/area-admin/especialidade/').then((response) => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+            axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
                 params: {
                     search: search,
                     idHospital: hospitalId
                 }
             }).then(response => setDuty(response.data));
         } else {
-            axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+            axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
                 params: {
                     idHospital: hospitalId
                 }
@@ -83,7 +83,7 @@ export function Plantao() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
                 search: search,
                 idHospital: hospitalId
@@ -124,7 +124,7 @@ export function Plantao() {
         formData.append("idHospital", hospitalId);
 
         if (dates && startTime && endTime && specialtyInputValue > 0 && medicInputValue > 0) {
-            await axios.post('http://localhost/buscasus-web/api/area-hospital/plantao/', formData);
+            await axios.post('http://localhost/buscasus/api/area-hospital/plantao/', formData);
 
             setIsFormSubmitted(true);
             setDates('');
@@ -133,7 +133,7 @@ export function Plantao() {
     }
 
     async function deleteDuty() {
-        await axios.delete('http://localhost/buscasus-web/api/area-hospital/plantao/', {
+        await axios.delete('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
                 idPlantao: dutyId
             }

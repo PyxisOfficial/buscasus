@@ -35,19 +35,19 @@ export function Admin() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-admin/admin/').then(response => setAdminUsers(response.data));
-        axios.get('http://localhost/buscasus-web/api/area-admin/hospital/').then(response => setHospital(response.data));
+        axios.get('http://localhost/buscasus/api/area-admin/admin/').then(response => setAdminUsers(response.data));
+        axios.get('http://localhost/buscasus/api/area-admin/hospital/').then(response => setHospital(response.data));
     }, []);
 
     useEffect(() => {
         if (searchAdmin) {
-            axios.get('http://localhost/buscasus-web/api/area-admin/admin/', {
+            axios.get('http://localhost/buscasus/api/area-admin/admin/', {
                 params: {
                     search: searchAdmin
                 }
             }).then(response => setAdminUsers(response.data));
         } else {
-            axios.get('http://localhost/buscasus-web/api/area-admin/admin/').then(response => setAdminUsers(response.data));
+            axios.get('http://localhost/buscasus/api/area-admin/admin/').then(response => setAdminUsers(response.data));
         }
 
         setLoginInputValue(null);
@@ -61,7 +61,7 @@ export function Admin() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus-web/api/area-admin/admin/', {
+        axios.get('http://localhost/buscasus/api/area-admin/admin/', {
             params: {
                 search: searchAdmin,
             }
@@ -93,7 +93,7 @@ export function Admin() {
         formData.append("idHospital", hospitalInputValue);
 
         if (loginInputValue && repeatedAdminVerification == 0 && passwordInputValue && hospitalInputValue > 0) {
-            await axios.post('http://localhost/buscasus-web/api/area-admin/admin/', formData);
+            await axios.post('http://localhost/buscasus/api/area-admin/admin/', formData);
 
             setIsFormSubmitted(true);
             toast.success("Administrador cadastrado com sucesso!");
@@ -101,7 +101,7 @@ export function Admin() {
     }
 
     async function deleteUser() {
-        await axios.delete('http://localhost/buscasus-web/api/area-admin/admin/', {
+        await axios.delete('http://localhost/buscasus/api/area-admin/admin/', {
             params: {
                 idAdmin: adminUserId
             }
@@ -124,7 +124,7 @@ export function Admin() {
     }
 
     function verifyIsAdminRepeated(admin: any) {
-        axios.get('http://localhost/buscasus-web/api/area-admin/admin/', {
+        axios.get('http://localhost/buscasus/api/area-admin/admin/', {
             params: {
                 repeatedAdmin: admin
             }
