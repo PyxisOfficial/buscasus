@@ -4,6 +4,7 @@ import axios from 'axios';
 import { cpf } from 'cpf-cnpj-validator';
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import Select from 'react-select';
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
@@ -12,7 +13,6 @@ import { Input, InputImage, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
 import { Label } from '../../../components/Form/Label';
 import { ToastContainer, toast } from 'react-toastify';
-import { Toggle } from '../../../components/Toggle';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -26,24 +26,24 @@ export function Medico() {
     const [medics, setMedics] = useState([]);
     const [medicId, setMedicId] = useState<number>();
     const [phoneId, setPhoneId] = useState<number>();
-    const [specialty, setSpecialty] = useState([]);
+    const [specialty, setSpecialty] = useState<any>([]);
     const [search, setSearch] = useState<string>();
+
+    const [specialtyValue, setSpecialtyValue] = useState<any>([]);
+    const [specialtyCheckbox, setSpecialtyCheckbox] = useState<any>([]);
 
     const [medicInputValue, setMedicInputValue] = useState<any>();
     const [cpfInputValue, setCpfInputValue] = useState<any>();
     const [crmInputValue, setCrmInputValue] = useState<any>();
     const [phoneInputValue, setPhoneInputValue] = useState<any>();
-    const [specialtyInputValue, setSpecialtyInputValue] = useState<any>();
     const [medicPhoto, setMedicPhoto] = useState<any>();
     const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
     const [isCpfInputWithError, setIsCpfInputWithError] = useState<boolean>();
     const [isCrmInputWithError, setIsCrmInputWithError] = useState<boolean>();
     const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
-    const [isSpecialtyInputWithError, setIsSpecialtyInputWithError] = useState<boolean>();
 
     const [medicInputValueModal, setMedicInputValueModal] = useState<any>();
     const [phoneInputValueModal, setPhoneInputValueModal] = useState<any>();
-    const [specialtyInputValueModal, setSpecialtyInputValueModal] = useState<any>();
     const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
     const [isMedicInputModalWithError, setIsMedicInputModalWithError] = useState<boolean>();
     const [isPhoneInputModalWithError, setIsPhoneInputModalWithError] = useState<boolean>();
@@ -68,6 +68,19 @@ export function Medico() {
     }, []);
 
     useEffect(() => {
+        const specialtyValue: any = [];
+
+        specialty.map((spe: any) => {
+            specialtyValue.push({
+                "value": spe.idEspecialidade,
+                "label": spe.nomeEspecialidade
+            });
+        });
+
+        setSpecialtyValue(specialtyValue);
+    }, [specialty]);
+
+    useEffect(() => {
         if (search) {
             axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
                 params: {
@@ -88,7 +101,7 @@ export function Medico() {
         setRepeatedCpfVerification(null);
         setCrmInputValue(null);
         setPhoneInputValue(null);
-        setSpecialtyInputValue(null);
+        setSpecialtyCheckbox(null)
         setMedicPhoto(null);
 
         setIsFormSubmitted(false);
@@ -119,9 +132,10 @@ export function Medico() {
         formData.append("nomeMedico", medicInputValue);
         formData.append("cpfMedico", cpfInputValue);
         formData.append("crmMedico", crmInputValue);
+        specialtyCheckbox.map((spe: any) => formData.append("idEspecialidade[]", spe.value));
         formData.append("numTelefone", phoneInputValue);
+
         medicPhoto ? formData.append("fotoMedico", medicPhoto[0].name) : formData.append("fotoMedico", null);
-        formData.append("idEspecialidade", specialtyInputValue);
         formData.append("idHospital", hospitalId);
         medicPhoto ? formData.append("picture", medicPhoto[0]) : formData.append("picture", null);
 
@@ -131,9 +145,8 @@ export function Medico() {
         if (!cpfInputValue || !cpfValidation || repeatedCpfVerification > 0) setIsCpfInputWithError(true);
         if (!crmInputValue) setIsCrmInputWithError(true);
         if (!phoneInputValue || phoneInputValue.length != 15) setIsPhoneInputWithError(true);
-        if (specialtyInputValue == 0 || !specialtyInputValue) setIsSpecialtyInputWithError(true);
 
-        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && specialtyInputValue > 0) {
+        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && specialtyCheckbox) {
             await axios.post('http://localhost/buscasus/api/area-hospital/medico/', formData);
 
             setIsFormSubmitted(true);
@@ -152,13 +165,12 @@ export function Medico() {
         if (!medicInputValueModal) setIsMedicInputModalWithError(true);
         if (!phoneInputValueModal || phoneInputValueModal.length != 15) setIsPhoneInputModalWithError(true);
 
-        if (medicInputValueModal && phoneInputValueModal.length == 15 && specialtyInputValueModal != 0) {
+        if (medicInputValueModal && phoneInputValueModal.length == 15) {
             await axios.post('http://localhost/buscasus/api/area-hospital/medico/', formData, {
                 params: {
                     nomeMedico: medicInputValueModal,
                     numTelefone: phoneInputValueModal,
                     fotoMedico: medicPhotoModal ? medicPhotoModal[0].name : null,
-                    idEspecialidade: specialtyInputValueModal,
                     idMedico: medicId,
                     idTelefone: phoneId
                 }
@@ -273,40 +285,14 @@ export function Medico() {
 
                             <Label>
                                 Especialidades
-                                <Modal.Generic.Root>
-                                <Modal.Generic.Trigger>
-                                    <C.ModalTrigger>
-                                        Selecione
-                                    </C.ModalTrigger>
-                                </Modal.Generic.Trigger>
-                                <Modal.Generic.Content title='Especialidades'>
-                                <C.ModalHeader>
-                                    <Input.Root>
-                                        <Input.Input
-                                            onChange={(e) => setSearch(e.target.value)}
-                                            isWithIcon
-                                            errorText={false}
-                                            inputSize={sizes.xl}
-                                            id="adminSearch"
-                                            type="search"
-                                            placeholder="Buscar"
-                                        />
-                                        <Input.LeftIcon
-                                            htmlFor="adminSearch"
-                                            topPosition={4}
-                                            leftPosition={5}
-                                        >
-                                            <MagnifyingGlass size={16} />
-                                        </Input.LeftIcon>
-                                    </Input.Root>
-                                </C.ModalHeader>
-                                <C.ModalList>
-                                    <Toggle.Generic>
-                                        Ortopedia
-                                    </Toggle.Generic>
-                                </C.ModalList>
-                                </Modal.Generic.Content>
-                            </Modal.Generic.Root>
+                                <Select
+                                    isMulti
+                                    value={specialtyCheckbox}
+                                    onChange={(spe: any) => setSpecialtyCheckbox(spe)}
+                                    options={specialtyValue}
+                                    placeholder="Selecione"
+                                />
+
                             </Label>
 
                             <Label>
@@ -322,8 +308,8 @@ export function Medico() {
                         <C.ButtonContainer>
                             <Button.Gray
                                 onClick={() => [
-                                    setMedicInputValue(null), setCpfInputValue(null), setRepeatedCpfVerification(null), setCrmInputValue(null), setPhoneInputValue(null), setSpecialtyInputValue(null), setMedicPhoto(null),
-                                    setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false), setIsSpecialtyInputWithError(false)
+                                    setMedicInputValue(null), setCpfInputValue(null), setRepeatedCpfVerification(null), setCrmInputValue(null), setPhoneInputValue(null), setSpecialtyCheckbox(null),
+                                    setMedicPhoto(null), setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false)
                                 ]}
                                 value="Cancelar"
                                 type="reset"
@@ -395,10 +381,10 @@ export function Medico() {
                                             </C.InfoModalContent>
                                         </Modal.Info>
                                         <Modal.Edit
-                                            itemId={() => [setMedicInputValueModal(medic.nomeMedico), setPhoneInputValueModal(medic.numTelefone), setSpecialtyInputValueModal(medic.idEspecialidade), setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
+                                            itemId={() => [setMedicInputValueModal(medic.nomeMedico), setPhoneInputValueModal(medic.numTelefone), setMedicId(medic.idMedico), setPhoneId(medic.idTelefone)]}
                                             closeModal={() => [
                                                 setMedicId(0), setPhoneId(0),
-                                                setMedicInputValueModal(null), setPhoneInputValueModal(null), setSpecialtyInputValueModal(null), setMedicPhotoModal(null),
+                                                setMedicInputValueModal(null), setPhoneInputValueModal(null), setMedicPhotoModal(null),
                                                 setIsMedicInputModalWithError(false), setIsPhoneInputModalWithError(false)
                                             ]}
                                             title='Editar médico'
@@ -458,10 +444,10 @@ export function Medico() {
                                                     />
                                                 </Label>
 
-                                                <Label>
+                                                {/* <Label>
                                                     Especialidade
 
-                                                </Label>
+                                                </Label> */}
 
                                                 <Label>
                                                     Foto do médico
@@ -478,7 +464,7 @@ export function Medico() {
                                                         <Button.Gray
                                                             onClick={() => [
                                                                 setMedicId(0), setPhoneId(0),
-                                                                setMedicInputValueModal(null), setPhoneInputValueModal(null), setSpecialtyInputValueModal(null), setMedicPhotoModal(null),
+                                                                setMedicInputValueModal(null), setPhoneInputValueModal(null), setMedicPhotoModal(null),
                                                                 setIsMedicInputModalWithError(false), setIsPhoneInputModalWithError(false)
                                                             ]}
                                                             value="Fechar"

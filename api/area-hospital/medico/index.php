@@ -81,13 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $idEspecialidade = $_POST['idEspecialidade'];
     $idHospital = $_POST['idHospital'];
 
-    $sql = "INSERT INTO tbMedico(idMedico, nomeMedico, cpfMedico, crmMedico, fotoMedico, idEspecialidade, idHospital) VALUES(null, :nomeMedico, :cpfMedico, :crmMedico, :fotoMedico, :idEspecialidade, :idHospital)";
+    $sql = "INSERT INTO tbMedico(idMedico, nomeMedico, cpfMedico, crmMedico, fotoMedico, idHospital) VALUES(null, :nomeMedico, :cpfMedico, :crmMedico, :fotoMedico, :idHospital)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':nomeMedico', $nomeMedico);
     $stmt->bindParam(':cpfMedico', $cpfMedico);
     $stmt->bindParam(':crmMedico', $crmMedico);
     $stmt->bindParam(':fotoMedico', $fotoMedico);
-    $stmt->bindParam(':idEspecialidade', $idEspecialidade);
     $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
     $lastMedId = $conn->lastInsertId();
@@ -97,12 +96,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $stmt->bindParam(':numTelefone', $numTelefone);
     $stmt->bindParam(':idMedico', $lastMedId);
     $stmt->execute();
+
+    for ($i = 0; $i < $idEspecialidade; $i++) {
+        $sql = "INSERT INTO tbMedicoEspecialidade(idMedicoEspecialidade, idMedico, idEspecialidade) VALUES(null, :idMedico, :idEspecialidade)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idMedico', $lastMedId);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade[$i]);
+        $stmt->execute();
+    }
         
     $files = $_FILES['picture'];
     $filename = $files['name'];
     $templocation = $files['tmp_name'];
     $file_destination = '../img/' . $filename;
     move_uploaded_file($templocation, $file_destination);
+
+    echo json_encode($idEspecialidade);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
@@ -115,10 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
     $files = @$_FILES['picture'];
 
     if (isset($files)) {
-        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, fotoMedico =:fotoMedico, idEspecialidade =:idEspecialidade WHERE idMedico = :idMedico";
+        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, fotoMedico =:fotoMedico WHERE idMedico = :idMedico";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nomeMedico', $nomeMedico);
-        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
         $stmt->bindParam(':fotoMedico', $fotoMedico);
         $stmt->bindParam(':idMedico', $idMedico);
         $stmt->execute();
@@ -134,10 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
         $file_destination = '../img/' . $filename;
         move_uploaded_file($templocation, $file_destination);
     } else {
-        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico, idEspecialidade =:idEspecialidade WHERE idMedico = :idMedico";
+        $sql = "UPDATE tbMedico SET nomeMedico= :nomeMedico WHERE idMedico = :idMedico";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nomeMedico', $nomeMedico);
-        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
         $stmt->bindParam(':idMedico', $idMedico);
         $stmt->execute();
 
@@ -161,6 +168,11 @@ if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
     $sql = "DELETE FROM tbTelefone WHERE idTelefone = :idTelefone";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':idTelefone', $idTelefone);
+    $stmt->execute();
+
+    $sql = "DELETE FROM tbMedicoEspecialidade WHERE idMedico = :idMedico";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':idMedico', $idMedico);
     $stmt->execute();
 }
 ?>

@@ -120,7 +120,6 @@ interface GenericModalContentProps {
     children: ReactNode;
     title: string;
     closeModal?: any;
-    title: string;
 }
 
 function GenericModalContent({children, title, closeModal}: GenericModalContentProps) {

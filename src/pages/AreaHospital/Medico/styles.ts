@@ -159,32 +159,3 @@ export const Select = styled.select<{
         border: 1px solid #287365;
     }
 `
-
-export const ModalHeader = styled.div`
-    margin-bottom: 10px;
-`
-
-export const ModalList = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    width: 100%;
-    height: 40vh;
-    border: 2px solid #3EB08F;
-    border-radius: 8px;
-    gap: 4px;
-`
-
-export const ModalTrigger = styled.button`
-    color: #6a6a6a;
-    padding: 4px;
-    border: 1px solid #6a6a6a;
-    border-radius: 8px;
-    background: #E7E7E7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    user-select: none;
-    font-size: 0.90rem;
-`
