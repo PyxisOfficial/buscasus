@@ -3,9 +3,11 @@ import * as C from './styles'
 
 interface ToggleProps {
    children: ReactNode;
+   onPressedChange?: any;
+   pressed?: any;
 }
 
-function ToggleGeneric({children}: ToggleProps) {
+function ToggleGeneric({ children }: ToggleProps) {
    return (
       <C.ToggleRoot>
          {children}
@@ -13,9 +15,12 @@ function ToggleGeneric({children}: ToggleProps) {
    )
 }
 
-function ToggleAbsence({children}: ToggleProps) {
+function ToggleAbsence({ children, onPressedChange, pressed }: ToggleProps) {
    return (
-      <C.ToggleAbsRoot>
+      <C.ToggleAbsRoot
+         pressed={pressed}
+         onPressedChange={onPressedChange}
+      >
          <C.ToggleButton>
             {children}
          </C.ToggleButton>

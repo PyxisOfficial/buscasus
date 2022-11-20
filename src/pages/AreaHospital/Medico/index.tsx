@@ -142,7 +142,7 @@ export function Medico() {
         formData.append("nomeMedico", medicInputValue);
         formData.append("cpfMedico", cpfInputValue);
         formData.append("crmMedico", crmInputValue);
-        specialtyCheckbox.map((spe: any) => formData.append("idEspecialidade[]", spe.value));
+        if (specialtyCheckbox) specialtyCheckbox.map((spe: any) => formData.append("idEspecialidade[]", spe.value));
         formData.append("numTelefone", phoneInputValue);
 
         medicPhoto ? formData.append("fotoMedico", medicPhoto[0].name) : formData.append("fotoMedico", null);
@@ -300,7 +300,7 @@ export function Medico() {
                                     value={specialtyCheckbox}
                                     onChange={(spe: any) => setSpecialtyCheckbox(spe)}
                                     options={specialtyValue}
-                                    placeholder="Selecione"
+                                    placeholder="Selecione as especialidades"
                                 />
 
                             </Label>

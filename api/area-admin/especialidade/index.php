@@ -28,10 +28,17 @@ if (isset($_GET['search'])) {
 
     echo json_encode($especialidade);
 } else {
-    $sql = "SELECT * FROM tbEspecialidade";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (isset($_GET['allSpecialty'])) {
+        $sql = "SELECT * FROM tbEspecialidade";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        $sql = "SELECT * FROM tbEspecialidade WHERE idEspecialidade > 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     echo json_encode($especialidade);
 }

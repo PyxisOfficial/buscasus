@@ -38,7 +38,7 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
 } else if (isset($_GET['todayDuty']) && !isset($_GET['search'])) {
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, p.presencaMedico, m.nomeMedico, m.idMedico
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
@@ -55,7 +55,7 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, p.presencaMedico, m.nomeMedico, m.idMedico
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
@@ -140,10 +140,8 @@ switch($method) {
         $idPlantao = $_GET['idPlantao'];
         $presencaMedico = $_GET['presencaMedico'];
 
-        $sql = "UPDATE tbPlantao SET presencaMedico = :presencaMedico WHERE idPlantao = :idPlantao";
+        $sql = "UPDATE tbPlantao SET presencaMedico = $presencaMedico WHERE idPlantao = $idPlantao";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':presencaMedico', $presencaMedico);
-        $stmt->bindParam(':idPlantao', $idPlantao);
         $stmt->execute();
         break;
 

@@ -12,6 +12,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 import * as C from './styles';
 
 export function PlantaoDia() {
+    const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [duty, setDuty] = useState([]);
     const [search, setSearch] = useState<string>();
@@ -26,7 +27,9 @@ export function PlantaoDia() {
                 idHospital: hospitalId
             }
         }).then(response => setDuty(response.data));
-    }, []);
+
+        setIsFormSubmitted(false);
+    }, [isFormSubmitted]);
 
     useEffect(() => {
         axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
@@ -37,6 +40,17 @@ export function PlantaoDia() {
             }
         }).then(response => setDuty(response.data));
     }, [search]);
+
+    async function alterMedicPresence(dutyId: string, medicPresence: boolean) {
+        await axios.put('http://localhost/buscasus/api/area-hospital/plantao/', null, {
+            params: {
+                idPlantao: dutyId,
+                presencaMedico: medicPresence
+            }
+        });
+
+        setIsFormSubmitted(true);
+    }
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
@@ -83,9 +97,12 @@ export function PlantaoDia() {
                                 <C.Td>{duty.fimPlantao}</C.Td>
                                 <C.Td>{duty.nomeMedico}</C.Td>
                                 <C.Td>
-                                    <Toggle.Absence> 
-                                        Ausente 
-                                    </Toggle.Absence>  
+                                    <Toggle.Absence
+                                        pressed={duty.presencaMedico == 1 ? true : false}
+                                        onPressedChange={() => duty.presencaMedico == 1 ? alterMedicPresence(duty.idPlantao, false) : alterMedicPresence(duty.idPlantao, true)}
+                                    >
+                                        {duty.presencaMedico == 1 ? 'Presente' : 'Ausente'}
+                                    </Toggle.Absence>
                                 </C.Td>
                             </C.InnerTr>
                         )}

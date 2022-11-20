@@ -28,7 +28,7 @@ export function Plantao() {
     const [specialty, setSpecialty] = useState([]);
     const [search, setSearch] = useState<string>();
 
-    const [specialtyInputValue, setSpecialtyInputValue] = useState<any>();
+    const [specialtyInputValue, setSpecialtyInputValue] = useState<any>(1);
     const [startTime, setStartTime] = useState<any>();
     const [endTime, setEndTime] = useState<any>();
     const [medicInputValue, setMedicInputValue] = useState<any>();
@@ -54,14 +54,21 @@ export function Plantao() {
             }
         }).then(response => setDuty(response.data));
 
-        axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
+        axios.get('http://localhost/buscasus/api/area-admin/especialidade/', {
             params: {
+                allSpecialty: true
+            }
+        }).then((response) => setSpecialty(response.data));
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
+            params: {
+                idEspecialidade: specialtyInputValue,
                 idHospital: hospitalId
             }
         }).then(response => setMedics(response.data));
-
-        axios.get('http://localhost/buscasus/api/area-admin/especialidade/').then((response) => setSpecialty(response.data));
-    }, []);
+    }, [specialtyInputValue]);
 
     useEffect(() => {
         if (search) {
@@ -171,7 +178,6 @@ export function Plantao() {
                                         onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : null}
                                         errorText={isSpecialtyInputWithError}
                                     >
-                                        <option value="0">Selecione</option>
                                         {specialty.map((spe: any) =>
                                             <option
                                                 key={spe.idEspecialidade}
