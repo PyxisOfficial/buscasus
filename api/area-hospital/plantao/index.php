@@ -22,7 +22,9 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($plantao);
+
 } else if (isset($_GET['hospitalCount'])) {
+    
     $idHospital = @$_GET['idHospital'];
 
     $sql = "SELECT COUNT(idPlantao) AS idPlantao FROM tbPlantao WHERE idHospital = :id";
@@ -32,6 +34,7 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $plantao = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($plantao);
+
 } else if (isset($_GET['todayDuty']) && !isset($_GET['search'])) {
     $idHospital = @$_GET['idHospital'];
 
@@ -46,7 +49,9 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($plantao);
+
 } else if (isset($_GET['search']) && isset($_GET['todayDuty'])) {
+
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
@@ -61,7 +66,38 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $plantao = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($plantao);
-} else {
+
+} else if (isset($_GET['idEspecialidade'])) {
+    
+    $idEspecialidade = $_GET['idEspecialidade'];
+    $idHospital = $_GET['idHospital'];
+    
+    if ($idEspecialidade == 1){
+        $sql = "SELECT idMedico, nomeMedico FROM tbMedico";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    } else {
+
+        $sql = "SELECT m.idMedico, m.nomeMedico FROM tbMedico m
+        INNER JOIN tbMedicoEspecialidade me
+        ON m.idMedico = me.idMedico
+        INNER JOIN tbEspecialidade e
+        ON e.idEspecialidade = me.idEspecialidade
+        WHERE e.idEspecialidade = :idEspecialidade AND m.idHospital = :idHospital";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade);
+        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->execute();
+        $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+    
+    echo json_encode($medico);
+
+ } else {
+
     $idHospital = @$_GET['idHospital'];
 
     $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico
@@ -100,6 +136,17 @@ switch($method) {
         }
         break;
 
+    case "PUT":
+        $idPlantao = $_GET['idPlantao'];
+        $presencaMedico = $_GET['presencaMedico'];
+
+        $sql = "UPDATE tbPlantao SET presencaMedico = :presencaMedico WHERE idPlantao = :idPlantao";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':presencaMedico', $presencaMedico);
+        $stmt->bindParam(':idPlantao', $idPlantao);
+        $stmt->execute();
+        break;
+
     case "DELETE":
         $idPlantao = $_GET['idPlantao'];
 
@@ -109,4 +156,5 @@ switch($method) {
         $stmt->execute();
         break;
 }
+
 ?>
