@@ -32,6 +32,8 @@ export function Admin() {
     const [isPasswordInputWithError, setIsPasswordInputWithError] = useState<boolean>();
     const [isHospitalInputWithError, setIsHospitalInputWithError] = useState<boolean>();
 
+    const [isPasswordCopied, setIsPasswordCopied] = useState<boolean>(false);
+
     const formRef = useRef<any>();
 
     useEffect(() => {
@@ -260,24 +262,25 @@ export function Admin() {
                                 <C.Td>
                                     <C.ButtonContainer>
                                         <C.HoverCardContainer>
-                                        {user.primeiroAcesso == 0
-                                        ?
-                                            <C.NotHover size={30} />
-                                        :
-                                            <HoverCard.Root>
-                                                <HoverCard.Trigger>
-                                                    <LockOpen size={30} />
-                                                </HoverCard.Trigger>
-                                                <HoverCard.Content>
-                                                    <CopyToClipboard
-                                                        text={user.senhaAdmin}
-                                                        onCopy={() => alert('Senha copiada!')}
-                                                    >
-                                                        <C.ClipboardText>{user.senhaAdmin}</C.ClipboardText>
-                                                    </CopyToClipboard>
-                                                </HoverCard.Content>
-                                            </HoverCard.Root>
-                                        }
+                                            {user.primeiroAcesso == 0
+                                                ?
+                                                <C.NotHover size={30} />
+                                                :
+                                                <HoverCard.Root>
+                                                    <HoverCard.Trigger>
+                                                        <LockOpen size={30} />
+                                                    </HoverCard.Trigger>
+                                                    <HoverCard.Content>
+                                                        <CopyToClipboard
+                                                            text={user.senhaAdmin}
+                                                            onCopy={() => setIsPasswordCopied(true)}
+                                                        >
+                                                            <C.ClipboardText>{user.senhaAdmin}</C.ClipboardText>
+                                                        </CopyToClipboard>
+                                                        {isPasswordCopied ? <div>Senha copiada com sucesso!</div> : null}
+                                                    </HoverCard.Content>
+                                                </HoverCard.Root>
+                                            }
                                         </C.HoverCardContainer>
                                         <Modal.Alert
                                             itemId={() => { setAdminUserId(user.idAdmin) }}

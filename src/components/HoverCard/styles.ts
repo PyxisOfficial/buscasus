@@ -8,6 +8,9 @@ export const HoverCardTrigger = styled(HoverCardPrimitive.Trigger)`
 `
 
 export const HoverCardContent = styled(HoverCardPrimitive.Content)`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
    background-color: #FBFBFD;
    padding: 10px;
    border-radius: 8px;
@@ -16,6 +19,7 @@ export const HoverCardContent = styled(HoverCardPrimitive.Content)`
                0px 3px 3px rgba(0, 0, 0, 0.09), 
                0px 1px 1px rgba(0, 0, 0, 0.1), 
                0px 0px 0px rgba(0, 0, 0, 0.1);
+   gap: 4px;
 `
 
 export const HoverCardArrow = styled(HoverCardPrimitive.Arrow)`
