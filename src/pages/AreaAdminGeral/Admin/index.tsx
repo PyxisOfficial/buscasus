@@ -277,7 +277,7 @@ export function Admin() {
                                                         >
                                                             <C.ClipboardText>{user.senhaAdmin}</C.ClipboardText>
                                                         </CopyToClipboard>
-                                                        {isPasswordCopied ? <div>Senha copiada com sucesso!</div> : null}
+                                                        {isPasswordCopied ? <C.ClipboardAlert>Copiado!</C.ClipboardAlert> : null}
                                                     </HoverCard.Content>
                                                 </HoverCard.Root>
                                             }

@@ -2,21 +2,6 @@ import styled from "styled-components";
 
 import * as Toggle from '@radix-ui/react-toggle';
 
-export const ToggleRoot = styled(Toggle.Root)`
-   padding: 4px 8px;
-   border: none;
-   border-radius: 20px;
-   background: #3EB08F;
-   color: #fff;
-   font-weight: 500;
-   font-size: 1.20rem;
-   cursor: pointer;
-
-   &[data-state='on'] {
-      background: #2D8272;
-   }
-`
-
 export const ToggleAbsRoot = styled(Toggle.Root)`
    padding: 2px 10px 2px 2px;
    border: none;
@@ -25,11 +10,13 @@ export const ToggleAbsRoot = styled(Toggle.Root)`
    color: #fff;
    font-weight: 500;
    font-size: 1.20rem;
+   transition: .3s;
    cursor: pointer;
 
    &[data-state='on'] {
-      background: #E54B4B;
+      background: #349684;
       color: #E54B4B !important;
+      padding: 2px 2px 2px 10px;
    }
 `
 

@@ -7,15 +7,7 @@ interface ToggleProps {
    pressed?: any;
 }
 
-function ToggleGeneric({ children }: ToggleProps) {
-   return (
-      <C.ToggleRoot>
-         {children}
-      </C.ToggleRoot>
-   )
-}
-
-function ToggleAbsence({ children, onPressedChange, pressed }: ToggleProps) {
+export function ToggleAbsence({ children, onPressedChange, pressed }: ToggleProps) {
    return (
       <C.ToggleAbsRoot
          pressed={pressed}
@@ -26,9 +18,4 @@ function ToggleAbsence({ children, onPressedChange, pressed }: ToggleProps) {
          </C.ToggleButton>
       </C.ToggleAbsRoot>
    )
-}
-
-export const Toggle = {
-   Generic: ToggleGeneric,
-   Absence: ToggleAbsence
 }

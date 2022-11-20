@@ -60,14 +60,14 @@ export const HoverCardContainer = styled.div`
     margin: 0 8px;
 `
 
-export const  PasswordContainer = styled.div`
+export const PasswordContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
 `
 
 export const GenPassContainer = styled.div`
-    color: #909090;
+    color: #414948;
     padding: 2px 4px;
     border: 1px solid #909090;
     border-radius: 8px;
@@ -172,13 +172,10 @@ export const ClipboardText = styled.span`
     cursor: pointer;
 `
 
-export const d = styled.div`
-    width: 800px;
-    height: 800px;
-    background-color: black;
+export const ClipboardAlert = styled(ClipboardText)`
+    color: #29d145;
 `
 
 export const NotHover = styled(Lock)`
     color: #585858;
 `
-

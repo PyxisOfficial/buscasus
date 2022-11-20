@@ -5,7 +5,7 @@ import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { Input, sizes } from '../../../components/Form/Input';
 import { Button } from '../../../components/Button';
-import { Toggle } from '../../../components/Toggle';
+import { ToggleAbsence } from '../../../components/Toggle';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
@@ -109,12 +109,12 @@ export function PlantaoDia() {
                                 <C.Td>{duty.nomeMedico}</C.Td>
                                 <C.Td>{duty.nomeEspecialidade}</C.Td>
                                 <C.Td>
-                                    <Toggle.Absence
+                                    <ToggleAbsence
                                         pressed={duty.presencaMedico == 1 ? true : false}
                                         onPressedChange={() => duty.presencaMedico == 1 ? alterMedicPresence(duty.idPlantao, false) : alterMedicPresence(duty.idPlantao, true)}
                                     >
-                                        {duty.presencaMedico == 1 ? 'Presente' : 'Ausente'}
-                                    </Toggle.Absence>
+                                        Presente
+                                    </ToggleAbsence>
                                 </C.Td>
                             </C.InnerTr>
                         )}
