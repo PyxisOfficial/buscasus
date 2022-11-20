@@ -8,6 +8,7 @@ $connection = new Connection;
 $conn = $connection->connect();
 
 if (isset($_GET['search'])) {
+
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
@@ -23,14 +24,18 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+
 } else if (isset($_GET['count'])) {
+
     $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+
 } else if (isset($_GET['hospitalCount'])) {
+
     $idHospital = @$_GET['idHospital'];
 
     $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE idHospital = :id";
@@ -40,7 +45,9 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+
 } else if (isset($_GET['repeatedCpf'])) {
+
     $repeatedCpf = @$_GET['repeatedCpf'];
 
     $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE cpfMedico LIKE :cpf";
@@ -50,7 +57,24 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+
+} else if (isset($_GET['idMedico'])) {
+
+    $idMedico = @$_GET['idMedico'];
+
+    $sql = "SELECT GROUP_CONCAT(e.nomeEspecialidade SEPARATOR ', ') AS nomeEspecialidade FROM tbEspecialidade e
+            INNER JOIN tbMedicoEspecialidade me
+            ON e.idEspecialidade = me.idEspecialidade
+            WHERE me.idMedico = :idMedico";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':idMedico', $idMedico);
+    $stmt->execute();
+    $medico = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($medico);
+
 } else if (isset($_GET['idHospital'])) {
+
     $idHospital = @$_GET['idHospital'];
 
     $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
@@ -63,13 +87,16 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+
 } else {
+
     $sql = "SELECT * FROM tbMedico";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {

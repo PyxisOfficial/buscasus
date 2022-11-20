@@ -42,6 +42,8 @@ export function Medico() {
     const [isCrmInputWithError, setIsCrmInputWithError] = useState<boolean>();
     const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
 
+    const [medicIdModal, setMedicIdModal] = useState<any>();
+    const [infoModalSpecialty, setInfoModalSpecialty] = useState<any>();
     const [medicInputValueModal, setMedicInputValueModal] = useState<any>();
     const [phoneInputValueModal, setPhoneInputValueModal] = useState<any>();
     const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
@@ -124,6 +126,14 @@ export function Medico() {
             setIsCpfInputWithError(false);
         }
     }, [repeatedCpfVerification]);
+
+    useEffect(() => {
+        axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
+            params: {
+                idMedico: medicIdModal
+            }
+        }).then(response => setInfoModalSpecialty(response.data.nomeEspecialidade));
+    }, [medicIdModal]);
 
     async function insertMedic(event: FormEvent) {
         event.preventDefault();
@@ -361,14 +371,18 @@ export function Medico() {
                                 <C.Td>{medic.crmMedico}</C.Td>
                                 <C.Td>
                                     <C.ButtonContainer>
-                                        <Modal.Info title='Informações do médico'>
+                                        <Modal.Info
+                                            itemId={() => setMedicIdModal(medic.idMedico)}
+                                            closeModal={() => setMedicIdModal(0)}
+                                            title='Informações do médico'
+                                        >
                                             <C.InfoModalContent>
                                                 <C.InfoContainer>
                                                     <C.Text><b>Nome:</b> {medic.nomeMedico}</C.Text>
                                                     <C.Text><b>CPF:</b> {medic.cpfMedico}</C.Text>
                                                     <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
                                                     <C.Text><b>Telefone:</b> {medic.numTelefone}</C.Text>
-                                                    <C.Text><b>Especialidades:</b> </C.Text>
+                                                    <C.Text><b>Especialidades:</b> {infoModalSpecialty} </C.Text>
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
                                                 <C.InfoImg
