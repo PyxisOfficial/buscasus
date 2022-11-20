@@ -96,6 +96,7 @@ export function PlantaoDia() {
                             <C.Th>Início</C.Th>
                             <C.Th>Fim</C.Th>
                             <C.Th>Médico</C.Th>
+                            <C.Th>Especialidade</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
                     </C.Thead>
@@ -106,6 +107,7 @@ export function PlantaoDia() {
                                 <C.Td>{duty.inicioPlantao}</C.Td>
                                 <C.Td>{duty.fimPlantao}</C.Td>
                                 <C.Td>{duty.nomeMedico}</C.Td>
+                                <C.Td>{duty.nomeEspecialidade}</C.Td>
                                 <C.Td>
                                     <Toggle.Absence
                                         pressed={duty.presencaMedico == 1 ? true : false}

@@ -8,13 +8,16 @@ $connection = new Connection;
 $conn = $connection->connect();
 
 if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
+
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico 
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, e.nomeEspecialidade, m.nomeMedico, m.idMedico 
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
+    INNER JOIN tbEspecialidade e
+    ON p.idEspecialidade = e.idEspecialidade
     WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -36,12 +39,15 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     echo json_encode($plantao);
 
 } else if (isset($_GET['todayDuty']) && !isset($_GET['search'])) {
+
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, p.presencaMedico, m.nomeMedico, m.idMedico
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, e.nomeEspecialidade, p.presencaMedico, m.nomeMedico, m.idMedico
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
+    INNER JOIN tbEspecialidade e
+    ON p.idEspecialidade = e.idEspecialidade
     WHERE p.idHospital = :id AND DATE(p.dataPlantao) = CURDATE()";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -55,10 +61,12 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, p.presencaMedico, m.nomeMedico, m.idMedico
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, e.nomeEspecialidade, p.presencaMedico, m.nomeMedico, m.idMedico
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
+    INNER JOIN tbEspecialidade e
+    ON p.idEspecialidade = e.idEspecialidade
     WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id AND DATE(p.dataPlantao) = CURDATE()";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -72,7 +80,8 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     $idEspecialidade = $_GET['idEspecialidade'];
     $idHospital = $_GET['idHospital'];
     
-    if ($idEspecialidade == 1){
+    if ($idEspecialidade == 1) {
+
         $sql = "SELECT idMedico, nomeMedico FROM tbMedico";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -100,10 +109,12 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
 
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, m.nomeMedico, m.idMedico
+    $sql = "SELECT p.idPlantao, DATE_FORMAT(p.dataPlantao, '%d/%m/%Y') AS dataPlantao, DATE_FORMAT(p.inicioPlantao, '%H:%i') AS inicioPlantao, DATE_FORMAT(p.fimPlantao,'%H:%i') AS fimPlantao, e.nomeEspecialidade, m.nomeMedico, m.idMedico
     FROM tbPlantao p
     INNER JOIN tbMedico m
     ON p.idMedico = m.idMedico
+    INNER JOIN tbEspecialidade e
+    ON p.idEspecialidade = e.idEspecialidade
     WHERE p.idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);

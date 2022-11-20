@@ -458,11 +458,6 @@ export function Medico() {
                                                     />
                                                 </Label>
 
-                                                {/* <Label>
-                                                    Especialidade
-
-                                                </Label> */}
-
                                                 <Label>
                                                     Foto do médico
                                                     <InputImage.Root>
