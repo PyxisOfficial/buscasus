@@ -62,14 +62,14 @@ switch ($method) {
 
     case "PUT":
         $senhaAdmin = $_GET['senhaAdmin'];
-        $idHospital = $_GET['idHospital'];
+        $idAdmin = $_GET['idAdmin'];
         $primeiroAcesso = '0';
 
-        $sql = "UPDATE tbAdmin SET senhaAdmin = :senhaAdmin, primeiroAcesso = :primeiroAcesso WHERE idHospital = :idHospital";
+        $sql = "UPDATE tbAdmin SET senhaAdmin = :senhaAdmin, primeiroAcesso = :primeiroAcesso WHERE idAdmin = :idAdmin";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':senhaAdmin', $senhaAdmin);
         $stmt->bindParam(':primeiroAcesso', $primeiroAcesso);
-        $stmt->bindParam(':idHospital', $idHospital);
+        $stmt->bindParam(':idAdmin', $idAdmin);
         $stmt->execute();
         
         break;

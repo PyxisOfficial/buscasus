@@ -38,6 +38,9 @@ export function VisaoGeralHospital() {
     const getHospitalId: any = localStorage.getItem("hospital_id");
     const hospitalId = JSON.parse(getHospitalId);
 
+    const getAdminId: any = localStorage.getItem("admin_id");
+    const adminId = JSON.parse(getAdminId);
+
     const getFirstAccess: any = localStorage.getItem("first_access");
     const firstAccess = JSON.parse(getFirstAccess);
 
@@ -65,7 +68,7 @@ export function VisaoGeralHospital() {
     }, []);
 
     return (
-        firstAccess == 1 ? <PrimeiroAcesso hospitalId={hospitalId} /> :
+        firstAccess == 1 ? <PrimeiroAcesso adminId={adminId} /> :
             <MenuBackground menuLinks={<MenuLinksHospital />}>
                 <C.TopContainer>
                     <C.TitleDiv>

@@ -8,10 +8,10 @@ import { Lock, Eye, EyeSlash } from 'phosphor-react';
 import * as C from './styles';
 
 interface FirstAccessProps {
-    hospitalId: number;
+    adminId: number;
 }
 
-export function PrimeiroAcesso({ hospitalId }: FirstAccessProps) {
+export function PrimeiroAcesso({ adminId }: FirstAccessProps) {
 
     const [password, setPassword] = useState<string>();
     const [confirmPassword, setConfirmPassword] = useState<string>();
@@ -30,7 +30,7 @@ export function PrimeiroAcesso({ hospitalId }: FirstAccessProps) {
             await axios.put('http://localhost/buscasus/api/area-admin/admin/', null, {
                 params: {
                     senhaAdmin: password,
-                    idHospital: hospitalId
+                    idAdmin: adminId
                 }
             });
 
