@@ -88,6 +88,17 @@ if (isset($_GET['search'])) {
 
     echo json_encode($medico);
 
+} else if (isset($_GET['generalSearch'])) {
+    $generalSearch = $_GET['generalSearch'];
+
+    $sql = "SELECT idMedico, nomeMedico FROM tbMedico 
+            WHERE nomeMedico LIKE '%$generalSearch%'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($medico);
+
 } else {
 
     $sql = "SELECT * FROM tbMedico";
