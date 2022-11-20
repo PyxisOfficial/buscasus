@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2022 at 02:11 AM
+-- Generation Time: Nov 20, 2022 at 10:52 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -62,7 +62,7 @@ CREATE TABLE `tbespecialidade` (
 --
 
 INSERT INTO `tbespecialidade` (`idEspecialidade`, `nomeEspecialidade`) VALUES
-(1, 'Ortopedia'),
+(1, 'Clínico Geral'),
 (2, 'Dermatologia'),
 (3, 'Ginecologia'),
 (4, 'Anestesiologia'),
@@ -154,9 +154,9 @@ CREATE TABLE `tbmedicoespecialidade` (
 --
 
 INSERT INTO `tbmedicoespecialidade` (`idMedicoEspecialidade`, `idMedico`, `idEspecialidade`) VALUES
-(1, 1, 1),
+(1, 1, 6),
 (2, 1, 2),
-(3, 2, 1),
+(3, 2, 3),
 (4, 2, 2),
 (5, 3, 3),
 (6, 3, 4),
