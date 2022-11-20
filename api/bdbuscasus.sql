@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2022 at 10:40 PM
+-- Generation Time: Nov 20, 2022 at 02:11 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -148,6 +148,28 @@ CREATE TABLE `tbmedicoespecialidade` (
   `idMedico` int(11) NOT NULL,
   `idEspecialidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbmedicoespecialidade`
+--
+
+INSERT INTO `tbmedicoespecialidade` (`idMedicoEspecialidade`, `idMedico`, `idEspecialidade`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 1),
+(4, 2, 2),
+(5, 3, 3),
+(6, 3, 4),
+(7, 4, 8),
+(8, 4, 9),
+(9, 5, 4),
+(10, 5, 8),
+(11, 6, 10),
+(12, 6, 11),
+(13, 7, 7),
+(14, 7, 6),
+(15, 8, 3),
+(16, 8, 12);
 
 -- --------------------------------------------------------
 
@@ -344,7 +366,7 @@ ALTER TABLE `tbmedico`
 -- AUTO_INCREMENT for table `tbmedicoespecialidade`
 --
 ALTER TABLE `tbmedicoespecialidade`
-  MODIFY `idMedicoEspecialidade` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMedicoEspecialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbplantao`
