@@ -151,7 +151,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
 
     echo json_encode($idEspecialidade);
 }
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['idEspecialidade'])) {
+    $idEspecialidade = $_POST['idEspecialidade'];
+    $idMedico = $_POST ['idMedico'];
 
+     for ($i = 0; $i < $idEspecialidade; $i++) {
+        $sql = "INSERT INTO tbMedicoEspecialidade(idMedicoEspecialidade, idMedico, idEspecialidade) VALUES(null, :idMedico, :idEspecialidade)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idMedico', $lastMedId);
+        $stmt->bindParam(':idEspecialidade', $idEspecialidade[$i]);
+        $stmt->execute();
+
+    }
+}
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
     $nomeMedico = $_GET['nomeMedico'];
     $numTelefone = $_GET['numTelefone'];
@@ -208,6 +220,13 @@ if ($_SERVER['REQUEST_METHOD'] == "DELETE") {
     $stmt->bindValue(':idTelefone', $idTelefone);
     $stmt->execute();
 
+    $sql = "DELETE FROM tbMedicoEspecialidade WHERE idMedico = :idMedico";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':idMedico', $idMedico);
+    $stmt->execute();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "DELETE" && isset($_GET['deleteSpe'])) {
     $sql = "DELETE FROM tbMedicoEspecialidade WHERE idMedico = :idMedico";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(':idMedico', $idMedico);
