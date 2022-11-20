@@ -21,12 +21,22 @@ export function PlantaoDia() {
     const hospitalId = JSON.parse(getHospitalId);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
-            params: {
-                todayDuty: true,
-                idHospital: hospitalId
-            }
-        }).then(response => setDuty(response.data));
+        if (search) {
+            axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
+                params: {
+                    todayDuty: true,
+                    search: search,
+                    idHospital: hospitalId
+                }
+            }).then(response => setDuty(response.data));
+        } else {
+            axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
+                params: {
+                    todayDuty: true,
+                    idHospital: hospitalId
+                }
+            }).then(response => setDuty(response.data));
+        }
 
         setIsFormSubmitted(false);
     }, [isFormSubmitted]);
