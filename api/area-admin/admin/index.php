@@ -16,7 +16,7 @@ if (isset($_GET['search'])) {
     WHERE (a.loginAdmin LIKE '%$search%' AND a.tipoAdmin != 1) 
     OR (a.idAdmin LIKE '%$search%' AND a.tipoAdmin != 1)
     OR (h.nomeHospital LIKE '%$search%' AND a.tipoAdmin != 1)
-    ORDER BY h.nomeHospital ASC";
+    ORDER BY a.primeiroAcesso DESC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -37,7 +37,7 @@ if (isset($_GET['search'])) {
     INNER JOIN tbHospital h
     ON a.idHospital = h.idHospital
     WHERE tipoAdmin != 1
-    ORDER BY h.nomeHospital ASC";
+    ORDER BY a.primeiroAcesso DESC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);

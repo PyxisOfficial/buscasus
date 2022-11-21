@@ -92,22 +92,20 @@ export function PlantaoDia() {
                 <C.Table>
                     <C.Thead>
                         <C.Tr>
-                            <C.Th>Data</C.Th>
-                            <C.Th>Início</C.Th>
-                            <C.Th>Fim</C.Th>
                             <C.Th>Médico</C.Th>
                             <C.Th>Especialidade</C.Th>
+                            <C.Th>Início</C.Th>
+                            <C.Th>Fim</C.Th>
                             <C.Th></C.Th>
                         </C.Tr>
                     </C.Thead>
                     <C.Tbody>
                         {duty.map((duty: any, key) =>
                             <C.InnerTr key={key}>
-                                <C.Td>{duty.dataPlantao}</C.Td>
-                                <C.Td>{duty.inicioPlantao}</C.Td>
-                                <C.Td>{duty.fimPlantao}</C.Td>
                                 <C.Td>{duty.nomeMedico}</C.Td>
                                 <C.Td>{duty.nomeEspecialidade}</C.Td>
+                                <C.Td>{duty.inicioPlantao}</C.Td>
+                                <C.Td>{duty.fimPlantao}</C.Td>
                                 <C.Td>
                                     <ToggleAbsence
                                         pressed={duty.presencaMedico == 1 ? true : false}

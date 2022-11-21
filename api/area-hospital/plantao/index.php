@@ -18,8 +18,9 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     ON p.idMedico = m.idMedico
     INNER JOIN tbEspecialidade e
     ON p.idEspecialidade = e.idEspecialidade
-    WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id
-    ORDER BY p.dataPlantao DESC";
+    WHERE (m.nomeMedico LIKE '%$search%' AND p.idHospital = :id)
+    OR (e.nomeEspecialidade LIKE '%$search%' AND p.idHospital = :id)
+    ORDER BY p.dataPlantao ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
@@ -68,7 +69,8 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     ON p.idMedico = m.idMedico
     INNER JOIN tbEspecialidade e
     ON p.idEspecialidade = e.idEspecialidade
-    WHERE m.nomeMedico LIKE '%$search%' AND p.idHospital = :id AND DATE(p.dataPlantao) = CURDATE()";
+    WHERE (m.nomeMedico LIKE '%$search%' AND p.idHospital = :id AND DATE(p.dataPlantao) = CURDATE())
+    OR (e.nomeEspecialidade LIKE '%$search%' AND p.idHospital = :id AND DATE(p.dataPlantao) = CURDATE())";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
@@ -117,7 +119,7 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     INNER JOIN tbEspecialidade e
     ON p.idEspecialidade = e.idEspecialidade
     WHERE p.idHospital = :id
-    ORDER BY p.dataPlantao DESC";
+    ORDER BY p.dataPlantao ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();

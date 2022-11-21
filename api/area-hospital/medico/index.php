@@ -124,6 +124,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $idEspecialidade = $_POST['idEspecialidade'];
     $idHospital = $_POST['idHospital'];
 
+    $files = $_FILES['picture'];
+    $filename = $files['name'];
+    $templocation = $files['tmp_name'];
+    $file_destination = '../img/' . $filename;
+    move_uploaded_file($templocation, $file_destination);
+
     $sql = "INSERT INTO tbMedico(idMedico, nomeMedico, cpfMedico, crmMedico, fotoMedico, idHospital) VALUES(null, :nomeMedico, :cpfMedico, :crmMedico, :fotoMedico, :idHospital)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':nomeMedico', $nomeMedico);
@@ -147,12 +153,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
         $stmt->bindParam(':idEspecialidade', $idEspecialidade[$i]);
         $stmt->execute();
     }
-        
-    $files = $_FILES['picture'];
-    $filename = $files['name'];
-    $templocation = $files['tmp_name'];
-    $file_destination = '../img/' . $filename;
-    move_uploaded_file($templocation, $file_destination);
 
     echo json_encode($idEspecialidade);
 }
