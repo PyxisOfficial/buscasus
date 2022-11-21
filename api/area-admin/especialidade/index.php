@@ -11,7 +11,8 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
 
     $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade
-            WHERE nomeEspecialidade LIKE '%$search%'";
+            WHERE nomeEspecialidade LIKE '%$search%' AND idEspecialidade > 1
+            ORDER BY nomeEspecialidade ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -28,17 +29,10 @@ if (isset($_GET['search'])) {
 
     echo json_encode($especialidade);
 } else {
-    if (isset($_GET['allSpecialty'])) {
-        $sql = "SELECT * FROM tbEspecialidade";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $sql = "SELECT * FROM tbEspecialidade WHERE idEspecialidade > 1";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $sql = "SELECT * FROM tbEspecialidade WHERE idEspecialidade > 1 ORDER BY nomeEspecialidade ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($especialidade);
 }

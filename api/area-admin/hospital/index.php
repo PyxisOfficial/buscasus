@@ -13,7 +13,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital FROM tbHospital h
     INNER JOIN tbTelefone t
     ON h.idHospital = t.idHospital
-    WHERE h.nomeHospital LIKE '%$search%'";
+    WHERE h.nomeHospital LIKE '%$search%'
+    ORDER BY h.nomeHospital ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,7 +41,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT h.idHospital, h.nomeHospital, h.emailHospital, t.idTelefone, t.numTelefone, DATE_FORMAT(h.aberturaHospital, '%H:%i') AS aberturaHospital, DATE_FORMAT(h.fechamentoHospital, '%H:%i') AS fechamentoHospital, h.cnpjHospital, h.ufHospital, h.logradouroHospital, h.complementoHospital, h.cepHospital , h.cidadeHospital, h.bairroHospital, h.fotoHospital
     FROM tbHospital h
     INNER JOIN tbTelefone t
-    ON h.idHospital = t.idHospital";
+    ON h.idHospital = t.idHospital
+    ORDER BY h.nomeHospital ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $hospital = $stmt->fetchAll(PDO::FETCH_ASSOC);

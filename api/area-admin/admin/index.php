@@ -10,10 +10,13 @@ $conn = $connection->connect();
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
 
-    $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso,a.idHospital, h.nomeHospital FROM tbAdmin a
+    $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso, a.idHospital, h.nomeHospital FROM tbAdmin a
     INNER JOIN tbHospital h
     ON a.idHospital = h.idHospital
-    WHERE (loginAdmin LIKE '%$search%' AND tipoAdmin != 1) OR (idAdmin LIKE '%$search%' AND tipoAdmin != 1)";
+    WHERE (a.loginAdmin LIKE '%$search%' AND a.tipoAdmin != 1) 
+    OR (a.idAdmin LIKE '%$search%' AND a.tipoAdmin != 1)
+    OR (h.nomeHospital LIKE '%$search%' AND a.tipoAdmin != 1)
+    ORDER BY h.nomeHospital ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -33,7 +36,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso,a.idHospital, h.nomeHospital FROM tbAdmin a
     INNER JOIN tbHospital h
     ON a.idHospital = h.idHospital
-    WHERE tipoAdmin != 1";
+    WHERE tipoAdmin != 1
+    ORDER BY h.nomeHospital ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);

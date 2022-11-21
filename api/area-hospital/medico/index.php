@@ -16,8 +16,9 @@ if (isset($_GET['search'])) {
             INNER JOIN tbTelefone t
             ON m.idMedico = t.idMedico 
             WHERE (m.nomeMedico LIKE '%$search%' AND m.idHospital = :id)
-            OR (e.nomeEspecialidade LIKE '%$search%' AND m.idHospital = :id)
-            OR (m.crmMedico LIKE '%$search%' AND m.idHospital = :id)";
+            OR (m.cpfMedico LIKE '%$search%' AND m.idHospital = :id)
+            OR (m.crmMedico LIKE '%$search%' AND m.idHospital = :id)
+            ORDER BY m.nomeMedico ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
@@ -49,10 +50,12 @@ if (isset($_GET['search'])) {
 } else if (isset($_GET['repeatedCpf'])) {
 
     $repeatedCpf = @$_GET['repeatedCpf'];
+    $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE cpfMedico LIKE :cpf";
+    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE cpfMedico LIKE :cpf AND idHospital = :idHospital";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':cpf', $repeatedCpf);
+    $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -80,7 +83,8 @@ if (isset($_GET['search'])) {
     $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
             INNER JOIN tbTelefone t
             ON m.idMedico = t.idMedico 
-            WHERE m.idHospital = :id";
+            WHERE m.idHospital = :id
+            ORDER BY m.nomeMedico ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
@@ -92,7 +96,8 @@ if (isset($_GET['search'])) {
     $generalSearch = $_GET['generalSearch'];
 
     $sql = "SELECT idMedico, nomeMedico FROM tbMedico 
-            WHERE nomeMedico LIKE '%$generalSearch%'";
+            WHERE nomeMedico LIKE '%$generalSearch%'
+            ORDER BY nomeMedico ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -101,7 +106,7 @@ if (isset($_GET['search'])) {
 
 } else {
 
-    $sql = "SELECT * FROM tbMedico";
+    $sql = "SELECT * FROM tbMedico ORDER BY nomeMedico ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);

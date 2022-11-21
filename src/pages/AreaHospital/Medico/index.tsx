@@ -206,7 +206,8 @@ export function Medico() {
     function verifyIsCpfRepeated(cpf: any) {
         axios.get('http://localhost/buscasus/api/area-hospital/medico/', {
             params: {
-                repeatedCpf: cpf
+                repeatedCpf: cpf,
+                idHospital: hospitalId
             }
         }).then(response => setRepeatedCpfVerification(response.data.idMedico));
     }

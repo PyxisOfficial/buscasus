@@ -10,7 +10,7 @@ $conn = $connection->connect();
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
 
-    $sql = "SELECT * FROM tbUsuario WHERE nomeUsuario LIKE '%$search%'";
+    $sql = "SELECT * FROM tbUsuario WHERE nomeUsuario LIKE '%$search%' ORDER BY nomeUsuario ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $usuario = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -38,7 +38,7 @@ if (isset($_GET['search'])) {
     echo json_encode($usuario);
 
 } else {
-    $sql = "SELECT * FROM tbUsuario";
+    $sql = "SELECT * FROM tbUsuario ORDER BY nomeUsuario ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $usuario = $stmt->fetchAll(PDO::FETCH_ASSOC);

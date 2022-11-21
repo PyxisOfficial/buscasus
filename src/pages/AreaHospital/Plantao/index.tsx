@@ -54,11 +54,7 @@ export function Plantao() {
             }
         }).then(response => setDuty(response.data));
 
-        axios.get('http://localhost/buscasus/api/area-admin/especialidade/', {
-            params: {
-                allSpecialty: true
-            }
-        }).then((response) => setSpecialty(response.data));
+        axios.get('http://localhost/buscasus/api/area-admin/especialidade/').then((response) => setSpecialty(response.data));
     }, []);
 
     useEffect(() => {
@@ -178,6 +174,7 @@ export function Plantao() {
                                         onBlur={() => specialtyInputValue != 0 ? setIsSpecialtyInputWithError(false) : null}
                                         errorText={isSpecialtyInputWithError}
                                     >
+                                        <option value="1">Clínico Geral</option>
                                         {specialty.map((spe: any) =>
                                             <option
                                                 key={spe.idEspecialidade}
