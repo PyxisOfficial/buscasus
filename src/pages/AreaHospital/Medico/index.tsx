@@ -317,7 +317,7 @@ export function Medico() {
                                         allItemsAreSelected: "Todas especialidaes selecionadas"
                                     }}           
                                     />
-                                <C.ErrorMsg></C.ErrorMsg>
+                                <C.ErrorMsg />
                             </Label>
 
                             <Label>
@@ -328,7 +328,7 @@ export function Medico() {
                                         inputAction={(e: any) => setMedicPhoto(e.target.files)}
                                     />
                                 </InputImage.Root>
-                                <C.ErrorMsg></C.ErrorMsg>
+                                <C.ErrorMsg />
                             </Label>
                         </C.InputsContainer>
                         <C.ButtonContainer>
