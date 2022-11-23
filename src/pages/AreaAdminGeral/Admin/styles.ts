@@ -53,7 +53,6 @@ export const ButtonContainer = styled.div`
     justify-content: flex-end;
     float: right;
     gap: 8px;
-    margin-top: 12px;
 `
 
 export const HoverCardContainer = styled.div`
@@ -173,9 +172,15 @@ export const ClipboardText = styled.span`
 `
 
 export const ClipboardAlert = styled(ClipboardText)`
-    color: #29d145;
+    color: #29d140;
 `
 
 export const NotHover = styled(Lock)`
     color: #585858;
+`
+
+export const ErrorMsg = styled.span`
+    color: #e94a4f;
+    height: 14px;
+    font-size: 14px;
 `

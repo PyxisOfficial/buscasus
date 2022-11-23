@@ -152,71 +152,73 @@ export function Admin() {
                 <C.FormContainer>
                     <C.Title>Cadastrar novo administrador de um hospital</C.Title>
                     <form ref={formRef} onSubmit={insertUser} autoComplete="off">
-                        <C.InputsContainer>
-                            <Label htmlFor="loginAdmin">
-                                Nome de usuário
-                                <Input.Input
-                                    onChange={(e) => setLoginInputValue(e.target.value)}
-                                    onBlur={(e) => [loginInputValue ? setIsLoginInputWithError(false) : null, verifyIsAdminRepeated(e.target.value)]}
-                                    isWithIcon={false}
-                                    errorText={isLoginInputWithError}
-                                    inputSize={sizes.md}
-                                    type="text"
-                                    id="loginAdmin"
+                        <div>
+                            <C.InputsContainer>
+                                <Label htmlFor="loginAdmin">
+                                    Nome de usuário
+                                    <Input.Input
+                                        onChange={(e) => setLoginInputValue(e.target.value)}
+                                        onBlur={(e) => [loginInputValue ? setIsLoginInputWithError(false) : null, verifyIsAdminRepeated(e.target.value)]}
+                                        isWithIcon={false}
+                                        errorText={isLoginInputWithError}
+                                        inputSize={sizes.md}
+                                        type="text"
+                                        id="loginAdmin"
+                                    />
+                                    <C.ErrorMsg>{isLoginInputWithError ? 'Insira um nome de usuário.' : null}</C.ErrorMsg>
+                                </Label>
+                                <Label htmlFor="senhaAdmin" onClick={generatePassword}>
+                                    Senha
+                                    <C.PasswordContainer>
+                                        <Input.Root>
+                                            <Input.Input
+                                                isWithIcon={false}
+                                                errorText={isPasswordInputWithError}
+                                                inputSize={sizes.sm}
+                                                type="password"
+                                                id="senhaAdmin"
+                                                value={passwordInputValue}
+                                                disabled
+                                            />
+                                        </Input.Root>
+                                        <C.GenPassContainer>
+                                            Gerar senha
+                                        </C.GenPassContainer>
+                                    </C.PasswordContainer>
+                                    <C.ErrorMsg>{isPasswordInputWithError ? 'Clique e gere uma senha.' : null}</C.ErrorMsg>
+                                </Label>
+                                <Label htmlFor="idHospital">
+                                    Hospital
+                                    <C.Select
+                                        onChange={(e) => setHospitalInputValue(e.target.value)}
+                                        onBlur={() => hospitalInputValue > 0 ? setIsHospitalInputWithError(false) : null}
+                                        errorText={isHospitalInputWithError}
+                                    >
+                                        <option value="0">Selecione</option>
+                                        {hospital.map((hosp: any) =>
+                                            <option
+                                                key={hosp.idHospital}
+                                                value={hosp.idHospital}
+                                            >
+                                                {hosp.nomeHospital}
+                                            </option>
+                                        )}
+                                    </C.Select>
+                                    <C.ErrorMsg>{isHospitalInputWithError ? 'Selecione um hospital.' : null}</C.ErrorMsg>
+                                </Label>
+                            </C.InputsContainer>
+                            <C.ButtonContainer>
+                                <Button.Gray
+                                    onClick={() => [
+                                        setLoginInputValue(null), setRepeatedAdminVerification(null), setPasswordInputValue(null), setHospitalInputValue(null),
+                                        setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsHospitalInputWithError(false)
+                                    ]}
+                                    value="Cancelar"
+                                    type="reset"
                                 />
-                            </Label>
-
-                            <Label htmlFor="senhaAdmin" onClick={generatePassword}>
-                                Senha
-                                <C.PasswordContainer>
-                                    <Input.Root>
-                                        <Input.Input
-                                            isWithIcon={false}
-                                            errorText={isPasswordInputWithError}
-                                            inputSize={sizes.sm}
-                                            type="password"
-                                            id="senhaAdmin"
-                                            value={passwordInputValue}
-                                            disabled
-                                        />
-                                    </Input.Root>
-                                    <C.GenPassContainer>
-                                        Gerar senha
-                                    </C.GenPassContainer>
-                                </C.PasswordContainer>
-                            </Label>
-
-                            <Label htmlFor="idHospital">
-                                Hospital
-                                <C.Select
-                                    onChange={(e) => setHospitalInputValue(e.target.value)}
-                                    onBlur={() => hospitalInputValue > 0 ? setIsHospitalInputWithError(false) : null}
-                                    errorText={isHospitalInputWithError}
-                                >
-                                    <option value="0">Selecione</option>
-                                    {hospital.map((hosp: any) =>
-                                        <option
-                                            key={hosp.idHospital}
-                                            value={hosp.idHospital}
-                                        >
-                                            {hosp.nomeHospital}
-                                        </option>
-                                    )}
-                                </C.Select>
-                            </Label>
-                        </C.InputsContainer>
-
-                        <C.ButtonContainer>
-                            <Button.Gray
-                                onClick={() => [
-                                    setLoginInputValue(null), setRepeatedAdminVerification(null), setPasswordInputValue(null), setHospitalInputValue(null),
-                                    setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsHospitalInputWithError(false)
-                                ]}
-                                value="Cancelar"
-                                type="reset"
-                            />
-                            <Button.Green value="Salvar" type="submit" />
-                        </C.ButtonContainer>
+                                <Button.Green value="Salvar" type="submit" />
+                            </C.ButtonContainer>
+                        </div>
                     </form>
                 </C.FormContainer>
             </C.InsertContainer>

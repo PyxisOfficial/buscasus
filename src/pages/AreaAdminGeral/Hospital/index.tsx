@@ -39,6 +39,7 @@ export function Hospital() {
     const [districtInputValue, setDistrictInputValue] = useState<any>();
     const [complementInputValue, setComplementInputValue] = useState<any>();
     const [hospitalPhoto, setHospitalPhoto] = useState<any>();
+
     const [isHospitalInputWithError, setIsHospitalInputWithError] = useState<boolean>();
     const [isEmailInputWithError, setIsEmailInputWithError] = useState<boolean>();
     const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
@@ -65,6 +66,7 @@ export function Hospital() {
     const [districtInputValueModal, setDistrictInputValueModal] = useState<any>();
     const [complementInputValueModal, setComplementInputValueModal] = useState<any>();
     const [hospitalPhotoModal, setHospitalPhotoModal] = useState<any>();
+
     const [isHospitalInputModalWithError, setIsHospitalInputModalWithError] = useState<boolean>();
     const [isEmailInputModalWithError, setIsEmailInputModalWithError] = useState<boolean>();
     const [isPhoneInputModalWithError, setIsPhoneInputModalWithError] = useState<boolean>();
@@ -78,18 +80,18 @@ export function Hospital() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get(`http://localhost/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
+        axios.get(`http://localhost:8080/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
     }, []);
 
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
+            axios.get('http://localhost:8080/buscasus/api/area-admin/hospital/', {
                 params: {
                     search: search
                 }
             }).then(response => setHospital(response.data));
         } else {
-            axios.get(`http://localhost/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
+            axios.get(`http://localhost:8080/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
         }
 
         setHospitalInputValue(null);
@@ -113,7 +115,7 @@ export function Hospital() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
+        axios.get('http://localhost:8080/buscasus/api/area-admin/hospital/', {
             params: {
                 search: search,
             }
@@ -189,7 +191,7 @@ export function Hospital() {
 
         if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation
             && repeatedCnpjVerification == 0 && ufInputValue && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
-            await axios.post('http://localhost/buscasus/api/area-admin/hospital/', formData);
+            await axios.post('http://localhost:8080/buscasus/api/area-admin/hospital/', formData);
 
             setIsFormSubmitted(true);
             toast.success("Hospital cadastrado com sucesso!");
@@ -212,7 +214,7 @@ export function Hospital() {
 
         if (hospitalInputValueModal && emailInputValueModal && phoneInputValueModal.length == 14 && startTimeInputValueModal && endTimeInputValueModal && cnpjInputValueModal && ufInputValueModal
             && publicPlaceInputValueModal && cepInputValueModal.length == 9 && cityInputValueModal && districtInputValueModal) {
-            await axios.post('http://localhost/buscasus/api/area-admin/hospital/', formData, {
+            await axios.post('http://localhost:8080/buscasus/api/area-admin/hospital/', formData, {
                 params: {
                     nomeHospital: hospitalInputValueModal,
                     emailHospital: emailInputValueModal,
@@ -237,7 +239,7 @@ export function Hospital() {
     }
 
     async function deleteHospital() {
-        await axios.delete('http://localhost/buscasus/api/area-admin/hospital/', {
+        await axios.delete('http://localhost:8080/buscasus/api/area-admin/hospital/', {
             params: {
                 idHospital: hospitalId,
                 idTelefone: phoneId
@@ -259,7 +261,7 @@ export function Hospital() {
     }
 
     function verifyIsCnpjRepeated(cnpj: any) {
-        axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
+        axios.get('http://localhost:8080/buscasus/api/area-admin/hospital/', {
             params: {
                 repeatedCnpj: cnpj
             }
@@ -296,6 +298,8 @@ export function Hospital() {
                                 type="text"
                                 id="nomeHospital"
                             />
+                         <C.ErrorMsg> {isHospitalInputWithError ? 'Insira o nome do hospital.' :  null} </C.ErrorMsg>
+
                         </C.Label>
                         <C.Label htmlFor="emailHospital">
                             Endereço de e-mail do hospital
@@ -308,6 +312,7 @@ export function Hospital() {
                                 type="text"
                                 id="emailHospital"
                             />
+                            <C.ErrorMsg> {isEmailInputWithError ? "Insira um email válido." : null }</C.ErrorMsg>
                         </C.Label>
                         <C.Label htmlFor="numTelefone">
                             Número de telefone do hospital
@@ -322,6 +327,7 @@ export function Hospital() {
                                 id="numTelefone"
                                 value={phoneInputValue}
                             />
+                             <C.ErrorMsg> {isPhoneInputWithError ? 'Insira uma telefone válido.' : null} </C.ErrorMsg>
                         </C.Label>
 
                         <C.InputContainer>
@@ -336,6 +342,7 @@ export function Hospital() {
                                     type="time"
                                     id="aberturaHospital"
                                 />
+                                 <C.ErrorMsg> {isStartTimeInputWithError ? 'Insira a abertura do hospital.' : null } </C.ErrorMsg> 
                             </C.Label>
 
                             <C.Label htmlFor="fechamentoHospital">
@@ -349,6 +356,7 @@ export function Hospital() {
                                     type="time"
                                     id="fechamentoHospital"
                                 />
+                                <C.ErrorMsg> {isEndTimeInputWithError ? 'Insira a fechamento do hospital.' : null }</C.ErrorMsg>
                             </C.Label>
                         </C.InputContainer>
 
@@ -366,6 +374,7 @@ export function Hospital() {
                                     id="cnpjHospital"
                                     value={cnpjInputValue}
                                 />
+                                <C.ErrorMsg>  {isCnpjInputWithError ? 'Insira um CNPJ válido.' : null }</C.ErrorMsg>
                             </C.Label>
 
                             <C.Label htmlFor="cepHospital">
@@ -382,6 +391,7 @@ export function Hospital() {
                                     id="cepHospital"
                                     value={cepInputValue}
                                 />
+                                 <C.ErrorMsg> {isCepInputWithError ?' Insira um CEP válido.' : null }</C.ErrorMsg>
                             </C.Label>
 
                             <C.Label htmlFor="ufHospital">
@@ -395,34 +405,39 @@ export function Hospital() {
                                     id="cepHospital"
                                     disabled
                                 />
+                                <C.ErrorMsg />
                             </C.Label>
+                            <C.ErrorMsg />
                         </C.InputContainer>
 
-                        <C.Label htmlFor="logradouroHospital">
-                            Logradouro
-                            <Input.Input
-                                defaultValue={publicPlaceInputValue}
-                                isWithIcon={false}
-                                errorText={isPublicPlaceInputWithError}
-                                inputSize={sizes.md}
-                                type="text"
-                                id="logradouroHospital"
-                                disabled
-                            />
-                        </C.Label>
-
-                        <C.Label htmlFor="cidadeHospital">
-                            Cidade
-                            <Input.Input
-                                defaultValue={cityInputValue}
-                                isWithIcon={false}
-                                errorText={isCityInputWithError}
-                                inputSize={sizes.md}
-                                type="text"
-                                id="cidadeHospital"
-                                disabled
-                            />
-                        </C.Label>
+                        <C.InputContainer>
+                            <C.Label htmlFor="logradouroHospital">
+                                Logradouro
+                                <Input.Input
+                                    defaultValue={publicPlaceInputValue}
+                                    isWithIcon={false}
+                                    errorText={isPublicPlaceInputWithError}
+                                    inputSize={sizes.xl}
+                                    type="text"
+                                    id="logradouroHospital"
+                                    disabled
+                                />
+                                <C.ErrorMsg />
+                            </C.Label>
+                            <C.Label htmlFor="cidadeHospital">
+                                Cidade
+                                <Input.Input
+                                    defaultValue={cityInputValue}
+                                    isWithIcon={false}
+                                    errorText={isCityInputWithError}
+                                    inputSize={sizes.xl}
+                                    type="text"
+                                    id="cidadeHospital"
+                                    disabled
+                                />
+                                <C.ErrorMsg />
+                            </C.Label>
+                        </C.InputContainer>
 
                         <C.Label htmlFor="bairroHospital">
                             Bairro
@@ -430,11 +445,12 @@ export function Hospital() {
                                 defaultValue={districtInputValue}
                                 isWithIcon={false}
                                 errorText={isDistrictInputWithError}
-                                inputSize={sizes.md}
+                                inputSize={sizes.xl}
                                 type="text"
                                 id="bairroHospital"
                                 disabled
                             />
+                            <C.ErrorMsg />
                         </C.Label>
 
                         <C.Label htmlFor="complementoHospital">
@@ -447,6 +463,7 @@ export function Hospital() {
                                 type="text"
                                 id="complementoHospital"
                             />
+                            <C.ErrorMsg />
                         </C.Label>
 
                         <C.Label>
@@ -458,6 +475,7 @@ export function Hospital() {
                                     inputAction={(e: any) => setHospitalPhoto(e.target.files)}
                                 />
                             </InputImage.Root>
+                            {isHospitalPhotoWithError ? <C.ErrorMsg> Insira uma foto para o hospital.</C.ErrorMsg> : <C.ErrorMsg>‎ </C.ErrorMsg>}
                         </C.Label>
                         <C.ButtonContainer>
                             <Button.Gray
@@ -540,7 +558,7 @@ export function Hospital() {
                                                         <C.Text><b>Cidade:</b> {hosp.cidadeHospital}</C.Text>
                                                         <C.Text><b>Bairro:</b> {hosp.bairroHospital}</C.Text>
                                                     </C.InfoContainer>
-                                                    <C.InfoImg src={`http://localhost/buscasus/api/area-admin/img/${hosp.fotoHospital}`} />
+                                                    <C.InfoImg src={`http://localhost:8080/buscasus/api/area-admin/img/${hosp.fotoHospital}`} />
                                                 </C.InfoModalContent>
                                             </Modal.Info>
                                             <Modal.Edit

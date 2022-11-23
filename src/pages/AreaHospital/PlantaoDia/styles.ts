@@ -1,5 +1,28 @@
 import styled from "styled-components"; 
 
+export const TitleDiv = styled.div`
+   width: 70%;
+   display: flex;
+   flex-direction: row;
+   align-items: flex-end;
+   justify-content: space-between;
+   text-align: left;
+   margin-bottom: 25px;
+`
+
+export const Title = styled.h2`
+   font-size: 1.5rem;
+   color: #000;
+   text-transform: uppercase;
+   font-weight: 800;
+`
+
+export const SubTitle = styled.h3`
+   font-size: 1.3rem;
+   color: #000;
+   font-weight: 800;
+`
+
 export const InputsContainer = styled.div`
     display: flex;
     align-items: center;
@@ -25,6 +48,7 @@ export const TableContainer = styled.div`
 export const TableContainerHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `
 
 export const Table = styled.table`
@@ -86,4 +110,13 @@ export const Img = styled.img`
     width: 100px;
     height: 100px;
     border-radius: 5px;
+`
+
+export const HeaderContainer = styled.div`
+   width: 70%;
+   display: flex;
+   flex-direction: row;
+   align-items: flex-end;
+   justify-content: space-between;
+   margin-bottom: 20px;
 `

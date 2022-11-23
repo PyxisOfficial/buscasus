@@ -4,7 +4,8 @@ import axios from 'axios';
 import { cpf } from 'cpf-cnpj-validator';
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
-import Select from 'react-select';
+import Select, { StylesConfig } from 'react-select';
+import { MultiSelect } from "react-multi-select-component";
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
@@ -30,23 +31,26 @@ export function Medico() {
     const [search, setSearch] = useState<string>();
 
     const [specialtyValue, setSpecialtyValue] = useState<any>([]);
-    const [specialtyCheckbox, setSpecialtyCheckbox] = useState<any>([]);
+    const [selected, setSelected] = useState<any>([]);
 
     const [medicInputValue, setMedicInputValue] = useState<any>();
     const [cpfInputValue, setCpfInputValue] = useState<any>();
     const [crmInputValue, setCrmInputValue] = useState<any>();
     const [phoneInputValue, setPhoneInputValue] = useState<any>();
     const [medicPhoto, setMedicPhoto] = useState<any>();
+
     const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
     const [isCpfInputWithError, setIsCpfInputWithError] = useState<boolean>();
     const [isCrmInputWithError, setIsCrmInputWithError] = useState<boolean>();
     const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
+    const [isSpecialtyInputWithError, setIsSpecialtyInputWithError] = useState<boolean>();
 
     const [medicIdModal, setMedicIdModal] = useState<any>();
     const [infoModalSpecialty, setInfoModalSpecialty] = useState<any>();
     const [medicInputValueModal, setMedicInputValueModal] = useState<any>();
     const [phoneInputValueModal, setPhoneInputValueModal] = useState<any>();
     const [medicPhotoModal, setMedicPhotoModal] = useState<any>();
+
     const [isMedicInputModalWithError, setIsMedicInputModalWithError] = useState<boolean>();
     const [isPhoneInputModalWithError, setIsPhoneInputModalWithError] = useState<boolean>();
 
@@ -103,7 +107,7 @@ export function Medico() {
         setRepeatedCpfVerification(null);
         setCrmInputValue(null);
         setPhoneInputValue(null);
-        setSpecialtyCheckbox(null)
+        setSelected([])
         setMedicPhoto(null);
 
         setIsFormSubmitted(false);
@@ -142,7 +146,7 @@ export function Medico() {
         formData.append("nomeMedico", medicInputValue);
         formData.append("cpfMedico", cpfInputValue);
         formData.append("crmMedico", crmInputValue);
-        if (specialtyCheckbox) specialtyCheckbox.map((spe: any) => formData.append("idEspecialidade[]", spe.value));
+        if (selected) selected.map((spe: any) => formData.append("idEspecialidade[]", spe.value));
         formData.append("numTelefone", phoneInputValue);
 
         medicPhoto ? formData.append("fotoMedico", medicPhoto[0].name) : formData.append("fotoMedico", null);
@@ -156,7 +160,7 @@ export function Medico() {
         if (!crmInputValue) setIsCrmInputWithError(true);
         if (!phoneInputValue || phoneInputValue.length != 15) setIsPhoneInputWithError(true);
 
-        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && specialtyCheckbox) {
+        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15) {
             await axios.post('http://localhost/buscasus/api/area-hospital/medico/', formData);
 
             setIsFormSubmitted(true);
@@ -217,7 +221,7 @@ export function Medico() {
 
             <ToastContainer
                 position="top-right"
-                autoClose={5000}
+                autoClose={3000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
@@ -244,6 +248,7 @@ export function Medico() {
                                     id="nomeMedico"
                                     placeholder='Mário de Andrade'
                                 />
+                                <C.ErrorMsg>{isMedicInputWithError ? 'Insira um nome válido.' : null}</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="cpfMedico">
@@ -260,6 +265,7 @@ export function Medico() {
                                     placeholder='123.456.789-00'
                                     value={cpfInputValue}
                                 />
+                                <C.ErrorMsg>{isCrmInputWithError ? 'Insira um CPF válido.' : null}</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="crmMedico">
@@ -276,6 +282,7 @@ export function Medico() {
                                     placeholder='CRM/SP 123456'
                                     value={crmInputValue}
                                 />
+                                <C.ErrorMsg>{isCrmInputWithError ? 'Insira um CRM válido.' : null}</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="numTelefone">
@@ -292,18 +299,25 @@ export function Medico() {
                                     placeholder='(99) 99999-9999'
                                     value={phoneInputValue}
                                 />
+                                <C.ErrorMsg>{isPhoneInputWithError ? 'Insira um número de telefone.' : null}</C.ErrorMsg>
                             </Label>
 
                             <Label>
                                 Especialidades
-                                <Select
-                                    isMulti
-                                    value={specialtyCheckbox}
-                                    onChange={(spe: any) => setSpecialtyCheckbox(spe)}
-                                    options={specialtyValue}
-                                    placeholder="Selecione as especialidades"
-                                />
 
+                                <C.CustomSelect
+                                    options={specialtyValue} 
+                                    value={selected} 
+                                    onChange={(spe: any) => setSelected(spe)}
+                                    labelledBy="Anestesiologia"        
+                                    hasSelectAll={false} 
+                                    overrideStrings={{
+                                        selectSomeItems: "Selecione a especialidade médica",
+                                        search: "Pesquisar",
+                                        allItemsAreSelected: "Todas especialidaes selecionadas"
+                                    }}           
+                                    />
+                                <C.ErrorMsg></C.ErrorMsg>
                             </Label>
 
                             <Label>
@@ -314,12 +328,13 @@ export function Medico() {
                                         inputAction={(e: any) => setMedicPhoto(e.target.files)}
                                     />
                                 </InputImage.Root>
+                                <C.ErrorMsg></C.ErrorMsg>
                             </Label>
                         </C.InputsContainer>
                         <C.ButtonContainer>
                             <Button.Gray
                                 onClick={() => [
-                                    setMedicInputValue(null), setCpfInputValue(null), setRepeatedCpfVerification(null), setCrmInputValue(null), setPhoneInputValue(null), setSpecialtyCheckbox(null),
+                                    setMedicInputValue(null), setCpfInputValue(null), setRepeatedCpfVerification(null), setCrmInputValue(null), setPhoneInputValue(null), setSelected([]),
                                     setMedicPhoto(null), setIsMedicInputWithError(false), setIsCpfInputWithError(false), setIsCrmInputWithError(false), setIsPhoneInputWithError(false)
                                 ]}
                                 value="Cancelar"

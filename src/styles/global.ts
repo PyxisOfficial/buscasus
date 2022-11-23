@@ -290,6 +290,36 @@ a:-webkit-any-link {
   color: #909090 !important;
 }
 
+.rmsc {
+  --rmsc-main: #287365;
+  --rmsc-hover: #f1f3f5;
+  --rmsc-selected: #e2e6ea;
+  --rmsc-border: #d1d1d1;
+  --rmsc-radius: 10px;
+  --rmsc-h: 25px;
+}
+
+.rmsc .dropdown-content .panel-content {
+  border-radius: 8px !important;
+}
+
+.rmsc .dropdown-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  outline: 0;
+  background-color: var(--rmsc-bg);
+  border-radius: 8px;
+  box-shadow: inset 0px 5px 2px rgba(32, 32, 64, 0.01), 
+                inset 0px 3px 2px rgba(32, 32, 64, 0.05), 
+                inset 0px 1px 1px rgba(32, 32, 64, 0.09), 
+                inset 0px 0px 1px rgba(32, 32, 64, 0.1);
+}
+
+.rmsc .dropdown-container:focus-within {
+  box-shadow: none;
+  border-color: #287365;
+}
 `;
 
 export default GlobalStyle;

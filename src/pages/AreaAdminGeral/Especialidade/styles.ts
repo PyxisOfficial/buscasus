@@ -116,3 +116,9 @@ export const Img = styled.img`
     height: 100px;
     border-radius: 5px;
 `
+
+export const ErrorMsg = styled.span`
+    color: #e94a4f;
+    height: 14px;
+    font-size: 14px;
+`

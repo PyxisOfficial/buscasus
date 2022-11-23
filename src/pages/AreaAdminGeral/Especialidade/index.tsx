@@ -120,27 +120,30 @@ export function Especialidade() {
                 <C.FormContainer>
                     <h3>Cadastrar uma nova especialidade</h3>
                     <form ref={formRef} onSubmit={insertSpecialty} autoComplete="off">
-                        <Label htmlFor="nomeEspecialidade">
-                            Especialidade
-                            <Input.Input
-                                onChange={(e) => setSpecialtyInputValue(e.target.value)}
-                                onBlur={(e) => [specialtyInputValue ? setIsSpecialtyInputWithError(false) : null, verifyIsSpecialtyRepeated(e.target.value)]}
-                                isWithIcon={false}
-                                errorText={isSpecialtyInputWithError}
-                                inputSize={sizes.lg}
-                                type="text"
-                                id="nomeEspecialidade"
-                                name="nomeEspecialidade"
-                            />
-                        </Label>
-                        <C.ButtonContainer>
-                            <Button.Gray
-                                onClick={() => [setSpecialtyInputValue(null), setRepeatedSpecialtyVerification(null), setIsSpecialtyInputWithError(false)]}
-                                value="Cancelar"
-                                type="reset"
-                            />
-                            <Button.Green value="Salvar" type="submit" />
-                        </C.ButtonContainer>
+                        <div>
+                            <Label htmlFor="nomeEspecialidade">
+                                Especialidade
+                                <Input.Input
+                                    onChange={(e) => setSpecialtyInputValue(e.target.value)}
+                                    onBlur={(e) => [specialtyInputValue ? setIsSpecialtyInputWithError(false) : null, verifyIsSpecialtyRepeated(e.target.value)]}
+                                    isWithIcon={false}
+                                    errorText={isSpecialtyInputWithError}
+                                    inputSize={sizes.lg}
+                                    type="text"
+                                    id="nomeEspecialidade"
+                                    name="nomeEspecialidade"
+                                />
+                                <C.ErrorMsg> {isSpecialtyInputWithError ? 'Insira uma especialidade válida.' : null} </C.ErrorMsg>
+                            </Label>
+                            <C.ButtonContainer>
+                                <Button.Gray
+                                    onClick={() => [setSpecialtyInputValue(null), setRepeatedSpecialtyVerification(null), setIsSpecialtyInputWithError(false)]}
+                                    value="Cancelar"
+                                    type="reset"
+                                />
+                                <Button.Green value="Salvar" type="submit" />
+                            </C.ButtonContainer>
+                        </div>
                     </form>
                 </C.FormContainer>
             </C.InsertContainer>

@@ -12,6 +12,29 @@ import { MagnifyingGlass } from 'phosphor-react';
 import * as C from './styles';
 
 export function PlantaoDia() {
+        const [claimCount, setClaimCount] = useState<string>();
+        const [dutyCount, setDutyCount] = useState<string>();
+        const [medicsCount, setMedicsCount] = useState<string>();
+    
+        const date = new Date();
+        let weekDay = date.getDay();
+        let day: any = "" + date.getDate();
+        let month: any = date.getMonth() + 1;
+        let year = "" + date.getFullYear();
+    
+        if (month.length < 2) month = "0" + month;
+        if (day.length < 2) day = "0" + day;
+    
+        const weekDays: any = {
+            0: "Domingo",
+            1: "Segunda-feira",
+            2: "Terça-feira",
+            3: "Quarta-feira",
+            4: "Quinta-feira",
+            5: "Sexta-feira",
+            6: "Sábado"
+        }
+
     const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
     const [duty, setDuty] = useState([]);
@@ -64,9 +87,12 @@ export function PlantaoDia() {
 
     return (
         <MenuBackground menuLinks={<MenuLinksHospital />}>
+            <C.TitleDiv>
+                <C.Title>Plantões do dia</C.Title>
+                <C.SubTitle>{weekDays[weekDay]}, {`${day}/${month}/${year}`}</C.SubTitle>
+            </C.TitleDiv>
             <C.TableContainer>
                 <C.TableContainerHeader>
-                    <h3>Plantões do dia</h3>
                     <C.InputsContainer>
                         <Input.Root>
                             <Input.Input
@@ -86,8 +112,8 @@ export function PlantaoDia() {
                                 <MagnifyingGlass size={16} />
                             </Input.LeftIcon>
                         </Input.Root>
-                        <Button.Pdf />
                     </C.InputsContainer>
+                    <Button.Pdf />
                 </C.TableContainerHeader>
                 <C.Table>
                     <C.Thead>

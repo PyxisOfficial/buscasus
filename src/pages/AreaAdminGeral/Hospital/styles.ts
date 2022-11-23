@@ -14,7 +14,7 @@ export const Text = styled.span`
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 `
 
 export const FormContainer = styled.div`
@@ -37,6 +37,12 @@ export const Label = styled.label`
     display: flex;
     flex-direction: column;
     gap: 4px;
+`
+
+export const ErrorMsg = styled.span`
+    color: #e94a4f;
+    height: 14px;
+    font-size: 14px;
 `
 
 export const InputsContainer = styled.div`
