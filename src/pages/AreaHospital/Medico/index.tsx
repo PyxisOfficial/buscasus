@@ -4,8 +4,6 @@ import axios from 'axios';
 import { cpf } from 'cpf-cnpj-validator';
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
-import Select, { StylesConfig } from 'react-select';
-import { MultiSelect } from "react-multi-select-component";
 
 import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
@@ -68,6 +66,7 @@ export function Medico() {
 
         axios.get('http://localhost/buscasus/api/area-admin/especialidade/', {
             params: {
+                allSpeciaty: true,
                 idHospital: hospitalId
             }
         }).then(response => setSpecialty(response.data));
@@ -160,7 +159,7 @@ export function Medico() {
         if (!crmInputValue) setIsCrmInputWithError(true);
         if (!phoneInputValue || phoneInputValue.length != 15) setIsPhoneInputWithError(true);
 
-        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15) {
+        if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && selected.length > 0) {
             await axios.post('http://localhost/buscasus/api/area-hospital/medico/', formData);
 
             setIsFormSubmitted(true);
@@ -306,17 +305,17 @@ export function Medico() {
                                 Especialidades
 
                                 <C.CustomSelect
-                                    options={specialtyValue} 
-                                    value={selected} 
+                                    options={specialtyValue}
+                                    value={selected}
                                     onChange={(spe: any) => setSelected(spe)}
-                                    labelledBy="Anestesiologia"        
-                                    hasSelectAll={false} 
+                                    labelledBy="Anestesiologia"
+                                    hasSelectAll={false}
                                     overrideStrings={{
                                         selectSomeItems: "Selecione a especialidade médica",
                                         search: "Pesquisar",
                                         allItemsAreSelected: "Todas especialidaes selecionadas"
-                                    }}           
-                                    />
+                                    }}
+                                />
                                 <C.ErrorMsg />
                             </Label>
 
@@ -398,7 +397,7 @@ export function Medico() {
                                                     <C.Text><b>CPF:</b> {medic.cpfMedico}</C.Text>
                                                     <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
                                                     <C.Text><b>Telefone:</b> {medic.numTelefone}</C.Text>
-                                                    <C.Text><b>Especialidades:</b> {infoModalSpecialty} </C.Text>
+                                                    <C.Text><b>Especialidades:</b> {infoModalSpecialty ? infoModalSpecialty : "Clínico Geral"} </C.Text>
                                                     <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
                                                 </C.InfoContainer>
                                                 <C.InfoImg

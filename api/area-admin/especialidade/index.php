@@ -8,6 +8,7 @@ $connection = new Connection;
 $conn = $connection->connect();
 
 if (isset($_GET['search'])) {
+
     $search = $_GET['search'];
 
     $sql = "SELECT idEspecialidade, nomeEspecialidade FROM tbEspecialidade
@@ -18,7 +19,9 @@ if (isset($_GET['search'])) {
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($especialidade);
+
 } else if (isset($_GET['repeatedSpecialty'])) {
+
     $repeatedSpecialty = @$_GET['repeatedSpecialty'];
 
     $sql = "SELECT COUNT(idEspecialidade) AS idEspecialidade FROM tbEspecialidade WHERE nomeEspecialidade LIKE :nomeEspecialidade";
@@ -28,13 +31,25 @@ if (isset($_GET['search'])) {
     $especialidade = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($especialidade);
+
+} else if (isset($_GET['allSpeciaty'])) {
+
+    $sql = "SELECT * FROM tbEspecialidade ORDER BY nomeEspecialidade ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo json_encode($especialidade);
+
 } else {
+
     $sql = "SELECT * FROM tbEspecialidade WHERE idEspecialidade > 1 ORDER BY nomeEspecialidade ASC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $especialidade = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($especialidade);
+    
 }
 
 $method = $_SERVER['REQUEST_METHOD'];

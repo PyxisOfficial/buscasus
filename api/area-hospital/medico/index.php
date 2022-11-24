@@ -68,7 +68,7 @@ if (isset($_GET['search'])) {
     $sql = "SELECT GROUP_CONCAT(e.nomeEspecialidade SEPARATOR ', ') AS nomeEspecialidade FROM tbEspecialidade e
             INNER JOIN tbMedicoEspecialidade me
             ON e.idEspecialidade = me.idEspecialidade
-            WHERE me.idMedico = :idMedico";
+            WHERE me.idMedico = :idMedico AND e.idEspecialidade > 1";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':idMedico', $idMedico);
     $stmt->execute();
