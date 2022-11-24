@@ -33,8 +33,12 @@ export const FormContainer = styled.div`
     box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.01), 0px 6px 4px rgba(0, 0, 0, 0.05), 0px 3px 3px rgba(0, 0, 0, 0.09), 0px 1px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
 `
 
-export const ErrorMsg = styled.span`
-    color: #e94a4f;
+export const ErrorMsg = styled.span<{
+    errorText?: boolean;
+}>`
+    color: ${(props) => props.errorText ? '#e94a4f' : '#fbfbfd'};
+    visibility: ${(props) => props.errorText ? 'visible' : 'hidden'};
+    transition: .3s;
     height: 14px;
     font-size: 14px;
 `

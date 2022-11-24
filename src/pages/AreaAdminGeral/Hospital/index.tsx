@@ -80,18 +80,18 @@ export function Hospital() {
     const formRef = useRef<any>();
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
+        axios.get(`http://localhost/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
     }, []);
-
+    
     useEffect(() => {
         if (search) {
-            axios.get('http://localhost:8080/buscasus/api/area-admin/hospital/', {
+            axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
                 params: {
                     search: search
                 }
             }).then(response => setHospital(response.data));
         } else {
-            axios.get(`http://localhost:8080/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
+            axios.get(`http://localhost/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
         }
 
         setHospitalInputValue(null);
@@ -115,7 +115,7 @@ export function Hospital() {
     }, [isFormSubmitted]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/buscasus/api/area-admin/hospital/', {
+        axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
             params: {
                 search: search,
             }
@@ -191,7 +191,7 @@ export function Hospital() {
 
         if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation
             && repeatedCnpjVerification == 0 && ufInputValue && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
-            await axios.post('http://localhost:8080/buscasus/api/area-admin/hospital/', formData);
+            await axios.post('http://localhost/buscasus/api/area-admin/hospital/', formData);
 
             setIsFormSubmitted(true);
             toast.success("Hospital cadastrado com sucesso!");
@@ -214,7 +214,7 @@ export function Hospital() {
 
         if (hospitalInputValueModal && emailInputValueModal && phoneInputValueModal.length == 14 && startTimeInputValueModal && endTimeInputValueModal && cnpjInputValueModal && ufInputValueModal
             && publicPlaceInputValueModal && cepInputValueModal.length == 9 && cityInputValueModal && districtInputValueModal) {
-            await axios.post('http://localhost:8080/buscasus/api/area-admin/hospital/', formData, {
+            await axios.post('http://localhost/buscasus/api/area-admin/hospital/', formData, {
                 params: {
                     nomeHospital: hospitalInputValueModal,
                     emailHospital: emailInputValueModal,
@@ -239,7 +239,7 @@ export function Hospital() {
     }
 
     async function deleteHospital() {
-        await axios.delete('http://localhost:8080/buscasus/api/area-admin/hospital/', {
+        await axios.delete('http://localhost/buscasus/api/area-admin/hospital/', {
             params: {
                 idHospital: hospitalId,
                 idTelefone: phoneId
@@ -261,7 +261,7 @@ export function Hospital() {
     }
 
     function verifyIsCnpjRepeated(cnpj: any) {
-        axios.get('http://localhost:8080/buscasus/api/area-admin/hospital/', {
+        axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
             params: {
                 repeatedCnpj: cnpj
             }
@@ -298,7 +298,7 @@ export function Hospital() {
                                 type="text"
                                 id="nomeHospital"
                             />
-                         <C.ErrorMsg> {isHospitalInputWithError ? 'Insira o nome do hospital.' :  null} </C.ErrorMsg>
+                            <C.ErrorMsg errorText={isHospitalInputWithError}>Insira o nome do hospital.</C.ErrorMsg>
 
                         </C.Label>
                         <C.Label htmlFor="emailHospital">
@@ -312,7 +312,7 @@ export function Hospital() {
                                 type="text"
                                 id="emailHospital"
                             />
-                            <C.ErrorMsg> {isEmailInputWithError ? "Insira um email válido." : null }</C.ErrorMsg>
+                            <C.ErrorMsg errorText={isEmailInputWithError}>Insira um email válido.</C.ErrorMsg>
                         </C.Label>
                         <C.Label htmlFor="numTelefone">
                             Número de telefone do hospital
@@ -327,7 +327,7 @@ export function Hospital() {
                                 id="numTelefone"
                                 value={phoneInputValue}
                             />
-                             <C.ErrorMsg> {isPhoneInputWithError ? 'Insira uma telefone válido.' : null} </C.ErrorMsg>
+                            <C.ErrorMsg errorText={isPhoneInputWithError}>Insira uma telefone válido.</C.ErrorMsg>
                         </C.Label>
 
                         <C.InputContainer>
@@ -342,7 +342,7 @@ export function Hospital() {
                                     type="time"
                                     id="aberturaHospital"
                                 />
-                                 <C.ErrorMsg> {isStartTimeInputWithError ? 'Insira a abertura do hospital.' : null } </C.ErrorMsg> 
+                                <C.ErrorMsg errorText={isStartTimeInputWithError}>Insira a abertura do hospital.</C.ErrorMsg>
                             </C.Label>
 
                             <C.Label htmlFor="fechamentoHospital">
@@ -356,7 +356,7 @@ export function Hospital() {
                                     type="time"
                                     id="fechamentoHospital"
                                 />
-                                <C.ErrorMsg> {isEndTimeInputWithError ? 'Insira a fechamento do hospital.' : null }</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isEndTimeInputWithError}>Insira o fechamento do hospital.</C.ErrorMsg>
                             </C.Label>
                         </C.InputContainer>
 
@@ -374,7 +374,7 @@ export function Hospital() {
                                     id="cnpjHospital"
                                     value={cnpjInputValue}
                                 />
-                                <C.ErrorMsg>  {isCnpjInputWithError ? 'Insira um CNPJ válido.' : null }</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isCnpjInputWithError}>Insira um CNPJ válido.</C.ErrorMsg>
                             </C.Label>
 
                             <C.Label htmlFor="cepHospital">
@@ -391,7 +391,7 @@ export function Hospital() {
                                     id="cepHospital"
                                     value={cepInputValue}
                                 />
-                                 <C.ErrorMsg> {isCepInputWithError ?' Insira um CEP válido.' : null }</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isCepInputWithError}>Insira um CEP válido.</C.ErrorMsg>
                             </C.Label>
 
                             <C.Label htmlFor="ufHospital">
@@ -475,13 +475,13 @@ export function Hospital() {
                                     inputAction={(e: any) => setHospitalPhoto(e.target.files)}
                                 />
                             </InputImage.Root>
-                            {isHospitalPhotoWithError ? <C.ErrorMsg> Insira uma foto para o hospital.</C.ErrorMsg> : <C.ErrorMsg>‎ </C.ErrorMsg>}
+                            <C.ErrorMsg errorText={isHospitalPhotoWithError}>Insira uma foto para o hospital.</C.ErrorMsg>
                         </C.Label>
                         <C.ButtonContainer>
                             <Button.Gray
                                 onClick={() => [
                                     setHospitalInputValue(null), setEmailInputValue(null), setPhoneInputValue(null), setStartTimeInputValue(null),
-                                    setEndTimeInputValue(null), setCnpjInputValue(null), setRepeatedCnpjVerification(null), setCepInputValue(null), setUfInputValue(null), 
+                                    setEndTimeInputValue(null), setCnpjInputValue(null), setRepeatedCnpjVerification(null), setCepInputValue(null), setUfInputValue(null),
                                     setPublicPlaceInputValue(null), setCityInputValue(null), setDistrictInputValue(null), setComplementInputValue(null), setHospitalPhoto(null),
                                     setIsHospitalInputWithError(false), setIsEmailInputWithError(false), setIsPhoneInputWithError(false),
                                     setIsStartTimeInputWithError(false), setIsEndTimeInputWithError(false), setIsCnpjInputWithError(false), setIsCepInputWithError(false),
@@ -558,7 +558,7 @@ export function Hospital() {
                                                         <C.Text><b>Cidade:</b> {hosp.cidadeHospital}</C.Text>
                                                         <C.Text><b>Bairro:</b> {hosp.bairroHospital}</C.Text>
                                                     </C.InfoContainer>
-                                                    <C.InfoImg src={`http://localhost:8080/buscasus/api/area-admin/img/${hosp.fotoHospital}`} />
+                                                    <C.InfoImg src={`http://localhost/buscasus/api/area-admin/img/${hosp.fotoHospital}`} />
                                                 </C.InfoModalContent>
                                             </Modal.Info>
                                             <Modal.Edit

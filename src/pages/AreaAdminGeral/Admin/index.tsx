@@ -165,7 +165,7 @@ export function Admin() {
                                         type="text"
                                         id="loginAdmin"
                                     />
-                                    <C.ErrorMsg>{isLoginInputWithError ? 'Insira um nome de usuário.' : null}</C.ErrorMsg>
+                                    <C.ErrorMsg errorText={isLoginInputWithError}>Insira um nome de usuário.</C.ErrorMsg>
                                 </Label>
                                 <Label htmlFor="senhaAdmin" onClick={generatePassword}>
                                     Senha
@@ -185,7 +185,7 @@ export function Admin() {
                                             Gerar senha
                                         </C.GenPassContainer>
                                     </C.PasswordContainer>
-                                    <C.ErrorMsg>{isPasswordInputWithError ? 'Clique e gere uma senha.' : null}</C.ErrorMsg>
+                                    <C.ErrorMsg errorText={isPasswordInputWithError}>Clique e gere uma senha.</C.ErrorMsg>
                                 </Label>
                                 <Label htmlFor="idHospital">
                                     Hospital
@@ -204,7 +204,7 @@ export function Admin() {
                                             </option>
                                         )}
                                     </C.Select>
-                                    <C.ErrorMsg>{isHospitalInputWithError ? 'Selecione um hospital.' : null}</C.ErrorMsg>
+                                    <C.ErrorMsg errorText={isHospitalInputWithError}>Selecione um hospital.</C.ErrorMsg>
                                 </Label>
                             </C.InputsContainer>
                             <C.ButtonContainer>

@@ -117,8 +117,12 @@ export const Img = styled.img`
     border-radius: 5px;
 `
 
-export const ErrorMsg = styled.span`
-    color: #e94a4f;
+export const ErrorMsg = styled.span<{
+    errorText?: boolean;
+}>`
+    color: ${(props) => props.errorText ? '#e94a4f' : '#fbfbfd'};
+    visibility: ${(props) => props.errorText ? 'visible' : 'hidden'};
+    transition: .3s;
     height: 14px;
     font-size: 14px;
 `

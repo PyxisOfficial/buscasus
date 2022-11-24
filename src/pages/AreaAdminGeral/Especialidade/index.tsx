@@ -133,7 +133,7 @@ export function Especialidade() {
                                     id="nomeEspecialidade"
                                     name="nomeEspecialidade"
                                 />
-                                <C.ErrorMsg> {isSpecialtyInputWithError ? 'Insira uma especialidade válida.' : null} </C.ErrorMsg>
+                                <C.ErrorMsg errorText={isSpecialtyInputWithError}>Insira uma especialidade válida.</C.ErrorMsg>
                             </Label>
                             <C.ButtonContainer>
                                 <Button.Gray

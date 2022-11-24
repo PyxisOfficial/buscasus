@@ -247,7 +247,7 @@ export function Medico() {
                                     id="nomeMedico"
                                     placeholder='Mário de Andrade'
                                 />
-                                <C.ErrorMsg>{isMedicInputWithError ? 'Insira um nome válido.' : null}</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isMedicInputWithError}>Insira um nome válido.</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="cpfMedico">
@@ -264,7 +264,7 @@ export function Medico() {
                                     placeholder='123.456.789-00'
                                     value={cpfInputValue}
                                 />
-                                <C.ErrorMsg>{isCrmInputWithError ? 'Insira um CPF válido.' : null}</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isCpfInputWithError}>Insira um CPF válido.</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="crmMedico">
@@ -281,7 +281,7 @@ export function Medico() {
                                     placeholder='CRM/SP 123456'
                                     value={crmInputValue}
                                 />
-                                <C.ErrorMsg>{isCrmInputWithError ? 'Insira um CRM válido.' : null}</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isCrmInputWithError}>Insira um CRM válido.</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="numTelefone">
@@ -298,7 +298,7 @@ export function Medico() {
                                     placeholder='(99) 99999-9999'
                                     value={phoneInputValue}
                                 />
-                                <C.ErrorMsg>{isPhoneInputWithError ? 'Insira um número de telefone.' : null}</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isPhoneInputWithError}>Insira um número de telefone.</C.ErrorMsg>
                             </Label>
 
                             <Label>
