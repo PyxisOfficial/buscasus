@@ -16,6 +16,8 @@ export function VisaoGeralHospital() {
     const [dutyCount, setDutyCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
 
+    const [specialtyCount, setSpecialtyCount] = useState<any>();
+
     const date = new Date();
     let weekDay = date.getDay();
     let day: any = "" + date.getDate();
@@ -65,6 +67,8 @@ export function VisaoGeralHospital() {
                 idHospital: hospitalId
             }
         }).then(response => setMedicsCount(response.data.idMedico));
+
+        axios.get('http://localhost/buscasus/api/area-hospital/visao-geral/').then(response => setSpecialtyCount(response.data));
     }, []);
 
     return (
@@ -107,7 +111,20 @@ export function VisaoGeralHospital() {
                         </C.ChartContainer>
                         <C.ChartContainer>
                             <h3>Porcentagem de médicos por especialidade</h3>
-                            <PieChart.Specialty />
+                            <PieChart.Specialty
+                                spe1={specialtyCount ? parseInt(specialtyCount[0].idMedico) : null}
+                                spe2={specialtyCount ? parseInt(specialtyCount[1].idMedico) : null}
+                                spe3={specialtyCount ? parseInt(specialtyCount[2].idMedico) : null}
+                                spe4={specialtyCount ? parseInt(specialtyCount[3].idMedico) : null}
+                                spe5={specialtyCount ? parseInt(specialtyCount[4].idMedico) : null}
+                                spe6={specialtyCount ? parseInt(specialtyCount[5].idMedico) : null}
+                                spe7={specialtyCount ? parseInt(specialtyCount[6].idMedico) : null}
+                                spe8={specialtyCount ? parseInt(specialtyCount[7].idMedico) : null}
+                                spe9={specialtyCount ? parseInt(specialtyCount[8].idMedico) : null}
+                                spe10={specialtyCount ? parseInt(specialtyCount[9].idMedico) : null}
+                                spe11={specialtyCount ? parseInt(specialtyCount[10].idMedico) : null}
+                                spe12={specialtyCount ? parseInt(specialtyCount[11].idMedico) : null}
+                            />
                         </C.ChartContainer>
                     </C.LeftContainer>
                     <C.Line />
