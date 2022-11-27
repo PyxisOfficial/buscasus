@@ -17,7 +17,8 @@ const options = {
          color: '#000',
       }
    },
-   pieSliceText: 'none'
+   pieSliceText: 'none',
+   sliceVisibilityThreshold: 5/50,
 };
 
 function PieRegion() {

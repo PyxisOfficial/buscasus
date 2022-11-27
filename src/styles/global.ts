@@ -320,6 +320,7 @@ a:-webkit-any-link {
   box-shadow: none;
   border-color: #287365;
 }
+
 `;
 
 export default GlobalStyle;
