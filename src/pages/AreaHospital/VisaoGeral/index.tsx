@@ -68,7 +68,7 @@ export function VisaoGeralHospital() {
             }
         }).then(response => setMedicsCount(response.data.idMedico));
 
-        axios.get('http://localhost/buscasus/api/area-hospital/visao-geral/').then(response => setSpecialtyCount(response.data));
+        axios.get('http://localhost/buscasus/api/area-hospital/visao-geral/medicoEspecialidade/').then(response => setSpecialtyCount(response.data));
     }, []);
 
     return (
