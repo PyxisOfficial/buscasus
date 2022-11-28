@@ -85,8 +85,9 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     
     if ($idEspecialidade == 1) {
 
-        $sql = "SELECT idMedico, nomeMedico FROM tbMedico";
+        $sql = "SELECT idMedico, nomeMedico FROM tbMedico WHERE idHospital = :idHospital";
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':idHospital', $idHospital);
         $stmt->execute();
         $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
