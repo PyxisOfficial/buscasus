@@ -26,12 +26,14 @@ export function Admin() {
     const [searchAdmin, setSearchAdmin] = useState<string>();
 
     const [loginInputValue, setLoginInputValue] = useState<any>();
+    const [emailHospital, setEmailHospital] = useState<any>();
     const [passwordInputValue, setPasswordInputValue] = useState<any>();
     const [hospitalInputValue, setHospitalInputValue] = useState<any>();
     const [isLoginInputWithError, setIsLoginInputWithError] = useState<boolean>();
     const [isPasswordInputWithError, setIsPasswordInputWithError] = useState<boolean>();
     const [isHospitalInputWithError, setIsHospitalInputWithError] = useState<boolean>();
 
+    const [hospitalMessageError, setHospitalMessageError] = useState<string>();
     const [isPasswordCopied, setIsPasswordCopied] = useState<boolean>(false);
 
     const formRef = useRef<any>();
@@ -53,6 +55,7 @@ export function Admin() {
         }
 
         setLoginInputValue(null);
+        setEmailHospital(null);
         setRepeatedAdminVerification(null);
         setPasswordInputValue(null);
         setHospitalInputValue(null);
@@ -71,30 +74,34 @@ export function Admin() {
     }, [searchAdmin]);
 
     useEffect(() => {
+        setIsLoginInputWithError(false);
         setIsPasswordInputWithError(false);
-    }, [passwordInputValue]);
+    }, [hospitalInputValue]);
 
     useEffect(() => {
-        if (repeatedAdminVerification > 0) {
-            setIsLoginInputWithError(true);
-        } else {
-            setIsLoginInputWithError(false);
-        }
-    }, [repeatedAdminVerification]);
+        if (emailHospital) setLoginInputValue(`admin${emailHospital}`);
+    }, [emailHospital]);
 
     async function insertUser(event: FormEvent) {
         event.preventDefault();
 
-        if (!loginInputValue || repeatedAdminVerification > 0) setIsLoginInputWithError(true);
+        if (!loginInputValue) setIsLoginInputWithError(true);
         if (!passwordInputValue) setIsPasswordInputWithError(true);
-        if (hospitalInputValue == 0 || !hospitalInputValue) setIsHospitalInputWithError(true);
+
+        if (hospitalInputValue == 0 || !hospitalInputValue) {
+            setIsHospitalInputWithError(true);
+            setHospitalMessageError("Selecione um hospital.");
+        } else if (repeatedAdminVerification > 0) {
+            setIsHospitalInputWithError(true);
+            setHospitalMessageError("Esse hospital já possui um administrador.");
+        }
 
         const formData = new FormData(event.target as HTMLFormElement);
         formData.append("loginAdmin", loginInputValue);
         formData.append("senhaAdmin", passwordInputValue);
         formData.append("idHospital", hospitalInputValue);
 
-        if (loginInputValue && repeatedAdminVerification == 0 && passwordInputValue && hospitalInputValue > 0) {
+        if (loginInputValue && passwordInputValue && hospitalInputValue > 0 && repeatedAdminVerification == 0) {
             await axios.post('http://localhost/buscasus/api/area-admin/admin/', formData);
 
             setIsFormSubmitted(true);
@@ -113,6 +120,15 @@ export function Admin() {
         toast.success("Administrador excluído com sucesso!");
     }
 
+    async function generateUser(id: any) {
+        await axios.get('http://localhost/buscasus/api/area-admin/admin/', {
+            params: {
+                userLogin: true,
+                idHospital: id
+            }
+        }).then(response => setEmailHospital((response.data.emailHospital).split('@')[0]));
+    }
+
     function generatePassword() {
         let chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ@#+";
         let passwordLength = 8;
@@ -125,10 +141,11 @@ export function Admin() {
         setPasswordInputValue(password);
     }
 
-    function verifyIsAdminRepeated(admin: any) {
-        axios.get('http://localhost/buscasus/api/area-admin/admin/', {
+    async function verifyIsAdminRepeated(id: any) {
+        await axios.get('http://localhost/buscasus/api/area-admin/admin/', {
             params: {
-                repeatedAdmin: admin
+                repeatedAdmin: true,
+                idHospital: id
             }
         }).then(response => setRepeatedAdminVerification(response.data.idAdmin));
     }
@@ -154,20 +171,40 @@ export function Admin() {
                     <form ref={formRef} onSubmit={insertUser} autoComplete="off">
                         <div>
                             <C.InputsContainer>
+                                <Label htmlFor="idHospital">
+                                    Hospital
+                                    <C.Select
+                                        onChange={(e) => [
+                                            setHospitalInputValue(e.target.value), setIsHospitalInputWithError(false),
+                                            verifyIsAdminRepeated(e.target.value), generateUser(e.target.value), generatePassword()
+                                        ]}
+                                        errorText={isHospitalInputWithError}
+                                    >
+                                        <option value="0">Selecione</option>
+                                        {hospital.map((hosp: any) =>
+                                            <option
+                                                key={hosp.idHospital}
+                                                value={hosp.idHospital}
+                                            >
+                                                {hosp.nomeHospital}
+                                            </option>
+                                        )}
+                                    </C.Select>
+                                    <C.ErrorMsg errorText={isHospitalInputWithError}>{hospitalMessageError}</C.ErrorMsg>
+                                </Label>
                                 <Label htmlFor="loginAdmin">
                                     Nome de usuário
                                     <Input.Input
-                                        onChange={(e) => setLoginInputValue(e.target.value)}
-                                        onBlur={(e) => [loginInputValue ? setIsLoginInputWithError(false) : null, verifyIsAdminRepeated(e.target.value)]}
                                         isWithIcon={false}
                                         errorText={isLoginInputWithError}
                                         inputSize={sizes.md}
                                         type="text"
                                         id="loginAdmin"
+                                        value={loginInputValue}
+                                        disabled
                                     />
-                                    <C.ErrorMsg errorText={isLoginInputWithError}>Insira um nome de usuário.</C.ErrorMsg>
                                 </Label>
-                                <Label htmlFor="senhaAdmin" onClick={generatePassword}>
+                                <Label htmlFor="senhaAdmin">
                                     Senha
                                     <C.PasswordContainer>
                                         <Input.Root>
@@ -181,36 +218,13 @@ export function Admin() {
                                                 disabled
                                             />
                                         </Input.Root>
-                                        <C.GenPassContainer>
-                                            Gerar senha
-                                        </C.GenPassContainer>
                                     </C.PasswordContainer>
-                                    <C.ErrorMsg errorText={isPasswordInputWithError}>Clique e gere uma senha.</C.ErrorMsg>
-                                </Label>
-                                <Label htmlFor="idHospital">
-                                    Hospital
-                                    <C.Select
-                                        onChange={(e) => setHospitalInputValue(e.target.value)}
-                                        onBlur={() => hospitalInputValue > 0 ? setIsHospitalInputWithError(false) : null}
-                                        errorText={isHospitalInputWithError}
-                                    >
-                                        <option value="0">Selecione</option>
-                                        {hospital.map((hosp: any) =>
-                                            <option
-                                                key={hosp.idHospital}
-                                                value={hosp.idHospital}
-                                            >
-                                                {hosp.nomeHospital}
-                                            </option>
-                                        )}
-                                    </C.Select>
-                                    <C.ErrorMsg errorText={isHospitalInputWithError}>Selecione um hospital.</C.ErrorMsg>
                                 </Label>
                             </C.InputsContainer>
                             <C.ButtonContainer>
                                 <Button.Gray
                                     onClick={() => [
-                                        setLoginInputValue(null), setRepeatedAdminVerification(null), setPasswordInputValue(null), setHospitalInputValue(null),
+                                        setLoginInputValue(null), setEmailHospital(null), setRepeatedAdminVerification(null), setPasswordInputValue(null), setHospitalInputValue(null),
                                         setIsLoginInputWithError(false), setIsPasswordInputWithError(false), setIsHospitalInputWithError(false)
                                     ]}
                                     value="Cancelar"
@@ -301,6 +315,6 @@ export function Admin() {
                     </C.Tbody>
                 </C.Table>
             </C.TableContainer>
-        </MenuBackground>
+        </MenuBackground >
     )
 }

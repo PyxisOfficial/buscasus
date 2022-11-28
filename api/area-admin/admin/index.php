@@ -8,6 +8,7 @@ $connection = new Connection;
 $conn = $connection->connect();
 
 if (isset($_GET['search'])) {
+
     $search = $_GET['search'];
 
     $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso, a.idHospital, h.nomeHospital FROM tbAdmin a
@@ -22,17 +23,33 @@ if (isset($_GET['search'])) {
     $admin = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($admin);
-} else if (isset($_GET['repeatedAdmin'])) {
-    $repeatedAdmin = @$_GET['repeatedAdmin'];
 
-    $sql = "SELECT COUNT(idAdmin) AS idAdmin FROM tbAdmin WHERE loginAdmin LIKE :loginAdmin";
+} else if (isset($_GET['userLogin'])) {
+
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT emailHospital FROM tbHospital WHERE idHospital = :idHospital";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':loginAdmin', $repeatedAdmin);
+    $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($admin);
+
+} else if (isset($_GET['repeatedAdmin'])) {
+
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT COUNT(idAdmin) AS idAdmin FROM tbAdmin WHERE idHospital = :idHospital";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':idHospital', $idHospital);
+    $stmt->execute();
+    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($admin);
+
 } else {
+
     $sql = "SELECT a.idAdmin, a.loginAdmin, a.senhaAdmin, a.primeiroAcesso,a.idHospital, h.nomeHospital FROM tbAdmin a
     INNER JOIN tbHospital h
     ON a.idHospital = h.idHospital
