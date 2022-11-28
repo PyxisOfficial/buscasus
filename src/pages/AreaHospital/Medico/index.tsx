@@ -37,6 +37,8 @@ export function Medico() {
     const [phoneInputValue, setPhoneInputValue] = useState<any>();
     const [medicPhoto, setMedicPhoto] = useState<any>();
 
+    const [cpfMessageError, setCpfMessageError] = useState<string>();
+
     const [isMedicInputWithError, setIsMedicInputWithError] = useState<boolean>();
     const [isCpfInputWithError, setIsCpfInputWithError] = useState<boolean>();
     const [isCrmInputWithError, setIsCrmInputWithError] = useState<boolean>();
@@ -155,9 +157,16 @@ export function Medico() {
         const cpfValidation = cpf.isValid(cpfInputValue);
 
         if (!medicInputValue) setIsMedicInputWithError(true);
-        if (!cpfInputValue || !cpfValidation || repeatedCpfVerification > 0) setIsCpfInputWithError(true);
         if (!crmInputValue) setIsCrmInputWithError(true);
         if (!phoneInputValue || phoneInputValue.length != 15) setIsPhoneInputWithError(true);
+
+        if (!cpfInputValue || !cpfValidation) {
+            setIsCpfInputWithError(true);
+            setCpfMessageError("Insira um CPF válido.")
+        } else if (repeatedCpfVerification > 0) {
+            setIsCpfInputWithError(true);
+            setCpfMessageError("Esse CPF já foi cadastrado.")
+        }
 
         if (medicInputValue && cpfValidation && repeatedCpfVerification == 0 && crmInputValue && phoneInputValue.length == 15 && selected.length > 0) {
             await axios.post('http://localhost/buscasus/api/area-hospital/medico/', formData);
@@ -264,7 +273,7 @@ export function Medico() {
                                     placeholder='123.456.789-00'
                                     value={cpfInputValue}
                                 />
-                                <C.ErrorMsg errorText={isCpfInputWithError}>Insira um CPF válido.</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isCpfInputWithError}>{cpfMessageError}</C.ErrorMsg>
                             </Label>
 
                             <Label htmlFor="crmMedico">

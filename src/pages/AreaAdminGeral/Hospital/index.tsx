@@ -40,6 +40,8 @@ export function Hospital() {
     const [complementInputValue, setComplementInputValue] = useState<any>();
     const [hospitalPhoto, setHospitalPhoto] = useState<any>();
 
+    const [cnpjMessageError, setCnpjMessageError] = useState<string>();
+
     const [isHospitalInputWithError, setIsHospitalInputWithError] = useState<boolean>();
     const [isEmailInputWithError, setIsEmailInputWithError] = useState<boolean>();
     const [isPhoneInputWithError, setIsPhoneInputWithError] = useState<boolean>();
@@ -82,7 +84,7 @@ export function Hospital() {
     useEffect(() => {
         axios.get(`http://localhost/buscasus/api/area-admin/hospital/`).then((response) => setHospital(response.data));
     }, []);
-    
+
     useEffect(() => {
         if (search) {
             axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
@@ -181,13 +183,20 @@ export function Hospital() {
         if (!phoneInputValue || phoneInputValue.length != 14) setIsPhoneInputWithError(true);
         if (!startTimeInputValue) setIsStartTimeInputWithError(true);
         if (!endTimeInputValue) setIsEndTimeInputWithError(true);
-        if (!cnpjInputValue || !cnpjValidation || repeatedCnpjVerification > 0) setIsCnpjInputWithError(true);
         if (!cepInputValue || cepInputValue.length != 9) setIsCepInputWithError(true);
         if (!ufInputValue) setIsUfInputWithError(true);
         if (!publicPlaceInputValue) setIsPublicPlaceInputWithError(true);
         if (!cityInputValue) setIsCityInputWithError(true);
         if (!districtInputValue) setIsDistrictInputWithError(true);
         if (!hospitalPhoto) setIsHospitalPhotoWithError(true);
+
+        if (!cnpjInputValue || !cnpjValidation) {
+            setIsCnpjInputWithError(true);
+            setCnpjMessageError("Insira um CNPJ válido.");
+        } else if (repeatedCnpjVerification > 0) {
+            setIsCnpjInputWithError(true);
+            setCnpjMessageError("Esse CNPJ já foi cadastrado.");
+        }
 
         if (hospitalInputValue && emailInputValue && phoneInputValue.length == 14 && startTimeInputValue && endTimeInputValue && cnpjValidation
             && repeatedCnpjVerification == 0 && ufInputValue && publicPlaceInputValue && cepInputValue.length == 9 && cityInputValue && districtInputValue && hospitalPhoto) {
@@ -374,7 +383,7 @@ export function Hospital() {
                                     id="cnpjHospital"
                                     value={cnpjInputValue}
                                 />
-                                <C.ErrorMsg errorText={isCnpjInputWithError}>Insira um CNPJ válido.</C.ErrorMsg>
+                                <C.ErrorMsg errorText={isCnpjInputWithError}>{cnpjMessageError}</C.ErrorMsg>
                             </C.Label>
 
                             <C.Label htmlFor="cepHospital">
