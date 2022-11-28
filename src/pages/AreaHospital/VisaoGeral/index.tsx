@@ -7,7 +7,7 @@ import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { BarChart, PieChart } from '../../../components/Charts';
 
-import { Activity, Syringe, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'phosphor-react';
+import { Activity, Syringe, ChatCenteredDots } from 'phosphor-react';
 
 import * as C from './styles'
 
@@ -17,6 +17,7 @@ export function VisaoGeralHospital() {
     const [medicsCount, setMedicsCount] = useState<string>();
 
     const [specialtyCount, setSpecialtyCount] = useState<any>();
+    const [absencesCount, setAbsencesCount] = useState<any>();
 
     const date = new Date();
     let weekDay = date.getDay();
@@ -35,6 +36,21 @@ export function VisaoGeralHospital() {
         4: "Quinta-feira",
         5: "Sexta-feira",
         6: "Sábado"
+    }
+
+    const months: any = {
+        1: "Janeiro",
+        2: "Fevereiro",
+        3: "Março",
+        4: "Abril",
+        5: "Maio",
+        6: "Junho",
+        7: "Julho",
+        8: "Agosto",
+        9: "Setembro",
+        10: "Outubro",
+        11: "Novembro",
+        12: "Dezembro"
     }
 
     const getHospitalId: any = localStorage.getItem("hospital_id");
@@ -68,7 +84,17 @@ export function VisaoGeralHospital() {
             }
         }).then(response => setMedicsCount(response.data.idMedico));
 
-        axios.get('http://localhost/buscasus/api/area-hospital/visao-geral/medicoEspecialidade/').then(response => setSpecialtyCount(response.data));
+        axios.get('http://localhost/buscasus/api/area-hospital/visao-geral/medico-especialidade/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then(response => setSpecialtyCount(response.data));
+
+        axios.get('http://localhost/buscasus/api/area-hospital/visao-geral/medico-ausencia/', {
+            params: {
+                idHospital: hospitalId
+            }
+        }).then(response => setAbsencesCount(response.data));
     }, []);
 
     return (
@@ -107,7 +133,16 @@ export function VisaoGeralHospital() {
                         </C.Quantities>
                         <C.ChartContainer>
                             <h3>Ausências nos últimos 4 meses</h3>
-                            <BarChart.Line />
+                            <BarChart.Line
+                                m1={absencesCount ? months[absencesCount[0].mes] : null}
+                                m2={absencesCount ? months[absencesCount[1].mes] : null}
+                                m3={absencesCount ? months[absencesCount[2].mes] : null}
+                                m4={absencesCount ? months[absencesCount[3].mes] : null}
+                                abs1={absencesCount ? parseInt(absencesCount[0].ausenciasMedico) : null}
+                                abs2={absencesCount ? parseInt(absencesCount[1].ausenciasMedico) : null}
+                                abs3={absencesCount ? parseInt(absencesCount[2].ausenciasMedico) : null}
+                                abs4={absencesCount ? parseInt(absencesCount[3].ausenciasMedico) : null}
+                            />
                         </C.ChartContainer>
                         <C.ChartContainer>
                             <h3>Porcentagem de médicos por especialidade</h3>

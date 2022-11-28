@@ -18,7 +18,7 @@ const options = {
       }
    },
    pieSliceText: 'none',
-   sliceVisibilityThreshold: 5/50,
+   sliceVisibilityThreshold: 5 / 50,
 };
 
 function PieRegion() {
@@ -50,22 +50,7 @@ function PieRegion() {
    )
 }
 
-interface PieSpecialtyProps {
-   spe1: any;
-   spe2: any;
-   spe3: any;
-   spe4: any;
-   spe5: any;
-   spe6: any;
-   spe7: any;
-   spe8: any;
-   spe9: any;
-   spe10: any;
-   spe11: any;
-   spe12: any;
-}
-
-function PieSpecialty({ spe1, spe2, spe3, spe4, spe5, spe6, spe7, spe8, spe9, spe10, spe11, spe12 }: PieSpecialtyProps) {
+function PieSpecialty({ spe1, spe2, spe3, spe4, spe5, spe6, spe7, spe8, spe9, spe10, spe11, spe12 }: any) {
 
    google.charts.load('current', { 'packages': ['corechart'] });
    google.charts.setOnLoadCallback(drawChart);
@@ -208,17 +193,17 @@ function AreaSearch() {
    )
 }
 
-function LineChart() {
+function LineChart({ m1, m2, m3, m4, abs1, abs2, abs3, abs4 }: any) {
    google.charts.load('current', { 'packages': ['corechart'] });
    google.charts.setOnLoadCallback(drawChart);
 
    function drawChart() {
       var data = google.visualization.arrayToDataTable([
          ['Year', 'Ausências'],
-         ['Julho', 10],
-         ['Agosto', 11],
-         ['Setembro', 6],
-         ['Outubro', 15]
+         [m4, abs4],
+         [m3, abs3],
+         [m2, abs2],
+         [m1, abs1]
       ]);
 
       var options = {
