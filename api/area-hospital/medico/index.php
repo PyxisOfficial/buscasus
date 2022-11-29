@@ -14,10 +14,12 @@ if (isset($_GET['search'])) {
 
     $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
             INNER JOIN tbTelefone t
-            ON m.idMedico = t.idMedico 
-            WHERE (m.nomeMedico LIKE '%$search%' AND m.idHospital = :id)
-            OR (m.cpfMedico LIKE '%$search%' AND m.idHospital = :id)
-            OR (m.crmMedico LIKE '%$search%' AND m.idHospital = :id)
+            ON m.idMedico = t.idMedico
+            INNER JOIN tbMedicoHospital mh
+            ON m.idMedico = mh.idMedico
+            WHERE (m.nomeMedico LIKE '%$search%' AND mh.idHospital = :id)
+            OR (m.cpfMedico LIKE '%$search%' AND mh.idHospital = :id)
+            OR (m.crmMedico LIKE '%$search%' AND mh.idHospital = :id)
             ORDER BY m.nomeMedico ASC";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
@@ -25,7 +27,6 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else if (isset($_GET['count'])) {
 
     $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico";
@@ -34,25 +35,29 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else if (isset($_GET['hospitalCount'])) {
 
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE idHospital = :id";
+    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico m
+    INNER JOIN tbMedicoHospital mh
+    ON m.idMedico = mh.idMedico
+    WHERE idHospital = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else if (isset($_GET['repeatedCpf'])) {
 
     $repeatedCpf = @$_GET['repeatedCpf'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico WHERE cpfMedico LIKE :cpf AND idHospital = :idHospital";
+    $sql = "SELECT COUNT(m.idMedico) AS idMedico FROM tbMedico m 
+    INNER JOIN tbMedicoHospital mh
+    ON m.idMedico = mh.idMedico
+    WHERE cpfMedico LIKE :cpf AND idHospital = :idHospital";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':cpf', $repeatedCpf);
     $stmt->bindParam(':idHospital', $idHospital);
@@ -60,7 +65,6 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else if (isset($_GET['idMedico'])) {
 
     $idMedico = @$_GET['idMedico'];
@@ -75,23 +79,23 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else if (isset($_GET['idHospital'])) {
 
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
-            INNER JOIN tbTelefone t
-            ON m.idMedico = t.idMedico 
-            WHERE m.idHospital = :id
-            ORDER BY m.nomeMedico ASC";
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, t.idTelefone, t.numTelefone FROM tbMedico m
+    INNER JOIN tbTelefone t 
+    ON m.idMedico = t.idMedico
+    INNER JOIN tbMedicoHospital mh 
+    ON m.idMedico = mh.idMedico         
+    WHERE mh.idHospital = :idHospital
+          ";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $idHospital);
+    $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else if (isset($_GET['generalSearch'])) {
     $generalSearch = $_GET['generalSearch'];
 
@@ -103,16 +107,14 @@ if (isset($_GET['search'])) {
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 } else {
 
-    $sql = "SELECT * FROM tbMedico ORDER BY nomeMedico ASC";
+    $sql = "SELECT * FROM tbMedico GROUP BY nomeMedico";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $medico = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($medico);
-
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
@@ -130,15 +132,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
     $file_destination = '../img/' . $filename;
     move_uploaded_file($templocation, $file_destination);
 
-    $sql = "INSERT INTO tbMedico(idMedico, nomeMedico, cpfMedico, crmMedico, fotoMedico, idHospital) VALUES(null, :nomeMedico, :cpfMedico, :crmMedico, :fotoMedico, :idHospital)";
+    $sql = "INSERT INTO tbMedico(idMedico, nomeMedico, cpfMedico, crmMedico, fotoMedico) VALUES(null, :nomeMedico, :cpfMedico, :crmMedico, :fotoMedico)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':nomeMedico', $nomeMedico);
     $stmt->bindParam(':cpfMedico', $cpfMedico);
     $stmt->bindParam(':crmMedico', $crmMedico);
     $stmt->bindParam(':fotoMedico', $fotoMedico);
-    $stmt->bindParam(':idHospital', $idHospital);
     $stmt->execute();
     $lastMedId = $conn->lastInsertId();
+
+    $sql = "INSERT INTO tbMedicoHospital(idMedicoHospital, idMedico, idHospital) VALUES(null, :idMedico, :idHospital)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':idMedico', $lastMedId);
+    $stmt->bindParam(':idHospital', $idHospital);
+    $stmt->execute();
 
     $sql = "INSERT INTO tbTelefone(idTelefone, numTelefone, idMedico) VALUES(null, :numTelefone, :idMedico)";
     $stmt = $conn->prepare($sql);
@@ -154,19 +161,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && !isset($_GET['nomeMedico'])) {
         $stmt->execute();
     }
 
-    echo json_encode($idEspecialidade);
+    echo json_encode($stmt);
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['idEspecialidade'])) {
     $idEspecialidade = $_POST['idEspecialidade'];
-    $idMedico = $_POST ['idMedico'];
+    $idMedico = $_POST['idMedico'];
 
-     for ($i = 0; $i < $idEspecialidade; $i++) {
+    for ($i = 0; $i < $idEspecialidade; $i++) {
         $sql = "INSERT INTO tbMedicoEspecialidade(idMedicoEspecialidade, idMedico, idEspecialidade) VALUES(null, :idMedico, :idEspecialidade)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':idMedico', $lastMedId);
         $stmt->bindParam(':idEspecialidade', $idEspecialidade[$i]);
         $stmt->execute();
-
     }
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_GET['nomeMedico'])) {
@@ -237,4 +243,3 @@ if ($_SERVER['REQUEST_METHOD'] == "DELETE" && isset($_GET['deleteSpe'])) {
     $stmt->bindValue(':idMedico', $idMedico);
     $stmt->execute();
 }
-?>
