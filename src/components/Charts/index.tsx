@@ -115,16 +115,16 @@ function PieOpinion() {
 
 //AREA CHART
 
-function AreaChart() {
+function AreaChart({ wu1, wu2, wu3, wu4 }: any) {
    google.charts.load("current", { packages: ['corechart'] });
    google.charts.setOnLoadCallback(drawChart);
    function drawChart() {
       var data = google.visualization.arrayToDataTable([
-         ["Element", "Pesquisas", { role: "style" }],
-         ["Semana 1", 25, "#496461"],
-         ["Semana 2", 16, "#45CA99"],
-         ["Semana 3", 14, "#349684"],
-         ["Semana 4", 30, "#287365"]
+         ["Element", "Usuários", { role: "style" }],
+         ["Semana 1", wu4, "#496461"],
+         ["Semana 2", wu3, "#45CA99"],
+         ["Semana 3", wu2, "#349684"],
+         ["Semana 4", wu1, "#287365"]
       ]);
 
       var view = new google.visualization.DataView(data);

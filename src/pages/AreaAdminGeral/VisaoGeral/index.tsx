@@ -16,8 +16,12 @@ import * as C from './styles'
 
 export function VisaoGeralAdmin() {
     const [usersCount, setUsersCount] = useState<string>();
+    const [todayUsersCount, setTodayUsersCount] = useState<string>();
+    const [weekUsers, setWeekUsers] = useState<any>();
     const [hospitalsCount, setHospitalsCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
+    const [claimCount, setClaimCount] = useState<string>();
+    const [claim, setClaim] = useState([]);
 
     const date = new Date();
     let weekDay = date.getDay();
@@ -45,6 +49,12 @@ export function VisaoGeralAdmin() {
             }
         }).then(response => setUsersCount(response.data.idUsuario));
 
+        axios.get('http://localhost/buscasus/api/area-usuario/usuario/', {
+            params: {
+                todayCount: true
+            }
+        }).then(response => setTodayUsersCount(response.data.idUsuario));
+
         axios.get('http://localhost/buscasus/api/area-admin/hospital/', {
             params: {
                 count: true
@@ -56,7 +66,18 @@ export function VisaoGeralAdmin() {
                 count: true
             }
         }).then(response => setMedicsCount(response.data.idMedico));
+
+        axios.get('http://localhost/buscasus/api/area-admin/visao-geral/usuario-semanal/').then(response => setWeekUsers(response.data));
+
+        axios.get('http://localhost/buscasus/api/area-usuario/reclamacao/', {
+            params: {
+                count: true
+            }
+        }).then(response => setClaimCount(response.data.idReclamacao));
+
+        axios.get('http://localhost/buscasus/api/area-usuario/reclamacao/').then(response => setClaim(response.data));
     }, []);
+
 
     return (
         <MenuBackground menuLinks={<MenuLinksAdmin />}>
@@ -92,12 +113,23 @@ export function VisaoGeralAdmin() {
                         </C.Icons>
                     </C.Quantities>
                     <C.ChartContainer>
-                        <h3>Quantidade de novos usuários por semana do mês</h3>
-                        <BarChart.Area />
+                        <h3>Quantidade de novos usuários nas últimas 4 semanas</h3>
+                        <BarChart.Area
+                            wu1={weekUsers ? parseInt(weekUsers[0].idUsuario) : null}
+                            wu2={weekUsers ? parseInt(weekUsers[1].idUsuario) : null}
+                            wu3={weekUsers ? parseInt(weekUsers[2].idUsuario) : null}
+                            wu4={weekUsers ? parseInt(weekUsers[3].idUsuario) : null}
+                        />
                     </C.ChartContainer>
                     <C.ChartContainer>
                         <h3>Especialidades mais pesquisadas</h3>
-                        <PieChart.Specialty />
+                        <PieChart.Specialty
+                            spe1={1}
+                            spe2={1}
+                            spe3={1}
+                            spe4={2}
+                            spe5={3}
+                        />
                     </C.ChartContainer>
                 </C.LeftContainer>
                 <C.Line />
@@ -107,23 +139,12 @@ export function VisaoGeralAdmin() {
                             <C.Card>
                                 <C.CardTitle>
                                     <UserPlus size={25} />
-                                    <h4>Usuários</h4>
+                                    <h4>Novos usuários</h4>
                                 </C.CardTitle>
                                 <C.CardDescription>
                                     <C.TextCard>
-                                        0
+                                        {todayUsersCount}
                                     </C.TextCard>
-                                    <HoverCard.Root>
-                                        <HoverCardPrimitive.Trigger asChild>
-                                            <C.PositiveData>
-                                                <CaretUp size={20} weight='bold' />
-                                                50%
-                                            </C.PositiveData>
-                                        </HoverCardPrimitive.Trigger>
-                                        <HoverCard.Content>
-                                            Aumento de 50% comparado ao último mês
-                                        </HoverCard.Content>
-                                    </HoverCard.Root>
                                 </C.CardDescription>
                             </C.Card>
 
@@ -134,19 +155,8 @@ export function VisaoGeralAdmin() {
                                 </C.CardTitle>
                                 <C.CardDescription>
                                     <C.TextCard>
-                                        12
+                                        {claimCount}
                                     </C.TextCard>
-                                    <HoverCard.Root>
-                                        <HoverCardPrimitive.Trigger asChild>
-                                            <C.NegativeData>
-                                                <CaretUp size={20} weight='bold' />
-                                                20%
-                                            </C.NegativeData>
-                                        </HoverCardPrimitive.Trigger>
-                                        <HoverCard.Content>
-                                            Aumento de 20% comparado ao último mês
-                                        </HoverCard.Content>
-                                    </HoverCard.Root>
                                 </C.CardDescription>
                             </C.Card>
 
@@ -165,42 +175,44 @@ export function VisaoGeralAdmin() {
                         <C.RequestContainer>
                             <h3>Reclamações</h3>
                             <C.RequestList>
-                                <DialogModal.Root>
-                                    <Dialog.Trigger asChild>
-                                        <C.RequestListItem>
-                                            <C.ItemHeader>
-                                                <span>Médico ausente</span>
-                                                <span>Há 20 minutos</span>
-                                            </C.ItemHeader>
-                                            <C.ItemContent>
-                                                <C.ItemDesc>
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe delectus sint repudiandae quod corporis,
-                                                    nostrum, nobis impedit illum quasi aut iste voluptates hic, modi praesentium error aliquid debitis distinctio eos!
-                                                </C.ItemDesc>
-                                            </C.ItemContent>
-                                        </C.RequestListItem>
-                                    </Dialog.Trigger>
-                                    <DialogModal.Content>
-                                        <C.DialogHeader>
-                                            <h3>Médico ausente</h3>
-                                            <C.DialogHeaderEnd>
-                                                <C.Time>Há 20 minutos</C.Time>
-                                                <Dialog.Close asChild>
-                                                    <C.Close size={20} />
-                                                </Dialog.Close>
-                                            </C.DialogHeaderEnd>
-                                        </C.DialogHeader>
-                                        <C.DialogDescription>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur, perferendis!
-                                            Sapiente excepturi voluptate earum quas, iure tenetur incidunt necessitatibus distinctio est,
-                                            itaque deleniti dignissimos cum temporibus. Enim a similique iste?
-                                        </C.DialogDescription>
-                                        <C.DialogFooter>
-                                            <C.Email>gabrieldantas@email.com</C.Email>
-                                            <Button.Green type='submit' value='Marcar como lido' />
-                                        </C.DialogFooter>
-                                    </DialogModal.Content>
-                                </DialogModal.Root>
+
+                                {claim.map((claim: any, key) => {
+                                    return (
+                                        <DialogModal.Root key={key}>
+                                            <Dialog.Trigger asChild>
+                                                <C.RequestListItem>
+                                                    <C.ItemHeader>
+                                                        <span>{claim.tipoReclamacao}</span>
+                                                        <span>{claim.dataReclamacao}</span>
+                                                    </C.ItemHeader>
+                                                    <C.ItemContent>
+                                                        <C.ItemDesc>
+                                                            {claim.txtReclamacao}
+                                                        </C.ItemDesc>
+                                                    </C.ItemContent>
+                                                </C.RequestListItem>
+                                            </Dialog.Trigger>
+                                            <DialogModal.Content>
+                                                <C.DialogHeader>
+                                                    <h3>{claim.tipoReclamacao}</h3>
+                                                    <C.DialogHeaderEnd>
+                                                        <C.Time>{claim.dataReclamacao}</C.Time>
+                                                        <Dialog.Close asChild>
+                                                            <C.Close size={20} />
+                                                        </Dialog.Close>
+                                                    </C.DialogHeaderEnd>
+                                                </C.DialogHeader>
+                                                <C.DialogDescription>
+                                                    {claim.txtReclamacao}
+                                                </C.DialogDescription>
+                                                <C.DialogFooter>
+                                                    <C.Email>{claim.emailUsuario}</C.Email>
+                                                    <Button.Green type='submit' value='Marcar como lido' />
+                                                </C.DialogFooter>
+                                            </DialogModal.Content>
+                                        </DialogModal.Root>
+                                    )
+                                })}
                             </C.RequestList>
                         </C.RequestContainer>
                     </C.RightTopContainer>

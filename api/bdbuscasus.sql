@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2022 at 07:25 PM
+-- Generation Time: Nov 30, 2022 at 12:29 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -1162,7 +1162,6 @@ INSERT INTO `tbplantao` (`idPlantao`, `dataPlantao`, `inicioPlantao`, `fimPlanta
 
 CREATE TABLE `tbreclamacao` (
   `idReclamacao` int(11) NOT NULL,
-  `emailUsuario` varchar(100) NOT NULL,
   `txtReclamacao` text NOT NULL,
   `dataReclamacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `dataPlantao` date NOT NULL,
@@ -1453,50 +1452,51 @@ CREATE TABLE `tbusuario` (
   `nomeUsuario` varchar(60) NOT NULL,
   `emailUsuario` varchar(100) NOT NULL,
   `senhaUsuario` varchar(60) NOT NULL,
-  `cpfUsuario` varchar(14) NOT NULL
+  `cpfUsuario` varchar(14) NOT NULL,
+  `dataUsuario` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbusuario`
 --
 
-INSERT INTO `tbusuario` (`idUsuario`, `nomeUsuario`, `emailUsuario`, `senhaUsuario`, `cpfUsuario`) VALUES
-(1, 'Gabriel Vinícius Matos Dantas', 'vmdgab@gmail.com', '12345678', '043.205.700-57'),
-(2, 'Leandro Coelho Saraiva', 'coelhorubronegro@gmail.com', '12345678', '878.463.610-66'),
-(3, 'Yuri Oliveira da Silva', 'veleenyurykk@gmail.com', '12345678', '094.084.370-63'),
-(4, 'Leonardo Aparecido de Paula Santos', 'kblueplays@gmail.com', '123456678', '607.198.410-62'),
-(5, 'José Henrique Almeida Motta', 'hrique2001625@gmail.com', '12345678', '021.632.510-20'),
-(6, 'Luigi Tadeu Vicchietti', 'luigiTadeu241571@gmail.com', '12345678', '363.630.440-22'),
-(7, 'Gislaine Coutinho Rodrigues', 'gisgitlaine2341@hotmail.com', '12345678', '703.118.280-86'),
-(8, 'Kauanny Tenório Felix da Silva', 'kakaufeliz6790@hotmail.com', '12345678', '279.381.490-39'),
-(9, 'Julia Alves Rufino', 'arufinoakajuju22@gmail.com', '12345678', '508.295.440-70'),
-(10, 'Cauã Gustavo de Souza Mesquita', 'hjoklarjoel13@hotmail.com', '87654321', '652.213.780-19'),
-(11, 'Wellington Augusto Souza Aguiar', 'wellgg777@outlook.com', '87654321', '830.217.360-68'),
-(12, 'Felipe Santos de Almeida', 'lipefelipebru434@outlook.com', '12345678', '639.787.170-34'),
-(13, 'Nicolas Nunes dos Santos', 'tulidando4352@gmail.com', '12345678', '776.864.820-06'),
-(14, 'Marina Liz Simões Oliveira', 'lilimarina22@outlook.com', '12345678', '229.962.650-68'),
-(15, 'Amanda Emídio Luciano de Freitas', 'AmDppt55fd@outlook.com', '12345678', '488.432.320-37'),
-(16, 'Caio Pereira de Souza', 'caioguu1234@hotmail.com', '12345678', '237.223.990-25'),
-(17, 'Caique de Andrade Lúcio', 'luciocaique33@gmail.com', '12345678', '369.195.990-31'),
-(18, 'Camila Pinto Martins', 'camilaoko1@gmail.com', '12345678', '690.757.250-86'),
-(19, 'Damaris Kamada Rodrigues da SIlva', 'damaris2203@gmail.com', '12345678', '713.335.380-65'),
-(20, 'Danielle dos Santos Romano', 'romanos44dani7@outlook.com', '12345678', '952.757.610-58'),
-(21, 'Fernando Almeida de Jesus Nogueira', 'nandophp22@gmail.com', '12345678', '977.355.810-09'),
-(22, 'Gabriel Antônio da Silva Souto', 'gass33tvd@gmail.com', '12345678', '801.379.020-77'),
-(23, 'Guilherme Cabral de LIma', 'guugui44fryg@outlook.com', '12345678', '012.309.610-38'),
-(24, 'Igor Ferreira Gazuza de Freitas', 'gori625stsbgta@outlook.com', '12345678', '524.463.900-56'),
-(25, 'Jonnas Kauan Santana de Oliveira', 'kauanwasd@gmail.com', '12345678', '663.223.430-50'),
-(26, 'Kauan Matheus Barros de Oliveira', 'kkml43kaymli@gmail.com', '12345678', '482.235.240-40'),
-(27, 'Kelvin Santos de Jesus', 'starkelvben10@hotmail.com', '12345678', '437.877.930-70'),
-(28, 'Kevin Silva Estrela', 'bhkkelvigraga@outlook.com', '12345678', '749.172.600-35'),
-(29, 'Kewen Dias de Araujo', 'kwewn90086@hotmail.com', '12345678', '059.612.590-99'),
-(30, 'Maria Eduarda Veroneze Viegas', 'sepmaria@hotmail.com', '12345678', '294.338.440-25'),
-(31, 'Nicollas Bispo Pereira', 'bbzibispo@gmail.com', '12345678', '694.761.370-10'),
-(32, 'Pablo Vinícius Silva Santos', 'pabingg425sra@hotmail.com', '12345678', '029.742.790-31'),
-(33, 'Pedro Henrique da Costa Lins', 'ph22riquehj77@gmail.com', '12345678', '892.749.210-20'),
-(34, 'Pedro Henrique Silva', 'rrkph777@gmail.com', '12345678', '226.042.980-74'),
-(35, 'Thiago Mendonça Rodrigues', 'thigosss3345vfgtred@outlook.com', '12345678', '265.696.750-36'),
-(36, 'Victor Henrique Cavalcante Batista', 'vitosccp012@gmail.com', '12345678', '851.258.720-24');
+INSERT INTO `tbusuario` (`idUsuario`, `nomeUsuario`, `emailUsuario`, `senhaUsuario`, `cpfUsuario`, `dataUsuario`) VALUES
+(1, 'Gabriel Vinícius Matos Dantas', 'vmdgab@gmail.com', '12345678', '043.205.700-57', '2022-11-15 22:34:44'),
+(2, 'Leandro Coelho Saraiva', 'coelhorubronegro@gmail.com', '12345678', '878.463.610-66', '2022-11-08 22:34:44'),
+(3, 'Yuri Oliveira da Silva', 'veleenyurykk@gmail.com', '12345678', '094.084.370-63', '2022-11-01 22:34:04'),
+(4, 'Leonardo Aparecido de Paula Santos', 'kblueplays@gmail.com', '123456678', '607.198.410-62', '2022-11-08 22:34:44'),
+(5, 'José Henrique Almeida Motta', 'hrique2001625@gmail.com', '12345678', '021.632.510-20', '2022-11-01 22:34:44'),
+(6, 'Luigi Tadeu Vicchietti', 'luigiTadeu241571@gmail.com', '12345678', '363.630.440-22', '2022-11-08 22:34:44'),
+(7, 'Gislaine Coutinho Rodrigues', 'gisgitlaine2341@hotmail.com', '12345678', '703.118.280-86', '2022-11-08 22:34:44'),
+(8, 'Kauanny Tenório Felix da Silva', 'kakaufeliz6790@hotmail.com', '12345678', '279.381.490-39', '2022-11-29 22:34:44'),
+(9, 'Julia Alves Rufino', 'arufinoakajuju22@gmail.com', '12345678', '508.295.440-70', '2022-11-29 22:34:44'),
+(10, 'Cauã Gustavo de Souza Mesquita', 'hjoklarjoel13@hotmail.com', '87654321', '652.213.780-19', '2022-11-22 22:34:44'),
+(11, 'Wellington Augusto Souza Aguiar', 'wellgg777@outlook.com', '87654321', '830.217.360-68', '2022-11-29 22:34:44'),
+(12, 'Felipe Santos de Almeida', 'lipefelipebru434@outlook.com', '12345678', '639.787.170-34', '2022-11-15 22:34:44'),
+(13, 'Nicolas Nunes dos Santos', 'tulidando4352@gmail.com', '12345678', '776.864.820-06', '2022-11-15 22:34:44'),
+(14, 'Marina Liz Simões Oliveira', 'lilimarina22@outlook.com', '12345678', '229.962.650-68', '2022-11-29 22:34:44'),
+(15, 'Amanda Emídio Luciano de Freitas', 'AmDppt55fd@outlook.com', '12345678', '488.432.320-37', '2022-11-15 22:34:44'),
+(16, 'Caio Pereira de Souza', 'caioguu1234@hotmail.com', '12345678', '237.223.990-25', '2022-11-29 22:34:44'),
+(17, 'Caique de Andrade Lúcio', 'luciocaique33@gmail.com', '12345678', '369.195.990-31', '2022-11-15 22:34:44'),
+(18, 'Camila Pinto Martins', 'camilaoko1@gmail.com', '12345678', '690.757.250-86', '2022-11-22 22:34:04'),
+(19, 'Damaris Kamada Rodrigues da SIlva', 'damaris2203@gmail.com', '12345678', '713.335.380-65', '2022-11-15 22:34:44'),
+(20, 'Danielle dos Santos Romano', 'romanos44dani7@outlook.com', '12345678', '952.757.610-58', '2022-11-22 22:34:44'),
+(21, 'Fernando Almeida de Jesus Nogueira', 'nandophp22@gmail.com', '12345678', '977.355.810-09', '2022-11-22 22:34:44'),
+(22, 'Gabriel Antônio da Silva Souto', 'gass33tvd@gmail.com', '12345678', '801.379.020-77', '2022-11-29 22:34:44'),
+(23, 'Guilherme Cabral de LIma', 'guugui44fryg@outlook.com', '12345678', '012.309.610-38', '2022-11-29 22:34:44'),
+(24, 'Igor Ferreira Gazuza de Freitas', 'gori625stsbgta@outlook.com', '12345678', '524.463.900-56', '2022-11-29 22:34:44'),
+(25, 'Jonnas Kauan Santana de Oliveira', 'kauanwasd@gmail.com', '12345678', '663.223.430-50', '2022-11-29 22:34:44'),
+(26, 'Kauan Matheus Barros de Oliveira', 'kkml43kaymli@gmail.com', '12345678', '482.235.240-40', '2022-11-29 22:34:44'),
+(27, 'Kelvin Santos de Jesus', 'starkelvben10@hotmail.com', '12345678', '437.877.930-70', '2022-11-29 22:34:44'),
+(28, 'Kevin Silva Estrela', 'bhkkelvigraga@outlook.com', '12345678', '749.172.600-35', '2022-11-29 22:34:44'),
+(29, 'Kewen Dias de Araujo', 'kwewn90086@hotmail.com', '12345678', '059.612.590-99', '2022-11-29 22:34:44'),
+(30, 'Maria Eduarda Veroneze Viegas', 'sepmaria@hotmail.com', '12345678', '294.338.440-25', '2022-11-29 22:34:44'),
+(31, 'Nicollas Bispo Pereira', 'bbzibispo@gmail.com', '12345678', '694.761.370-10', '2022-11-29 22:34:44'),
+(32, 'Pablo Vinícius Silva Santos', 'pabingg425sra@hotmail.com', '12345678', '029.742.790-31', '2022-11-29 22:34:44'),
+(33, 'Pedro Henrique da Costa Lins', 'ph22riquehj77@gmail.com', '12345678', '892.749.210-20', '2022-11-29 22:34:44'),
+(34, 'Pedro Henrique Silva', 'rrkph777@gmail.com', '12345678', '226.042.980-74', '2022-11-29 22:34:44'),
+(35, 'Thiago Mendonça Rodrigues', 'thigosss3345vfgtred@outlook.com', '12345678', '265.696.750-36', '2022-11-29 22:34:44'),
+(36, 'Victor Henrique Cavalcante Batista', 'vitosccp012@gmail.com', '12345678', '851.258.720-24', '2022-11-29 22:34:44');
 
 --
 -- Indexes for dumped tables

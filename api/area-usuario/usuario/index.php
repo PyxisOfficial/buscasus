@@ -25,6 +25,14 @@ if (isset($_GET['search'])) {
 
     echo json_encode($usuario);
 
+} else if (isset($_GET['todayCount'])) {
+    $sql = "SELECT COUNT(idUsuario) AS idUsuario FROM tbUsuario WHERE DATE(dataUsuario) = CURDATE()";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($usuario);
+
 } else if (isset($_GET['repeatedCpf'])) {
 
     $repeatedCpf = @$_GET['repeatedCpf'];

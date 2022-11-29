@@ -180,6 +180,23 @@ export const RequestList = styled.div`
    flex-direction: column;
    width: 100%;
    height: 100%;
+   overflow-y: scroll;
+   gap: 8px;
+
+   ::-webkit-scrollbar {
+      width: 13px;
+   }
+
+   ::-webkit-scrollbar-track {
+      background: #fff;
+      border-bottom-right-radius: 8px;
+   }
+
+   ::-webkit-scrollbar-thumb {
+      background-color: #2D8272;
+      border-radius: 20px;
+      border: 3px solid #fff;
+   }
 `
 
 export const RequestListItem = styled.div`
