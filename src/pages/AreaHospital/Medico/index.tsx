@@ -407,7 +407,7 @@ export function Medico() {
                                                     <C.Text><b>CRM:</b> {medic.crmMedico}</C.Text>
                                                     <C.Text><b>Telefone:</b> {medic.numTelefone}</C.Text>
                                                     <C.Text><b>Especialidades:</b> {infoModalSpecialty ? infoModalSpecialty : "Clínico Geral"} </C.Text>
-                                                    <C.Text><b>Ausências:</b> {medic.ausenciasMedico}</C.Text>
+                                                    <C.Text><b>Ausências:</b></C.Text>
                                                 </C.InfoContainer>
                                                 <C.InfoImg
                                                     src={`http://localhost/buscasus/api/area-hospital/img/${medic.fotoMedico}`}

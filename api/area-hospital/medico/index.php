@@ -12,7 +12,7 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico, m.ausenciasMedico FROM tbMedico m
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, t.idTelefone, t.numTelefone, m.fotoMedico, m.fotoMedico FROM tbMedico m
             INNER JOIN tbTelefone t
             ON m.idMedico = t.idMedico
             INNER JOIN tbMedicoHospital mh
@@ -39,7 +39,7 @@ if (isset($_GET['search'])) {
 
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT COUNT(idMedico) AS idMedico FROM tbMedico m
+    $sql = "SELECT COUNT(m.idMedico) AS idMedico FROM tbMedico m
     INNER JOIN tbMedicoHospital mh
     ON m.idMedico = mh.idMedico
     WHERE idHospital = :id";
@@ -83,7 +83,7 @@ if (isset($_GET['search'])) {
 
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, m.ausenciasMedico, t.idTelefone, t.numTelefone FROM tbMedico m
+    $sql = "SELECT m.idMedico, m.nomeMedico, m.cpfMedico, m.crmMedico, m.fotoMedico, m.fotoMedico, t.idTelefone, t.numTelefone FROM tbMedico m
     INNER JOIN tbTelefone t 
     ON m.idMedico = t.idMedico
     INNER JOIN tbMedicoHospital mh 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29-Nov-2022 às 03:44
--- Versão do servidor: 10.4.19-MariaDB
--- versão do PHP: 8.0.6
+-- Generation Time: Nov 29, 2022 at 07:25 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `bdbuscasus`
+-- Database: `bdbuscasus`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbadmin`
+-- Table structure for table `tbadmin`
 --
 
 CREATE TABLE `tbadmin` (
@@ -37,7 +37,7 @@ CREATE TABLE `tbadmin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbadmin`
+-- Dumping data for table `tbadmin`
 --
 
 INSERT INTO `tbadmin` (`idAdmin`, `loginAdmin`, `senhaAdmin`, `tipoAdmin`, `primeiroAcesso`, `idHospital`) VALUES
@@ -56,7 +56,7 @@ INSERT INTO `tbadmin` (`idAdmin`, `loginAdmin`, `senhaAdmin`, `tipoAdmin`, `prim
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbespecialidade`
+-- Table structure for table `tbespecialidade`
 --
 
 CREATE TABLE `tbespecialidade` (
@@ -65,7 +65,7 @@ CREATE TABLE `tbespecialidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbespecialidade`
+-- Dumping data for table `tbespecialidade`
 --
 
 INSERT INTO `tbespecialidade` (`idEspecialidade`, `nomeEspecialidade`) VALUES
@@ -113,7 +113,7 @@ INSERT INTO `tbespecialidade` (`idEspecialidade`, `nomeEspecialidade`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbhospital`
+-- Table structure for table `tbhospital`
 --
 
 CREATE TABLE `tbhospital` (
@@ -133,7 +133,7 @@ CREATE TABLE `tbhospital` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbhospital`
+-- Dumping data for table `tbhospital`
 --
 
 INSERT INTO `tbhospital` (`idHospital`, `nomeHospital`, `emailHospital`, `aberturaHospital`, `fechamentoHospital`, `cnpjHospital`, `ufHospital`, `logradouroHospital`, `complementoHospital`, `cepHospital`, `cidadeHospital`, `bairroHospital`, `fotoHospital`) VALUES
@@ -151,7 +151,7 @@ INSERT INTO `tbhospital` (`idHospital`, `nomeHospital`, `emailHospital`, `abertu
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbmedico`
+-- Table structure for table `tbmedico`
 --
 
 CREATE TABLE `tbmedico` (
@@ -159,241 +159,237 @@ CREATE TABLE `tbmedico` (
   `nomeMedico` varchar(100) NOT NULL,
   `cpfMedico` varchar(14) NOT NULL,
   `crmMedico` varchar(13) NOT NULL,
-  `fotoMedico` varchar(150) NOT NULL,
-  `ausenciasMedico` int(11) NOT NULL,
-  `idHospital` int(11) NOT NULL
+  `fotoMedico` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbmedico`
+-- Dumping data for table `tbmedico`
 --
 
-INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fotoMedico`, `ausenciasMedico`, `idHospital`) VALUES
-(1, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 1),
-(2, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 1),
-(3, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 1),
-(4, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 1),
-(5, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 1),
-(6, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 1),
-(7, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 1),
-(8, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 1),
-(9, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 1),
-(10, 'Marlon Marques', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 1),
-(12, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 1),
-(13, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 1),
-(14, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 1),
-(15, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 1),
-(16, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 1),
-(17, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 1),
-(18, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 1),
-(19, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 1),
-(20, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 1),
-(21, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 1),
-(22, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 1),
-(23, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 1),
-(24, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 2),
-(25, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 2),
-(26, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 2),
-(27, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 2),
-(28, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 2),
-(29, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 2),
-(30, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 2),
-(31, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 2),
-(32, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 2),
-(33, 'Marlon Marques', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 2),
-(34, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 2),
-(35, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 2),
-(36, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 2),
-(37, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 2),
-(38, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 2),
-(39, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 2),
-(40, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 2),
-(41, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 2),
-(42, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 2),
-(43, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 2),
-(44, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 2),
-(45, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 2),
-(46, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 3),
-(47, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 3),
-(48, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 3),
-(49, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 3),
-(50, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 3),
-(51, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 3),
-(52, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 3),
-(53, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 3),
-(54, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 3),
-(55, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 3),
-(56, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 3),
-(57, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 3),
-(58, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 3),
-(59, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 3),
-(60, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 3),
-(61, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 3),
-(62, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 3),
-(63, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 3),
-(64, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 3),
-(65, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 3),
-(66, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 3),
-(67, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 3),
-(68, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 4),
-(69, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 4),
-(70, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 4),
-(71, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 4),
-(72, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 4),
-(73, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 4),
-(74, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 4),
-(75, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 4),
-(76, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 4),
-(77, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 4),
-(78, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 4),
-(79, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 4),
-(80, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 4),
-(81, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 4),
-(82, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 4),
-(83, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 4),
-(84, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 4),
-(85, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 4),
-(86, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 4),
-(87, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 4),
-(88, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 4),
-(89, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 4),
-(90, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 5),
-(91, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 5),
-(92, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 5),
-(93, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 5),
-(94, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 5),
-(95, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 5),
-(96, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 5),
-(97, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 5),
-(98, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 5),
-(99, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 5),
-(100, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 5),
-(101, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 5),
-(102, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 5),
-(103, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 5),
-(104, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 5),
-(105, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 5),
-(106, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 5),
-(107, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 5),
-(108, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 5),
-(109, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 5),
-(110, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 5),
-(111, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 5),
-(112, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 6),
-(113, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 6),
-(114, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 6),
-(115, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 6),
-(116, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 6),
-(117, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 6),
-(118, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 6),
-(119, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 6),
-(120, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 6),
-(121, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 6),
-(122, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 6),
-(123, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 6),
-(124, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 6),
-(125, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 6),
-(126, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 6),
-(127, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 6),
-(128, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 6),
-(129, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 6),
-(130, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 6),
-(131, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 6),
-(132, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 6),
-(133, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 6),
-(134, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 7),
-(135, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 7),
-(136, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 7),
-(137, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 7),
-(138, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 7),
-(139, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 7),
-(140, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 7),
-(141, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 7),
-(142, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 7),
-(143, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 7),
-(144, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 7),
-(145, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 7),
-(146, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 7),
-(147, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 7),
-(148, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 7),
-(149, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 7),
-(150, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 7),
-(151, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 7),
-(152, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 7),
-(153, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 7),
-(154, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 7),
-(155, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 7),
-(156, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 8),
-(157, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 8),
-(158, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 8),
-(159, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 8),
-(160, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 8),
-(161, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 8),
-(162, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 8),
-(163, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 8),
-(164, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 8),
-(165, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 8),
-(166, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 8),
-(167, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 8),
-(168, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 8),
-(169, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 8),
-(170, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 8),
-(171, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 8),
-(172, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 8),
-(173, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 8),
-(174, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 8),
-(175, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 8),
-(176, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 8),
-(177, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 8),
-(178, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 9),
-(179, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 9),
-(180, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 9),
-(181, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 9),
-(182, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 9),
-(183, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 9),
-(184, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 9),
-(185, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 9),
-(186, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 9),
-(187, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 9),
-(188, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 9),
-(189, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 9),
-(190, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 9),
-(191, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 9),
-(192, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 9),
-(193, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 9),
-(194, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 9),
-(195, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 9),
-(196, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 9),
-(197, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 9),
-(198, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 9),
-(199, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 9),
-(200, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg', 0, 10),
-(201, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg', 0, 10),
-(202, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg', 0, 10),
-(203, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg', 0, 10),
-(204, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg', 0, 10),
-(205, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg', 0, 10),
-(206, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg', 0, 10),
-(207, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg', 0, 10),
-(208, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg', 0, 10),
-(209, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg', 0, 10),
-(210, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg', 0, 10),
-(211, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg', 0, 10),
-(212, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg', 0, 10),
-(213, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg', 0, 10),
-(214, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg', 0, 10),
-(215, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg', 0, 10),
-(216, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg', 0, 10),
-(217, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg', 0, 10),
-(218, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg', 0, 10),
-(219, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg', 0, 10),
-(220, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg', 0, 10),
-(221, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg', 0, 10);
+INSERT INTO `tbmedico` (`idMedico`, `nomeMedico`, `cpfMedico`, `crmMedico`, `fotoMedico`) VALUES
+(1, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(2, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(3, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(4, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(5, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(6, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(7, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(8, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(9, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(10, 'Marlon Marques', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(12, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(13, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(14, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(15, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(16, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(17, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(18, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(19, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(20, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(21, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(22, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(23, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(24, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(25, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(26, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(27, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(28, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(29, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(30, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(31, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(32, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(33, 'Marlon Marques', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(34, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(35, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(36, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(37, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(38, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(39, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(40, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(41, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(42, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(43, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(44, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(45, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(46, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(47, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(48, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(49, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(50, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(51, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(52, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(53, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(54, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(55, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(56, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(57, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(58, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(59, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(60, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(61, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(62, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(63, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(64, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(65, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(66, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(67, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(68, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(69, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(70, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(71, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(72, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(73, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(74, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(75, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(76, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(77, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(78, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(79, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(80, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(81, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(82, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(83, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(84, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(85, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(86, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(87, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(88, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(89, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(90, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(91, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(93, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(94, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(95, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(96, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(97, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(98, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(99, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(100, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(101, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(102, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(103, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(104, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(105, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(106, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(107, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(108, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(109, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(110, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(111, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(112, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(113, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(114, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(115, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(116, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(117, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(118, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(119, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(120, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(121, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(122, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(123, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(124, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(125, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(126, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(127, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(128, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(129, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(130, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(131, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(132, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(133, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(134, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(135, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(136, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(137, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(138, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(139, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(140, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(141, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(142, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(143, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(144, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(145, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(146, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(147, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(148, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(149, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(150, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(151, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(152, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(153, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(154, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(155, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(156, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(157, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(158, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(159, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(160, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(162, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(163, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(164, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(165, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(166, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(167, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(168, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(169, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(170, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(171, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(172, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(173, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(174, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(175, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(176, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(177, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(178, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(179, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(180, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(181, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(182, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(183, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(184, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(185, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(186, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(187, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(188, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(189, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(190, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(191, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(192, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(193, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(194, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(195, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(196, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(197, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(198, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(199, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg'),
+(200, 'Ana Lúcia de Paula', '958.466.470-06', 'CRM/SP 198765', 'doutoraAna.jpg'),
+(201, 'Simone da Silva Santos Ferreira', '306.326.300-19', 'CRM/RJ 434252', 'doutoraSimone.jpg'),
+(202, 'Humberto Tadeu Silveira Pinto', '340.433.790-56', 'CRM/RJ 652425', 'doutorHumberto.jpg'),
+(203, 'Simara Campos Ferreira', '140.054.260-00', 'CRM/SP 786543', 'doutoraSimara.jpg'),
+(204, 'Gustavo José Alencar Pinto', '273.441.410-43', 'CRM/SP 091726', 'images.jpg'),
+(205, 'Dorivaldo Benegripe de Amora Camporim', '980.518.260-60', 'CRM/AM 826672', 'doutorDorivaldo.jpg'),
+(206, 'Antônio José dos Santos Junior ', '306.741.120-08', 'CRM/SP 252415', 'doutorJunior.jpg'),
+(207, 'Lenildo dos Santos', '811.238.210-70', 'CRM/SP 754252', 'doutorBruno.jpg'),
+(208, 'Vanessa Duarte Costa', '504.060.680-03', 'CRM/RJ 656792', 'doutoraEduarda.jpg'),
+(209, 'Marlon Marx', '933.396.140-24', 'CRM/SP 982617', 'doutorAlexandre.jpg'),
+(210, 'Clodoaldo Pinheiro Bastos', '802.682.070-38', 'CRM/AM 278394', 'doutorCaua.jpg'),
+(211, 'Alan Vidal de Negreiros ', '973.389.060-09', 'CRM/AM 912325', 'doutorRhian.jpg'),
+(212, 'Aline Mendonça Cordeiro ', '283.278.290-68', 'CRM/AM 979775', 'doutoraKiriko.jpg'),
+(213, 'Elaine Lima Silva', '303.673.410-42', 'CRM/AM 876522', 'doutoraAline.jpg'),
+(214, 'Regiane Astigarraga Falconeri', '160.512.080-46', 'CRM/RJ 825362', 'doutoraFernanda.jpg'),
+(215, 'Leandro Coelho Saraiva', '947.261.660-77', 'CRM/RJ 998425', 'doutorCleber.jpg'),
+(216, 'André Simão de Almeira', '626.878.210-04', 'CRM/RJ 765923', 'doutorRhuan.jpg'),
+(217, 'Luciano Ferreira de Macedo', '185.519.580-11', 'CRM/RJ 827629', 'doutorGuilherme.jpg'),
+(218, 'Emilene Pereira Lima', '916.867.520-83', 'CRM/RJ 425262', 'doutoraEmilene.jpg'),
+(219, 'Carlos Eduardo de Carvalho', '038.461.240-79', 'CRM/SP 984352', 'carlo.jpg'),
+(220, 'Rosângela Freire de Oliveira Silva', '060.903.590-84', 'CRM/SP 919286', 'rosangela.jpg'),
+(221, 'Ana Aparecida Santiago Gomes', '495.501.320-13', 'CRM/SP 862425', 'santiago.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbmedicoespecialidade`
+-- Table structure for table `tbmedicoespecialidade`
 --
 
 CREATE TABLE `tbmedicoespecialidade` (
@@ -403,7 +399,7 @@ CREATE TABLE `tbmedicoespecialidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbmedicoespecialidade`
+-- Dumping data for table `tbmedicoespecialidade`
 --
 
 INSERT INTO `tbmedicoespecialidade` (`idMedicoEspecialidade`, `idMedico`, `idEspecialidade`) VALUES
@@ -650,7 +646,255 @@ INSERT INTO `tbmedicoespecialidade` (`idMedicoEspecialidade`, `idMedico`, `idEsp
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbplantao`
+-- Table structure for table `tbmedicohospital`
+--
+
+CREATE TABLE `tbmedicohospital` (
+  `idMedicoHospital` int(11) NOT NULL,
+  `idMedico` int(11) NOT NULL,
+  `idHospital` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbmedicohospital`
+--
+
+INSERT INTO `tbmedicohospital` (`idMedicoHospital`, `idMedico`, `idHospital`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 1),
+(7, 7, 1),
+(8, 8, 1),
+(9, 9, 1),
+(10, 10, 1),
+(11, 11, 1),
+(12, 12, 1),
+(13, 13, 1),
+(14, 14, 1),
+(15, 15, 1),
+(16, 16, 1),
+(17, 17, 1),
+(18, 18, 1),
+(19, 19, 1),
+(20, 20, 1),
+(21, 21, 1),
+(22, 22, 1),
+(23, 23, 1),
+(24, 24, 2),
+(25, 25, 2),
+(26, 26, 2),
+(27, 27, 2),
+(28, 28, 2),
+(29, 29, 2),
+(30, 30, 2),
+(31, 31, 2),
+(32, 32, 2),
+(33, 33, 2),
+(34, 34, 2),
+(35, 35, 2),
+(36, 36, 2),
+(37, 37, 2),
+(38, 38, 2),
+(39, 39, 2),
+(40, 40, 2),
+(41, 41, 2),
+(42, 42, 2),
+(43, 43, 2),
+(44, 44, 2),
+(45, 45, 2),
+(46, 46, 2),
+(47, 47, 3),
+(48, 48, 3),
+(49, 49, 3),
+(50, 50, 3),
+(51, 51, 3),
+(52, 52, 3),
+(53, 53, 3),
+(54, 54, 3),
+(55, 55, 3),
+(56, 56, 3),
+(57, 57, 3),
+(58, 58, 3),
+(59, 59, 3),
+(60, 60, 3),
+(61, 61, 3),
+(62, 62, 3),
+(63, 63, 3),
+(64, 64, 3),
+(65, 65, 3),
+(66, 66, 3),
+(67, 67, 3),
+(68, 68, 3),
+(69, 69, 3),
+(70, 70, 4),
+(71, 71, 4),
+(72, 72, 4),
+(73, 73, 4),
+(74, 74, 4),
+(75, 75, 4),
+(76, 76, 4),
+(77, 77, 4),
+(78, 78, 4),
+(79, 79, 4),
+(80, 80, 4),
+(81, 81, 4),
+(82, 82, 4),
+(83, 83, 4),
+(84, 84, 4),
+(85, 85, 4),
+(86, 86, 4),
+(87, 87, 4),
+(88, 88, 4),
+(89, 89, 4),
+(90, 90, 4),
+(91, 91, 4),
+(92, 92, 4),
+(93, 93, 5),
+(94, 94, 5),
+(95, 95, 5),
+(96, 96, 5),
+(97, 97, 5),
+(98, 98, 5),
+(99, 99, 5),
+(100, 100, 5),
+(101, 101, 5),
+(102, 102, 5),
+(103, 103, 5),
+(104, 104, 5),
+(105, 105, 5),
+(106, 106, 5),
+(107, 107, 5),
+(108, 108, 5),
+(109, 109, 5),
+(110, 110, 5),
+(111, 111, 5),
+(112, 112, 5),
+(113, 113, 5),
+(114, 114, 5),
+(115, 115, 5),
+(116, 116, 6),
+(117, 117, 6),
+(118, 118, 6),
+(119, 119, 6),
+(120, 120, 6),
+(121, 121, 6),
+(122, 122, 6),
+(123, 123, 6),
+(124, 124, 6),
+(125, 125, 6),
+(126, 126, 6),
+(127, 127, 6),
+(128, 128, 6),
+(129, 129, 6),
+(130, 130, 6),
+(131, 131, 6),
+(132, 132, 6),
+(133, 133, 6),
+(134, 134, 6),
+(135, 135, 6),
+(136, 136, 6),
+(137, 137, 6),
+(138, 138, 6),
+(139, 139, 7),
+(140, 140, 7),
+(141, 141, 7),
+(142, 142, 7),
+(143, 143, 7),
+(144, 144, 7),
+(145, 145, 7),
+(146, 146, 7),
+(147, 147, 7),
+(148, 148, 7),
+(149, 149, 7),
+(150, 150, 7),
+(151, 151, 7),
+(152, 152, 7),
+(153, 153, 7),
+(154, 154, 7),
+(155, 155, 7),
+(156, 156, 7),
+(157, 157, 7),
+(158, 158, 7),
+(159, 159, 7),
+(160, 160, 7),
+(161, 161, 7),
+(162, 162, 8),
+(163, 163, 8),
+(164, 164, 8),
+(165, 165, 8),
+(166, 166, 8),
+(167, 167, 8),
+(168, 168, 8),
+(169, 169, 8),
+(170, 170, 8),
+(171, 171, 8),
+(172, 172, 8),
+(173, 173, 8),
+(174, 174, 8),
+(175, 175, 8),
+(176, 176, 8),
+(177, 177, 8),
+(178, 178, 8),
+(179, 179, 8),
+(180, 180, 8),
+(181, 181, 8),
+(182, 182, 8),
+(183, 183, 8),
+(184, 184, 8),
+(185, 185, 9),
+(186, 186, 9),
+(187, 187, 9),
+(188, 188, 9),
+(189, 189, 9),
+(190, 190, 9),
+(191, 191, 9),
+(192, 192, 9),
+(193, 193, 9),
+(194, 194, 9),
+(195, 195, 9),
+(196, 196, 9),
+(197, 197, 9),
+(198, 198, 9),
+(199, 199, 9),
+(200, 200, 9),
+(201, 201, 9),
+(202, 202, 9),
+(203, 203, 9),
+(204, 204, 9),
+(205, 205, 9),
+(206, 206, 9),
+(207, 207, 9),
+(208, 208, 10),
+(209, 209, 10),
+(210, 210, 10),
+(211, 211, 10),
+(212, 212, 10),
+(213, 213, 10),
+(214, 214, 10),
+(215, 215, 10),
+(216, 216, 10),
+(217, 217, 10),
+(218, 218, 10),
+(219, 219, 10),
+(220, 220, 10),
+(221, 221, 10),
+(222, 222, 10),
+(223, 223, 10),
+(224, 224, 10),
+(225, 225, 10),
+(226, 226, 10),
+(227, 227, 10),
+(228, 228, 10),
+(229, 229, 10),
+(230, 230, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbplantao`
 --
 
 CREATE TABLE `tbplantao` (
@@ -665,7 +909,7 @@ CREATE TABLE `tbplantao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbplantao`
+-- Dumping data for table `tbplantao`
 --
 
 INSERT INTO `tbplantao` (`idPlantao`, `dataPlantao`, `inicioPlantao`, `fimPlantao`, `idEspecialidade`, `idMedico`, `presencaMedico`, `idHospital`) VALUES
@@ -913,7 +1157,7 @@ INSERT INTO `tbplantao` (`idPlantao`, `dataPlantao`, `inicioPlantao`, `fimPlanta
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbreclamacao`
+-- Table structure for table `tbreclamacao`
 --
 
 CREATE TABLE `tbreclamacao` (
@@ -930,7 +1174,7 @@ CREATE TABLE `tbreclamacao` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbtelefone`
+-- Table structure for table `tbtelefone`
 --
 
 CREATE TABLE `tbtelefone` (
@@ -941,7 +1185,7 @@ CREATE TABLE `tbtelefone` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbtelefone`
+-- Dumping data for table `tbtelefone`
 --
 
 INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idMedico`) VALUES
@@ -976,12 +1220,208 @@ INSERT INTO `tbtelefone` (`idTelefone`, `numTelefone`, `idHospital`, `idMedico`)
 (30, '(21) 3111-2611', 7, 0),
 (31, '(92) 3649-2750', 8, 0),
 (32, '(92) 2123-1313', 9, 0),
-(33, '(11) 2551-5151', 10, 0);
+(33, '(11) 2551-5151', 10, 0),
+(34, '(11) 9986-8653', 0, 24),
+(35, '(21) 97536-2472', 0, 25),
+(36, '(21) 97352-4241', 0, 26),
+(37, '(11) 94826-2533', 0, 27),
+(38, '(11) 95623-2573', 0, 28),
+(39, '(92) 97636-7281', 0, 29),
+(40, '(11) 97978-6324', 0, 30),
+(41, '(11) 99853-2411', 0, 31),
+(42, '(21) 91728-3451', 0, 32),
+(43, '(11) 98764-5929', 0, 33),
+(44, '(92) 98467-2535', 0, 34),
+(45, '(92) 97989-5423', 0, 35),
+(46, '(92) 97976-6423', 0, 36),
+(47, '(92) 96674-2326', 0, 37),
+(48, '(21) 97667-3435', 0, 38),
+(49, '(21) 98986-5342', 0, 39),
+(50, '(21) 98939-3752', 0, 40),
+(51, '(21) 99536-7289', 0, 41),
+(52, '(21) 91926-3424', 0, 42),
+(53, '(11) 91927-3536', 0, 43),
+(54, '(11) 98987-6211', 0, 44),
+(55, '(11) 97993-2561', 0, 45),
+(56, '(11) 9986-8653', 0, 46),
+(57, '(21) 97536-2472', 0, 47),
+(58, '(21) 97352-4241', 0, 48),
+(59, '(11) 94826-2533', 0, 49),
+(60, '(11) 95623-2573', 0, 50),
+(61, '(92) 97636-7281', 0, 51),
+(62, '(11) 97978-6324', 0, 52),
+(63, '(11) 99853-2411', 0, 53),
+(64, '(21) 91728-3451', 0, 54),
+(65, '(11) 98764-5929', 0, 55),
+(66, '(92) 98467-2535', 0, 56),
+(67, '(92) 97989-5423', 0, 57),
+(68, '(92) 97976-6423', 0, 58),
+(69, '(92) 96674-2326', 0, 59),
+(70, '(21) 97667-3435', 0, 60),
+(71, '(21) 98986-5342', 0, 61),
+(72, '(21) 98939-3752', 0, 62),
+(73, '(21) 99536-7289', 0, 63),
+(74, '(21) 91926-3424', 0, 64),
+(75, '(11) 91927-3536', 0, 65),
+(76, '(11) 98987-6211', 0, 66),
+(77, '(11) 97993-2561', 0, 67),
+(78, '(11) 9986-8653', 0, 68),
+(79, '(21) 97536-2472', 0, 69),
+(80, '(21) 97352-4241', 0, 70),
+(81, '(11) 94826-2533', 0, 71),
+(82, '(11) 95623-2573', 0, 72),
+(83, '(92) 97636-7281', 0, 73),
+(84, '(11) 97978-6324', 0, 74),
+(85, '(11) 99853-2411', 0, 75),
+(86, '(21) 91728-3451', 0, 76),
+(87, '(11) 98764-5929', 0, 77),
+(88, '(92) 98467-2535', 0, 78),
+(89, '(92) 97989-5423', 0, 79),
+(90, '(92) 97976-6423', 0, 80),
+(91, '(92) 96674-2326', 0, 81),
+(92, '(21) 97667-3435', 0, 82),
+(93, '(21) 98986-5342', 0, 83),
+(94, '(21) 98939-3752', 0, 84),
+(95, '(21) 99536-7289', 0, 85),
+(96, '(21) 91926-3424', 0, 86),
+(97, '(11) 91927-3536', 0, 87),
+(98, '(11) 98987-6211', 0, 88),
+(99, '(11) 97993-2561', 0, 89),
+(100, '(11) 9986-8653', 0, 90),
+(101, '(21) 97536-2472', 0, 91),
+(103, '(11) 94826-2533', 0, 93),
+(104, '(11) 95623-2573', 0, 94),
+(105, '(92) 97636-7281', 0, 95),
+(106, '(11) 97978-6324', 0, 96),
+(107, '(11) 99853-2411', 0, 97),
+(108, '(21) 91728-3451', 0, 98),
+(109, '(11) 98764-5929', 0, 99),
+(110, '(92) 98467-2535', 0, 100),
+(111, '(92) 97989-5423', 0, 101),
+(112, '(92) 97976-6423', 0, 102),
+(113, '(92) 96674-2326', 0, 103),
+(114, '(21) 97667-3435', 0, 104),
+(115, '(21) 98986-5342', 0, 105),
+(116, '(21) 98939-3752', 0, 106),
+(117, '(21) 99536-7289', 0, 107),
+(118, '(21) 91926-3424', 0, 108),
+(119, '(11) 91927-3536', 0, 109),
+(120, '(11) 98987-6211', 0, 110),
+(121, '(11) 97993-2561', 0, 111),
+(122, '(11) 9986-8653', 0, 112),
+(123, '(21) 97536-2472', 0, 113),
+(124, '(21) 97352-4241', 0, 114),
+(125, '(11) 94826-2533', 0, 115),
+(126, '(11) 95623-2573', 0, 116),
+(127, '(92) 97636-7281', 0, 117),
+(128, '(11) 97978-6324', 0, 118),
+(129, '(11) 99853-2411', 0, 119),
+(130, '(21) 91728-3451', 0, 120),
+(131, '(11) 98764-5929', 0, 121),
+(132, '(92) 98467-2535', 0, 122),
+(133, '(92) 97989-5423', 0, 123),
+(134, '(92) 97976-6423', 0, 124),
+(135, '(92) 96674-2326', 0, 125),
+(136, '(21) 97667-3435', 0, 126),
+(137, '(21) 98986-5342', 0, 127),
+(138, '(21) 98939-3752', 0, 128),
+(139, '(21) 99536-7289', 0, 129),
+(140, '(21) 91926-3424', 0, 130),
+(141, '(11) 91927-3536', 0, 131),
+(142, '(11) 98987-6211', 0, 132),
+(143, '(11) 97993-2561', 0, 133),
+(144, '(11) 9986-8653', 0, 134),
+(145, '(21) 97536-2472', 0, 135),
+(146, '(21) 97352-4241', 0, 136),
+(147, '(11) 94826-2533', 0, 137),
+(148, '(11) 95623-2573', 0, 138),
+(149, '(92) 97636-7281', 0, 139),
+(150, '(11) 97978-6324', 0, 140),
+(151, '(11) 99853-2411', 0, 141),
+(152, '(21) 91728-3451', 0, 142),
+(153, '(11) 98764-5929', 0, 143),
+(154, '(92) 98467-2535', 0, 144),
+(155, '(92) 97989-5423', 0, 145),
+(156, '(92) 97976-6423', 0, 146),
+(157, '(92) 96674-2326', 0, 147),
+(158, '(21) 97667-3435', 0, 148),
+(159, '(21) 98986-5342', 0, 149),
+(160, '(21) 98939-3752', 0, 150),
+(161, '(21) 99536-7289', 0, 151),
+(162, '(21) 91926-3424', 0, 152),
+(163, '(11) 91927-3536', 0, 153),
+(164, '(11) 98987-6211', 0, 154),
+(165, '(11) 97993-2561', 0, 155),
+(166, '(11) 9986-8653', 0, 156),
+(167, '(21) 97536-2472', 0, 157),
+(168, '(21) 97352-4241', 0, 158),
+(169, '(11) 94826-2533', 0, 159),
+(170, '(11) 95623-2573', 0, 160),
+(172, '(11) 97978-6324', 0, 162),
+(173, '(11) 99853-2411', 0, 163),
+(174, '(21) 91728-3451', 0, 164),
+(175, '(11) 98764-5929', 0, 165),
+(176, '(92) 98467-2535', 0, 166),
+(177, '(92) 97989-5423', 0, 167),
+(178, '(92) 97976-6423', 0, 168),
+(179, '(92) 96674-2326', 0, 169),
+(180, '(21) 97667-3435', 0, 170),
+(181, '(21) 98986-5342', 0, 171),
+(182, '(21) 98939-3752', 0, 172),
+(183, '(21) 99536-7289', 0, 173),
+(184, '(21) 91926-3424', 0, 174),
+(185, '(11) 91927-3536', 0, 175),
+(186, '(11) 98987-6211', 0, 176),
+(187, '(11) 97993-2561', 0, 177),
+(188, '(11) 9986-8653', 0, 178),
+(189, '(21) 97536-2472', 0, 179),
+(190, '(21) 97352-4241', 0, 180),
+(191, '(11) 94826-2533', 0, 181),
+(192, '(11) 95623-2573', 0, 182),
+(193, '(92) 97636-7281', 0, 183),
+(194, '(11) 97978-6324', 0, 184),
+(195, '(11) 99853-2411', 0, 185),
+(196, '(21) 91728-3451', 0, 186),
+(197, '(11) 98764-5929', 0, 187),
+(198, '(92) 98467-2535', 0, 188),
+(199, '(92) 97989-5423', 0, 189),
+(200, '(92) 97976-6423', 0, 190),
+(201, '(92) 96674-2326', 0, 191),
+(202, '(21) 97667-3435', 0, 192),
+(203, '(21) 98986-5342', 0, 193),
+(204, '(21) 98939-3752', 0, 194),
+(205, '(21) 99536-7289', 0, 195),
+(206, '(21) 91926-3424', 0, 196),
+(207, '(11) 91927-3536', 0, 197),
+(208, '(11) 98987-6211', 0, 198),
+(209, '(11) 97993-2561', 0, 199),
+(210, '(11) 9986-8653', 0, 200),
+(211, '(21) 97536-2472', 0, 201),
+(212, '(21) 97352-4241', 0, 202),
+(213, '(11) 94826-2533', 0, 203),
+(214, '(11) 95623-2573', 0, 204),
+(215, '(92) 97636-7281', 0, 205),
+(216, '(11) 97978-6324', 0, 206),
+(217, '(11) 99853-2411', 0, 207),
+(218, '(21) 91728-3451', 0, 208),
+(219, '(11) 98764-5929', 0, 209),
+(220, '(92) 98467-2535', 0, 210),
+(221, '(92) 97989-5423', 0, 211),
+(222, '(92) 97976-6423', 0, 212),
+(223, '(92) 96674-2326', 0, 213),
+(224, '(21) 97667-3435', 0, 214),
+(225, '(21) 98986-5342', 0, 215),
+(226, '(21) 98939-3752', 0, 216),
+(227, '(21) 99536-7289', 0, 217),
+(228, '(21) 91926-3424', 0, 218),
+(229, '(11) 91927-3536', 0, 219),
+(230, '(11) 98987-6211', 0, 220),
+(231, '(11) 97993-2561', 0, 221);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbtiporeclamacao`
+-- Table structure for table `tbtiporeclamacao`
 --
 
 CREATE TABLE `tbtiporeclamacao` (
@@ -990,7 +1430,7 @@ CREATE TABLE `tbtiporeclamacao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbtiporeclamacao`
+-- Dumping data for table `tbtiporeclamacao`
 --
 
 INSERT INTO `tbtiporeclamacao` (`idTipoReclamacao`, `tipoReclamacao`) VALUES
@@ -1005,7 +1445,7 @@ INSERT INTO `tbtiporeclamacao` (`idTipoReclamacao`, `tipoReclamacao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tbusuario`
+-- Table structure for table `tbusuario`
 --
 
 CREATE TABLE `tbusuario` (
@@ -1017,7 +1457,7 @@ CREATE TABLE `tbusuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Extraindo dados da tabela `tbusuario`
+-- Dumping data for table `tbusuario`
 --
 
 INSERT INTO `tbusuario` (`idUsuario`, `nomeUsuario`, `emailUsuario`, `senhaUsuario`, `cpfUsuario`) VALUES
@@ -1059,37 +1499,36 @@ INSERT INTO `tbusuario` (`idUsuario`, `nomeUsuario`, `emailUsuario`, `senhaUsuar
 (36, 'Victor Henrique Cavalcante Batista', 'vitosccp012@gmail.com', '12345678', '851.258.720-24');
 
 --
--- Índices para tabelas despejadas
+-- Indexes for dumped tables
 --
 
 --
--- Índices para tabela `tbadmin`
+-- Indexes for table `tbadmin`
 --
 ALTER TABLE `tbadmin`
   ADD PRIMARY KEY (`idAdmin`),
   ADD KEY `fk_idHospital` (`idHospital`);
 
 --
--- Índices para tabela `tbespecialidade`
+-- Indexes for table `tbespecialidade`
 --
 ALTER TABLE `tbespecialidade`
   ADD PRIMARY KEY (`idEspecialidade`);
 
 --
--- Índices para tabela `tbhospital`
+-- Indexes for table `tbhospital`
 --
 ALTER TABLE `tbhospital`
   ADD PRIMARY KEY (`idHospital`);
 
 --
--- Índices para tabela `tbmedico`
+-- Indexes for table `tbmedico`
 --
 ALTER TABLE `tbmedico`
-  ADD PRIMARY KEY (`idMedico`),
-  ADD KEY `fk_idHospital` (`idHospital`);
+  ADD PRIMARY KEY (`idMedico`);
 
 --
--- Índices para tabela `tbmedicoespecialidade`
+-- Indexes for table `tbmedicoespecialidade`
 --
 ALTER TABLE `tbmedicoespecialidade`
   ADD PRIMARY KEY (`idMedicoEspecialidade`),
@@ -1097,7 +1536,15 @@ ALTER TABLE `tbmedicoespecialidade`
   ADD KEY `fk_idEspecialidade` (`idEspecialidade`);
 
 --
--- Índices para tabela `tbplantao`
+-- Indexes for table `tbmedicohospital`
+--
+ALTER TABLE `tbmedicohospital`
+  ADD PRIMARY KEY (`idMedicoHospital`),
+  ADD KEY `fk_idMedico` (`idMedico`),
+  ADD KEY `fk_idHospital` (`idHospital`);
+
+--
+-- Indexes for table `tbplantao`
 --
 ALTER TABLE `tbplantao`
   ADD PRIMARY KEY (`idPlantao`),
@@ -1106,7 +1553,7 @@ ALTER TABLE `tbplantao`
   ADD KEY `fk_idTipoPlantao` (`idEspecialidade`);
 
 --
--- Índices para tabela `tbreclamacao`
+-- Indexes for table `tbreclamacao`
 --
 ALTER TABLE `tbreclamacao`
   ADD PRIMARY KEY (`idReclamacao`),
@@ -1115,7 +1562,7 @@ ALTER TABLE `tbreclamacao`
   ADD KEY `fk_idUsuario` (`idUsuario`);
 
 --
--- Índices para tabela `tbtelefone`
+-- Indexes for table `tbtelefone`
 --
 ALTER TABLE `tbtelefone`
   ADD PRIMARY KEY (`idTelefone`),
@@ -1123,77 +1570,83 @@ ALTER TABLE `tbtelefone`
   ADD KEY `fk_idMedico` (`idMedico`);
 
 --
--- Índices para tabela `tbtiporeclamacao`
+-- Indexes for table `tbtiporeclamacao`
 --
 ALTER TABLE `tbtiporeclamacao`
   ADD PRIMARY KEY (`idTipoReclamacao`);
 
 --
--- Índices para tabela `tbusuario`
+-- Indexes for table `tbusuario`
 --
 ALTER TABLE `tbusuario`
   ADD PRIMARY KEY (`idUsuario`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `tbadmin`
+-- AUTO_INCREMENT for table `tbadmin`
 --
 ALTER TABLE `tbadmin`
   MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT de tabela `tbespecialidade`
+-- AUTO_INCREMENT for table `tbespecialidade`
 --
 ALTER TABLE `tbespecialidade`
   MODIFY `idEspecialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT de tabela `tbhospital`
+-- AUTO_INCREMENT for table `tbhospital`
 --
 ALTER TABLE `tbhospital`
   MODIFY `idHospital` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de tabela `tbmedico`
+-- AUTO_INCREMENT for table `tbmedico`
 --
 ALTER TABLE `tbmedico`
   MODIFY `idMedico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
--- AUTO_INCREMENT de tabela `tbmedicoespecialidade`
+-- AUTO_INCREMENT for table `tbmedicoespecialidade`
 --
 ALTER TABLE `tbmedicoespecialidade`
   MODIFY `idMedicoEspecialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=280;
 
 --
--- AUTO_INCREMENT de tabela `tbplantao`
+-- AUTO_INCREMENT for table `tbmedicohospital`
+--
+ALTER TABLE `tbmedicohospital`
+  MODIFY `idMedicoHospital` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=231;
+
+--
+-- AUTO_INCREMENT for table `tbplantao`
 --
 ALTER TABLE `tbplantao`
   MODIFY `idPlantao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
--- AUTO_INCREMENT de tabela `tbreclamacao`
+-- AUTO_INCREMENT for table `tbreclamacao`
 --
 ALTER TABLE `tbreclamacao`
   MODIFY `idReclamacao` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `tbtelefone`
+-- AUTO_INCREMENT for table `tbtelefone`
 --
 ALTER TABLE `tbtelefone`
-  MODIFY `idTelefone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idTelefone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
 
 --
--- AUTO_INCREMENT de tabela `tbtiporeclamacao`
+-- AUTO_INCREMENT for table `tbtiporeclamacao`
 --
 ALTER TABLE `tbtiporeclamacao`
   MODIFY `idTipoReclamacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de tabela `tbusuario`
+-- AUTO_INCREMENT for table `tbusuario`
 --
 ALTER TABLE `tbusuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;

@@ -85,7 +85,10 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     
     if ($idEspecialidade == 1) {
 
-        $sql = "SELECT idMedico, nomeMedico FROM tbMedico WHERE idHospital = :idHospital";
+        $sql = "SELECT m.idMedico, m.nomeMedico FROM tbMedico m
+        INNER JOIN tbMedicoHospital mh
+        ON m.idMedico = mh.idMedico
+        WHERE idHospital = :idHospital";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':idHospital', $idHospital);
         $stmt->execute();
@@ -94,11 +97,13 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
     } else {
 
         $sql = "SELECT m.idMedico, m.nomeMedico FROM tbMedico m
+        INNER JOIN tbMedicoHospital mh
+        ON m.idMedico = mh.idMedico
         INNER JOIN tbMedicoEspecialidade me
         ON m.idMedico = me.idMedico
         INNER JOIN tbEspecialidade e
         ON e.idEspecialidade = me.idEspecialidade
-        WHERE e.idEspecialidade = :idEspecialidade AND m.idHospital = :idHospital";
+        WHERE e.idEspecialidade = :idEspecialidade AND mh.idHospital = :idHospital";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':idEspecialidade', $idEspecialidade);
         $stmt->bindParam(':idHospital', $idHospital);
