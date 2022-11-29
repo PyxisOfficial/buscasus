@@ -280,11 +280,11 @@ export function Admin() {
                                         <C.HoverCardContainer>
                                             {user.primeiroAcesso == 0
                                                 ?
-                                                <C.NotHover size={30} />
+                                                <C.NotHover size={35} />
                                                 :
                                                 <HoverCard.Root>
                                                     <HoverCard.Trigger>
-                                                        <LockOpen size={30} />
+                                                        <LockOpen size={35} />
                                                     </HoverCard.Trigger>
                                                     <HoverCard.Content>
                                                         <CopyToClipboard

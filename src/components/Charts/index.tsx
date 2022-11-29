@@ -18,7 +18,7 @@ const options = {
       }
    },
    pieSliceText: 'none',
-   sliceVisibilityThreshold: 5 / 50,
+   sliceVisibilityThreshold: 5 / 100,
 };
 
 function PieRegion() {
@@ -59,18 +59,18 @@ function PieSpecialty({ spe1, spe2, spe3, spe4, spe5, spe6, spe7, spe8, spe9, sp
 
       var data = google.visualization.arrayToDataTable([
          ['Task', 'Hours per Day'],
-         ['Dermatologia', spe1],
-         ['Ginecologia', spe2],
-         ['Anestesiologia', spe3],
-         ['Pediatria', spe4],
-         ['Oftalmologia', spe5],
-         ['Obstetricia', spe6],
-         ['Urologia', spe7],
-         ['Oncologia', spe8],
-         ['Endocrinologia', spe9],
-         ['Hematologia', spe10],
-         ['Neurologia', spe11],
-         ['Patologia', spe12],
+         ['Imunologia', spe1],
+         ['Angiologia', spe2],
+         ['Cardiologia', spe3],
+         ['Cirurgia Geral', spe4],
+         ['Cirurgia Pediátrica', spe5],
+         ['Cirurgia Plástica', spe6],
+         [' Clínica Médica', spe7],
+         ['Dermatologia', spe8],
+         ['Infecto-Parasitárias', spe9],
+         ['DST/AIDS', spe10],
+         ['Endocrinologia', spe11],
+         ['Fisiatria', spe12],
       ]);
 
       { options }

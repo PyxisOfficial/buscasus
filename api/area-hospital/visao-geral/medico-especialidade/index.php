@@ -12,7 +12,9 @@ $idHospital = @$_GET['idHospital'];
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 2 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 2 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -21,7 +23,9 @@ $idMedicoEspecialidade1 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 3 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 3 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -30,7 +34,9 @@ $idMedicoEspecialidade2 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 4 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 4 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -39,7 +45,9 @@ $idMedicoEspecialidade3 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 5 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 5 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -48,7 +56,9 @@ $idMedicoEspecialidade4 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 6 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 6 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -57,7 +67,9 @@ $idMedicoEspecialidade5 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 7 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 7 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -66,7 +78,9 @@ $idMedicoEspecialidade6 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 8 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 8 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -75,7 +89,9 @@ $idMedicoEspecialidade7 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 9 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 9 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -84,7 +100,9 @@ $idMedicoEspecialidade8 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 10 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 10 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -93,7 +111,9 @@ $idMedicoEspecialidade9 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 11 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 11 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -102,7 +122,9 @@ $idMedicoEspecialidade10 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 12 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 12 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);
 $stmt->execute();
@@ -111,7 +133,9 @@ $idMedicoEspecialidade11 = $stmt->fetch(PDO::FETCH_ASSOC);
 $sql = "SELECT COUNT(me.idMedico) AS idMedico FROM tbMedicoEspecialidade me 
 INNER JOIN tbMedico m
 ON me.idMedico = m.idMedico
-WHERE idEspecialidade = 13 AND idHospital = :idHospital";
+INNER JOIN tbMedicoHospital mh
+ON m.idMedico = mh.idMedico
+WHERE idEspecialidade = 13 AND mh.idHospital = :idHospital";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':idHospital', $idHospital);$stmt->execute();
 $idMedicoEspecialidade12 = $stmt->fetch(PDO::FETCH_ASSOC);
