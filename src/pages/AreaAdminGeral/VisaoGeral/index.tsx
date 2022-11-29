@@ -6,8 +6,6 @@ import { MenuLinksAdmin } from '../../../components/MenuLinks/MenuLinksAdmin';
 import { BarChart, PieChart } from '../../../components/Charts';
 import { DialogModal } from '../../../components/Modal';
 import { Button } from '../../../components/Button';
-import { HoverCard } from '../../../components/HoverCard';
-import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import * as Dialog from '@radix-ui/react-dialog';
 
 import { Users, UserPlus, Syringe, FirstAid, ThumbsDown, ChatCenteredDots, CaretUp, X } from 'phosphor-react';

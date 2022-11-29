@@ -40,6 +40,18 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
 
     echo json_encode($plantao);
 
+} else if (isset($_GET['todayDutyCount'])) {
+    
+    $idHospital = @$_GET['idHospital'];
+
+    $sql = "SELECT COUNT(idPlantao) AS idPlantao FROM tbPlantao WHERE DATE(dataPlantao) = CURDATE() AND idHospital = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $idHospital);
+    $stmt->execute();
+    $plantao = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo json_encode($plantao);
+
 } else if (isset($_GET['todayDuty']) && !isset($_GET['search'])) {
 
     $idHospital = @$_GET['idHospital'];

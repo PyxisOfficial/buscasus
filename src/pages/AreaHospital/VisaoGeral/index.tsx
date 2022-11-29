@@ -7,12 +7,12 @@ import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { BarChart, PieChart } from '../../../components/Charts';
 
-import { Activity, Syringe, ChatCenteredDots } from 'phosphor-react';
+import { Activity, Syringe, CalendarCheck } from 'phosphor-react';
 
 import * as C from './styles'
 
 export function VisaoGeralHospital() {
-    const [claimCount, setClaimCount] = useState<string>();
+    const [todayDutyCount, setTodayDutyCount] = useState<string>();
     const [dutyCount, setDutyCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
 
@@ -63,12 +63,12 @@ export function VisaoGeralHospital() {
     const firstAccess = JSON.parse(getFirstAccess);
 
     useEffect(() => {
-        axios.get('http://localhost/buscasus/api/area-usuario/reclamacao/', {
+        axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
-                hospitalCount: true,
+                todayDutyCount: true,
                 idHospital: hospitalId
             }
-        }).then(response => setClaimCount(response.data.idReclamacao));
+        }).then(response => setTodayDutyCount(response.data.idPlantao));
 
         axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
@@ -110,16 +110,16 @@ export function VisaoGeralHospital() {
                     <C.LeftContainer>
                         <C.Quantities>
                             <C.Icons color='#49B28C'>
-                                <ChatCenteredDots size={70} />
+                                <CalendarCheck size={70} />
                                 <C.TextContainer>
-                                    <span>Notificações</span>
-                                    <span>{claimCount}</span>
+                                    <span>Plantões do dia</span>
+                                    <span>{todayDutyCount}</span>
                                 </C.TextContainer>
                             </C.Icons>
                             <C.Icons color='#349684'>
                                 <Activity size={70} />
                                 <C.TextContainer>
-                                    <span>Plantões</span>
+                                    <span>Total de plantões</span>
                                     <span>{dutyCount}</span>
                                 </C.TextContainer>
                             </C.Icons>
