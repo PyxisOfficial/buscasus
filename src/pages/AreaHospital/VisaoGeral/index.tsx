@@ -7,12 +7,12 @@ import { MenuBackground } from '../../../components/Menu';
 import { MenuLinksHospital } from '../../../components/MenuLinks/MenuLinksHospital';
 import { BarChart, PieChart } from '../../../components/Charts';
 
-import { Activity, Syringe, CalendarCheck } from 'phosphor-react';
+import { Activity, Syringe, WarningCircle } from 'phosphor-react';
 
 import * as C from './styles'
 
 export function VisaoGeralHospital() {
-    const [todayDutyCount, setTodayDutyCount] = useState<string>();
+    const [medicAbsenceCount, setMedicAbsenceCount] = useState<string>();
     const [dutyCount, setDutyCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
 
@@ -65,10 +65,10 @@ export function VisaoGeralHospital() {
     useEffect(() => {
         axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
-                todayDutyCount: true,
+                medicAbsenceCount: true,
                 idHospital: hospitalId
             }
-        }).then(response => setTodayDutyCount(response.data.idPlantao));
+        }).then(response => setMedicAbsenceCount(response.data.idPlantao));
 
         axios.get('http://localhost/buscasus/api/area-hospital/plantao/', {
             params: {
@@ -110,10 +110,10 @@ export function VisaoGeralHospital() {
                     <C.LeftContainer>
                         <C.Quantities>
                             <C.Icons color='#49B28C'>
-                                <CalendarCheck size={70} />
+                                <WarningCircle size={70} />
                                 <C.TextContainer>
-                                    <span>Plantões do dia</span>
-                                    <span>{todayDutyCount}</span>
+                                    <span>Ausências do dia</span>
+                                    <span>{medicAbsenceCount}</span>
                                 </C.TextContainer>
                             </C.Icons>
                             <C.Icons color='#349684'>

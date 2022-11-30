@@ -40,11 +40,13 @@ if (isset($_GET['search']) && !isset($_GET['todayDuty'])) {
 
     echo json_encode($plantao);
 
-} else if (isset($_GET['todayDutyCount'])) {
+} else if (isset($_GET['medicAbsenceCount'])) {
     
     $idHospital = @$_GET['idHospital'];
 
-    $sql = "SELECT COUNT(idPlantao) AS idPlantao FROM tbPlantao WHERE DATE(dataPlantao) = CURDATE() AND idHospital = :id";
+    $sql = "SELECT COUNT(idPlantao) AS idPlantao FROM tbPlantao 
+    WHERE (DATE(dataPlantao) = CURDATE() AND idHospital = :id)
+    AND (presencaMedico = 0 AND idHospital = :id)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idHospital);
     $stmt->execute();
