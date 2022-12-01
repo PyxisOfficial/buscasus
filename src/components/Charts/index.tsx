@@ -87,7 +87,7 @@ function PieSpecialty({ spe1, spe2, spe3, spe4, spe5, spe6, spe7, spe8, spe9, sp
    )
 }
 
-function PieOpinion() {
+function PieOpinion({sa, nsa}: any) {
    google.charts.load('current', { 'packages': ['corechart'] });
    google.charts.setOnLoadCallback(drawChart);
 
@@ -95,8 +95,8 @@ function PieOpinion() {
 
       var data = google.visualization.arrayToDataTable([
          ['Task', 'Hours per Day'],
-         ['Satisfeito', 80],
-         ['Não Satisfeito', 50],
+         ['Satisfeito', sa],
+         ['Não Satisfeito', nsa],
       ]);
 
       { options }
@@ -154,16 +154,16 @@ function AreaChart({ wu1, wu2, wu3, wu4 }: any) {
    )
 }
 
-function AreaSearch() {
+function AreaSearch({w1, w2, w3, w4}: any) {
    google.charts.load("current", { packages: ['corechart'] });
    google.charts.setOnLoadCallback(drawChart);
    function drawChart() {
       var data = google.visualization.arrayToDataTable([
          ["Element", "Pesquisas", { role: "style" }],
-         ["Semana 1", 25, "#496461"],
-         ["Semana 2", 16, "#45CA99"],
-         ["Semana 3", 14, "#349684"],
-         ["Semana 4", 30, "#287365"]
+         ["Semana 1", w1, "#496461"],
+         ["Semana 2", w2, "#45CA99"],
+         ["Semana 3", w3, "#349684"],
+         ["Semana 4", w4, "#287365"]
       ]);
 
       var view = new google.visualization.DataView(data);

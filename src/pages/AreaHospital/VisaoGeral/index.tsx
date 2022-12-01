@@ -12,7 +12,7 @@ import { Activity, Syringe, WarningCircle } from 'phosphor-react';
 import * as C from './styles'
 
 export function VisaoGeralHospital() {
-    const [medicAbsenceCount, setMedicAbsenceCount] = useState<string>();
+    const [medicAbsenceCount, setMedicAbsenceCount] = useState<any>();
     const [dutyCount, setDutyCount] = useState<string>();
     const [medicsCount, setMedicsCount] = useState<string>();
 
@@ -166,11 +166,35 @@ export function VisaoGeralHospital() {
                     <C.RightContainer>
                         <C.ChartContainer>
                             <h3>Satisfação dos pacientes</h3>
-                            <PieChart.Opinion />
+
+                            {medicsCount != '0'
+                                ? <PieChart.Opinion
+                                    sa={38}
+                                    nsa={40}
+                                />
+                                : <PieChart.Opinion
+                                    sa={0}
+                                    nsa={0}
+                                />}
+
                         </C.ChartContainer>
                         <C.ChartContainer>
-                            <h3>Pesquisas pelo hospital no último mês</h3>
-                            <BarChart.Search />
+                            <h3>Pesquisas pelo hospital nas últimas 4 semanas</h3>
+
+                            {medicsCount != '0'
+                                ? <BarChart.Search
+                                    w1={25}
+                                    w2={16}
+                                    w3={14}
+                                    w4={30}
+                                />
+                                : <BarChart.Search
+                                    w1={0}
+                                    w2={0}
+                                    w3={0}
+                                    w4={0}
+                                />}
+
                         </C.ChartContainer>
                     </C.RightContainer>
                 </C.DashboardContent>
