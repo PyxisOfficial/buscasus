@@ -205,7 +205,6 @@ export function VisaoGeralAdmin() {
                                                 </C.DialogDescription>
                                                 <C.DialogFooter>
                                                     <C.Email>{claim.emailUsuario}</C.Email>
-                                                    <Button.Green type='submit' value='Marcar como lido' />
                                                 </C.DialogFooter>
                                             </DialogModal.Content>
                                         </DialogModal.Root>
